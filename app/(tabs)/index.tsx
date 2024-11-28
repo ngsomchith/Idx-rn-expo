@@ -12,6 +12,7 @@ import { Button } from 'react-native-elements'; // Ou votre composant Button pr√
 import { ExternalLink } from '@/components/ExternalLink';
 import BackgroundImage from '@/components/BackGroundImage';
 import ContactForm from '@/components/Contact';
+import LoginScreen from '@/firebase';
 // import SignIn from '@/firebase';
 // import Profile from '@/components/Profile';
 // import ContactForm from '@/components/ContactCallable';
@@ -125,6 +126,7 @@ export default function HomeIndex() {
           {/* <ArticleList articles={articles0} /> */}
           {/* <SignIn navigation={undefined} />   */}
           <ContactForm />
+          <LoginScreen />
           {/* <Profile /> */}
         </ThemedView>
       </View>
