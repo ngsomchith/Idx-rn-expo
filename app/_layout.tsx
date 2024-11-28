@@ -7,6 +7,9 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { firebaseConfig } from '@/constants/firebaseConfig';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -26,14 +29,24 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
+  const myApp =()=> {
+
+    // Initialize Firebase
+    const firebaseApp = initializeApp(firebaseConfig);
+
+    // Initialize Firebase Authentication
+    const firebaseAuth = getAuth(firebaseApp);
+  }
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }}  />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
+      
     </ThemeProvider>
   );
 }

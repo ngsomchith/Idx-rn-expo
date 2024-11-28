@@ -9,14 +9,15 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "fr.udexweb.delicatessen"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.idx-expo-rn"
+      "package": "fr.udexweb.delicatessen"
     },
     "web": {
       "bundler": "metro",
@@ -38,7 +39,15 @@
     "experiments": {
       "typedRoutes": true
     },
-    "sdkVersion": "52.0.0"
+    "sdkVersion": "52.0.0",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "e8ad8de5-56a1-4dff-b1a1-22d24e0df55f"
+      }
+    }
   },
   "name": "idx-expo-rn"
 }

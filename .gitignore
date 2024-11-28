@@ -2,6 +2,7 @@
 
 # dependencies
 node_modules/
+.env
 
 # Ne pas ignorer le dossier /app
 !/app
