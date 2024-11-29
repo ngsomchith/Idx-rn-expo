@@ -7,15 +7,9 @@ import { ThemedView } from '@/components/ThemedView';
 import { ThemedTitle } from '@/components/ThemedTitle';
 import { ArticleList } from '@/components/ShowArticles';
 import ArticlesToShow from '@/components/ArticlesToShow';
-import { useEffect, useState } from 'react';
-import { Button } from 'react-native-elements'; // Ou votre composant Button préféré
-import { ExternalLink } from '@/components/ExternalLink';
 import BackgroundImage from '@/components/BackGroundImage';
 import ContactForm from '@/components/Contact';
 import LoginScreen from '@/firebase';
-// import SignIn from '@/firebase';
-// import Profile from '@/components/Profile';
-// import ContactForm from '@/components/ContactCallable';
 
 
 export default function HomeIndex() {

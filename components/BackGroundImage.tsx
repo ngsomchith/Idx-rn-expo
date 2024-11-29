@@ -29,7 +29,7 @@ const BackgroundImage = () => {
       >
         <Text style={styles.text}>Commander vos repas </Text>
         <Text style={styles.text}>Directement</Text>
-        {/* <Text style={styles.text}>Background</Text> */}
+        {/* <Text style={styles.text}>Text upon Background</Text> */}
       </ImageBackground>
     </View>
   )

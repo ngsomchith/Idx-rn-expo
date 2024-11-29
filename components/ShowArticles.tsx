@@ -16,7 +16,7 @@ export const ArticleCard = ({ title, imageUrl,url, slogan, courtPresentation, on
 
   useEffect(() => {
     console.log("imageUrl ", imageUrl)
-  }, imageUrl)
+  }, [imageUrl])
 
   return (
     <ThemedView style={styles.cardContainer}>

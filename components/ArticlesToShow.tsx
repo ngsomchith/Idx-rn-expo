@@ -1,7 +1,5 @@
 import React from 'react';
 import { ArticleList } from './ShowArticles';
-import { ExternalLink } from './ExternalLink';
-import { ThemedText } from './ThemedText';
 
 const ArticlesToShow = ({ }) => {
 
