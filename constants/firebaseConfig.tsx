@@ -9,6 +9,7 @@ import firebase from '@react-native-firebase/app';
 
 // for mobil app
 import auth from '@react-native-firebase/auth';
+import { getFunctions } from "firebase/functions";
 
 
 // Obtenez l'instance Auth
@@ -94,6 +95,8 @@ export const FirebaseInit = () => {
         firebaseApp[0] = initializeApp(firebaseConfig); // Initialisation pour le web
         if(firebaseApp[0]){
             firebaseApp[1] = getAuth(initializeApp(firebaseConfig));
+            firebaseApp[2] = getFunctions(initializeApp(firebaseConfig));
+            firebaseApp[3] = getFirestore(initializeApp(firebaseConfig));
             // console.log("auth 96 ", firebaseApp[1])
         }
     } else {

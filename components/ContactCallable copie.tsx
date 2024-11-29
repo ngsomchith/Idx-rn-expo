@@ -3,7 +3,6 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "reac
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { initializeApp } from "firebase/app";
 import { FirebaseInit } from "@/constants/firebaseConfig";
-import { updateItem } from "@/firebase";
 // import { myApp } from "@/constants/firebaseConfig";
 
 // Configuration Firebase
@@ -33,41 +32,26 @@ const ContactForm = () => {
     if (!name || !email || !message) {
       Alert.alert("Erreur", "Veuillez remplir tous les champs.");
       return;
-    } else{
-      
-        let emailOptions = {
-            // data need in index.ts functions
-            emailFrom: `udex.web //  ${email}`,
-            emailTo:  'delicatessen.cloud@gmail.com',
-            subject: `Contact message de:${email}`,
-            isHtml: `${message}`,
-          };
-          let thisCollection = "submissions";
-          let thisDoc = "mesageToBuyer";
-          console.log("emailOptions = ", emailOptions);
-        
-          updateItem(thisCollection, emailOptions, thisDoc);
     }
 
-    // try {
+    try {
+        
+      const contactMessage = httpsCallable(myApp[2], "contactMessage");
+      const response = await contactMessage({ name, email, message });
 
-
-    //   const contactMessage = httpsCallable(myApp[2], "contactMessage");
-    //   const response = await contactMessage({ name, email, message });
-
-    //   if (response ) {
-    //     console.log(response,  'response?.data.success')
-    //     window.alert("Succès : Votre message a été envoyé !");
-    //     setName("");
-    //     setEmail("");
-    //     setMessage("");
-    //   }
-    // } catch (error) {
-    //   console.error("Erreur lors de l'envoi du message :", error);
-    //   window.alert(
-    //     "Erreur : Une erreur est survenue lors de l'envoi de votre message."
-    //   );
-    // }
+      if (response ) {
+        console.log(response,  'response?.data.success')
+        window.alert("Succès : Votre message a été envoyé !");
+        setName("");
+        setEmail("");
+        setMessage("");
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'envoi du message :", error);
+      window.alert(
+        "Erreur : Une erreur est survenue lors de l'envoi de votre message."
+      );
+    }
   };
 
   return (

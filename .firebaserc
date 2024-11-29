@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "livraison-de-repas-a-toulon"
-  }
+    "default": "delicatessencloud",
+    "delicatessencloud": "delicatessencloud"
+  },
+  "targets": {},
+  "etags": {}
 }

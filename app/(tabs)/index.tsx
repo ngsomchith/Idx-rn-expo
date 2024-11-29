@@ -8,8 +8,9 @@ import { ThemedTitle } from '@/components/ThemedTitle';
 import { ArticleList } from '@/components/ShowArticles';
 import ArticlesToShow from '@/components/ArticlesToShow';
 import BackgroundImage from '@/components/BackGroundImage';
-import ContactForm from '@/components/Contact';
+// import ContactForm from '@/components/Contact';
 import LoginScreen from '@/firebase';
+import ContactForm from '@/components/ContactCallable';
 
 
 export default function HomeIndex() {
