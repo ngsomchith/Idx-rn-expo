@@ -1,13 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
 import { View, Image, ScrollView } from 'react-native';
-import { ThemedView } from './ThemedView';
-import { ThemedTitle } from './ThemedTitle'; // Assurez-vous d'importer ThemedTitle
-import { ThemedText } from './ThemedText'; // Assurez-vous d'importer ThemedText
-import { Button } from 'react-native-elements'; // Ou votre composant Button préféré
-import images from '../constants/images';
-import ThisDevice from '../constants';
-import { ExternalLink } from './ExternalLink';
+import { ThemedView } from '../ThemedView';
+import { ThemedTitle } from '../ThemedTitle'; // Assurez-vous d'importer ThemedTitle
+import { ThemedText } from '../ThemedText'; // Assurez-vous d'importer ThemedText
+import images from '../../constants/images';
+import ThisDevice from '../../constants';
+import { ExternalLink } from '../ExternalLink';
+
 export const ArticleCard = ({ title, imageUrl,url, slogan, courtPresentation, onActionPress }) => {
 
 

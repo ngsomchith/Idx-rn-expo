@@ -5,12 +5,10 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedTitle } from '@/components/ThemedTitle';
-import { ArticleList } from '@/components/ShowArticles';
-import ArticlesToShow from '@/components/ArticlesToShow';
+import ArticlesToShow from '@/components/articles/ArticlesToShow';
 import BackgroundImage from '@/components/BackGroundImage';
-// import ContactForm from '@/components/Contact';
 import LoginScreen from '@/firebase';
-import ContactForm from '@/components/ContactCallable';
+import ContactForm from '@/components/contact/ContactCallable';
 
 
 export default function HomeIndex() {
