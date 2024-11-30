@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet, Platform } from 'react-native';
 
 import { FirebaseInit, signInWithEmailAndPassword } from './constants/firebaseConfig';
-import { doc, setDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
 
+
+export const myApp = FirebaseInit()
 
 export const LoginScreen = () => {
     const [email, setEmail] = useState('');
@@ -71,3 +73,20 @@ export async function updateItem(
     }
 }
 
+
+export async function getItems(thisCollection: string) {
+    // ++++++++++++++++++++++++++++++++++++++++++++++
+    //model :  import { collection, query, where, getDocs } from "firebase/firestore";
+    // const q = query(collection(db, "cities"), where("capital", "==", true));
+  
+    const db = myApp[3]
+    let items: any = [];
+    let i = 0;
+    const querySnapshot = await getDocs(collection(db, thisCollection));
+    querySnapshot.forEach((doc) => {
+      // console.log(`175,${doc.id} => ${doc.data()}`);
+      items.push(doc.data());
+      i++;
+    });
+    return items;
+  }
