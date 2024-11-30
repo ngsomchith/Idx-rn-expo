@@ -1,5 +1,5 @@
-import ThisDevice from "./ThisDevice"
+import     device from "./ThisDevice"
 
-export default {
-    ThisDevice,
+export {
+    device
 }

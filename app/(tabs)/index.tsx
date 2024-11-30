@@ -5,9 +5,9 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedTitle } from '@/components/ThemedTitle';
-import ArticlesToShow from '@/components/articles/ArticlesToShow';
 import BackgroundImage from '@/components/BackGroundImage';
 import LoginScreen from '@/firebase';
+import ArticlesToShow from '@/components/articles/ArticlesToShow';
 import ContactForm from '@/components/contact/ContactCallable';
 
 
