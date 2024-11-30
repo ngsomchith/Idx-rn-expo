@@ -9,33 +9,62 @@ import BackgroundImage from '@/components/BackGroundImage';
 import LoginScreen from '@/firebase';
 import ArticlesToShow from '@/components/articles/ArticlesToShow';
 import ContactForm from '@/components/contact/ContactCallable';
+import ThisDevice from '@/constants/ThisDevice';
 
 
 export default function HomeIndex() {
+  const myDevice = ThisDevice().device
+  const MAXWIDTH = ThisDevice().device.myMAXWIDTH
+  const widthMobile = 650
+  const widthMobileOrWeb = MAXWIDTH > widthMobile ? '40%' : '100%'
 
-  // const MyComponent = () => {
-  //   const { isSmallScreen } = useMediaQuery({
-  //     queries: {
-  //       smallScreen: '(max-width: 768px)',
-  //     },
-  //   });
-  
-  //   return (
-  //     <View style={[styles.container, isSmallScreen && styles.smallScreen]}>
-  //       {/* Your content */}
-  //     </View>
-  //   );
-  // };
-  
-  // const styles = StyleSheet.create({
-  //   container: {
-  //     // Default styles
-  //   },
-  //   smallScreen: {
-  //     // Styles for small screens
-  //   },
-  // });
+  const padHorizNotMobile = MAXWIDTH > widthMobile ? '10%' : 0
 
+
+  const styles = StyleSheet.create({
+    pageContainer: {
+      backgroundColor: 'transparent',
+      height: '100%',
+      width: '100%',
+      paddingHorizontal: padHorizNotMobile,
+      position: 'relative',
+      borderColor: 'white', borderStyle: 'solid', borderWidth: 2,
+    },
+    titleContainer: {
+      borderColor: 'yellow', borderStyle: 'solid', borderWidth: 5,
+      // position:'absolute',
+      // top: 0,
+      // left: 0,
+      zIndex: 99999,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+    },
+    stepContainer: {
+      gap: 8,
+      marginBottom: 8,
+    },
+    reactLogo: {
+      height: '100%',
+      width: '100%',
+      bottom: 0,
+      left: 0,
+      // position: 'absolute',
+    },
+    cardContainer: {
+      padding: 20,
+      margin: 10,
+      borderRadius: 10,
+      backgroundColor: 'white', // Couleur de fond par défaut
+    },
+    text: {
+      marginBottom: 10,
+      color: 'grey'
+    }
+
+
+  }
+  );
 
   return (
     // <ExternalLink href="https://docs.expo.dev/router/introduction">
@@ -44,11 +73,11 @@ export default function HomeIndex() {
     <ParallaxScrollView //background image
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
-         <BackgroundImage />
-       // <Image
-       //   source={require('@/assets/images/livreurs-a-TOULON.webp')}
-       //   style={styles.reactLogo}
-       // />
+        <BackgroundImage />
+        // <Image
+        //   source={require('@/assets/images/livreurs-a-TOULON.webp')}
+        //   style={styles.reactLogo}
+        // />
       }>
 
       <View style={styles.pageContainer}>
@@ -127,47 +156,4 @@ export default function HomeIndex() {
   );
 }
 
-const styles = StyleSheet.create({
-  pageContainer: {
-    backgroundColor: 'transparent',
-    height: '100%',
-    width: '100%',
-    paddingHorizontal:'10%',
-    position: 'relative',
-    borderColor: 'white', borderStyle: 'solid', borderWidth: 2,
-  },
-  titleContainer: {
-    borderColor: 'yellow', borderStyle: 'solid', borderWidth: 5,
-    // position:'absolute',
-    // top: 0,
-    // left: 0,
-    zIndex: 99999,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: '100%',
-    width: '100%',
-    bottom: 0,
-    left: 0,
-    // position: 'absolute',
-  },
-  cardContainer: {
-    padding: 20,
-    margin: 10,
-    borderRadius: 10,
-    backgroundColor: 'white', // Couleur de fond par défaut
-  },
-  text: {
-    marginBottom: 10,
-    color: 'grey'
-  }
 
-
-}
-);
