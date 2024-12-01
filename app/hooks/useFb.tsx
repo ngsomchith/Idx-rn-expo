@@ -3,7 +3,7 @@ import { ArticleType } from '../models/ArticleType';
 import { collection, getDocs } from 'firebase/firestore';
 import { getItems, myApp } from '@/firebase';
 // collectionStr='articles/seller2/articlesList'
-export const useFb = (collectionStr:any) => {
+export const useFb = (collectionStr: any) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -11,15 +11,23 @@ export const useFb = (collectionStr:any) => {
   const [articlesList, setArticlesList] = useState(Array<ArticleType>); // État pour stocker les chaînes
   const [loading, setLoading] = useState(true); // État pour le chargement
 
-  const fetchData2 = async () => {
+  const myDocs: any = []
+
+  async function fetchData2() {
     console.log("collectionStr = ", collectionStr)
     const db = myApp[3]
+    let setDataOnce = 1
     try {
       // const querySnapshot = await getDocs(collection(db, collectionStr)); // Récupère les documents
       const querySnapshot = await getItems(collectionStr)
-      console.log("querySnapshot = ", querySnapshot)
-      const loadedArticles = querySnapshot?.docs?.map(doc => doc.data().value); // Extrait les valeurs
-      setArticlesList(loadedArticles); // Met à jour l'état
+      // console.log("querySnapshot = ", querySnapshot)
+
+
+      myDocs[0] = querySnapshot
+      const loadedArticles = querySnapshot && querySnapshot.docs?.map(doc => doc.data().value); // Extrait les valeurs
+      setArticlesList(querySnapshot); // Met à jour l'état
+      // console.log("loadedArticles = ", querySnapshot)
+
     } catch (error) {
       console.error('Erreur lors du chargement des chaînes :', error);
     } finally {
@@ -34,9 +42,6 @@ export const useFb = (collectionStr:any) => {
 
 
 
-  useEffect(() => {
-    // console.log('46 useEffect getArticles' , data)
-  }, [data]);
 
 
 
@@ -45,7 +50,7 @@ export const useFb = (collectionStr:any) => {
     fetchData2();
   };
 
-  return { data, isLoading, error, refetch };
+  return { articlesList, data, isLoading, error, refetch };
 
 };
 
