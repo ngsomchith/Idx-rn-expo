@@ -154,17 +154,21 @@ const ArticlesQteToShow = ({ }) => {
       return acc;
     }, {});
   }
-  const renderItem = ({ item }) => {
+  const renderItem = ( item, index ) => {
+    console.log("renderItem ", item)
     return (
       <View style={styles.articleContainer}>
         {/* <Image source={{ uri: item.img }} style={styles.articleImage} /> */}
-       <View style={styles.articleDetails}>
-          <Text style={styles.articleName}>{item?.name}</Text>
-          <Text style={styles.articleDescription}>{item?.description}</Text>
-          <Text style={styles.articlePrice}>Prix: {item?.prix} €</Text>
-          <Text style={styles.articleQuantity}>Quantité: {item?.qte}</Text>
-          <Text style={styles.articleTotal}>Total: {item?.totalLigne} €</Text>
-        </View> 
+        {item !=undefined && 
+        // index>0 &&       
+        <View style={styles.articleDetails}>
+          <Text style={styles.articleName}>{item.name}</Text>
+          <Text style={styles.articleDescription}>{item.description}</Text>
+          <Text style={styles.articlePrice}>Prix: {item.prix} €</Text>
+          <Text style={styles.articleQuantity}>Quantité: {item.qte}</Text>
+          <Text style={styles.articleTotal}>Total: {item.totalLigne} €</Text>
+        </View>}
+
 
         {/*  <RenderEachArticleInHome
           thiscategoryName={item?.pdjType}
@@ -179,10 +183,9 @@ const ArticlesQteToShow = ({ }) => {
     );
   };
 
-  function myFlatListRow(articlesMenu: any
-    , pdjType: any, _categoryName: any, _categoryIcon: any
-  ) {
-    console.log("myFlatListRow / articlesList ", '_categoryName', articlesMenu)
+
+  function myFlatListRow(articlesMenu: any, pdjType: any, _categoryName: any, _categoryIcon: any) {
+    console.log("myFlatListRow / _categoryName, articlesMenu ",_categoryName, articlesMenu)
     return (
 
 
@@ -193,11 +196,11 @@ const ArticlesQteToShow = ({ }) => {
             flexDirection: 'row',
             justifyContent: 'flex-start',
             alignItems: 'center',
-            marginVertical: 5,
-            borderColor: 'turquoise',
-            borderStyle: 'solid',
-            borderWidth: 5,
-            height: articlesList?.length > 0 ? '100%' : 100,
+            // marginVertical: 5,
+            // borderColor: 'turquoise',
+            // borderStyle: 'solid',
+            // borderWidth: 5,
+            height: articlesMenu?.length > 0 ? '100%' : 100,
             // maxHeight: device.heightBody - 120,
             maxHeight: '100%',
             backgroundColor: Colors.primaryBG,
@@ -208,6 +211,7 @@ const ArticlesQteToShow = ({ }) => {
       >
 
         {
+        // !panierView && //this shows mainView
           articlesMenu?.length > 0 &&
           articlesMenu?.map((item: any, index: any) => {
             return (
@@ -220,32 +224,37 @@ const ArticlesQteToShow = ({ }) => {
                     maxWidth: 250,
                     minWidth: 250,
                     margin: 0,
-                    minHeight: articlesList?.length > 0 ? 160 : 0,
+                    minHeight: articlesMenu?.length > 0 ? 160 : 0,
                     maxHeight: '100%',
-                    height: articlesList?.length > 0 ? '100%' : 0,
+                    height: articlesMenu?.length > 0 ? '100%' : 0,
                     display: 'flex',
                     flexDirection: 'row',
                     borderRadius: 10,
                     justifyContent: 'center',
-                    borderColor: 'pink',
-                    borderStyle: 'solid',
-                    borderWidth: 5,
                     // borderWidth: item.date == dateFact.substring(0, 10) ? 3 : 0,
-
+                    // borderWidth: 3,
+                    // borderColor: 'pink',
+                    // borderStyle: 'solid'
                   }
                 }>
-
-                {renderItem(item)}
-
-
+                  <Text>{item == undefined ?'YY':'NN'} </Text>
+                {renderItem(item, index)}
               </View>
             );
           })
 
 
         }
+        {/* {panierView &&
 
+          <Text>
+            showPanierViewModal1621
+          </Text>
 
+          // showPanierViewModal() 
+        } */}
+
+        {/* </ScrollView> */}
       </View>
     );
   }
