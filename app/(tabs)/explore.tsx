@@ -18,7 +18,6 @@ export default function TabTwoScreen() {
   return (
 
     <ParallaxScrollView
-      
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
       headerImage={
         <IconSymbol
@@ -32,7 +31,8 @@ export default function TabTwoScreen() {
       <View style={{ 
         width: MAXWIDTH,
         maxWidth:'100%',
-        margin:'auto',
+        margin:0,
+        padding:0,
         height: myDevice.heightBody,
         borderColor: 'yellow', borderStyle: 'solid', borderWidth: 5,
         left:0,
@@ -40,16 +40,16 @@ export default function TabTwoScreen() {
         }}>
         <ArticlesQteToShow />
       </View>
-      <ExternalLink href="https://docs.expo.dev/router/introduction">
+      {/* <ExternalLink href="https://docs.expo.dev/router/introduction">
         <ThemedText type="link">Learn more</ThemedText>
-      </ExternalLink>
+      </ExternalLink> */}
 
-      <ThemedView style={styles.titleContainer}>
+      {/* <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Explore</ThemedText>
       </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
+      <ThemedText>This app includes example code to help you get started.</ThemedText> */}
 
-      <Collapsible title="File-based routing">
+      {/* <Collapsible title="File-based routing">
         <ThemedText>
           This app has two screens:{' '}
           <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
@@ -62,7 +62,7 @@ export default function TabTwoScreen() {
         <ExternalLink href="https://docs.expo.dev/router/introduction">
           <ThemedText type="link">Learn more</ThemedText>
         </ExternalLink>
-      </Collapsible>
+      </Collapsible> */}
 
       {/* <Collapsible title="Android, iOS, and web support">
         <ThemedText>

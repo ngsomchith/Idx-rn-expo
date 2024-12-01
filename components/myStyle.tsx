@@ -1,5 +1,5 @@
+import { Colors } from "@/constants/Colors";
 import { View, Text, StyleSheet, useWindowDimensions, SafeAreaView } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 // import { Colors, bigWidthBorder, middleWidthBorder } from "../config";
 
 const yellow2 = '#ffe38d'

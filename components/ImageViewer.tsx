@@ -3,7 +3,7 @@ import images from "../constants/images";
 import ThisDevice from "../constants/ThisDevice";
 // import ZoomImage from "./ZoomImage";
 
-export default function ImageViewer({ placeholderImageSource:any }) {
+export default function ImageViewer({ placeholderImageSource }) {
 
   const device = ThisDevice().device
   const MAXWIDTH = ThisDevice().MAXWIDTH

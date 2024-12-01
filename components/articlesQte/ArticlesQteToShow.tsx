@@ -154,38 +154,29 @@ const ArticlesQteToShow = ({ }) => {
       return acc;
     }, {});
   }
-  const renderItem = ( item, index ) => {
-    console.log("renderItem ", item)
+  const renderItem = (item, index) => {
+    // console.log("renderItem158 ", index)
     return (
       <View style={styles.articleContainer}>
-        {/* <Image source={{ uri: item.img }} style={styles.articleImage} /> */}
-        {item !=undefined && 
-        // index>0 &&       
-        <View style={styles.articleDetails}>
-          <Text style={styles.articleName}>{item.name}</Text>
-          <Text style={styles.articleDescription}>{item.description}</Text>
-          <Text style={styles.articlePrice}>Prix: {item.prix} €</Text>
-          <Text style={styles.articleQuantity}>Quantité: {item.qte}</Text>
-          <Text style={styles.articleTotal}>Total: {item.totalLigne} €</Text>
-        </View>}
-
-
-        {/*  <RenderEachArticleInHome
-          thiscategoryName={item?.pdjType}
-          todayfr10={undefined} menuN={item}
-          menuNImg={item?.img} idx={undefined} navigation={undefined} route={undefined}
-          callbackFn={undefined} pdjType={item.pdjType}
-          PlatsToShowFilteredTemp={undefined}
-          articlesListTemp={articlesList}
-          scrollY0={scrollY}
-          scrollX0={scrollX} updateScrollValue={undefined} zoomMenuN={undefined} />*/}
+        
+          <RenderEachArticleInHome
+            thiscategoryName={item.pdjType}
+            todayfr10={undefined} menuN={item}
+            menuNImg={item?.img} idx={undefined} navigation={undefined} route={undefined}
+            callbackFn={undefined} pdjType={item.pdjType}
+            PlatsToShowFilteredTemp={undefined}
+            articlesListTemp={articlesList}
+            scrollY0={scrollY}
+            scrollX0={scrollX} updateScrollValue={undefined} zoomMenuN={undefined}
+          />
+          
       </View>
     );
   };
 
 
   function myFlatListRow(articlesMenu: any, pdjType: any, _categoryName: any, _categoryIcon: any) {
-    console.log("myFlatListRow / _categoryName, articlesMenu ",_categoryName, articlesMenu)
+    console.log("myFlatListRow / _categoryName, articlesMenu ", _categoryName, articlesMenu)
     return (
 
 
@@ -197,9 +188,10 @@ const ArticlesQteToShow = ({ }) => {
             justifyContent: 'flex-start',
             alignItems: 'center',
             // marginVertical: 5,
-            // borderColor: 'turquoise',
-            // borderStyle: 'solid',
-            // borderWidth: 5,
+            borderColor: 'turquoise',
+            borderStyle: 'solid',
+            borderWidth: 5,
+            width:'100%',
             height: articlesMenu?.length > 0 ? '100%' : 100,
             // maxHeight: device.heightBody - 120,
             maxHeight: '100%',
@@ -211,7 +203,7 @@ const ArticlesQteToShow = ({ }) => {
       >
 
         {
-        // !panierView && //this shows mainView
+          // !panierView && //this shows mainView
           articlesMenu?.length > 0 &&
           articlesMenu?.map((item: any, index: any) => {
             return (
@@ -232,12 +224,11 @@ const ArticlesQteToShow = ({ }) => {
                     borderRadius: 10,
                     justifyContent: 'center',
                     // borderWidth: item.date == dateFact.substring(0, 10) ? 3 : 0,
-                    // borderWidth: 3,
-                    // borderColor: 'pink',
-                    // borderStyle: 'solid'
+                    borderWidth: 3,
+                    borderColor: 'white',
+                    borderStyle: 'solid'
                   }
                 }>
-                  <Text>{item == undefined ?'YY':'NN'} </Text>
                 {renderItem(item, index)}
               </View>
             );
@@ -245,16 +236,7 @@ const ArticlesQteToShow = ({ }) => {
 
 
         }
-        {/* {panierView &&
-
-          <Text>
-            showPanierViewModal1621
-          </Text>
-
-          // showPanierViewModal() 
-        } */}
-
-        {/* </ScrollView> */}
+       
       </View>
     );
   }
@@ -268,7 +250,10 @@ const ArticlesQteToShow = ({ }) => {
       borderRadius: 18,
     },
     articleContainer: {
-
+      display: 'flex',
+      width: '100%',
+      flexDirection: 'column',
+      height: '100%',
     },
     articleDetails: {
 
@@ -292,8 +277,9 @@ const ArticlesQteToShow = ({ }) => {
     dbCol: {
       display: 'flex',
       flexDirection: 'column',
-      minHeight: 300,
-      minWidth: 300
+      minHeight: '100%',
+      minWidth: 300,
+      height:'100%'
     }
   });
 
@@ -304,10 +290,12 @@ const ArticlesQteToShow = ({ }) => {
       overflow: 'scroll',
       // borderColor: 'transparent',
       backgroundColor: Colors.primaryBG,
+      minHeight: myDevice.heightBody,
       borderStyle: 'solid',
-      borderWidth: 5,
+      borderWidth: 10,
       borderColor: 'red',
-      minHeight: 300, maxHeight: '100%'
+      // minHeight: 300, 
+      maxHeight: '100%'
       // maxHeight: articlesListByCat2[pdjTitleName[index]]?.length > 0 ? 400 : 0,
       // height: articlesListByCat2[pdjTitleName[index]]?.length > 0 ? 400 : 0
     }}
@@ -322,9 +310,15 @@ const ArticlesQteToShow = ({ }) => {
           <View key={index} style={[
             styles.dbCol
             , {
+
+              minHeight: myDevice.heightBody,
+              // maxHeight: index==0 ? 0 :myDevice.heightBody,
+              maxHeight: myDevice.heightBody,
+              display: index==0 ? 'none' : 'flex',
+              // maxHeight: index > 0 ? '100%' : 0,
               backgroundColor: 'grey',
-              borderColor: 'coral', borderStyle: 'solid', borderWidth: 5,
-              // marginVertical: 5
+              borderColor: 'coral', borderStyle: 'solid', borderWidth: 15,
+              marginVertical: 10
             }]}
 
           >
@@ -337,21 +331,22 @@ const ArticlesQteToShow = ({ }) => {
 
               <View style={{ //myFlatListRow
                 display: 'flex',
-                flexDirection: 'column',
+                flexDirection: 'row',
                 overflow: 'scroll',
                 // borderColor: 'transparent',
                 backgroundColor: Colors.primaryBG,
                 borderStyle: 'solid',
                 borderWidth: 5,
                 borderColor: 'pink',
-                minHeight: 300, maxHeight: '100%',
-                minWidth: 100,
+                // minHeight: 300, 
+                maxHeight: index==0 ? 0: '100%',
+                minWidth: 300,
                 // maxHeight: articlesListByCat[pdjTitleName[index]]?.length > 0 ? 400 : 0,
                 // height: articlesListByCat[pdjTitleName[index]]?.length > 0 ? 400 : 0
               }}
               >
 
-                <Text style={{ color: 'white' }}>{pdjTitleName[index]} :::{articlesListByCat[pdjTitleName[index]]?.length} </Text>
+                {/* <Text style={{ color: 'white' }}>{pdjTitleName[index]} :::{articlesListByCat[pdjTitleName[index]]?.length} </Text> */}
                 {
                   articlesListByCat
                   && articlesListByCatLength > 0
@@ -370,6 +365,7 @@ const ArticlesQteToShow = ({ }) => {
               </View>
             }
           </View>
+
 
         ))
       }
