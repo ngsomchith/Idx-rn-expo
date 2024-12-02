@@ -4,8 +4,19 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import Panier from '@/components/articlesQte/Panier';
+import ThisDevice from '@/constants/ThisDevice';
+import { useFb } from '../hooks/useFb';
+import { useState } from 'react';
+import { ArticleType } from '../models/ArticleType';
 
 export default function HomeScreen() {
+  const myDevice = ThisDevice().device
+  const MAXWIDTH = ThisDevice().device.myMAXWIDTH
+  const widthMobile = 650
+  const widthMobileOrWeb = MAXWIDTH > widthMobile ? '40%' : '100%'
+  const thisUseFB = useFb('articles/seller2/articlesList')
+  const [articlesList, setArticlesList] = useState(Array<ArticleType>)
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -18,12 +29,12 @@ export default function HomeScreen() {
 
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
+        <Panier />
       </ThemedView>
 
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
+        {/* <ThemedText>
           Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
           Press{' '}
           <ThemedText type="defaultSemiBold">
@@ -34,9 +45,9 @@ export default function HomeScreen() {
             })}
           </ThemedText>{' '}
           to open developer tools.
-        </ThemedText>
+        </ThemedText> */}
 
-      </ThemedView>
+        {/*  </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 2: Explore</ThemedText>
         <ThemedText>
@@ -52,7 +63,7 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
           <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
+        </ThemedText> */}
       </ThemedView>
     </ParallaxScrollView>
   );
@@ -60,7 +71,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     gap: 8,
   },

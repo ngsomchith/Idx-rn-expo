@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Button, View, Text, ScrollView, Pressable, SafeAreaView, ActivityIndicator, RefreshControl } from 'react-native';
-import { useFb } from '@/app/hooks/useFb';
+
 import { ArticleType } from '@/app/models/ArticleType';
-import { ThemedView } from '../ThemedView';
-import { ThemedTitle } from '../ThemedTitle';
 import ThisDevice from '@/constants/ThisDevice';
 import { Colors } from '@/constants/Colors';
 import { generateObjectToKeyAndNameWithDetail } from '../services/DataServices';
 import { pdjTitleSushi, pdjTitleTradit } from './pdjTitleObject0';
 import RenderEachArticleInHome from './RenderEachArticleInHome';
-// import { pdjTitleSushi, pdjTitleTradit } from './pdjTitleObject0';
-// import { pdjTitleObject0, pdjTitlePromo, pdjTitleSushi, pdjTitleTopV, pdjTitleTradit } from './pdjTitleObject0';
-
-const ArticlesQteToShow = ({ }) => {
+const ArticlesQteToShow = ({articlesList, addToCart, removeFromCart, cart }) => {
 
   const myDevice = ThisDevice().device
   const MAXWIDTH = ThisDevice().device.myMAXWIDTH
   const widthMobile = 650
   const widthMobileOrWeb = MAXWIDTH > widthMobile ? '40%' : '100%'
 
-  const thisUseFB = useFb('articles/seller2/articlesList')
-  const [articlesList, setArticlesList] = useState(Array<ArticleType>)
+
   const [articlesListByCat, setArticlesListByCat] = useState(Array<ArticleType>)
 
   const [categoryNameList, setcategoryNameList] = useState([])
@@ -33,12 +27,12 @@ const ArticlesQteToShow = ({ }) => {
   const [isLoading, setIsLoading] = useState(true);
 
 
-  useEffect(() => {
-    // articlesList.length > 0 && console.log("articlesList18 ", articlesList)
-    if (articlesList.length === 0 && thisUseFB.articlesList) {
-      setArticlesList(thisUseFB.articlesList)
-    }
-  }, [thisUseFB, articlesList])
+  // useEffect(() => {
+  //   // articlesList.length > 0 && console.log("articlesList18 ", articlesList)
+  //   if (articlesList.length === 0 && thisUseFB.articlesList) {
+  //     setArticlesList(thisUseFB.articlesList)
+  //   }
+  // }, [thisUseFB, articlesList])
 
   useEffect(() => {
     console.log("categoryNameList useEffect", categoryNameList)
@@ -87,8 +81,8 @@ const ArticlesQteToShow = ({ }) => {
 
       getarticlesListByCat(articlesList)
     } else {
-      articlesListByCat.length != 0 && console.log("31 articlesList", articlesList)
-      articlesListByCat.length != 0 && console.log("31 articlesListByCat", articlesListByCat)
+      // articlesListByCat.length != 0 && console.log("31 articlesList", articlesList)
+      // articlesListByCat.length != 0 && console.log("31 articlesListByCat", articlesListByCat)
       setarticlesListByCatLength(Object.keys(articlesListByCat)?.length)
     }
 
@@ -114,13 +108,13 @@ const ArticlesQteToShow = ({ }) => {
   async function getPdjTitleList(_pdjTitleObject: any) {
     console.log("getPdjTitleList pdjTitleObject ", _pdjTitleObject)
     if (_pdjTitleObject && _pdjTitleObject != null) {
-      console.log("home804 getPdjTitleList Object.keys(pdjTitle)?.length ", Object.keys(_pdjTitleObject)?.length, _pdjTitleObject)
+      // console.log("home804 getPdjTitleList Object.keys(pdjTitle)?.length ", Object.keys(_pdjTitleObject)?.length, _pdjTitleObject)
       if (Object.keys(_pdjTitleObject)?.length > 0) {
-        console.log("home711 pdjTitle Object.keys(pdjTitle)?.length ", _pdjTitleObject)
+        // console.log("home711 pdjTitle Object.keys(pdjTitle)?.length ", _pdjTitleObject)
 
         const result = await generateObjectToKeyAndNameWithDetail(_pdjTitleObject)
 
-        console.log("home117  generateObjectToKeyAndName ", result)
+        // console.log("home117  generateObjectToKeyAndName ", result)
 
         const pdjTitleNameTemp: any = result[0]
         const categoryNameTemp: any = result[1]
@@ -158,25 +152,27 @@ const ArticlesQteToShow = ({ }) => {
     // console.log("renderItem158 ", index)
     return (
       <View style={styles.articleContainer}>
-        
-          <RenderEachArticleInHome
-            thiscategoryName={item.pdjType}
-            todayfr10={undefined} menuN={item}
-            menuNImg={item?.img} idx={undefined} navigation={undefined} route={undefined}
-            callbackFn={undefined} pdjType={item.pdjType}
-            PlatsToShowFilteredTemp={undefined}
-            articlesListTemp={articlesList}
-            scrollY0={scrollY}
-            scrollX0={scrollX} updateScrollValue={undefined} zoomMenuN={undefined}
-          />
-          
+
+        <RenderEachArticleInHome
+          addToCart={addToCart}
+          removeFromCart = {removeFromCart}
+          thiscategoryName={item.pdjType}
+          todayfr10={undefined} menuN={item}
+          menuNImg={item?.img} idx={undefined} navigation={undefined} route={undefined}
+          callbackFn={undefined} pdjType={item.pdjType}
+          PlatsToShowFilteredTemp={undefined}
+          articlesListTemp={articlesList}
+          scrollY0={scrollY}
+          scrollX0={scrollX} updateScrollValue={undefined} zoomMenuN={undefined}
+        />
+
       </View>
     );
   };
 
 
   function myFlatListRow(articlesMenu: any, pdjType: any, _categoryName: any, _categoryIcon: any) {
-    console.log("myFlatListRow / _categoryName, articlesMenu ", _categoryName, articlesMenu)
+    // console.log("myFlatListRow / _categoryName, articlesMenu ", _categoryName, articlesMenu)
     return (
 
 
@@ -191,7 +187,7 @@ const ArticlesQteToShow = ({ }) => {
             borderColor: 'turquoise',
             borderStyle: 'solid',
             borderWidth: 5,
-            width:'100%',
+            width: '100%',
             height: articlesMenu?.length > 0 ? '100%' : 100,
             // maxHeight: device.heightBody - 120,
             maxHeight: '100%',
@@ -229,14 +225,14 @@ const ArticlesQteToShow = ({ }) => {
                     borderStyle: 'solid'
                   }
                 }>
-                {renderItem(item, index)}
+                {renderItem(item, index)} 
               </View>
             );
           })
 
 
         }
-       
+
       </View>
     );
   }
@@ -279,7 +275,7 @@ const ArticlesQteToShow = ({ }) => {
       flexDirection: 'column',
       minHeight: '100%',
       minWidth: 300,
-      height:'100%'
+      height: '100%'
     }
   });
 
@@ -314,7 +310,7 @@ const ArticlesQteToShow = ({ }) => {
               minHeight: myDevice.heightBody,
               // maxHeight: index==0 ? 0 :myDevice.heightBody,
               maxHeight: myDevice.heightBody,
-              display: index==0 ? 'none' : 'flex',
+              display: index == 0 ? 'none' : 'flex',
               // maxHeight: index > 0 ? '100%' : 0,
               backgroundColor: 'grey',
               borderColor: 'coral', borderStyle: 'solid', borderWidth: 15,
@@ -339,14 +335,13 @@ const ArticlesQteToShow = ({ }) => {
                 borderWidth: 5,
                 borderColor: 'pink',
                 // minHeight: 300, 
-                maxHeight: index==0 ? 0: '100%',
+                maxHeight: index == 0 ? 0 : '100%',
                 minWidth: 300,
                 // maxHeight: articlesListByCat[pdjTitleName[index]]?.length > 0 ? 400 : 0,
                 // height: articlesListByCat[pdjTitleName[index]]?.length > 0 ? 400 : 0
               }}
               >
 
-                {/* <Text style={{ color: 'white' }}>{pdjTitleName[index]} :::{articlesListByCat[pdjTitleName[index]]?.length} </Text> */}
                 {
                   articlesListByCat
                   && articlesListByCatLength > 0

@@ -1,5 +1,6 @@
+import { Image, StyleSheet, Platform } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { Button, Pressable, Text, TextInput, View } from 'react-native';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 // import { Colors, iconPlusUn, iconMinus, iconSearchPlus, iconBasket, iconClick, iconCadeau, iconBuyAndGift2, iconPromoSushi, iconPromoTradit } from '../config';
 import { ArticleType } from '@/app/models/ArticleType';
@@ -10,6 +11,7 @@ import { Colors } from '@/constants/Colors';
 
 
 const RenderEachArticleInHome = ({
+    addToCart, removeFromCart,
     thiscategoryName,
     articlesListTemp, PlatsToShowFilteredTemp,
     todayfr10, menuN, menuNImg, idx, pdjType,
@@ -17,55 +19,14 @@ const RenderEachArticleInHome = ({
     scrollY0, scrollX0, updateScrollValue,
     zoomMenuN,
     ...otherprops }) => {
-    // const {
 
-    //     user, setUser,
-    //     viewModal, setViewModal,
-    //     currentUserEmail, setCurrentUserEmail,
-    //     currentUserEmailNew, setCurrentUserEmailNew,
-    //     userInfo, setUserInfo,
-    //     articlesList, setArticlesList,
-    //     currentCdeEnCours, setCurrentCdeEnCours,
-    //     cdeEnCours, setCdeEnCours,
-    //     cdeEnCoursList, setCdeEnCoursList,
-    //     filteredDataSource, setFilteredDataSource,
-    //     MyModalPageVisible, setMyModalPageVisible,
-    //     PlatsToShowFiltered, setPlatsToShowFiltered,
-    //     PlatsToShowFilteredPanier, setPlatsToShowFilteredPanier,
-
-    //     currentMenuN, setcurrentMenuN,
-    //     newArticlesList, setNewArticlesList,
-    //     panier, setPanier,
-    //     panierQte, setPanierQte,
-    //     // callPanier,setcallPanier,
-    //     panierView, setpanierView,
-    //     totalPanier, setTotalPanier,
-    //     currentPdjType, setCurrentPdjType,
-    //     myDaysList, setMyDaysList,
-    //     currentUser, setCurrentUser,
-    //     masterDataSource, setMasterDataSource,
-    //     search, setSearch,
-    //     searchAble, setSearchAble,
-    //     chooseDay, setChooseDay,
-    //     scrollY, setScrollY,
-    //     scrollX, setScrollX,
-    //     categoryName, setcategoryName,
-    //     scrollYAgain, setScrollYAgain,
-
-    //     // updateScrollValue,
-    //     setUpdateScrollValue,
-
-    //     gAuth, setGAuth,
-
-
-    // } = useContext(AuthenticatedUserContext);
 
     const [scrollXLastVal, setScrollXLastVal] = useState(0)
     const [scrollYLastVal, setScrollYLastVal] = useState(0)
     const iconSearchMinus = <FontAwesome name="search-minus" size={24} color="#821e1e" />
     const [chooseDayTime, setChooseDayTime] = useState(false)
     const [PlatsToShow, setPlatsToShow] = useState(Array<ArticleType>)
- 
+
     const styles = myStyles
     // const [viewModal, setViewModal] = useState(false)
     const [qte, setQte] = useState(menuN?.qte)
@@ -103,101 +64,24 @@ const RenderEachArticleInHome = ({
         }
     }, [scrollY0, scrollX0])
 
-    // function onPlusUn(user: any, menuN: any, idx: any, userEmail: string) {
-    //     // if (categoryName != '') {
-    //     // } else {
-    //     //     // console.log("143categoryName ", thiscategoryName)
-    //     //     // setcategoryName(thiscategoryName)
-    //     // }
-    //     //all10112023 console.log("129menuN?.pdjType.indexOf('tlj') ", menuN?.pdjType.indexOf('tlj') >=0)
-    //     if (menuN?.qte > 0
-    //         || menuN?.pdjType.indexOf('tlj') >= 0
-    //         || menuN?.pdjType.indexOf('vap') >= 0
-    //         || menuN?.pdjType.indexOf('jap') >= 0
-    //         || menuN?.pdjType.indexOf('promo') >= 0
-    //         || menuN?.pdjType.indexOf('faitM') >= 0
-    //         || menuN?.pdjType.indexOf('topV') >= 0
-
-    //     ) {
-    //         //all10112023 console.log("133 majQteAgainInPanier / addQte_1_InPanier")
-    //         addQte_1_InPanier(menuN, idx)
-    //     } else {
-
-    //         // +++++++++++++++menuN?.qte == 0 +++++++++++++++++++++
-    //         //all10112023 console.log("140 userEmail, currentUserEmail = ", userEmail, currentUserEmail)
-    //         if (userEmail == '' || userEmail == invitedEmail) {
-    //             //cas impossible car dejà login
-    //             alert("cas impossible car dejà login")
-    //         }
-    //         else {
-    //             //all10112023 console.log("user.email", user?.email)
-    //             //all10112023 console.log("148 userEmail, currentUserEmail = ", userEmail, currentUserEmail)
-    //             if ((menuN?.pdjType == 'tlj')
-    //                 || (menuN?.pdjType != 'tlj' && Number(menuN?.date?.substr(0, 1)) > 0)
-    //             ) {
-    //                 //all10112023 console.log("150  choose Day & Time ")
-    //                 setChooseDay(menuN.date)
-    //                 setUpdateScrollValue(false)
-    //                 // setcurrentMenuN(menuN)
-    //                 // setIdx(undefined)
-    //                 chooseDayAndTime(menuN, idx)
-    //             } else {
-    //                 setUpdateScrollValue(false)
-    //                 //all console.log("164 choose Day & Time then addQte_1_InPanier", menuN, idx)
-    //                 chooseDayAndTime(menuN, idx)
-    //                 // Qte++ by validDateAndTime in ArticleScreen
-    //             }
-    //         }
-
-    //     }
+    function onPlusUn(menuN: any
+        //, user: any,idx: any, userEmail: string
+    ) {
+        menuN.qte++
+        addToCart(menuN)
+        console.log("onPlusUn clicked ", menuN.qte, menuN)
+        setQte(menuN.qte)
+    }
 
 
-    // }
-
-    // function addQte_1_InPanier(menuN: ArticleType, idx: number) {
-    //     // console.log(65, idx, menuN?.qte)
-    //     menuN.qte++
-    //     setQte(menuN?.qte)
-    //     //all10112023 console.log(209, " menuN =", menuN?.date, menuN)
-    //     setTimeout(() => {
-    //         //all10112023 console.log(200, " idx, menuN?.qte =", idx, menuN?.qte)
-    //         setcurrentMenuN(menuN)
-    //         callbackFn(false, menuN, idx, true)
-    //     }, 100);
-
-    //     if (zoomMenuN) {
-    //         setViewModal(false)
-    //         // setModalSignInVisible(false)
-
-    //         // window.alert("2596 back scrollY : " + scrollY + ' ')
-    //         setScrollYAgain(true)
-    //     }
-    // }
-
-    // function onChangePlusUn(user: any, menuN: any, idx: any, userEmail: string) {
-    //     // console.log('172 onChangePlusUn menuN ', menuN?.name,menuN?.date ,menuN?.qte) 
-    //     if (qte != menuN?.qte) {
-    //         //all10112023 console.log("70menuN", menuN?.name, qte, '===', menuN?.qte, menuN?.date, jour)
-
-    //         setQte(menuN?.qte)
-    //         if (menuN?.pdjType == 'pdj') {
-    //             setJour(menuN?.date)
-    //         }
-    //         // setViewModal(false)
-    //         setChooseDayTime(false)
-    //     } else {
-    //         // console.log("183=========menuN", menuN?.name,qte,':::', menuN?.qte)
-    //     }
-
-    // }
-
-    // function onMoinsUn(user: any, menuN: any, idx: any, userEmail: string) {
-
-    //     if (menuN?.qte >= 1) {
-    //         minusQteFromPanier(menuN, idx)
-
-    //     }
-    // }
+    function onMoinsUn(menuN: any,
+        // user: any,  idx: any, userEmail: string
+    ) {
+        menuN.qte--
+        removeFromCart(menuN)
+        console.log("onMoinsUn clicked ", menuN.qte, menuN)
+        setQte(menuN.qte)
+    }
 
 
 
@@ -231,7 +115,7 @@ const RenderEachArticleInHome = ({
                     // marginHorizontal: 0
                 }]} >
 
-                {menuN &&
+                {/* {menuN &&
                     (menuN.pdjType == 'promoSnack' || menuN.pdjType == 'promoSushi')
                     // menuN.prixbarre && Number(menuN.prixbarre) > 0
                     &&
@@ -255,7 +139,7 @@ const RenderEachArticleInHome = ({
                         {Number(menuN.prixbarre).toFixed(2) + '€'}
                     </Text>
 
-                }
+                } */}
 
                 {menuN &&
                     menuN.pdjType === 'promo'
@@ -275,7 +159,6 @@ const RenderEachArticleInHome = ({
                         top: -20,
                         borderRadius: 5
                     }]}>
-                        {/* + {Math.round((menuN.qte / 2) - 0.5)} gratuit */}
                         + {menuN.qte} gratuit
                     </Text>
                 }
@@ -299,12 +182,12 @@ const RenderEachArticleInHome = ({
 
                     }}
                     >
-
-                        {menuN.pdjType === 'promo' && '(pp)'}
-                        {menuN.pdjType === 'promoSushi' && '(SS)'}
-                        {menuN.pdjType === 'promoSnack' && '(TT)'}
-                        {/* <ImageViewer placeholderImageSource={'buy_and_gift2'} /> */}
-
+                        <Text>
+                            {menuN.pdjType === 'promo' && '(pp)'}
+                            {menuN.pdjType === 'promoSushi' && '(SS)'}
+                            {menuN.pdjType === 'promoSnack' && '(TT)'}
+                            {/* <ImageViewer placeholderImageSource={'buy_and_gift2'} /> */}
+                        </Text>
                     </View>
                 }
 
@@ -337,30 +220,43 @@ const RenderEachArticleInHome = ({
                     height: 60,
                     margin: 0,
                     alignItems: 'flex-end',
-                    // paddingHorizontal: 10,
-                    // borderColor: 'white',
-                    // borderStyle: 'solid',
-                    // borderWidth: 1,
                 }}>
 
-                    {/* <View style={{ //onMoinsUn
-                            width: 40,
-                            height: '100%',
-                            backgroundColor: 'transparent',
-                            borderRadius: 50,
-                            justifyContent: 'center',
-                            alignItems: 'center'
+                    <View style={ //onMoins
+                        styles0.buttonAddRemove
+                    } >
+                        <Pressable
+                            onPress={() => onMoinsUn(menuN)}
 
-                        }} >
-                            <ButtonStd iconR={iconMinus} label={undefined}
-                                onPress={() => {
-                                    menuN.qte > 0 ?
-                                        onMoinsUn(user, menuN, idx, user?.email)
-                                        : undefined
-                                }} onChange={undefined} bgButton={'transparent'}
-                                labelColor={Colors.primaryBG} iconL={undefined} />
-                        </View> */}
+                        >
+                            <Text style={{
+                                height: 30,
+                                color: 'white',
+                                display: 'flex',
+                                fontSize: 30,
+                                fontWeight: 700,
+                            }}> {'-'}
+                            </Text>
+                        </Pressable>
 
+                    </View>
+
+
+                    {/* <Text //qte
+                        style={[styles.input, {
+                            width: '40%',
+                            borderBottomWidth: 10,
+                            color: Colors.primaryText,
+                            borderStyle: 'solid',
+                            // height: 30,
+                            height: '70%',
+                            justifyContent: 'flex-end',
+                            alignItems: 'center',
+                            borderColor: 'white',
+                        }]}
+                    >
+                        {qte}
+                    </Text> */}
 
                     <TextInput //qte
                         style={[styles.input, {
@@ -386,39 +282,32 @@ const RenderEachArticleInHome = ({
                         }}
                     />
 
-                    <View style={{ //onPlus
-                        width: '60%',
-                        // height: '100%',
-                        backgroundColor: 'transparent',
-                        borderRadius: 50,
-                        display: 'flex',
-                        maxHeight: 50,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        // borderColor: 'yellow',
-                        // borderStyle: 'solid',
-                        // borderWidth: 3,
-                        position: 'relative'
-                    }} >
+
+                    <View style={ //onPlus
+                        styles0.buttonAddRemove
+                    } >
                         <Pressable
-                            onPress={() => { onPlusUn(user, menuN, idx, user?.email); }}
+                            onPress={() => onPlusUn(menuN)}
 
                         >
-                            <Text style={{
+                            {/* <Text style={{ color:'white'
                                 // position: 'absolute', 
-                            }}> {'Bask'}</Text>
+                            }}> {'BK'}</Text> */}
 
                             <Text style={{
-                                position: 'absolute',
-                                // borderColor: 'green',
+                                // position: 'absolute',
+                                // left: 23,
+                                // top: 15,
+                                // borderColor: 'white',
                                 // borderStyle: 'solid',
+                                // borderRadius: '50%',
                                 // borderWidth: 3,
                                 height: 30,
+                                color: 'white',
                                 display: 'flex',
-                                fontSize: 16,
-                                left: 23,
-                                top: 15
-                            }}> {'(+)'}
+                                fontSize: 30,
+                                fontWeight: 700,
+                            }}> {'+'}
                             </Text>
                         </Pressable>
 
@@ -435,6 +324,25 @@ const RenderEachArticleInHome = ({
     //     callbackFn(true, menuN, idx, true)
     // }
 
+    const styles0 = StyleSheet.create({
+
+        buttonAddRemove: {
+
+            width: 40,
+            // height: '100%',
+            backgroundColor: 'transparent',
+            borderRadius: 50,
+            display: 'flex',
+            maxHeight: 50,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderColor: 'yellow',
+            borderStyle: 'solid',
+            borderWidth: 2,
+            position: 'relative'
+        },
+
+    });
 
     return ( //global
         <View style={{
@@ -442,8 +350,8 @@ const RenderEachArticleInHome = ({
             justifyContent: 'flex-start', alignItems: 'flex-start',
             width: '100%',
             // borderColor: 'white',// menuN.qte > 0 ? Colors.primaryText : Colors.accentBG,
-            
-            height:400
+
+            height: 400
         }}>
 
             {!zoomMenuN ?
@@ -460,7 +368,7 @@ const RenderEachArticleInHome = ({
                         width: '90%',
                         padding: 5,
                         minHeight: 300,
-                        maxHeight:400,
+                        maxHeight: 400,
                         alignItems: 'flex-start',
                         justifyContent: 'center',
                         borderRadius: 10,
@@ -531,7 +439,7 @@ const RenderEachArticleInHome = ({
 
                             <View style={[styles.figure, { //ImageViewer
                                 // paddingLeft: 10,
-                                minWidth: MAXWIDTH < 400  || myCoeffScreen <1 ? '50%' : '50%',
+                                minWidth: MAXWIDTH < 400 || myCoeffScreen < 1 ? '50%' : '50%',
                                 // height: MAXWIDTH < 400  || myCoeffScreen <1 ? '90%' : '100%',
                                 minHeight: 130,
                                 marginVertical: 0,
@@ -590,7 +498,7 @@ const RenderEachArticleInHome = ({
                                         borderColor: 'turquoise',// MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'coral',
                                         borderStyle: 'solid',
                                         borderWidth: 1,
-                                        minHeight:10
+                                        minHeight: 10
                                     }]} >
                                         {/* <Text style={{color:'white'}}>221{menuN?.date} </Text> */}
                                         {(
@@ -673,12 +581,10 @@ const RenderEachArticleInHome = ({
 
                         </Pressable>
                     </View>
-
                     {barrePrix(menuN)}
-
                 </View>
                 :
-                                <Text>barrePrix</Text>
+                <Text>barrePrix</Text>
                 // barrePrix(menuN)
             }
         </View>

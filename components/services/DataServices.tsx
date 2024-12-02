@@ -21,7 +21,39 @@ export function generateObjectToKeyAndNameWithDetail(thisArrayObject: any[]) {
       //  }
   
      });
-   console.log('1308 thisObjectKey ', thisObjectKey,  thisObjectName,thisObjectIcon)
-     console.log('thisObjectName ', thisObjectName)
+  //  console.log('1308 thisObjectKey ', thisObjectKey,  thisObjectName,thisObjectIcon)
+  //    console.log('thisObjectName ', thisObjectName)
      return [ thisObjectKey,  thisObjectName, thisObjectIcon, thisObjectDetail]
   }
+  export async function reduceCdeToUniqueList(objectToReduce: any[]){
+    console.log("29 objectToReduce ",objectToReduce?.length > 0, objectToReduce)
+     let i = 0
+     const objectToReduceUnique: any[] = []
+     if (objectToReduce?.length > 0) {
+       objectToReduce?.forEach((objectToReduceElt: { ref: any; date: any; }) => {
+        // console.log("34 objectToReduceElt ",objectToReduceElt)
+         if (i == 0) {
+           objectToReduceUnique.push(objectToReduceElt)
+           //all29122023 console.log("317 objectToReduce ",objectToReduceUnique, objectToReduceElt)
+    
+         } else if (i > 0 && i <= objectToReduce.length) {
+           console.log("40 objectToReduce.length ",objectToReduce?.length)
+           if (objectToReduce[i - 1].ref != objectToReduceElt.ref
+            //  && objectToReduce[i - 1].date != objectToReduceElt.date
+           ) {
+             objectToReduceUnique.push(objectToReduceElt)
+              console.log("45 objectToReduce ",objectToReduceUnique?.length, objectToReduceElt)
+           }
+         }
+    
+         i++
+       });
+       //all29122023 console.log("332 objectToReduceUnique ",i, objectToReduceUnique)
+      //  if (objectToReduceUnique.length != cdeEnCoursAllEmail.length) {
+      //    setCdeEnCoursAllEmail(objectToReduceUnique)
+      //    //all29122023 console.log("334 objectToReduceUnique ",i, objectToReduceUnique)
+      //  }
+       return objectToReduceUnique
+     
+     }
+    }

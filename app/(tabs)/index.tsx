@@ -143,10 +143,8 @@ export default function HomeIndex() {
         </ThemedView>
 
         <ThemedView style={styles.stepContainer}>
-          <ArticlesToShow />
-          {/* <ArticleList /> */}
-          {/* <ArticleList articles={articles0} /> */}
-          {/* <SignIn navigation={undefined} />   */}
+          {/* <ArticlesToShow /> */}
+          
           <ContactForm />
           <LoginScreen />
           {/* <Profile /> */}

@@ -25,7 +25,7 @@ export const useFb = (collectionStr: any) => {
 
       myDocs[0] = querySnapshot
       const loadedArticles = querySnapshot && querySnapshot.docs?.map(doc => doc.data().value); // Extrait les valeurs
-      setArticlesList(querySnapshot); // Met à jour l'état
+      setArticlesList((querySnapshot)); // Met à jour l'état
       // console.log("loadedArticles = ", querySnapshot)
 
     } catch (error) {

@@ -8,8 +8,90 @@ import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import ArticlesQteToShow from '@/components/articlesQte/ArticlesQteToShow';
 import ThisDevice from '@/constants/ThisDevice';
+import Panier from '@/components/articlesQte/Panier';
+import { useEffect, useState } from 'react';
+import Header from '@/components/Header';
+import { useFb } from '../hooks/useFb';
+import { ArticleType } from '../models/ArticleType';
 
 export default function TabTwoScreen() {
+
+  const thisUseFB = useFb('articles/seller2/articlesList')
+  const [articlesList, setArticlesList] = useState(Array<ArticleType>)
+  
+  // État pour le panier
+  const [cart, setCart] = useState([]);
+
+  // Ajouter un article au panier
+  // const addToCart = (article: any) => {
+  //   article.qte++
+  //   console.log("addToCart ::", article.qte, article)
+  //   setCart((prevCart: any) => {
+  //     // Vérifie si l'article est déjà dans le panier
+  //     const isAlreadyInCart = prevCart.find((item:any) => item.id === article.id);
+  //     if (isAlreadyInCart) {
+
+  //       return prevCart; // Ne pas ajouter de doublons
+  //     }
+  //     console.log("prevCart ", prevCart)
+  //     console.log("article ", article)
+  //     return [...prevCart, article];
+  //   });
+  // };
+
+  // Supprimer un article du panier
+  
+  const addToCart = (article:any) => {
+    setCart((prevCart:any) => {
+      // Vérifie si l'article est déjà dans le panier
+      const existingItem = prevCart.find((item:any) => item.id === article.id);
+  
+      if (existingItem) {
+        // Augmente la quantité
+        return prevCart.map((item:any) =>
+          item.id === article.id ? { ...item, qte: item.qte + 1 } : item
+        );
+      }
+  
+      // Ajoute l'article avec une quantité initiale de 1
+      return [...prevCart, { ...article, qte: 1 }];
+    });
+  };
+  
+  
+  // const removeFromCart = (_menuN:any) => {
+  //   console.log("removeFromCart _menuN.qte" , _menuN.qte)
+  //   // setCart((prevCart) => prevCart.filter((item) => item.id !== _menuN.id));
+  //   // console.log("panier = ", prevCart)
+  // };
+
+  const removeFromCart = (article:any) => {
+    setCart((prevCart:any) => {
+      return prevCart
+        .map((item:any) =>
+          item.id === article.id ? { ...item, qte: item.qte - 1 } : item
+        )
+        .filter((item:any) => item.qte > 0); // Supprime les articles avec une quantité de 0
+    });
+  };
+  
+
+  const callBackPanier = (data: any) => {
+    console.log("callBackPanier =", data)
+  }
+
+  useEffect(() => {
+    // articlesList.length > 0 && console.log("articlesList18 ", articlesList)
+    if (articlesList.length === 0 && thisUseFB.articlesList) {
+      setArticlesList(thisUseFB.articlesList)
+    }
+  }, [thisUseFB, articlesList])
+
+  useEffect(() => {
+    console.log("cart useEffect expplore56  ", cart)
+  }, [cart])
+
+  
   const myDevice = ThisDevice().device
   const MAXWIDTH = ThisDevice().device.myMAXWIDTH
   const widthMobile = 650
@@ -38,86 +120,15 @@ export default function TabTwoScreen() {
         left:0,
         position:'relative'
         }}>
-        <ArticlesQteToShow />
+
+      <Header 
+        articlesList={articlesList} cart ={cart}
+
+        PlatsToShow={undefined} navigation={undefined} route={undefined} callback={undefined} showPanierViewModal={undefined} scrollY0={undefined} scrollX0={undefined} commande={undefined}
+      />
+        <ArticlesQteToShow articlesList = {articlesList} addToCart = {addToCart} removeFromCart = {removeFromCart}  cart= {cart} />
       </View>
-      {/* <ExternalLink href="https://docs.expo.dev/router/introduction">
-        <ThemedText type="link">Learn more</ThemedText>
-      </ExternalLink> */}
-
-      {/* <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText> */}
-
-      {/* <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible> */}
-
-      {/* <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image source={require('@/assets/images/react-logo.png')} style={{ alignSelf: 'center' }} />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Custom fonts">
-        <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
-          <ThemedText style={{ fontFamily: 'SpaceMono' }}>
-            custom fonts such as this one.
-          </ThemedText>
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user's current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible> */}
+     
     </ParallaxScrollView>
   );
 }
