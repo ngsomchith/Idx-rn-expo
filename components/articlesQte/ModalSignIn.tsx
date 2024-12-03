@@ -1,593 +1,308 @@
 
 import React, { useRef, useContext, useEffect, useState } from 'react';
 import { Modal, Text, Pressable, View, TextInput, StyleSheet, ScrollView, SafeAreaView } from "react-native";
-import { ThemedText } from '../ThemedText';
-import { Colors } from '@/constants/Colors';
+import Feather from "react-native-vector-icons/Feather";
+// import CallCA from "./CallCA";
+// import { Colors, iconBack, iconBasket, iconClose, iconEmail, iconEuro, iconInfo, iconMachineCB, iconUser, starHalf } from "../config";
 
-import { AntDesign, FontAwesome } from '@expo/vector-icons';
-// import { Colors, iconPlusUn, iconMinus, iconSearchPlus, iconBasket, iconClick, iconCadeau, iconBuyAndGift2, iconPromoSushi, iconPromoTradit } from '../config';
-import { ArticleType } from '@/app/models/ArticleType';
-import { myStyles } from '../myStyle';
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+// import { A } from "@expo/html-elements";
+
+// import FactureComp from "./FactureComp";
+
+// import { AuthenticatedUserContext } from '../providers';
+// import { thisDevice } from '../hooks';
+// import RenderEachAricle from './RenderEachArticle';
+// import { getPanierQteNonNull, reduceCdeToUniqueList, sortObjectsDescent, thisClone } from './DataService';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import ThisDevice from '@/constants/ThisDevice';
-import ImageViewer from '../ImageViewer';
+import { myStyles } from '../myStyle';
+import { ThemedText } from '../ThemedText';
+import { ThemedView } from '../ThemedView';
+// import { myStyles } from './style';
+// import SignInScreen from '../(tabs)/SignInScreen';
+// import SignInComp from './SignInC
+
+function ModalSignIn({ cart, addToCart, removeFromCart, navigation, route, showPanierViewModal, scrollY0, scrollX0, commande }) {
+
+  // const {
+
+  //   user, setUser,
+  //   viewModal, setViewModal,
+  //   currentUserEmail, setCurrentUserEmail,
+  //   currentUserEmailNew, setCurrentUserEmailNew,
+  //   userInfo, setUserInfo,
+  //   currentCdeEnCours, setCurrentCdeEnCours,
+  //   cdeEnCours, setCdeEnCours,
+  //   cdeEnCoursAllEmail, setCdeEnCoursAllEmail,
+  //   historyCde, setHistoryCde,
+  //   cdeEnCoursList, setCdeEnCoursList,
+  //   filteredDataSource, setFilteredDataSource,
+  //   MyModalPageVisible, setMyModalPageVisible,
+  //   PlatsToShowFiltered, setPlatsToShowFiltered,
+  //   PlatsToShowFilteredPanier, setPlatsToShowFilteredPanier,
+  //   modalSignInVisiblePublic, setModalSignInVisiblePublic,
+  //   currentMenuN, setcurrentMenuN,
+  //   newPlatsToShowFilteredPanier, setNewPlatsToShowFilteredPanier,
+  //   panier, setPanier,
+  //   panierQte, setPanierQte,
+  //   // callPanier,setcallPanier,
+  //   panierView, setpanierView,
+  //   totalPanier, setTotalPanier,
+  //   currentPdjType, setCurrentPdjType,
+  //   myDaysList, setMyDaysList,
+  //   currentUser, setCurrentUser,
+  //   masterDataSource, setMasterDataSource,
+  //   search, setSearch,
+  //   dayDocStr, setDayDocStr,
+  //   searchAble, setSearchAble,
+  //   gAuth, setGAuth,
+  //   currentScreen, setCurrentScreen,
+  //   promoOuverture, setpromoOuverture,
+  //   scrollYAgain, setScrollYAgain,
+  //   stateBar, setstateBar,
+  //   scrollY, setScrollY,
+  //   scrollX, setScrollX,
+  //   todayfr10, setTodayfr10,
+  //   isLoading, setIsLoading,
+  //   connexionView, setConnexionView,
+  //   monthDocStr, setMonthDocStr,
+  //   dateFact, setdateFact,
+  //   goToHomeScreen, setgoToHomeScreen,
+  //   chooseDay, setChooseDay,
+  //   chooseDayTime, setChooseDayTime,
+  //   scrollTo, setscrollTo,
+  //   categoryName, setcategoryName,
+  //   panierVisible, setPanierVisible,
+  //   idx, setIdx
 
 
-const ModalSignIn = ({
-    addToCart, removeFromCart,cart,
-    thiscategoryName,
-    articlesListTemp, PlatsToShowFilteredTemp,
-    todayfr10, menuN, menuNImg, idx, pdjType,
-    navigation, route, callbackFn,
-    scrollY0, scrollX0, updateScrollValue,
-    zoomMenuN,
-    ...otherprops }) => {
+  // } = useContext(AuthenticatedUserContext);
+
+  const [idxScrollTo, setIdxScrollTo] = useState(null)
+  const flatListRef = useRef();
+
+  const [totalAPayer, setTotalAPayer] = useState(0)
+
+  const styles20 = ThisDevice().styles0
+
+  const styles = myStyles
+
+  const [modalSignInVisible, setModalSignInVisible] = useState(false);
+
+  const device = ThisDevice().device
+  const MAXWIDTH = ThisDevice().device.width - 5
+  const [value, setValue] = useState({
+    email: ' ',
+    name: ' ',
+    date: ' ',
+    plat: '',
+    // phone: "",
+    details: "",
+    error: "",
+  });
 
 
-    const [scrollXLastVal, setScrollXLastVal] = useState(0)
-    const [scrollYLastVal, setScrollYLastVal] = useState(0)
-    const iconSearchMinus = <FontAwesome name="search-minus" size={24} color="#821e1e" />
-    const [chooseDayTime, setChooseDayTime] = useState(false)
-    const [PlatsToShow, setPlatsToShow] = useState(Array<ArticleType>)
+  useEffect(() => {
+    console.log(" cart ",  cart)
+  }, [cart])
 
-    const styles = myStyles
-    // const [viewModal, setViewModal] = useState(false)
-    const [qte, setQte] = useState(menuN?.qte)
-    const [jour, setJour] = useState(menuN?.date ? menuN?.date : 'date ../../..')
-    const [thismage, setThisIage] = useState('../assets/imagesArticle/Banh-canh.jpg')
+  useEffect(() => {
+    //all console.log(" scrollY ",  scrollY)
+  }, [scrollY])
 
 
-
-    const MAXWIDTH = ThisDevice().device.width - 5
-    // const LEFTGLOBAL = myPLatform.OS == 'web' ? 0 : 0
-    const invitedEmail = 'udex.invited@gmail.com'
-
-    const myWidth = ThisDevice().MAXWIDTH
-    const myHeight = ThisDevice().device.height * 1.3
-    const myCoeffScreen = myWidth / myHeight
-    //===============================================
-
-    useEffect(() => {
-        //all console.log(" scrollYLastVal, scrollXLastVal ",  scrollYLastVal, scrollXLastVal)
-    }, [scrollYLastVal, scrollXLastVal])
+  useEffect(() => {
+    console.log(" commande ", commande)
+  }, [commande])
 
 
-    useEffect(() => {
-        //all console.log(" scrollY0, scrollYLastVal ", scrollY0, scrollYLastVal)
-        if (scrollY0 > 0 && (scrollYLastVal == 0
-            || scrollY0 != scrollYLastVal
-        )) {
-            setTimeout(() => {
-                updateScrollValue && setScrollYLastVal(scrollY0)
-                updateScrollValue && setScrollXLastVal(scrollX0)
-                //all console.log("104scrollY0 ==0 ", scrollY0)
-            }, 500);
-        } else {
-            //all console.log(" scrollY0 , scrollYLastVal ?  ", scrollY0, scrollYLastVal)
+
+  const styles0 = StyleSheet.create({
+    containerPage: {
+      height: device?.height,
+      width: device?.width,
+      display: 'flex',
+      backgroundColor: '#821e1e',
+      alignItems: "center",
+      justifyContent: "flex-start",
+      flexDirection: "column",
+      maxWidth: '100%',
+      borderStyle: 'solid',
+      padding: 10
+    },
+    container: {
+      display: 'flex',
+      width: '100%',
+      height: '100%',
+    },
+    header: {
+      // width: device?.width,
+      // height: device?.header,
+      // backgroundColor: "#821e1e"
+    },
+    panierText: {
+      color: 'red'
+    },
+    containerBody: {
+      width: device?.width,
+      maxWidth: '100%',
+      height: device?.heightBody,
+      backgroundColor: "#a13737",
+    },
+    footer: {
+      width: device?.width,
+      height: 70, // + Tab = (70) = 140
+      backgroundColor: "lightgrey",
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-around'
+    }
+  })
+  useEffect(() => {
+    console.log(" commande185 ", commande)
+  }, [commande])
+
+  return (
+
+    <View style={{
+      width: '100%', // 50
+      height: '100%', // 50
+      minWidth: 50,
+      minHeight: 50
+    }}>
+
+      {/* <AnalyticsTracker pageView={'ModalSignIn'} /> */}
+      <Pressable // button open Modal
+        style={{
+          width: '100%',
+          height: '100%',
+          justifyContent: 'center', alignItems: 'center',
+          // borderWidth: 3, borderColor: 'blue', borderStyle: 'solid',
+        }}
+        onPress={() => {
+          setModalSignInVisible(true)
+          // setpanierView(true)
+
         }
-    }, [scrollY0, scrollX0])
 
-    function onPlusUn(menuN: any
-        //, user: any,idx: any, userEmail: string
-    ) {
-        menuN.qte++
-        addToCart(menuN)
-        console.log("onPlusUn clicked ", menuN.qte, menuN)
-        setQte(menuN.qte)
-    }
+        }
+      >
+        <ThemedText>{cart ? cart?.length : 0} </ThemedText>
 
 
-    function onMoinsUn(menuN: any,
-        // user: any,  idx: any, userEmail: string
-    ) {
-        menuN.qte--
-        removeFromCart(menuN)
-        console.log("onMoinsUn clicked ", menuN.qte, menuN)
-        setQte(menuN.qte)
-    }
+      </Pressable>
+
+      <Modal // Modal-in
+        animationType="slide" transparent={true} visible={modalSignInVisible}>
+
+        <ThemedView>
+          <ThemedText>Modal PAnier to Sign in</ThemedText>
+          {/* <FlatListScrollPanier
+            articlesListTemp={undefined} PlatsToShowFilteredTemp={cart}
+            menuN={undefined} menuNImg={undefined}
+            pdjType={undefined} navigation={undefined}
+            callbackFn={undefined} route={undefined} 
+            addToCart={addToCart} removeFromCart={removeFromCart}          /> */}
+          {/* <SignInComp navigation={navigation} route={route} showPanierViewModal={showPanierViewModal} setModalSignInVisible={setModalSignInVisible} scrollY0={scrollY0} scrollX0={scrollX0} commande={commande} /> */}
+        </ThemedView>
+
+        {/* <GestureHandlerRootView
+          style={ // total screen
+            [styles0.containerPage, {
+              // borderColor: 'turquoise',
+              // borderWidth: 5,
+              // borderStyle: 'solid',
+            }]
+          }
+        >
+
+          <SafeAreaView //safe area
+            style={[
+              styles0.container, {
+                position: 'relative',
+                width: MAXWIDTH,
+                maxWidth: '100%',
+                backgroundColor: Colors.primaryBG,
+                // borderColor: 'turquoise',
+                // borderWidth: 5,
+                // borderStyle: 'solid',
+                maxHeight: '90%'
+              }
+            ]} >
+
+            <View style={[styles0.header, {
+              width: '100%',
+              // borderWidth: 1, borderColor: 'white', borderStyle: 'solid',
+              height: 120,
+              position: 'absolute'
+            }]} >
+              <Header navigation={undefined}
+              callback={undefined} PlatsToShow={undefined} route={undefined} showPanierViewModal={showPanierViewModal} scrollY0={scrollY0} scrollX0={scrollX0} commande={commande} articlesList={undefined} cart={undefined} />
 
 
 
+              <Text style={{
+                position: 'absolute',
+                minHeight: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                width: 70,
+                // borderWidth: 10,borderColor: 'yellow', borderStyle: 'solid',
+              }}>
+                <ButtonStd //  iconBack : soit Annuler , soit bouton suivant
+                  iconL={undefined} iconR={undefined}
+                  label={commande?.remise?.toFixed(2).toString()}
+                  labelColor={'transparent'}
 
-
-    function barrePrix(menuN:any) {
-        return (
-            <View style={[ //barre prix qte 
-                // panierView ? styles.dbCol : styles.dbRow,
-                {
-                    maxWidth: 340,
-                    // width: MAXWIDTH < 400 || myCoeffScreen < 1 ? '98%' : '31%',
-                    width: '100%',
-                    marginHorizontal: 'auto',
-                    // margin: 'auto', 
-                    paddingVertical: 5,
-                    marginVertical: 0,
-                    position: 'relative',
-                    paddingHorizontal: 0,
-                    backgroundColor: 'transparent',
-                    // borderColor: 'yellow',
-                    // borderStyle: 'solid',
-                    // borderWidth: 3,
-                    justifyContent: 'flex-start',
-                    alignItems: 'flex-end',
-                    borderRadius: 10,
-                    // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? 60 : 180,
-                    height: 80,
-                    flexDirection: 'row',
-                    flexWrap: 'nowrap',
-                    // marginHorizontal: 0
-                }]} >
-
-                {/* {menuN &&
-                    (menuN.pdjType == 'promoSnack' || menuN.pdjType == 'promoSushi')
-                    // menuN.prixbarre && Number(menuN.prixbarre) > 0
-                    &&
-                    <Text style={[styles.texteArticlePrix, {
-                        fontSize: 24,
-                        // width: MAXWIDTH < 400 || myCoeffScreen < 1 ? '40%' : '100%',
-                        // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '30%',
-                        display: 'flex', justifyContent: 'flex-end',
-                        paddingHorizontal: 5,
-                        alignItems: 'flex-end',
-                        color: Colors.primaryText,
-                        // borderColor: 'red',
-                        // borderStyle: 'solid',
-                        // borderWidth: 3,
-                        position: 'absolute',
-                        backgroundColor: 'red',
-                        textDecorationLine: 'line-through',
-                        left: 0,
-                        top: 0
-                    }]}>
-                        {Number(menuN.prixbarre).toFixed(2) + '€'}
-                    </Text>
-
-                } */}
-
-                {menuN &&
-                    menuN.pdjType === 'promo'
-                    && menuN.qte >= 1
-                    &&
-                    <Text style={[styles.texteArticlePrix, {
-                        fontSize: 20,
-                        width: 100,
-                        // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '30%',
-                        display: 'flex', justifyContent: 'flex-end',
-                        paddingHorizontal: 5,
-                        alignItems: 'flex-end',
-                        color: Colors.primaryText,
-                        position: 'absolute',
-                        backgroundColor: 'green',
-                        left: 105,
-                        top: -20,
-                        borderRadius: 5
-                    }]}>
-                        + {menuN.qte} gratuit
-                    </Text>
-                }
-
-                {menuN &&
-                    (menuN.pdjType === 'promo' || menuN.pdjType === 'promoSushi' || menuN.pdjType === 'promoSnack')
-                    && menuN.qte == 0
-                    &&
-                    <View style={{
-                        // position:'absolute',
-                        width: 50,
-                        height: 50,
-                        // borderColor: 'white',
-                        // borderStyle: 'solid',
-                        // borderWidth: 5,
-                        position: 'absolute',
-                        left: 135,
-                        top: -25,
-                        flexDirection: 'row',
-                        marginHorizontal: 10
-
-                    }}
-                    >
-                        <Text>
-                            {menuN.pdjType === 'promo' && '(pp)'}
-                            {menuN.pdjType === 'promoSushi' && '(SS)'}
-                            {menuN.pdjType === 'promoSnack' && '(TT)'}
-                            {/* <ImageViewer placeholderImageSource={'buy_and_gift2'} /> */}
-                        </Text>
-                    </View>
-                }
-
-                {menuN && menuN.prix && Number(menuN.prix) > 0 && // prix
-                    <Text style={[styles.texteArticlePrix, {
-                        fontSize: 20,
-                        // width: MAXWIDTH < 400 || myCoeffScreen < 1 ? '40%' : '100%',
-                        width: '40%',
-                        // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '30%',
-                        height: 30,
-                        display: 'flex', justifyContent: 'flex-start',
-                        flexWrap: 'nowrap',
-                        paddingHorizontal: 0,
-                        marginVertical: 0,
-
-                        alignItems: 'flex-end',
-                        // color: panierView ? Colors.primaryText : Colors.primaryText,
-                        // borderColor: 'green', borderStyle: 'solid', borderWidth: 3,
-                    }]}>
-                        {Number(menuN.prix).toFixed(2) + '€'}
-                    </Text>
-                }
-
-                <View style={{ // row buttons  (-) prix (+)
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    // width: panierView ? '50%' : '100%',
-                    // height: MAXWIDTH < 400  || myCoeffScreen <1 ? '100%' : '30%',
-                    width: '60%',
-                    height: 60,
-                    margin: 0,
-                    alignItems: 'flex-end',
-                }}>
-
-                    <View style={ //onMoins
-                        styles0.buttonAddRemove
-                    } >
-                        <Pressable
-                            onPress={() => onMoinsUn(menuN)}
-
-                        >
-                            <Text style={{
-                                height: 30,
-                                color: 'white',
-                                display: 'flex',
-                                fontSize: 30,
-                                fontWeight: 700,
-                            }}> {'-'}
-                            </Text>
-                        </Pressable>
-
-                    </View>
-
-
-                    {/* <Text //qte
-                        style={[styles.input, {
-                            width: '40%',
-                            borderBottomWidth: 10,
-                            color: Colors.primaryText,
-                            borderStyle: 'solid',
-                            // height: 30,
-                            height: '70%',
-                            justifyContent: 'flex-end',
-                            alignItems: 'center',
-                            borderColor: 'white',
-                        }]}
-                    >
-                        {qte}
-                    </Text> */}
-
-                    <TextInput //qte
-                        style={[styles.input, {
-                            width: '40%',
-                            borderBottomWidth: 10,
-                            color: Colors.primaryText,
-                            // color: 'white',
-                            // borderColor: Colors.primaryText,
-                            borderStyle: 'solid',
-                            // height: 30,
-                            height: '70%',
-                            justifyContent: 'flex-end',
-                            alignItems: 'center',
-                            borderColor: 'white',
-                            // borderStyle: 'solid',
-                            // borderWidth: 1,
-                        }]}
-                        editable={false}
-                        value={qte > 0 ? qte.toString() : '0'}
-                        onChangeText={(value) => {
-                            setQte(value)
-                            // console.log(value)
-                        }}
-                    />
-
-
-                    <View style={ //onPlus
-                        styles0.buttonAddRemove
-                    } >
-                        <Pressable
-                            onPress={() => onPlusUn(menuN)}
-
-                        >
-                            {/* <Text style={{ color:'white'
-                                // position: 'absolute', 
-                            }}> {'BK'}</Text> */}
-
-                            <Text style={{
-                                // position: 'absolute',
-                                // left: 23,
-                                // top: 15,
-                                // borderColor: 'white',
-                                // borderStyle: 'solid',
-                                // borderRadius: '50%',
-                                // borderWidth: 3,
-                                height: 30,
-                                color: 'white',
-                                display: 'flex',
-                                fontSize: 30,
-                                fontWeight: 700,
-                            }}> {'+'}
-                            </Text>
-                        </Pressable>
-
-                    </View>
-
-                </View>
+                  onPress={() => {
+                    setModalSignInVisible(false)
+                  }}
+                  onChange={undefined} bgButton={
+                    // Colors.primaryBG
+                    // 'transparent'
+                    undefined
+                  } />
+              </Text>
 
             </View>
-        )
-    }
+            <ScrollView contentContainerStyle={{
+              flexGrow: 1,
+              width: MAXWIDTH,
+              maxWidth: '100%',
+              paddingHorizontal: 10,
+              marginHorizontal: 'auto',
+              display: 'flex',
+              // borderColor: 'white',
+              // borderWidth: 5,
+              // borderStyle: 'solid',
+            }} >
+              <View
+                style={{
+                  width: MAXWIDTH,
+                  maxWidth: '100%',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  padding: 0,
+                  // borderWidth: 5, borderColor: 'white', borderStyle: 'solid',
+                }}
+              >
 
-   
+                <ThemedText>SignInComp</ThemedText>
+                 <SignInComp navigation={navigation} route={route} showPanierViewModal={showPanierViewModal} setModalSignInVisible={setModalSignInVisible} scrollY0={scrollY0} scrollX0={scrollX0} commande={commande} />
 
-    const styles0 = StyleSheet.create({
+              </View>
 
-        buttonAddRemove: {
+            </ScrollView>
+          </SafeAreaView>
+        </GestureHandlerRootView> */}
 
-            width: 40,
-            // height: '100%',
-            backgroundColor: 'transparent',
-            borderRadius: 50,
-            display: 'flex',
-            maxHeight: 50,
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderColor: 'yellow',
-            borderStyle: 'solid',
-            borderWidth: 2,
-            position: 'relative'
-        },
-
-    });
-
-    return ( //global
-        <View style={{
-            display: 'flex', flexDirection: 'row',
-            justifyContent: 'flex-start', alignItems: 'flex-start',
-            width: '100%',
-            // borderColor: 'white',// menuN.qte > 0 ? Colors.primaryText : Colors.accentBG,
-
-            height: 400
-        }}>
-
-            {!zoomMenuN ?
-                <View  // 
-                    style={[, {
-
-                        flexDirection: 'row',
-                        // backgroundColor: Colors.primaryBG,
-                        backgroundColor: menuN.qte > 0 ? Colors.highlightBG : Colors.accentBG,
-                        // borderColor: menuN.qte > 0 ? Colors.highlightBG : Colors.accentBG,
-                        borderColor: 'green',
-                        borderStyle: 'solid',
-                        borderWidth: 5,
-                        width: '90%',
-                        padding: 5,
-                        minHeight: 300,
-                        maxHeight: 400,
-                        alignItems: 'flex-start',
-                        justifyContent: 'center',
-                        borderRadius: 10,
-                        display: 'flex',
-                        flexWrap: 'wrap',
-
-                    }]
-                    }  >
-
-                    <Text style={[styles.titreArticle, { //name
-                        color: Colors.primaryText,
-                        width: '100%',
-                        // width: panierView ? '45%' : '100%',
-                        // fontSize: panierView ? 14 : 18,
-                        marginVertical: 5,
-                        justifyContent: 'center',
-                        // borderColor: 'purple',
-                        // borderStyle: 'solid',
-                        // borderWidth: 3,
-                        overflow: 'hidden',
-                        alignItems: 'flex-start',
-                        // maxHeight: MAXWIDTH < 400 || myCoeffScreen < 1 ? 100 : 50,
-                        maxHeight: 65,
-                    }]}>
-                        {menuN?.name}
-                    </Text>
-
-                    <View style={{ // container d' imageViewer & figCaption
-                        width: '100%', // MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '60%',
-                        // marginHorizontal:10,
-                        height: 200,
-                        display: 'flex',
-                        flexWrap: 'nowrap',
-                        flexDirection: 'column',
-                        alignItems: 'flex-start',
-                        justifyContent: 'flex-start',
-                        // borderRadius: 10,
-                        // borderColor: 'red',
-                        // borderStyle: 'solid',
-                        // borderWidth: 8,
-                    }}>
-                        <Pressable // imageViewer & figCaption
-                            style={[styles.containerRowArticle, {
-                                borderColor: 'red',
-                                borderStyle: 'solid',
-                                borderWidth: 3,
-                                backgroundColor: Colors.accentBG,
-                                width: '98%',
-                                marginHorizontal: '1%',
-                                marginVertical: 0,
-                                borderRadius: 10,
-                                height: 100,
-                                display: 'flex',
-                                flexWrap: 'nowrap',
-                                // flexDirection:  MAXWIDTH < 400  || myCoeffScreen <1 ?  'column' : 'row' ,
-
-                                flexDirection: 'column',
-                                justifyContent: 'space-between',
-                                alignItems: 'flex-start'
-                            }]}
-                            // onPress={() => callbackFn(true, menuN, idx, false)}
-
-                            onPress={() => {
-                                // setViewModal(true),
-                                //     setcurrentMenuN(menuN)
-                            }}
-                        >
-
-                            <View style={[styles.figure, { //ImageViewer
-                                // paddingLeft: 10,
-                                minWidth: MAXWIDTH < 400 || myCoeffScreen < 1 ? '50%' : '50%',
-                                // height: MAXWIDTH < 400  || myCoeffScreen <1 ? '90%' : '100%',
-                                minHeight: 130,
-                                marginVertical: 0,
-                                borderColor: 'white',  // MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'grey',
-                                borderStyle: 'solid',
-                                borderWidth: 2,
-                                alignItems: 'flex-start',
-                                justifyContent: 'flex-start',
-                                display: 'flex'
-                            }]}>
-
-                                <ImageViewer placeholderImageSource={menuNImg} />
-
-                            </View>
-
-                            <View style={[styles.figcaption, {
-                                width: '100%', // MAXWIDTH < 400 || myCoeffScreen < 1 ? '45%' : '90%',
-                                maxHeight: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : 70,
-                                // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '20%',
-                                minHeight: 80,
-                                paddingVertical: 10,
-                                flex: 1,
-                                display: 'flex',
-                                minWidth: '45%',
-                                justifyContent: 'space-between',
-
-                                borderColor: 'pink',// MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'coral',
-                                borderStyle: 'solid',
-                                borderWidth: 2
-                            }]} >
-
-                                <Text style={[
-                                    styles.texteArticle, {
-                                        // minHeight: 100,
-                                        // paddingHorizontal: 10,
-                                        // marginHorizontal: '5%',
-                                        maxWidth: '90%',
-                                        // height:50,
-                                        flex: 1,
-                                        overflow: 'hidden',
-                                        color: 'white',
-                                        justifyContent: 'flex-start',
-                                        fontSize: 16,
-                                        borderColor: 'purple',// MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'coral',
-                                        borderStyle: 'solid',
-                                        borderWidth: 2
-
-                                    }
-                                ]}>
-                                    {menuN?.description}
-                                </Text>
-
-                                {menuN?.pdjType != 'tlj' && menuN?.date != '' ? //|| varparam == 'prochainsjours'
-                                    <View style={[styles.dbCol, {
-
-                                        borderColor: 'turquoise',// MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'coral',
-                                        borderStyle: 'solid',
-                                        borderWidth: 1,
-                                        minHeight: 10
-                                    }]} >
-                                        {/* <Text style={{color:'white'}}>221{menuN?.date} </Text> */}
-                                        {(
-                                            (menuN?.pdjType == 'pdj')
-                                            && menuN?.date != null && menuN?.date != '' && menuN?.date != 'Jour ?' && menuN?.date != todayfr10
-                                        ) &&
-                                            <Text style={[styles.texteArticleRenderJour, {//date
-                                                backgroundColor: Colors.highlightBG,
-                                                color: Colors.primaryText
-                                            }]}>
-                                                {/* 312 */}
-                                                {menuN?.date}
-                                            </Text>
-                                        }
-
-                                        {(
-                                            (menuN?.pdjType == 'pdjs') && menuN?.date != ''
-                                            && menuN?.date != null && menuN?.date != 'Jour ?'
-                                            && menuN?.date != todayfr10
-                                        ) &&
-                                            <Text style={[styles.texteArticleRenderJour, {
-                                                backgroundColor: Colors.highlightBG,
-                                            }]}>
-                                                325
-                                                {menuN?.date}
-                                            </Text>
-                                        }
-
-                                        {(menuN?.pdjType == 'pdj' && menuN?.date && menuN?.date == todayfr10) &&
-
-
-                                            <Text style={[styles.texteArticleRenderJour, {
-                                                backgroundColor: Colors.highlightBG,
-                                            }]}>
-                                                {/* 336 */}
-                                                {/* Plat Du Jour */}
-                                                {/* {menuN?.date + '|'+todayfr10} */}
-                                                {menuN?.date}
-                                            </Text>
-
-                                        }
-                                        {/* {(menuN?.pdjType == 'pdj' && menuN?.date == null) &&
-                                        <Text style={[styles.texteArticleRenderJour, {
-                                            backgroundColor: Colors.highlightBG
-                                        }]}>
-                                            346
-                                            {menuN.date = null ? '.. / .. / ..' : menuN?.date}
-                                        </Text>
-                                    } */}
-
-                                        {
-                                            menuN?.pdjType == 'pdjs' && menuN?.date == null &&
-                                            !(menuN?.pdjType == 'pdj' && menuN?.date == todayfr10) &&
-                                            <Text style={[styles.texteArticleRenderJour, {
-                                                backgroundColor: Colors.highlightBG,
-                                            }]}>
-                                                386
-                                                {menuN?.date} </Text>
-                                        }
-
-                                    </View>
-                                    :
-
-                                    <>
-                                        {
-                                            menuN?.date != null && menuN?.date != '' && menuN?.date != 'Jour ?' &&
-
-                                            <Text style={[styles.texteArticle,
-                                            { fontSize: 30 },
-                                            { backgroundColor: Colors.highlightBG },
-                                            { color: 'white' }]} >
-                                                372
-                                                {menuN?.date}
-                                            </Text>
-                                        }
-
-                                    </>
-                                }
-                            </View>
-
-                        </Pressable>
-                    </View>
-                    {barrePrix(menuN)}
-                </View>
-                :
-                <Text>barrePrix</Text>
-                // barrePrix(menuN)
-            }
-        </View>
-    );
-};
+      </Modal>
+    </View>
+  );
+}
 
 export default ModalSignIn;

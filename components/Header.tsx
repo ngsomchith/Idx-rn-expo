@@ -12,12 +12,12 @@ import { Image } from 'react-native';
 
 // import { A } from '@expo/html-elements';
 // import ModalGoHome from './ModalGoHome';
-import ThisDevice from '../constants/ThisDevice';
 import ButtonStd from './ButtonTypeStd';
 import Panier from './articlesQte/Panier';
 import { Colors } from '@/constants/Colors';
-import ModalSignIn from './ModalSignIn';
 import ModalPanier from './articlesQte/ModalPanier';
+import ModalSignIn from './articlesQte/ModalSignIn';
+import ThisDevice from '@/constants/ThisDevice';
 
 // interface ContainerProps {
 //     PlatsToShow: Array<ArticleType> | null; //alimenté par panier2
@@ -211,16 +211,12 @@ const Header = ({  articlesList, cart, removeFromCart, addToCart, navigation
                     zIndex: 999
                 }
             ]}>
-                {/* <ModalPanier addToCart={addToCart} removeFromCart={removeFromCart} 
-                cart ={cart}
-                thiscategoryName={undefined} articlesListTemp={undefined} 
-                PlatsToShowFilteredTemp={undefined} 
-                todayfr10={undefined} menuN={undefined} 
-                menuNImg={undefined} idx={undefined} 
-                pdjType={undefined} navigation={undefined} 
-                route={undefined} callbackFn={undefined} 
-                scrollY0={undefined} scrollX0={undefined} 
-                updateScrollValue={undefined} zoomMenuN={undefined} /> */}
+                <ModalPanier addToCart={addToCart} removeFromCart={removeFromCart}
+                cart={cart} navigation={undefined} route={undefined} 
+                showPanierViewModal={undefined} commande={undefined}   
+                scrollY0={undefined} scrollX0={undefined}              
+                /> 
+
                 <ModalSignIn cart={cart}
                  addToCart={addToCart} removeFromCart={removeFromCart} 
                  navigation={undefined} route={undefined} 

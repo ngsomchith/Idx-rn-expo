@@ -6,7 +6,7 @@ import { FlatList, View, Button, Text, ScrollView, Pressable } from 'react-nativ
 import RenderEachPanierElt from './RenderEachPanierElt';
 
 const FlatListScrollPanier = ({
-    addToCart ,removeFromCart,
+    addToCart ,removeFromCart,cart,
     articlesListTemp,
     PlatsToShowFilteredTemp, menuN, menuNImg,
     pdjType, navigation, callbackFn,
@@ -28,7 +28,9 @@ const FlatListScrollPanier = ({
         //all console.log("FlatListScr", "77PlatsToShowFilteredPanier = ", PlatsToShowFilteredPanier)
      }, [])
 
-   
+   useEffect(() => {
+    console.log( "cart useEffect FlatListScrollPanier", cart)
+   }, [cart])
 
     const renderItem = ({ item }) => (
         <Pressable
@@ -42,7 +44,7 @@ const FlatListScrollPanier = ({
 
             }>
 
-            {/* <RenderEachPanierElt
+            <RenderEachPanierElt
                 thiscategoryName={'categoryName'}
                 todayfr10={'todayfr10'} menuN={item}
                 menuNImg={item?.img} idx={undefined} navigation={navigation} route={route}
@@ -52,7 +54,7 @@ const FlatListScrollPanier = ({
                 fromPanier={undefined} callback={callbackFn} 
                 addToCart={addToCart} 
                 removeFromCart={removeFromCart} 
-                scrollY0={undefined} scrollX0={undefined} updateScrollValue={undefined} zoomMenuN={undefined} /> */}
+                scrollY0={undefined} scrollX0={undefined} updateScrollValue={undefined} zoomMenuN={undefined} />
         </Pressable>
     );
 
@@ -84,7 +86,7 @@ const FlatListScrollPanier = ({
                 ref={flatListRef}
 
                 getItemLayout={getItemLayout}
-                data={PlatsToShowFilteredTemp}
+                data={cart}
                 renderItem={renderItem}
                 keyExtractor={item => item.ref}
             />
