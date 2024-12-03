@@ -74,12 +74,7 @@ export default function TabTwoScreen() {
         .filter((item:any) => item.qte > 0); // Supprime les articles avec une quantité de 0
     });
   };
-  
-
-  const callBackPanier = (data: any) => {
-    console.log("callBackPanier =", data)
-  }
-
+ 
   useEffect(() => {
     // articlesList.length > 0 && console.log("articlesList18 ", articlesList)
     if (articlesList.length === 0 && thisUseFB.articlesList) {
@@ -121,10 +116,10 @@ export default function TabTwoScreen() {
         position:'relative'
         }}>
 
-      <Header 
+      <Header addToCart = {addToCart} removeFromCart = {removeFromCart} 
         articlesList={articlesList} cart ={cart}
 
-        PlatsToShow={undefined} navigation={undefined} route={undefined} callback={undefined} showPanierViewModal={undefined} scrollY0={undefined} scrollX0={undefined} commande={undefined}
+         navigation={undefined} route={undefined} callback={undefined} showPanierViewModal={undefined} scrollY0={undefined} scrollX0={undefined} commande={undefined}
       />
         <ArticlesQteToShow articlesList = {articlesList} addToCart = {addToCart} removeFromCart = {removeFromCart}  cart= {cart} />
       </View>

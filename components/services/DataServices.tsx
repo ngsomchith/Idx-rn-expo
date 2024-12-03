@@ -57,3 +57,16 @@ export function generateObjectToKeyAndNameWithDetail(thisArrayObject: any[]) {
      
      }
     }
+
+    export function getPanierQteNonNull(panierQte: any) {
+      //all console.log("Panier", "85 getPanierQteNonNull, panierQte?.length = ", panierQte?.length)
+      let result = panierQte?.filter((panierElt: any, idx: any, panierQte: any) => {
+          return panierElt.qte > 0
+      })
+      // console.log("Panier", "88 result getPanierQteNonNull ", result)
+      return result
+    }
+
+export function thisClone(something: any) {
+  return something
+}

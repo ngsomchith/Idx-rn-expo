@@ -16,6 +16,8 @@ import ThisDevice from '../constants/ThisDevice';
 import ButtonStd from './ButtonTypeStd';
 import Panier from './articlesQte/Panier';
 import { Colors } from '@/constants/Colors';
+import ModalSignIn from './ModalSignIn';
+import ModalPanier from './articlesQte/ModalPanier';
 
 // interface ContainerProps {
 //     PlatsToShow: Array<ArticleType> | null; //alimenté par panier2
@@ -23,8 +25,7 @@ import { Colors } from '@/constants/Colors';
 
 // }
 // ../config/device
-const Header = ({ articlesList, cart
-    , PlatsToShow, navigation, route, callback, showPanierViewModal, scrollY0, scrollX0, commande 
+const Header = ({  articlesList, cart, removeFromCart, addToCart, navigation
 }) => {
 
 
@@ -37,12 +38,12 @@ const Header = ({ articlesList, cart
     const myHeight = device.height
     const myCoeffScreen = myWidth / myHeight
 
-  
 
 
-  useEffect(() => {
-    console.log("Header : cart  ", cart)
-  }, [cart])
+
+    useEffect(() => {
+        console.log("Header : cart  ", cart)
+    }, [cart])
 
     const iconUser = <Ionicons name="person-outline" size={24} color="white" />
 
@@ -138,8 +139,6 @@ const Header = ({ articlesList, cart
 
         <View
             style={[styles00.container, {
-                // backgroundColor: 'transparent',
-                // backgroundColor:'#0000ff54',
                 width: MAXWIDTH,
                 maxWidth: '100%',
                 height: 100,
@@ -154,80 +153,31 @@ const Header = ({ articlesList, cart
                 backgroundColor: 'transparent',
                 //  borderWidth: 5, borderColor: 'green', borderStyle: 'solid',
             }]}>
-                {/* {thisCanGoBack && currentScreen != 'WelcomeScreen'
-                    // && currentScreen != 'HomeScreen'
-                    // && !viewModal 
-                    ? */}
-                    <Text style={{
-                        position: 'absolute',
-                        top: 25,
-                        left: 10,
-                        width: 35,
-                        height: 35,
-                        borderColor: 'turquoise',
-                        borderStyle: 'solid',
-                        borderWidth: 5,
-                    }}>
-                        {/* {
-                            !viewModal && */}
-                            <ButtonStd //button GO BAck
-                            // iconR={currentScreen != 'WelcomeScreen' ? iconBack : ''}
-                            // iconR={ iconBack } 
-                            label={thisCanGoBack} onPress={() => {
+                
+                <Text style={{
+                    position: 'absolute',
+                    top: 25,
+                    left: 10,
+                    width: 35,
+                    height: 35,
+                    borderColor: 'turquoise',
+                    borderStyle: 'solid',
+                    borderWidth: 5,
+                }}>
+                   
+                    <ButtonStd //button GO BAck
+                        // iconR={currentScreen != 'WelcomeScreen' ? iconBack : ''}
+                        // iconR={ iconBack } 
+                        label={thisCanGoBack} onPress={() => {
                             console.log(111, "navigation.canGoBack  == true ? ", navigation.canGoBack() == true);
                             if (navigation && navigation.canGoBack()) {
                                 console.log(122, "navigation.canGoBack(), panierView", navigation.canGoBack() ? 'Y' : 'N', 'panierView');
-
-                                // setpanierView(false)
-                                // console.log(66, navigation.canGoBack() == true);
-                                // if (panierView) {
-                                //     console.log(118, " setpanierView(false)");
-                                //     console.log("325Header ", " articlesList = ", articlesList)
-                                //     console.log("325Header ", " articlesListByCat = ", articlesListByCat)
-                                //     const thisParams = {
-                                //         // typemenu: itemPdjType0,
-                                //         // categoryName: _categoryName,
-                                //         articlesList: articlesList,
-                                //         articlesListByCat: articlesListByCat,
-                                //         categoryNameList: categoryNameList,
-                                //         // menuN: menuN,
-                                //         // currentMenuN: menuN,
-                                //         // pdjTitleObject: pdjTitleObject,
-                                //         panierQte: panierQte ? panierQte : []
-                                //     }
-                                //     navigation.navigate('HomeScreen', {
-                                //         thisParams
-                                //     })
-                                // } else {
-                                //     callback('goBack');
-                                //     console.log("navigation.goBack()");
-                                //     // navigation.goBack() //=> error
-                                //     const thisParams = {
-                                //         // typemenu: itemPdjType0,
-                                //         // categoryName: _categoryName,
-                                //         articlesList: articlesList,
-                                //         articlesListByCat: articlesListByCat,
-                                //         categoryNameList: categoryNameList,
-                                //         // menuN: menuN,
-                                //         // currentMenuN: menuN,
-                                //         // pdjTitleObject: pdjTitleObject,
-                                //         panierQte: panierQte ? panierQte : []
-                                //     }
-                                //     navigation.navigate('WelcomeScreen', {
-                                //         thisParams
-                                //     })
-                                // }
                             } else {
                                 console.log(80, '!!navigation.canGoBack()', navigation.canGoBack);
                             }
-                        } } onChange={undefined} bgButton={'transparent'} labelColor={undefined} iconL={undefined} iconR={undefined} />
-                        {/* } */}
-                        
-                        </Text>
-                    {/* 
-                    :
-                    <></>
-                } */}
+                        }} onChange={undefined} bgButton={'transparent'} labelColor={undefined} iconL={undefined} iconR={undefined} />
+                    
+                </Text>
 
             </View>
             <View style={[styles00.dbCol70, {  //myTitle
@@ -236,7 +186,7 @@ const Header = ({ articlesList, cart
                 paddingHorizontal: 10,
                 marginHorizontal: 'auto',
                 // display: 'flex', flexDirection: 'row', justifyContent: 'space-around',
-                display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',alignItems:'flex-start',
+                display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start',
                 borderWidth: 2, borderColor: 'yellow', borderStyle: 'solid',
             }]}>
                 <View style={[{ //ModalGoHome
@@ -247,7 +197,7 @@ const Header = ({ articlesList, cart
                     display: 'flex'
                 }]}>
                     {/* <ModalGoHome myImage={myImage} /> */}
-                    <Text style={{color: 'white'}}>MyTitle</Text>
+                    <Text style={{ color: 'white' }}>MyTitle</Text>
                 </View>
                 {/* <MyTitle /> */}
             </View>
@@ -261,8 +211,23 @@ const Header = ({ articlesList, cart
                     zIndex: 999
                 }
             ]}>
-
-                    <Text style={{color: 'white'}}>{cart.length} </Text>
+                {/* <ModalPanier addToCart={addToCart} removeFromCart={removeFromCart} 
+                cart ={cart}
+                thiscategoryName={undefined} articlesListTemp={undefined} 
+                PlatsToShowFilteredTemp={undefined} 
+                todayfr10={undefined} menuN={undefined} 
+                menuNImg={undefined} idx={undefined} 
+                pdjType={undefined} navigation={undefined} 
+                route={undefined} callbackFn={undefined} 
+                scrollY0={undefined} scrollX0={undefined} 
+                updateScrollValue={undefined} zoomMenuN={undefined} /> */}
+                <ModalSignIn cart={cart}
+                 addToCart={addToCart} removeFromCart={removeFromCart} 
+                 navigation={undefined} route={undefined} 
+                 showPanierViewModal={undefined} 
+                 scrollY0={undefined} scrollX0={undefined} commande={undefined}  />
+                {/* addToCart={addToCart} removeFromCart={removeFromCart} */}
+                {/* <Text style={{color: 'white'}}>{cart.length} </Text> */}
                 {/* <Text style={{ color: 'yellow' }}> {scrollY0}</Text> */}
                 {/* <Panier articlesList={articlesList}                // callback={callbackPanier} PlatsToShow={PlatsToShow} navigation={navigation} route={route} showPanierViewModal={showPanierViewModal} scrollY0={scrollY0} scrollX0={scrollX0} commande={commande} 
                 /> */}

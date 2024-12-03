@@ -1,16 +1,20 @@
+
 import { Image, StyleSheet, Platform } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Pressable, Text, TextInput, View } from 'react-native';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
-// import { Colors, iconPlusUn, iconMinus, iconSearchPlus, iconBasket, iconClick, iconCadeau, iconBuyAndGift2, iconPromoSushi, iconPromoTradit } from '../config';
+// import { Colors, '+', '-', iconSearchPlus, iconBasket, iconClick, iconCadeau, iconBuyAndGift2, iconPromoSushi, iconPromoTradit } from '../config';
 import { ArticleType } from '@/app/models/ArticleType';
 import { myStyles } from '../myStyle';
 import ThisDevice from '@/constants/ThisDevice';
 import ImageViewer from '../ImageViewer';
 import { Colors } from '@/constants/Colors';
+import ButtonStd from '../ButtonTypeStd';
 
 
-const RenderEachArticleInHome = ({
+
+
+const RenderEachPanierElt = ({
     addToCart, removeFromCart,
     thiscategoryName,
     articlesListTemp, PlatsToShowFilteredTemp,
@@ -21,6 +25,10 @@ const RenderEachArticleInHome = ({
     ...otherprops }) => {
 
 
+    const myDevice = ThisDevice().device
+    const MAXWIDTH = ThisDevice().device.myMAXWIDTH
+    const widthMobile = 650
+    const widthMobileOrWeb = MAXWIDTH > widthMobile ? '40%' : '100%'
     const [scrollXLastVal, setScrollXLastVal] = useState(0)
     const [scrollYLastVal, setScrollYLastVal] = useState(0)
     const iconSearchMinus = <FontAwesome name="search-minus" size={24} color="#821e1e" />
@@ -35,8 +43,6 @@ const RenderEachArticleInHome = ({
 
 
 
-    const MAXWIDTH = ThisDevice().device.width - 5
-    // const LEFTGLOBAL = myPLatform.OS == 'web' ? 0 : 0
     const invitedEmail = 'udex.invited@gmail.com'
 
     const myWidth = ThisDevice().MAXWIDTH
@@ -63,6 +69,7 @@ const RenderEachArticleInHome = ({
             //all console.log(" scrollY0 , scrollYLastVal ?  ", scrollY0, scrollYLastVal)
         }
     }, [scrollY0, scrollX0])
+
 
     function onPlusUn(menuN: any
         //, user: any,idx: any, userEmail: string
@@ -97,9 +104,9 @@ const RenderEachArticleInHome = ({
                     position: 'relative',
                     paddingHorizontal: 0,
                     backgroundColor: 'transparent',
-                    // borderColor: 'yellow',
-                    // borderStyle: 'solid',
-                    // borderWidth: 3,
+                    borderColor: 'coral',
+                    borderStyle: 'solid',
+                    borderWidth: 3,
                     justifyContent: 'flex-start',
                     alignItems: 'flex-end',
                     borderRadius: 10,
@@ -314,10 +321,189 @@ const RenderEachArticleInHome = ({
         )
     }
 
-    // function chooseDayAndTime(menuN: ArticleType, idx: number) {
-    //     //all console.log("218callbackFn", true, menuN, idx, true)
-    //     callbackFn(true, menuN, idx, true)
-    // }
+    const chaqLigneQteSup0 = (menuN: any) => {
+        return (<View
+            style={[
+                // styles.containerMenuNPdj
+                ,
+                {
+                    display: 'flex',
+                    flexDirection: 'row',
+                    // borderStyle: 'solid',
+                    // borderColor: 'green', //menuN.pdjType !='jap' ? 'lightgreen':'transparent',
+                    // borderWidth: 2,
+                    backgroundColor:'grey',
+                    width: MAXWIDTH,
+                    maxWidth: '88%',
+                    marginHorizontal: 'auto',
+                    minHeight: 70,
+                    maxHeight: '100%',
+                    marginVertical: 2,
+                    justifyContent: 'space-between',
+                    overflow: 'hidden',
+                    borderRadius: 10,
+                    borderColor: 'yellow', //menuN.pdjType != 'jap' && menuN.pdjType != 'pdjsja' ? 'lightgreen' : 'white',
+                    borderStyle: 'solid',
+                    borderWidth: 5,
+                }]}>
+
+            <View style={[
+                // styles.dbRow
+                , { //name 
+                    maxWidth: '55%',
+                    marginHorizontal: 0,
+                    marginVertical: 0,
+                    paddingHorizontal: 0,
+                    display: 'flex', flexWrap: 'wrap',
+                    // borderColor: menuN.pdjType != 'jap' && menuN.pdjType != 'pdjsja' ? 'lightgreen' : 'white',
+                    // borderStyle: 'solid',
+                    // borderWidth: 2,
+                    borderRadius: 10,
+                    height: '98%',
+                }]} >
+                <Text style={[ // styles.texteArticlePrix
+                    , { //prix
+                        fontSize: 18, width: '100%', height: '100%', color: Colors.primaryText,
+
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        display: 'flex', alignItems: 'flex-start'
+                    }]}>{menuN.name}
+                    {menuN &&
+                        menuN.pdjType == 'promo'
+                        // menuN.prixbarre && Number(menuN.prixbarre) > 0
+                        &&
+                        <Text style={[styles.texteArticlePrix, {
+                            fontSize: 20,
+                            width: 100,
+                            // width: MAXWIDTH < 400 || myCoeffScreen < 1 ? '40%' : '100%',
+                            // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '30%',
+                            display: 'flex', justifyContent: 'flex-end',
+                            paddingHorizontal: 5,
+                            alignItems: 'flex-end',
+                            color: Colors.primaryText,
+                            // borderColor: 'red',
+                            // borderStyle: 'solid',
+                            // borderWidth: 3,
+                            // position: 'absolute',
+                            backgroundColor: 'green',
+                            // left: 115,
+                            // top: +18,
+                            borderRadius: 5
+                        }]}>
+                            + {menuN.qte} gratuit
+                        </Text>
+
+                    }
+                </Text>
+
+
+            </View>
+
+
+            <View style={[styles.dbCol, { //prix et  row Wrap qte & +/-
+                width: '45%', margin: 0,
+                // maxWidth: 130,
+                height: '98%',
+                // backgroundColor: Colors.primaryText,
+                borderRadius: 10,
+                paddingVertical: 5,
+                paddingHorizontal: 0,
+                // borderColor: Colors.primaryText,
+                // borderStyle: 'solid',
+                // borderWidth: 2,
+                justifyContent: 'space-around'
+            }]} >
+
+
+                <Text style={[ //prix
+                    , {
+                        fontSize: 20, minWidth: '60%', color: Colors.primaryText,
+                        display: 'flex', flexWrap: 'wrap',
+                        // borderColor: 'white', 
+                        // borderStyle: 'solid',
+                        // borderWidth: 1,
+                        borderRadius: 10,
+                        justifyContent: 'center',
+                        height: '45%', textAlign: 'left',
+                    }]}>
+                    {Number(menuN.prix).toFixed(2) + ' €'}
+                </Text>
+                <View style={[// +:- qte
+                    , {
+                        minWidth: '40%',
+                        height: '45%',
+                        marginVertical: 5,
+                        display: 'flex',
+                        flexDirection: 'row',
+                        // borderColor: 'purple',
+                        // borderStyle: 'solid',
+                        // borderWidth: 1,
+                        maxHeight: '45%',
+                        justifyContent: 'center', alignItems: 'center'
+                    }]}>
+                    { //============================================ 
+                        menuN.qte >= 1 ? //onMinus clickable ou pas
+                            <View style={{
+                                width: 35,
+                                // borderColor: 'green',
+                                // borderStyle: 'solid',
+                                // borderWidth: 1,
+
+                            }} >
+
+                                <ButtonStd iconR={'-'} label={undefined} onPress={() => { onMoinsUn(user, menuN, idx, user?.email); }} onChange={undefined} bgButton={'transparent'} labelColor={undefined} iconL={undefined} />
+                            </View>
+                            :
+                            <View style={{ width: 35 }} >
+                                <ButtonStd iconR={'-'} label={undefined} onPress={undefined} onChange={undefined} bgButton={"transparent"} labelColor={undefined} iconL={undefined} />
+                            </View>
+
+                    }
+                    <View style={{ //qte
+                        height: '100%',
+                        width: 40,
+                        // borderColor: 'white',
+                        // borderStyle: 'solid',
+                        // borderWidth: 1,
+                    }}
+                    >
+
+                        <TextInput
+                            style={[
+                                styles.input, {
+                                    color: Colors.primaryText
+                                    // borderBottomWidth: 10,
+                                    // borderColor: 'black',
+                                }]}
+
+                            editable={false}
+                            value={qte.toString()}
+                            onChangeText={(value) => {
+                                setQte(value)
+                            }}
+                        />
+
+                    </View>
+                    <View style={{// onPlusUn
+                        width: 35,
+                        // borderColor: 'green',
+                        // borderStyle: 'solid',
+                        // borderWidth: 1,
+                    }}
+                    >
+                        <ButtonStd iconR={'+'} label={undefined}
+                            onPress={() => { onPlusUn(user, menuN, idx, user?.email); }}
+                            onChange={undefined} bgButton={'transparent'} labelColor={undefined} iconL={undefined} />
+
+                    </View>
+                </View>
+
+
+            </View>
+
+        </View>)
+    }
 
     const styles0 = StyleSheet.create({
 
@@ -343,247 +529,22 @@ const RenderEachArticleInHome = ({
         <View style={{
             display: 'flex', flexDirection: 'row',
             justifyContent: 'flex-start', alignItems: 'flex-start',
-            width: '100%',
+            width: '100%', backgroundColor: 'pink', marginVertical: 10,
             // borderColor: 'white',// menuN.qte > 0 ? Colors.primaryText : Colors.accentBG,
 
-            height: 400
+            height: 50
         }}>
 
             {!zoomMenuN ?
-                <View  // 
-                    style={[, {
-
-                        flexDirection: 'row',
-                        // backgroundColor: Colors.primaryBG,
-                        backgroundColor: menuN.qte > 0 ? Colors.highlightBG : Colors.accentBG,
-                        // borderColor: menuN.qte > 0 ? Colors.highlightBG : Colors.accentBG,
-                        borderColor: 'green',
-                        borderStyle: 'solid',
-                        borderWidth: 5,
-                        width: '90%',
-                        padding: 5,
-                        minHeight: 300,
-                        maxHeight: 400,
-                        alignItems: 'flex-start',
-                        justifyContent: 'center',
-                        borderRadius: 10,
-                        display: 'flex',
-                        flexWrap: 'wrap',
-
-                    }]
-                    }  >
-
-                    <Text style={[styles.titreArticle, { //name
-                        color: Colors.primaryText,
-                        width: '100%',
-                        // width: panierView ? '45%' : '100%',
-                        // fontSize: panierView ? 14 : 18,
-                        marginVertical: 5,
-                        justifyContent: 'center',
-                        // borderColor: 'purple',
-                        // borderStyle: 'solid',
-                        // borderWidth: 3,
-                        overflow: 'hidden',
-                        alignItems: 'flex-start',
-                        // maxHeight: MAXWIDTH < 400 || myCoeffScreen < 1 ? 100 : 50,
-                        maxHeight: 65,
-                    }]}>
-                        {menuN?.name}
-                    </Text>
-
-                    <View style={{ // container d' imageViewer & figCaption
-                        width: '100%', // MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '60%',
-                        // marginHorizontal:10,
-                        height: 200,
-                        display: 'flex',
-                        flexWrap: 'nowrap',
-                        flexDirection: 'column',
-                        alignItems: 'flex-start',
-                        justifyContent: 'flex-start',
-                        // borderRadius: 10,
-                        // borderColor: 'red',
-                        // borderStyle: 'solid',
-                        // borderWidth: 8,
-                    }}>
-                        <Pressable // imageViewer & figCaption
-                            style={[styles.containerRowArticle, {
-                                borderColor: 'red',
-                                borderStyle: 'solid',
-                                borderWidth: 3,
-                                backgroundColor: Colors.accentBG,
-                                width: '98%',
-                                marginHorizontal: '1%',
-                                marginVertical: 0,
-                                borderRadius: 10,
-                                height: 100,
-                                display: 'flex',
-                                flexWrap: 'nowrap',
-                                // flexDirection:  MAXWIDTH < 400  || myCoeffScreen <1 ?  'column' : 'row' ,
-
-                                flexDirection: 'column',
-                                justifyContent: 'space-between',
-                                alignItems: 'flex-start'
-                            }]}
-                            // onPress={() => callbackFn(true, menuN, idx, false)}
-
-                            onPress={() => {
-                                // setViewModal(true),
-                                //     setcurrentMenuN(menuN)
-                            }}
-                        >
-
-                            <View style={[styles.figure, { //ImageViewer
-                                // paddingLeft: 10,
-                                minWidth: MAXWIDTH < 400 || myCoeffScreen < 1 ? '50%' : '50%',
-                                // height: MAXWIDTH < 400  || myCoeffScreen <1 ? '90%' : '100%',
-                                minHeight: 130,
-                                marginVertical: 0,
-                                borderColor: 'white',  // MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'grey',
-                                borderStyle: 'solid',
-                                borderWidth: 2,
-                                alignItems: 'flex-start',
-                                justifyContent: 'flex-start',
-                                display: 'flex'
-                            }]}>
-
-                                <ImageViewer placeholderImageSource={menuNImg} />
-
-                            </View>
-
-                            <View style={[styles.figcaption, {
-                                width: '100%', // MAXWIDTH < 400 || myCoeffScreen < 1 ? '45%' : '90%',
-                                maxHeight: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : 70,
-                                // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '20%',
-                                minHeight: 80,
-                                paddingVertical: 10,
-                                flex: 1,
-                                display: 'flex',
-                                minWidth: '45%',
-                                justifyContent: 'space-between',
-
-                                borderColor: 'pink',// MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'coral',
-                                borderStyle: 'solid',
-                                borderWidth: 2
-                            }]} >
-
-                                <Text style={[
-                                    styles.texteArticle, {
-                                        // minHeight: 100,
-                                        // paddingHorizontal: 10,
-                                        // marginHorizontal: '5%',
-                                        maxWidth: '90%',
-                                        // height:50,
-                                        flex: 1,
-                                        overflow: 'hidden',
-                                        color: 'white',
-                                        justifyContent: 'flex-start',
-                                        fontSize: 16,
-                                        borderColor: 'purple',// MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'coral',
-                                        borderStyle: 'solid',
-                                        borderWidth: 2
-
-                                    }
-                                ]}>
-                                    {menuN?.description}
-                                </Text>
-
-                                {menuN?.pdjType != 'tlj' && menuN?.date != '' ? //|| varparam == 'prochainsjours'
-                                    <View style={[styles.dbCol, {
-
-                                        borderColor: 'turquoise',// MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'coral',
-                                        borderStyle: 'solid',
-                                        borderWidth: 1,
-                                        minHeight: 10
-                                    }]} >
-                                        {/* <Text style={{color:'white'}}>221{menuN?.date} </Text> */}
-                                        {(
-                                            (menuN?.pdjType == 'pdj')
-                                            && menuN?.date != null && menuN?.date != '' && menuN?.date != 'Jour ?' && menuN?.date != todayfr10
-                                        ) &&
-                                            <Text style={[styles.texteArticleRenderJour, {//date
-                                                backgroundColor: Colors.highlightBG,
-                                                color: Colors.primaryText
-                                            }]}>
-                                                {/* 312 */}
-                                                {menuN?.date}
-                                            </Text>
-                                        }
-
-                                        {(
-                                            (menuN?.pdjType == 'pdjs') && menuN?.date != ''
-                                            && menuN?.date != null && menuN?.date != 'Jour ?'
-                                            && menuN?.date != todayfr10
-                                        ) &&
-                                            <Text style={[styles.texteArticleRenderJour, {
-                                                backgroundColor: Colors.highlightBG,
-                                            }]}>
-                                                325
-                                                {menuN?.date}
-                                            </Text>
-                                        }
-
-                                        {(menuN?.pdjType == 'pdj' && menuN?.date && menuN?.date == todayfr10) &&
-
-
-                                            <Text style={[styles.texteArticleRenderJour, {
-                                                backgroundColor: Colors.highlightBG,
-                                            }]}>
-                                                {/* 336 */}
-                                                {/* Plat Du Jour */}
-                                                {/* {menuN?.date + '|'+todayfr10} */}
-                                                {menuN?.date}
-                                            </Text>
-
-                                        }
-                                        {/* {(menuN?.pdjType == 'pdj' && menuN?.date == null) &&
-                                        <Text style={[styles.texteArticleRenderJour, {
-                                            backgroundColor: Colors.highlightBG
-                                        }]}>
-                                            346
-                                            {menuN.date = null ? '.. / .. / ..' : menuN?.date}
-                                        </Text>
-                                    } */}
-
-                                        {
-                                            menuN?.pdjType == 'pdjs' && menuN?.date == null &&
-                                            !(menuN?.pdjType == 'pdj' && menuN?.date == todayfr10) &&
-                                            <Text style={[styles.texteArticleRenderJour, {
-                                                backgroundColor: Colors.highlightBG,
-                                            }]}>
-                                                386
-                                                {menuN?.date} </Text>
-                                        }
-
-                                    </View>
-                                    :
-
-                                    <>
-                                        {
-                                            menuN?.date != null && menuN?.date != '' && menuN?.date != 'Jour ?' &&
-
-                                            <Text style={[styles.texteArticle,
-                                            { fontSize: 30 },
-                                            { backgroundColor: Colors.highlightBG },
-                                            { color: 'white' }]} >
-                                                372
-                                                {menuN?.date}
-                                            </Text>
-                                        }
-
-                                    </>
-                                }
-                            </View>
-
-                        </Pressable>
-                    </View>
-                    {barrePrix(menuN)}
-                </View>
+                chaqLigneQteSup0(menuN)
                 :
-                <Text>barrePrix</Text>
-                // barrePrix(menuN)
+                // <Text>barrePrix</Text>
+                barrePrix(menuN)
             }
         </View>
     );
 };
 
-export default RenderEachArticleInHome;
+
+
+export default RenderEachPanierElt;

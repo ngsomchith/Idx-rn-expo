@@ -1,17 +1,19 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
-import { Button, Pressable, Text, TextInput, View } from 'react-native';
+
+import React, { useRef, useContext, useEffect, useState } from 'react';
+import { Modal, Text, Pressable, View, TextInput, StyleSheet, ScrollView, SafeAreaView } from "react-native";
+import { ThemedText } from '../ThemedText';
+import { Colors } from '@/constants/Colors';
+
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 // import { Colors, iconPlusUn, iconMinus, iconSearchPlus, iconBasket, iconClick, iconCadeau, iconBuyAndGift2, iconPromoSushi, iconPromoTradit } from '../config';
 import { ArticleType } from '@/app/models/ArticleType';
 import { myStyles } from '../myStyle';
 import ThisDevice from '@/constants/ThisDevice';
 import ImageViewer from '../ImageViewer';
-import { Colors } from '@/constants/Colors';
 
 
-const RenderEachArticleInHome = ({
-    addToCart, removeFromCart,
+const ModalSignIn = ({
+    addToCart, removeFromCart,cart,
     thiscategoryName,
     articlesListTemp, PlatsToShowFilteredTemp,
     todayfr10, menuN, menuNImg, idx, pdjType,
@@ -73,6 +75,7 @@ const RenderEachArticleInHome = ({
         setQte(menuN.qte)
     }
 
+
     function onMoinsUn(menuN: any,
         // user: any,  idx: any, userEmail: string
     ) {
@@ -81,6 +84,10 @@ const RenderEachArticleInHome = ({
         console.log("onMoinsUn clicked ", menuN.qte, menuN)
         setQte(menuN.qte)
     }
+
+
+
+
 
     function barrePrix(menuN:any) {
         return (
@@ -314,10 +321,7 @@ const RenderEachArticleInHome = ({
         )
     }
 
-    // function chooseDayAndTime(menuN: ArticleType, idx: number) {
-    //     //all console.log("218callbackFn", true, menuN, idx, true)
-    //     callbackFn(true, menuN, idx, true)
-    // }
+   
 
     const styles0 = StyleSheet.create({
 
@@ -586,4 +590,4 @@ const RenderEachArticleInHome = ({
     );
 };
 
-export default RenderEachArticleInHome;
+export default ModalSignIn;
