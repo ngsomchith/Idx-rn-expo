@@ -3,6 +3,10 @@ import { View, Text, TextInput, Button, Alert, StyleSheet, Platform } from 'reac
 
 import { FirebaseInit, signInWithEmailAndPassword } from './constants/firebaseConfig';
 import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
+import { ThemedView } from './components/ThemedView';
+import { ThemedTitle } from './components/ThemedTitle';
+import { ThemedText } from './components/ThemedText';
+import { ThemedInput } from './components/ThemedInput';
 
 
 export const myApp = FirebaseInit()
@@ -10,7 +14,6 @@ export const myApp = FirebaseInit()
 export const LoginScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const myApp = FirebaseInit()
 
     const handleSignIn = async () => {
         console.log('handleSignIn')
@@ -23,31 +26,35 @@ export const LoginScreen = () => {
         }
     };
     const styles = StyleSheet.create({
-        container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: 'white' },
+        containerColumn: { flex: 1, justifyContent: 'flex-start', padding: 20, backgroundColor: 'white' },
         title: { fontSize: 24, marginBottom: 20, textAlign: 'center' },
         input: { height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 10 },
     });
-    
+
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Connexion Firebase</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Mot de passe"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-            />
+        <ThemedView
+        // style={styles.containerColumn}
+        >
+            <ThemedTitle style={styles.title}>Connexion Firebase</ThemedTitle>
+            {/* <ThemedText>  */}
+                <ThemedInput
+                    style={styles.input}
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={setEmail}
+                />
+                <ThemedInput
+                    style={styles.input}
+                    placeholder="Mot de passe"
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry
+                />
+            {/* </ThemedText> */}
 
             <Button title="Se connecter" onPress={handleSignIn} />
-        </View>
+        </ThemedView>
     );
 };
 
@@ -78,15 +85,15 @@ export async function getItems(thisCollection: string) {
     // ++++++++++++++++++++++++++++++++++++++++++++++
     //model :  import { collection, query, where, getDocs } from "firebase/firestore";
     // const q = query(collection(db, "cities"), where("capital", "==", true));
-  
+
     const db = myApp[3]
     let items: any = [];
     let i = 0;
     const querySnapshot = await getDocs(collection(db, thisCollection));
     querySnapshot.forEach((doc) => {
-      // console.log(`175,${doc.id} => ${doc.data()}`);
-      items.push(doc.data());
-      i++;
+        // console.log(`175,${doc.id} => ${doc.data()}`);
+        items.push(doc.data());
+        i++;
     });
     return items;
-  }
+}

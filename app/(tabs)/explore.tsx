@@ -11,8 +11,8 @@ import ThisDevice from '@/constants/ThisDevice';
 import Panier from '@/components/articlesQte/Panier';
 import { useEffect, useState } from 'react';
 import Header from '@/components/Header';
-import { useFb } from '../hooks/useFb';
 import { ArticleType } from '../models/ArticleType';
+import { useFb } from '@/hooks/useFb';
 
 export default function TabTwoScreen() {
 
@@ -21,25 +21,6 @@ export default function TabTwoScreen() {
   
   // État pour le panier
   const [cart, setCart] = useState([]);
-
-  // Ajouter un article au panier
-  // const addToCart = (article: any) => {
-  //   article.qte++
-  //   console.log("addToCart ::", article.qte, article)
-  //   setCart((prevCart: any) => {
-  //     // Vérifie si l'article est déjà dans le panier
-  //     const isAlreadyInCart = prevCart.find((item:any) => item.id === article.id);
-  //     if (isAlreadyInCart) {
-
-  //       return prevCart; // Ne pas ajouter de doublons
-  //     }
-  //     console.log("prevCart ", prevCart)
-  //     console.log("article ", article)
-  //     return [...prevCart, article];
-  //   });
-  // };
-
-  // Supprimer un article du panier
   
   const addToCart = (article:any) => {
     setCart((prevCart:any) => {
@@ -58,13 +39,6 @@ export default function TabTwoScreen() {
     });
   };
   
-  
-  // const removeFromCart = (_menuN:any) => {
-  //   console.log("removeFromCart _menuN.qte" , _menuN.qte)
-  //   // setCart((prevCart) => prevCart.filter((item) => item.id !== _menuN.id));
-  //   // console.log("panier = ", prevCart)
-  // };
-
   const removeFromCart = (article:any) => {
     setCart((prevCart:any) => {
       return prevCart
@@ -95,6 +69,7 @@ export default function TabTwoScreen() {
   return (
 
     <ParallaxScrollView
+    
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
       headerImage={
         <IconSymbol
@@ -113,7 +88,8 @@ export default function TabTwoScreen() {
         height: myDevice.heightBody,
         borderColor: 'yellow', borderStyle: 'solid', borderWidth: 5,
         left:0,
-        position:'relative'
+        position:'relative',
+        top: 0
         }}>
 
       <Header addToCart = {addToCart} removeFromCart = {removeFromCart} 

@@ -69,7 +69,7 @@ const RenderEachArticleInHome = ({
     ) {
         menuN.qte++
         addToCart(menuN)
-        console.log("onPlusUn clicked ", menuN.qte, menuN)
+        console.log("onPlusUn RenderEachArticleInHome 72 clicked ", menuN.qte, menuN)
         setQte(menuN.qte)
     }
 
@@ -78,7 +78,7 @@ const RenderEachArticleInHome = ({
     ) {
         menuN.qte--
         removeFromCart(menuN)
-        console.log("onMoinsUn clicked ", menuN.qte, menuN)
+        console.log("onMoinsUn  RenderEachArticleInHome 81 clicked ", menuN.qte, menuN)
         setQte(menuN.qte)
     }
 
@@ -314,10 +314,7 @@ const RenderEachArticleInHome = ({
         )
     }
 
-    // function chooseDayAndTime(menuN: ArticleType, idx: number) {
-    //     //all console.log("218callbackFn", true, menuN, idx, true)
-    //     callbackFn(true, menuN, idx, true)
-    // }
+  
 
     const styles0 = StyleSheet.create({
 

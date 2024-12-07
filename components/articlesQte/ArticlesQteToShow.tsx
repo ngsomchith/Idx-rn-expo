@@ -35,7 +35,7 @@ const ArticlesQteToShow = ({articlesList, addToCart, removeFromCart, cart }) => 
   // }, [thisUseFB, articlesList])
 
   useEffect(() => {
-    console.log("categoryNameList useEffect", categoryNameList)
+  //all console.log("categoryNameList useEffect", categoryNameList)
   }, [categoryNameList])
 
   useEffect(() => {
@@ -43,12 +43,12 @@ const ArticlesQteToShow = ({articlesList, addToCart, removeFromCart, cart }) => 
     // console.log("home42 ", "useEffect pdjTitleObject2", pdjTitleObject2)
     if (!pdjTitleObject2 || pdjTitleObject2.length === 0) {
       const pdjTitleSushiTemp = pdjTitleSushi
-      console.log("pdjTitleSushi 51 ", articlesListByCat, pdjTitleSushi)
+    //all console.log("pdjTitleSushi 51 ", articlesListByCat, pdjTitleSushi)
       getPdjTitleList(pdjTitleSushiTemp)
       // setArticlesListByCat(pdjTitleTradit)
     } else if (!pdjTitleObject || pdjTitleObject.length === 0) {
-      console.log("home45 ", "useEffect pdjTitleObject", pdjTitleObject)
-      console.log("home42 ", "useEffect pdjTitleObject2", pdjTitleObject2)
+    //all console.log("home45 ", "useEffect pdjTitleObject", pdjTitleObject)
+    //all console.log("home42 ", "useEffect pdjTitleObject2", pdjTitleObject2)
       getPdjTitleList(pdjTitleObject2)
     } else if (pdjTitleObject2 && pdjTitleObject.length == 0) {
       // setPdjTitleObject2('pdjTitleSushi')
@@ -58,7 +58,7 @@ const ArticlesQteToShow = ({articlesList, addToCart, removeFromCart, cart }) => 
 
   useEffect(() => {
     // console.log("home771 ", " pdjTitleObject", pdjTitleObject)
-    console.log("home626 ", "useEffect pdjTitleObject2", pdjTitleObject2)
+  //all console.log("home626 ", "useEffect pdjTitleObject2", pdjTitleObject2)
 
     if (!pdjTitleObject) {
       //all console.log("home744 ", "useEffect pdjTitleObject2", pdjTitleObject2)
@@ -97,7 +97,7 @@ const ArticlesQteToShow = ({articlesList, addToCart, removeFromCart, cart }) => 
 
   async function getarticlesListByCat(_articlesList) {
     if (_articlesList && _articlesList.length > 0) {
-      console.log("521getarticlesListByCat +++++++++++++ TOP getarticlesListByCat ++++++++++++++++", _articlesList)
+    //all console.log("521getarticlesListByCat +++++++++++++ TOP getarticlesListByCat ++++++++++++++++", _articlesList)
 
       // initArticlesListByCatTemp()
       groupedByPdjType(articlesList, setArticlesListByCat)
@@ -106,7 +106,7 @@ const ArticlesQteToShow = ({articlesList, addToCart, removeFromCart, cart }) => 
     }
   }
   async function getPdjTitleList(_pdjTitleObject: any) {
-    console.log("getPdjTitleList pdjTitleObject ", _pdjTitleObject)
+  //all console.log("getPdjTitleList pdjTitleObject ", _pdjTitleObject)
     if (_pdjTitleObject && _pdjTitleObject != null) {
       // console.log("home804 getPdjTitleList Object.keys(pdjTitle)?.length ", Object.keys(_pdjTitleObject)?.length, _pdjTitleObject)
       if (Object.keys(_pdjTitleObject)?.length > 0) {

@@ -15,9 +15,11 @@ import { Image } from 'react-native';
 import ButtonStd from './ButtonTypeStd';
 import Panier from './articlesQte/Panier';
 import { Colors } from '@/constants/Colors';
-import ModalPanier from './articlesQte/ModalPanier';
-import ModalSignIn from './articlesQte/ModalSignIn';
+// import ModalPanier from './articlesQte/ModalPanier';
+// import ModalSignIn from './articlesQte/ModalSignIn';
 import ThisDevice from '@/constants/ThisDevice';
+import { myStyles } from './myStyle';
+import ModalPanier from './articlesQte/ModalPanier';
 
 // interface ContainerProps {
 //     PlatsToShow: Array<ArticleType> | null; //alimenté par panier2
@@ -28,35 +30,32 @@ import ThisDevice from '@/constants/ThisDevice';
 const Header = ({  articlesList, cart, removeFromCart, addToCart, navigation
 }) => {
 
+    const styles = myStyles
+
+
+    const device = ThisDevice().device
+
+    const myWidth = device.width
+    const myHeight = device.height * 1.3
+    const myCoeffScreen = myWidth / myHeight
 
     useEffect(() => {
         console.log("Header articlesList = ", articlesList)
     }, [articlesList])
 
-    const device = ThisDevice().device
-    const myWidth = device.width
-    const myHeight = device.height
-    const myCoeffScreen = myWidth / myHeight
 
 
 
 
     useEffect(() => {
-        console.log("Header : cart  ", cart)
+        // console.log("Header : cart  ", cart)
     }, [cart])
 
     const iconUser = <Ionicons name="person-outline" size={24} color="white" />
 
-
     const [thisCanGoBack, setThisCanGoBack] = useState(navigation?.canGoBack() || null)
 
     const MAXWIDTH = ThisDevice().MAXWIDTH
-
-    // const callbackPanier = (data: any) => {
-    //     console.log("97 callbackPanier = ", data)
-    //     callback(data)
-    // }
-
 
     const styles00 =
         StyleSheet.create({
@@ -205,9 +204,9 @@ const Header = ({  articlesList, cart, removeFromCart, addToCart, navigation
             <View style={[ //A droite
                 styles00.dbCol15,
                 {
-                    // borderColor: 'white',
-                    // borderWidth: 2,
-                    // borderStyle: 'solid',
+                    borderColor: 'yellow',
+                    borderWidth: 2,
+                    borderStyle: 'solid',
                     zIndex: 999
                 }
             ]}>
@@ -217,16 +216,6 @@ const Header = ({  articlesList, cart, removeFromCart, addToCart, navigation
                 scrollY0={undefined} scrollX0={undefined}              
                 /> 
 
-                <ModalSignIn cart={cart}
-                 addToCart={addToCart} removeFromCart={removeFromCart} 
-                 navigation={undefined} route={undefined} 
-                 showPanierViewModal={undefined} 
-                 scrollY0={undefined} scrollX0={undefined} commande={undefined}  />
-                {/* addToCart={addToCart} removeFromCart={removeFromCart} */}
-                {/* <Text style={{color: 'white'}}>{cart.length} </Text> */}
-                {/* <Text style={{ color: 'yellow' }}> {scrollY0}</Text> */}
-                {/* <Panier articlesList={articlesList}                // callback={callbackPanier} PlatsToShow={PlatsToShow} navigation={navigation} route={route} showPanierViewModal={showPanierViewModal} scrollY0={scrollY0} scrollX0={scrollX0} commande={commande} 
-                /> */}
 
             </View>
 

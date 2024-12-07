@@ -1,14 +1,100 @@
-// 'use dom';
-// import { useCallback } from 'react';
-// import React, { useContext, useEffect, useState } from 'react';
-// import { Text, View, StyleSheet, Pressable } from 'react-native';
-// import { useFonts } from 'expo-font';
-// // import * as SplashScreen from 'expo-splash-screen';
-// import { myStyles } from './style';
-// import { AuthenticatedUserContext } from '../providers';
-// import { H1 } from '@expo/html-elements';
-// import { Colors } from '../config';
-// import ThisDevice from '../constants/ThisDevice';
+'use dom';
+import { useCallback } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, View, StyleSheet, Pressable } from 'react-native';
+import { useFonts } from 'expo-font';
+// import * as SplashScreen from 'expo-splash-screen';
+import { H1 } from '@expo/html-elements';
+import ThisDevice from '../constants/ThisDevice';
+
+
+const MyTitle = () => {
+   
+
+    const styles0 = ThisDevice().styles0
+
+    // const [isLoading, setIsLoading] = useState(true);
+    const FULLWIDTH = ThisDevice().device.width
+    const MAXWIDTH1_3 = ThisDevice().device.width / 3
+
+    const MAXWIDTH = myCoeffScreen < 1 ? myWidth : MAXWIDTH1_3
+    const NBCOLUMN = myCoeffScreen < 1 ? 1 : 3
+    return (//global
+
+                <h1 style={{
+                    margin:0,
+                    width: '75%',
+                    // borderColor: 'pink',
+                    // borderWidth: 2,
+                    // borderStyle: 'solid',
+                    maxHeight: '100%',
+                    height: '80%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                }}>
+                    <View style={[
+                        styles.dbCol, {
+                            // borderColor: 'white',
+                            // borderWidth: 5,
+                            // borderStyle: 'solid',
+                        }]} onLayout={onLayoutRootView}>
+                        <Pressable
+                            style={{
+                                maxHeight: '90%',
+                                // display:'flex',
+                                // flexDirection:'column',
+                                // justifyContent:'flex-start',
+        
+                            }}
+                            onPress={() => {
+                                setstateBar(!stateBar)
+                            }}
+                        >
+                            <Text style={{
+                                fontFamily: 'Inter-SemiBoldItalic',
+                                fontSize: 44,
+                                color: 'white',
+                                height: '100%',
+                                maxHeight: '100%',
+                                display: 'flex',
+                                fontWeight:'600',
+                                // borderColor: 'yellow',
+                                // borderWidth: 5,
+                                // borderStyle: 'solid',
+                                position: 'relative',
+                                top: 10,
+                            }}>
+                                
+                                Délicatessen
+        
+                            </Text>
+        
+                        </Pressable>
+        
+        
+                        <Text style={{
+                            width: MAXWIDTH,
+                            height: 60,
+                            fontSize: 22,
+                            color: Colors.primaryText,
+                            fontFamily: 'BrushScript',
+                            position: 'absolute',
+                            left: -45,
+                            top: 65,
+                            // borderColor: 'green',
+                            // borderWidth: 5,
+                            // borderStyle: 'solid',
+                        }}>
+                            Plats Vietnamien et Sushi
+                        </Text>
+                        {/* <Text style={styles.dbCol70} > SITE DE DEMONSTRATION :</Text> */}
+                    </View>
+                </h1>
+            )
+        }
+
+export default MyTitle;
 
 // // SplashScreen.preventAutoHideAsync();
 

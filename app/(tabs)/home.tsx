@@ -6,9 +6,10 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import Panier from '@/components/articlesQte/Panier';
 import ThisDevice from '@/constants/ThisDevice';
-import { useFb } from '../hooks/useFb';
+
 import { useState } from 'react';
 import { ArticleType } from '../models/ArticleType';
+import { useFb } from '@/hooks/useFb';
 
 export default function HomeScreen() {
   const myDevice = ThisDevice().device

@@ -1,12 +1,16 @@
 import { StyleSheet, View, Pressable, Text, Button } from 'react-native';
 import React, { useState } from 'react';
+
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 //source: https://icons.expo.fyi/
 // source: https://www.npmjs.com/package/@expo/vector-icons
 import { AntDesign } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
-
 export default function ButtonStd({ iconL,iconR, label, labelColor, onPress, onChange, bgButton,
   ...otherProps }) {
   // console.log("21 actif , lessThanNavIdx" , actif , lessThanNavIdx )
@@ -45,7 +49,7 @@ export default function ButtonStd({ iconL,iconR, label, labelColor, onPress, onC
       borderRadius: 10,
       backgroundColor: bgButton,
       height: 60,
-      minHeigh: 60,
+      // minHeigh: 60,
       // maxHeight:  '100%',
       display: 'flex',
       color: Colors.primaryTextBG,
@@ -109,14 +113,7 @@ export default function ButtonStd({ iconL,iconR, label, labelColor, onPress, onC
 
 
   return (
-    <Button onPress={undefined}  style={
-      [styles.buttonStd, 
-        {
-        marginHorizontal:0,
-        marginVertical:5,
-        maxHeight:'100%'
-    }
-      ]} >
+    
 
       <Pressable style={{
         width: '100%',
@@ -137,8 +134,6 @@ export default function ButtonStd({ iconL,iconR, label, labelColor, onPress, onC
       </Pressable>
 
 
-
-    </Button>
   );
 
 }

@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
   default: {
     fontSize: 16,
     lineHeight: 24,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    flexDirection:'row'
   },
   defaultSemiBold: {
     fontSize: 16,

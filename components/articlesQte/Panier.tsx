@@ -1,8 +1,10 @@
-import { useFb } from '@/app/hooks/useFb';
+
 import ThisDevice from '@/constants/ThisDevice';
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, FlatList } from 'react-native';
 import { reduceCdeToUniqueList } from '../services/DataServices';
+import { useFb } from '@/hooks/useFb';
+import { ArticleType } from '@/app/models/ArticleType';
 
 const Panier = function ({ }) {
 

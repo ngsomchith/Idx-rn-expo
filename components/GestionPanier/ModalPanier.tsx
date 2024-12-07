@@ -21,7 +21,7 @@ import { Colors } from '@/constants/Colors';
 function ModalPanier({ }) {
 
 
-  const [modalSignVisible, setModalSignVisible] = useState(false);
+  const [modalSignInVisible, setModalSignInVisible] = useState(false);
   const [idxScrollTo, setIdxScrollTo] = useState(null)
   const flatListRef = useRef();
 
@@ -118,38 +118,27 @@ function ModalPanier({ }) {
           // borderWidth: 3, borderColor: 'blue', borderStyle: 'solid',
         }}
         onPress={() => {
-          // setModalSignInVisible(true),
+          // setModalSignInVisible(true)
+          // ,
           //   setpanierView(true)
 
           // setScrollY(scrollY0)
-          //all console.log("panier:Qte clicked , scrollY0 : ", scrollY0)
+           console.log("panier:Qte clicked , scrollY0 : ")
           // ,
           //all console.log("setModalSignInVisible(true)")
         }
 
         }
       >
-        {
-          // !modalSignInVisiblePublic &&
-          // !panierView &&
-          // currentScreen === 'HomeScreen' &&
-          // panierQte?.length > 0 &&
-          // getPanierQteNonNull(panierQte).length > 0 &&
 
-          <Text style={[[
-            // styles.panierText
-            , {
-            // borderWidth: 5, borderColor: 'yellow', borderStyle: 'solid',
-            position: 'absolute',
-            color: 'white',
-            top: -30,
-            left: 0
-          }]]}>
-            00
-            {/* {getPanierQteNonNull(panierQte).length} */}
-            {/* + {commande?.remise} */}
+          <Text style={{
+
+            borderWidth: 15, borderColor: 'yellow', borderStyle: 'solid',
+          }}
+          
+          >00
           </Text>
-        }
+     
         {/* {!modalSignInVisiblePublic
           && !panierView
           && currentScreen === 'HomeScreen'
@@ -197,38 +186,23 @@ function ModalPanier({ }) {
               height: 120,
               position: 'absolute'
             }]} >
-              <Header navigation={undefined}
-              callback={undefined} PlatsToShow={undefined} route={undefined} showPanierViewModal={undefined} scrollY0={undefined} scrollX0={undefined} commande={undefined} articlesList={undefined} cart={undefined} />
+              <Header 
+              articlesList={undefined} cart={undefined} 
+              removeFromCart={undefined} addToCart={undefined} 
+              navigation={undefined} />
 
 
 
-              <Text style={{
-                position: 'absolute',
-                minHeight: '100%',
+              <Text style={{ //left
+                // position: 'absolute',
+                minHeight: 70,
                 display: 'flex',
                 justifyContent: 'center',
                 width: 70,
-                // borderWidth: 10,borderColor: 'yellow', borderStyle: 'solid',
+                color: 'white',
+                borderWidth: 10,borderColor: 'yellow', borderStyle: 'solid',
               }}>
-                <ButtonStd //  iconBack : soit Annuler , soit bouton suivant
-                  iconL={undefined} iconR={undefined}
-                  // label={commande?.remise?.toFixed(2).toString()}
-                  label={'label'}
-                  // labelColor={'yellow'}
-                  labelColor={'transparent'}
-
-                  onPress={() => {
-                    // setModalSignInVisible(false)
-                    console.log("backHome with scrollY0 ", 'scrollY0')
-                    // ,
-                    // setpanierView(true)
-                    // setConnexionView(false)
-                  }}
-                  onChange={undefined} bgButton={
-                    Colors.primaryBG
-                    // 'transparent'
-                    // undefined
-                  } />
+                back205
               </Text>
 
             </View>
@@ -255,7 +229,7 @@ function ModalPanier({ }) {
                   alignItems: "center",
                   // marginVertical:5,
                   padding: 0,
-                  // borderWidth: 5, borderColor: 'white', borderStyle: 'solid',
+                  borderWidth: 5, borderColor: 'red', borderStyle: 'solid',
                 }}
               >
 

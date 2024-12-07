@@ -6,15 +6,15 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 
 const ThisDevice = () => {
   const device = {
-    height: useWindowDimensions().height,
-    width: useWindowDimensions().width,
+    height: useWindowDimensions()?.height,
+    width: useWindowDimensions()?.width,
     header: 100,
     bottom: 70,
     footer: 70,
-    heightBody: useWindowDimensions().height - 200,
-    myCoeffScreen : useWindowDimensions().width / useWindowDimensions().height,
-    myMAXWIDTH : useWindowDimensions().width, 
-    myMAXWIDTH1_3 : useWindowDimensions().width / 3
+    heightBody: useWindowDimensions()?.height - 200,
+    myCoeffScreen : useWindowDimensions()?.width / useWindowDimensions().height,
+    myMAXWIDTH : useWindowDimensions()?.width, 
+    myMAXWIDTH1_3 : useWindowDimensions()?.width / 3
   };
 
   const styles0 = StyleSheet.create({

@@ -1592,6 +1592,11 @@
     resolve-from "^5.0.0"
     semver "^7.6.0"
 
+"@expo/html-elements@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@expo/html-elements/-/html-elements-0.11.0.tgz#946d3f9e72c5ed2b3fd1e4bc938a7e23a6f52425"
+  integrity sha512-VYqpWme9oucgQ0fE3H2PR/YYGLIi95nBIuWJiv4tct1+9WHZq8IIz3BauND5fWp2zBtGzX7ZYUf+w4qXUb7BZw==
+
 "@expo/image-utils@^0.6.0":
   version "0.6.3"
   resolved "https://registry.npmjs.org/@expo/image-utils/-/image-utils-0.6.3.tgz"

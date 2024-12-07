@@ -1,6 +1,6 @@
 
 import React, { useRef, useContext, useEffect, useState } from 'react';
-import { Modal, Text, Pressable, View, TextInput, StyleSheet, ScrollView, SafeAreaView } from "react-native";
+import { Modal, Text, Pressable, View, TextInput, StyleSheet, ScrollView, SafeAreaView, Button } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 // import CallCA from "./CallCA";
 // import { Colors, iconBack, iconBasket, iconClose, iconEmail, iconEuro, iconInfo, iconMachineCB, iconUser, starHalf } from "../config";
@@ -20,237 +20,256 @@ import { myStyles } from '../myStyle';
 import { ThemedText } from '../ThemedText';
 import { ThemedView } from '../ThemedView';
 import FlatListScrollPanier from './FlatListScrollPanier';
-// import { myStyles } from './style';
-// import SignInScreen from '../(tabs)/SignInScreen';
-// import SignInComp from './SignInC
+import { Colors } from '@/constants/Colors';
+
+import { ThemedTitle } from '../ThemedTitle';
+import { signOut } from 'firebase/auth';
+import { useAuth } from '../AuthContext';
+import { myApp } from '@/constants/firebaseConfig';
+import ModalModel from '../ModalModel';
+import ModalSignIn from '../GestionUser/ModalSignIn';
 
 function ModalPaniee({ cart, addToCart, removeFromCart, navigation, route, showPanierViewModal, scrollY0, scrollX0, commande }) {
+    // ce modal appelle FlatListScrollPanier
+    const thisAuth = useAuth
+
+    const auth = myApp[1]
+
+    const MAXWIDTH = ThisDevice().device.myMAXWIDTH
+    const widthMobile = 650
+    const widthMobileOrWeb = MAXWIDTH > widthMobile ? '40%' : '100%'
+
+    const [currentUserEmail, setCurrentUserEmail] = useState('')
+
+    const [idxScrollTo, setIdxScrollTo] = useState(null)
+    const flatListRef = useRef();
+
+    const [totalAPayer, setTotalAPayer] = useState(0)
+
+    const styles20 = ThisDevice().styles0
+
+    const styles = myStyles
+
+    const [modalPanierVisible, setModalPanierVisible] = useState(false);
+
+    const device = ThisDevice().device
+    const [value, setValue] = useState({
+        email: ' ',
+        name: ' ',
+        date: ' ',
+        plat: '',
+        // phone: "",
+        details: "",
+        error: "",
+    });
 
 
-  const [idxScrollTo, setIdxScrollTo] = useState(null)
-  const flatListRef = useRef();
+    useEffect(() => {
+        console.log("ModalPanier useEffect cart ", cart)
+    }, [cart])
 
-  const [totalAPayer, setTotalAPayer] = useState(0)
-
-  const styles20 = ThisDevice().styles0
-
-  const styles = myStyles
-
-  const [modalSignInVisible, setModalSignInVisible] = useState(false);
-
-  const device = ThisDevice().device
-  const MAXWIDTH = ThisDevice().device.width - 5
-  const [value, setValue] = useState({
-    email: ' ',
-    name: ' ',
-    date: ' ',
-    plat: '',
-    // phone: "",
-    details: "",
-    error: "",
-  });
+    useEffect(() => {
+        //all console.log(" scrollY ",  scrollY)
+    }, [scrollY])
 
 
-  useEffect(() => {
-    console.log(" cart ",  cart)
-  }, [cart])
-
-  useEffect(() => {
-    //all console.log(" scrollY ",  scrollY)
-  }, [scrollY])
+    useEffect(() => {
+        console.log(" myApp ", myApp)
+    }, [myApp])
 
 
-  useEffect(() => {
-    console.log(" commande ", commande)
-  }, [commande])
+    useEffect(() => {
+        console.log(" thisAuth ", thisAuth)
+    }, [thisAuth])
+
+    useEffect(() => {
+        console.log(" auth 80 ", auth)
+
+        console.log("auth81?.currentUSer ===null   ???  ':',, auth.currentUSer  ", auth.currentUSer == null, ':', auth.currentUser)
+        if (auth && auth.currentUser) { setCurrentUserEmail(auth.currentUser.email) }
+        console.log(" auth.user 84 ", auth.user)
+    }, [])
+    useEffect(() => {
+        console.log(" auth 87 ", auth)
+        console.log(" auth.currentUSer 88 ", auth.currentUser)
+        if (auth && auth.currentUser) { setCurrentUserEmail(auth.currentUser.email) }
+        console.log(" auth.user 90 ", auth.user)
+    }, [auth])
+
+    // useEffect(() => {
+    //     console.log(" commande ", commande)
+    // }, [commande])
 
 
 
-  const styles0 = StyleSheet.create({
-    containerPage: {
-      height: device?.height,
-      width: device?.width,
-      display: 'flex',
-      backgroundColor: '#821e1e',
-      alignItems: "center",
-      justifyContent: "flex-start",
-      flexDirection: "column",
-      maxWidth: '100%',
-      borderStyle: 'solid',
-      padding: 10
-    },
-    container: {
-      display: 'flex',
-      width: '100%',
-      height: '100%',
-    },
-    header: {
-      // width: device?.width,
-      // height: device?.header,
-      // backgroundColor: "#821e1e"
-    },
-    panierText: {
-      color: 'red'
-    },
-    containerBody: {
-      width: device?.width,
-      maxWidth: '100%',
-      height: device?.heightBody,
-      backgroundColor: "#a13737",
-    },
-    footer: {
-      width: device?.width,
-      height: 70, // + Tab = (70) = 140
-      backgroundColor: "lightgrey",
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-around'
-    }
-  })
-  useEffect(() => {
-    console.log(" commande185 ", commande)
-  }, [commande])
-
-  return (
-
-    <View style={{
-      width: '100%', // 50
-      height: '100%', // 50
-      minWidth: 50,
-      minHeight: 50
-    }}>
-
-      {/* <AnalyticsTracker pageView={'ModalSignIn'} /> */}
-      <Pressable // button open Modal
-        style={{
-          width: '100%',
-          height: '100%',
-          justifyContent: 'center', alignItems: 'center',
-          // borderWidth: 3, borderColor: 'blue', borderStyle: 'solid',
-        }}
-        onPress={() => {
-          setModalSignInVisible(true)
-          // setpanierView(true)
-
+    const styles0 = StyleSheet.create({
+        containerPage: {
+            height: device?.height,
+            width: device?.width,
+            display: 'flex',
+            backgroundColor: '#821e1e',
+            alignItems: "center",
+            justifyContent: "flex-start",
+            flexDirection: "column",
+            maxWidth: '100%',
+            borderStyle: 'solid',
+            padding: 10
+        },
+        container: {
+            display: 'flex',
+            width: '100%',
+            height: '100%',
+        },
+        header: {
+            // width: device?.width,
+            // height: device?.header,
+            // backgroundColor: "#821e1e"
+        },
+        panierText: {
+            color: 'red'
+        },
+        containerBody: {
+            width: device?.width,
+            maxWidth: '100%',
+            height: device?.heightBody,
+            backgroundColor: "#a13737",
+        },
+        footer: {
+            width: device?.width,
+            height: 70, // + Tab = (70) = 140
+            backgroundColor: "lightgrey",
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-around'
+        },
+        ModalModelButton: {
+            width: 300,
+            height: 50,
+            display: 'flex',
+            alignSelf: 'flex-end',
+            justifyContent: 'flex-start',
+            borderWidth: 3, borderColor: 'white', borderStyle: 'solid',
+        },
+        Button50: {
+            // width: 50,
+            // height: 50,
+            display: 'flex',
+            alignSelf: 'center',
+            justifyContent: 'center',
+            borderWidth: 3, borderColor: 'white', borderStyle: 'solid',
         }
+    })
 
-        }
-      >
-        <ThemedText>{cart ? cart?.length : 0} </ThemedText>
-
-
-      </Pressable>
-
-      <Modal // Modal-in
-        animationType="slide" transparent={true} visible={modalSignInVisible}>
-
-        <ThemedView>
-          <ThemedText>Modal PAnier to Sign in</ThemedText>
-          <FlatListScrollPanier
-                      articlesListTemp={undefined} PlatsToShowFilteredTemp={cart}
-                      menuN={undefined} menuNImg={undefined}
-                      pdjType={undefined} navigation={undefined}
-                      callbackFn={undefined} route={undefined}
-                      addToCart={addToCart} removeFromCart={removeFromCart} cart={cart}          />
-          {/* <SignInComp navigation={navigation} route={route} showPanierViewModal={showPanierViewModal} setModalSignInVisible={setModalSignInVisible} scrollY0={scrollY0} scrollX0={scrollX0} commande={commande} /> */}
-        </ThemedView>
-
-        {/* <GestureHandlerRootView
-          style={ // total screen
-            [styles0.containerPage, {
-              // borderColor: 'turquoise',
-              // borderWidth: 5,
-              // borderStyle: 'solid',
-            }]
-          }
-        >
-
-          <SafeAreaView //safe area
-            style={[
-              styles0.container, {
-                position: 'relative',
-                width: MAXWIDTH,
-                maxWidth: '100%',
-                backgroundColor: Colors.primaryBG,
-                // borderColor: 'turquoise',
-                // borderWidth: 5,
-                // borderStyle: 'solid',
-                maxHeight: '90%'
-              }
-            ]} >
-
-            <View style={[styles0.header, {
-              width: '100%',
-              // borderWidth: 1, borderColor: 'white', borderStyle: 'solid',
-              height: 120,
-              position: 'absolute'
-            }]} >
-              <Header navigation={undefined}
-              callback={undefined} PlatsToShow={undefined} route={undefined} showPanierViewModal={showPanierViewModal} scrollY0={scrollY0} scrollX0={scrollX0} commande={commande} articlesList={undefined} cart={undefined} />
-
-
-
-              <Text style={{
-                position: 'absolute',
-                minHeight: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                width: 70,
-                // borderWidth: 10,borderColor: 'yellow', borderStyle: 'solid',
-              }}>
-                <ButtonStd //  iconBack : soit Annuler , soit bouton suivant
-                  iconL={undefined} iconR={undefined}
-                  label={commande?.remise?.toFixed(2).toString()}
-                  labelColor={'transparent'}
-
-                  onPress={() => {
-                    setModalSignInVisible(false)
-                  }}
-                  onChange={undefined} bgButton={
-                    // Colors.primaryBG
-                    // 'transparent'
-                    undefined
-                  } />
-              </Text>
-
-            </View>
-            <ScrollView contentContainerStyle={{
-              flexGrow: 1,
-              width: MAXWIDTH,
-              maxWidth: '100%',
-              paddingHorizontal: 10,
-              marginHorizontal: 'auto',
-              display: 'flex',
-              // borderColor: 'white',
-              // borderWidth: 5,
-              // borderStyle: 'solid',
-            }} >
-              <View
+    const openModalPanier = () => {
+        return (
+            <Pressable // button open Modal
                 style={{
-                  width: MAXWIDTH,
-                  maxWidth: '100%',
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                  padding: 0,
-                  // borderWidth: 5, borderColor: 'white', borderStyle: 'solid',
+                    width: '100%',
+                    height: '100%',
+                    justifyContent: 'center', alignItems: 'center',
+                    borderWidth: 5, borderColor: 'blue', borderStyle: 'solid',
                 }}
-              >
+                onPress={() => {
+                    setModalPanierVisible(true)
 
-                <ThemedText>SignInComp</ThemedText>
-                 <SignInComp navigation={navigation} route={route} showPanierViewModal={showPanierViewModal} setModalSignInVisible={setModalSignInVisible} scrollY0={scrollY0} scrollX0={scrollX0} commande={commande} />
+                }
 
-              </View>
+                }
+            >
+                <ThemedText>{cart?.length} </ThemedText>
 
-            </ScrollView>
-          </SafeAreaView>
-        </GestureHandlerRootView> */}
 
-      </Modal>
-    </View>
-  );
+            </Pressable>
+        )
+    }
+    const gAuth: any = null
+
+    // Fonction de déconnexion (log out)
+    const handleLogout = () => {
+        console.log("handleLogout")
+        signOut(auth)
+            .then(() => {
+                // Le logout a réussi
+                console.log("Utilisateur déconnecté avec succès.");
+                // Vous pouvez rediriger ou mettre à jour l'UI ici
+                // navigation.navigate('Login'); // Rediriger vers la page de connexion
+            })
+            .catch((error) => {
+                // Gérer les erreurs de déconnexion
+                console.error("Erreur lors de la déconnexion : ", error);
+            });
+    };
+
+    return ( //global
+
+        <View style={{
+            width: '100%', // 50
+            height: '100%', // 50
+            minWidth: 50,
+            minHeight: 50
+        }}>
+
+            {/* <AnalyticsTracker pageView={'ModalSignIn'} /> */}
+
+            {openModalPanier()}
+
+            <Modal // Modal-in
+                animationType="slide" transparent={true} visible={modalPanierVisible}>
+
+                <ThemedView style={{ //cadre principal modal
+                    borderWidth: 3, borderColor: 'yellow', borderStyle: 'solid',
+                    backgroundColor: 'grey',
+                    height: device.height,
+                    width: MAXWIDTH,
+                }}
+                >
+                    <View style={styles0.ModalModelButton}>
+                        {auth.currentUSer == null ?
+                            // <ModalModel myImage={'image'} /> //non connecté
+                            <ModalSignIn myImage={'image'} /> //non connecté
+                            // <Text>non Connecté</Text>
+                            :
+                            // <Text> Connecté</Text>
+
+                            <View style={styles0.Button50}>
+                                {/* <ButtonStd iconL={undefined} iconR={undefined}
+                                        label={'log out'} labelColor={undefined}
+                                        onPress={() => {handleLogout()}} onChange={undefined} bgButton={"coral"}
+                                    /> 
+                                */}
+                                <Text style={{ color: 'white' }}> Connecté 227</Text>
+                            </View>
+
+                        }
+                    </View>
+
+                    <ThemedView style={{
+                        backgroundColor: 'coral',// Colors.primaryBG,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        marginVertical: 10
+                    }}>
+                        <ThemedTitle style={{ fontSize: 30 }}> Modal Panier</ThemedTitle>
+
+                        <Pressable onPress={() => { setModalPanierVisible(false) }}>
+                            <ThemedText>X</ThemedText>
+                        </Pressable>
+
+                    </ThemedView>
+                    {/* <ModalSignIn setModalPanierVisible = {setModalPanierVisible } cart={undefined} addToCart={undefined} removeFromCart={undefined} navigation={undefined} route={undefined} showPanierViewModal={undefined} scrollY0={undefined} scrollX0={undefined} commande={undefined} />  */}
+
+                    <FlatListScrollPanier
+                        articlesListTemp={undefined} PlatsToShowFilteredTemp={cart}
+                        menuN={undefined} menuNImg={undefined}
+                        pdjType={undefined} navigation={undefined}
+                        callbackFn={undefined} route={undefined}
+                        addToCart={addToCart} removeFromCart={removeFromCart} cart={cart} />
+                </ThemedView>
+
+
+            </Modal>
+        </View>
+    );
 }
 
 export default ModalPaniee;
