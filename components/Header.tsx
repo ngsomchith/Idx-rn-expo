@@ -15,18 +15,12 @@ import { Image } from 'react-native';
 import ButtonStd from './ButtonTypeStd';
 import Panier from './articlesQte/Panier';
 import { Colors } from '@/constants/Colors';
-// import ModalPanier from './articlesQte/ModalPanier';
-// import ModalSignIn from './articlesQte/ModalSignIn';
 import ThisDevice from '@/constants/ThisDevice';
 import { myStyles } from './myStyle';
 import ModalPanier from './articlesQte/ModalPanier';
+import MyTitle from './MyTitle';
 
-// interface ContainerProps {
-//     PlatsToShow: Array<ArticleType> | null; //alimenté par panier2
-//     navigation: any;
 
-// }
-// ../config/device
 const Header = ({  articlesList, cart, removeFromCart, addToCart, navigation
 }) => {
 
@@ -196,9 +190,9 @@ const Header = ({  articlesList, cart, removeFromCart, addToCart, navigation
                     display: 'flex'
                 }]}>
                     {/* <ModalGoHome myImage={myImage} /> */}
-                    <Text style={{ color: 'white' }}>MyTitle</Text>
+                    {/* <Text style={{ color: 'white' }}>MyTitle</Text> */}
+                    <MyTitle />
                 </View>
-                {/* <MyTitle /> */}
             </View>
 
             <View style={[ //A droite
@@ -210,11 +204,13 @@ const Header = ({  articlesList, cart, removeFromCart, addToCart, navigation
                     zIndex: 999
                 }
             ]}>
+                
+                {cart.length > 0 &&
                 <ModalPanier addToCart={addToCart} removeFromCart={removeFromCart}
                 cart={cart} navigation={undefined} route={undefined} 
                 showPanierViewModal={undefined} commande={undefined}   
                 scrollY0={undefined} scrollX0={undefined}              
-                /> 
+                /> }
 
 
             </View>

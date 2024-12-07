@@ -6,8 +6,10 @@ import ThisDevice from "@/constants/ThisDevice";
 import { ThemedView } from "../ThemedView";
 import { ThemedTitle } from "../ThemedTitle";
 import { ThemedText } from "../ThemedText";
-import LoginScreen from "@/firebase";
 import { iconLogin, iconUser, iconUsers } from "@/icons";
+import { LoginScreen } from "../LoginScreen";
+import { useAuth } from "../AuthContext";
+import ProfileScreen from "./ProfileScreen";
 
 
 function ModalSignin({ myImage }) {
@@ -24,11 +26,19 @@ function ModalSignin({ myImage }) {
     details: "",
     error: "",
   });
+  const { user } = useAuth();
 
   useEffect(() => {
     console.log("ModalSignin31 value ", value, //Number(value.montantCB).toFixed(2)
     )
   }, [value])
+
+  useEffect(() => {
+    console.log("ModalSignin36 user ", user)
+    if (user) {
+      console.log("ModalSignin36 user ", user.email)
+    }
+  }, [user])
 
   const openModal = () => {
     return (
@@ -46,9 +56,9 @@ function ModalSignin({ myImage }) {
 
     }}> */}
         <ThemedText style={{ display: 'flex', flexDirection: 'row', height: '100%', minWidth: 300 }}>
-          {iconLogin}
+          {!user ? iconLogin : iconUser}
         </ThemedText>
-       
+
 
 
       </Pressable>
@@ -149,7 +159,7 @@ function ModalSignin({ myImage }) {
           borderWidth: 3, borderColor: 'white', borderStyle: 'solid',
         }}>
           <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-           
+
             <Text style={{
               color: 'white', fontSize: 26
             }} > contenu du Modal</Text>
@@ -182,16 +192,16 @@ function ModalSignin({ myImage }) {
   return (
     <View
       style={{
-          backgroundColor: 'transparent',
-          width: '100%',
-          // borderWidth: 3, borderColor: 'pink', borderStyle: 'solid',
-        }
+        backgroundColor: 'transparent',
+        width: '100%',
+        // borderWidth: 3, borderColor: 'pink', borderStyle: 'solid',
+      }
       }
     >
 
 
 
-      {openModal()}
+      { openModal()}
 
       <Modal // Modal-in
         animationType="slide" transparent={true} visible={modalVisible}>
@@ -225,7 +235,11 @@ function ModalSignin({ myImage }) {
           }}
         >
           {/* <LienGoToUrl /> */}
-          <LoginScreen />
+          {!user ?
+            <LoginScreen />
+            :
+            <ProfileScreen />
+          }
         </View>
       </Modal>
     </View>

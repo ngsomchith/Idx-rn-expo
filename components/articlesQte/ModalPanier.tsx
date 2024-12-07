@@ -225,9 +225,7 @@ function ModalPaniee({ cart, addToCart, removeFromCart, navigation, route, showP
                 >
                     <View style={styles0.ModalModelButton}>
                         {auth.currentUSer == null ?
-                            // <ModalModel myImage={'image'} /> //non connecté
                             <ModalSignIn myImage={'image'} /> //non connecté
-                            // <Text>non Connecté</Text>
                             :
                             // <Text> Connecté</Text>
 
