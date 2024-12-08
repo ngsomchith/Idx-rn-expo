@@ -8,6 +8,8 @@ import { myStyles } from '../myStyle';
 import ThisDevice from '@/constants/ThisDevice';
 import ImageViewer from '../ImageViewer';
 import { Colors } from '@/constants/Colors';
+import { iconSearchPlus } from '@/icons';
+import ModalMenuN from './ModalMenuN';
 
 
 const RenderEachArticleInHome = ({
@@ -42,6 +44,10 @@ const RenderEachArticleInHome = ({
     const myWidth = ThisDevice().MAXWIDTH
     const myHeight = ThisDevice().device.height * 1.3
     const myCoeffScreen = myWidth / myHeight
+
+
+
+    const maxHeightArticle = 230
     //===============================================
 
     useEffect(() => {
@@ -82,7 +88,7 @@ const RenderEachArticleInHome = ({
         setQte(menuN.qte)
     }
 
-    function barrePrix(menuN:any) {
+    function barrePrix(menuN: any) {
         return (
             <View style={[ //barre prix qte 
                 // panierView ? styles.dbCol : styles.dbRow,
@@ -110,7 +116,7 @@ const RenderEachArticleInHome = ({
                     // marginHorizontal: 0
                 }]} >
 
-                {/* {menuN &&
+                {menuN &&
                     (menuN.pdjType == 'promoSnack' || menuN.pdjType == 'promoSushi')
                     // menuN.prixbarre && Number(menuN.prixbarre) > 0
                     &&
@@ -134,7 +140,7 @@ const RenderEachArticleInHome = ({
                         {Number(menuN.prixbarre).toFixed(2) + '€'}
                     </Text>
 
-                } */}
+                }
 
                 {menuN &&
                     menuN.pdjType === 'promo'
@@ -150,7 +156,7 @@ const RenderEachArticleInHome = ({
                         color: Colors.primaryText,
                         position: 'absolute',
                         backgroundColor: 'green',
-                        left: 105,
+                        left: 0,
                         top: -20,
                         borderRadius: 5
                     }]}>
@@ -233,25 +239,7 @@ const RenderEachArticleInHome = ({
                             }}> {'-'}
                             </Text>
                         </Pressable>
-
                     </View>
-
-
-                    {/* <Text //qte
-                        style={[styles.input, {
-                            width: '40%',
-                            borderBottomWidth: 10,
-                            color: Colors.primaryText,
-                            borderStyle: 'solid',
-                            // height: 30,
-                            height: '70%',
-                            justifyContent: 'flex-end',
-                            alignItems: 'center',
-                            borderColor: 'white',
-                        }]}
-                    >
-                        {qte}
-                    </Text> */}
 
                     <TextInput //qte
                         style={[styles.input, {
@@ -307,14 +295,13 @@ const RenderEachArticleInHome = ({
                         </Pressable>
 
                     </View>
-
                 </View>
 
             </View>
         )
     }
 
-  
+
 
     const styles0 = StyleSheet.create({
 
@@ -335,88 +322,77 @@ const RenderEachArticleInHome = ({
         },
 
     });
-
     return ( //global
         <View style={{
             display: 'flex', flexDirection: 'row',
             justifyContent: 'flex-start', alignItems: 'flex-start',
             width: '100%',
-            // borderColor: 'white',// menuN.qte > 0 ? Colors.primaryText : Colors.accentBG,
-
-            height: 400
+            maxHeight: maxHeightArticle,
+            height: maxHeightArticle,
+            // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 3,
         }}>
 
-            {!zoomMenuN ?
-                <View  // 
-                    style={[, {
+            <View  // 
+                style={[, {
 
-                        flexDirection: 'row',
-                        // backgroundColor: Colors.primaryBG,
-                        backgroundColor: menuN.qte > 0 ? Colors.highlightBG : Colors.accentBG,
-                        // borderColor: menuN.qte > 0 ? Colors.highlightBG : Colors.accentBG,
-                        borderColor: 'green',
-                        borderStyle: 'solid',
-                        borderWidth: 5,
-                        width: '90%',
-                        padding: 5,
-                        minHeight: 300,
-                        maxHeight: 400,
-                        alignItems: 'flex-start',
-                        justifyContent: 'center',
-                        borderRadius: 10,
-                        display: 'flex',
-                        flexWrap: 'wrap',
+                    flexDirection: 'column',
+                    backgroundColor: menuN.qte > 0 ? Colors.highlightBG : Colors.accentBG,
+                    // borderColor: menuN.qte > 0 ? Colors.highlightBG : Colors.accentBG,
+                    width: '96%',
+                    marginHorizontal: '1%',
+                    paddingHorizontal: 5,
+                    height: maxHeightArticle,
+                    maxHeight: maxHeightArticle,
+                    alignItems: 'flex-start',
+                    justifyContent: 'flex-start',
+                    borderRadius: 10,
+                    display: 'flex',
+                    flexWrap: 'nowrap',
+                    borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
 
-                    }]
-                    }  >
-
+                }]
+                }  >
+                    <ModalMenuN menuN={menuN} />
+                {/* <View style={{
+                     flexWrap:'nowrap',width:'100%',
+                        borderColor: 'yellow', borderStyle: 'solid', borderWidth: 3,
+                }}>
                     <Text style={[styles.titreArticle, { //name
                         color: Colors.primaryText,
                         width: '100%',
-                        // width: panierView ? '45%' : '100%',
-                        // fontSize: panierView ? 14 : 18,
-                        marginVertical: 5,
-                        justifyContent: 'center',
-                        // borderColor: 'purple',
-                        // borderStyle: 'solid',
-                        // borderWidth: 3,
+                        fontSize: 16,  //panierView ? 14 : 18,
+                        margin: 0,
+                        justifyContent: 'flex-start',
+                        textAlign: 'left',
                         overflow: 'hidden',
                         alignItems: 'flex-start',
-                        // maxHeight: MAXWIDTH < 400 || myCoeffScreen < 1 ? 100 : 50,
-                        maxHeight: 65,
+                        padding: 0,
+                        maxHeight: 60,
                     }]}>
                         {menuN?.name}
                     </Text>
 
                     <View style={{ // container d' imageViewer & figCaption
-                        width: '100%', // MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '60%',
+                        width: '100%',
                         // marginHorizontal:10,
-                        height: 200,
+                        height: 90,
                         display: 'flex',
                         flexWrap: 'nowrap',
                         flexDirection: 'column',
                         alignItems: 'flex-start',
                         justifyContent: 'flex-start',
-                        // borderRadius: 10,
-                        // borderColor: 'red',
-                        // borderStyle: 'solid',
-                        // borderWidth: 8,
+                        // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 3,
                     }}>
                         <Pressable // imageViewer & figCaption
                             style={[styles.containerRowArticle, {
-                                borderColor: 'red',
-                                borderStyle: 'solid',
-                                borderWidth: 3,
                                 backgroundColor: Colors.accentBG,
                                 width: '98%',
                                 marginHorizontal: '1%',
                                 marginVertical: 0,
                                 borderRadius: 10,
-                                height: 100,
+                                height: 80,
                                 display: 'flex',
                                 flexWrap: 'nowrap',
-                                // flexDirection:  MAXWIDTH < 400  || myCoeffScreen <1 ?  'column' : 'row' ,
-
                                 flexDirection: 'column',
                                 justifyContent: 'space-between',
                                 alignItems: 'flex-start'
@@ -430,55 +406,53 @@ const RenderEachArticleInHome = ({
                         >
 
                             <View style={[styles.figure, { //ImageViewer
-                                // paddingLeft: 10,
-                                minWidth: MAXWIDTH < 400 || myCoeffScreen < 1 ? '50%' : '50%',
-                                // height: MAXWIDTH < 400  || myCoeffScreen <1 ? '90%' : '100%',
-                                minHeight: 130,
+                                minHeight: 80,
                                 marginVertical: 0,
-                                borderColor: 'white',  // MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'grey',
-                                borderStyle: 'solid',
-                                borderWidth: 2,
+                                maxWidth: '100%',
+                                maxHeight: 50,
                                 alignItems: 'flex-start',
                                 justifyContent: 'flex-start',
-                                display: 'flex'
+                                display: 'flex',
+                                position: 'relative'
                             }]}>
 
+                                <Text style={{
+                                    position: 'absolute',
+                                    color: 'white',
+                                    fontWeight: '600',
+                                    right: 0,
+                                    zIndex: 999,
+                                    // borderColor: 'yellow', borderStyle: 'solid',borderWidth: 2,
+                                }}>
+                                    {iconSearchPlus}
+                                </Text>
                                 <ImageViewer placeholderImageSource={menuNImg} />
 
                             </View>
 
                             <View style={[styles.figcaption, {
-                                width: '100%', // MAXWIDTH < 400 || myCoeffScreen < 1 ? '45%' : '90%',
-                                maxHeight: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : 70,
-                                // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '20%',
-                                minHeight: 80,
-                                paddingVertical: 10,
+                                width: '100%',
+                                minHeight: 30,
                                 flex: 1,
                                 display: 'flex',
-                                minWidth: '45%',
-                                justifyContent: 'space-between',
-
-                                borderColor: 'pink',// MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'coral',
-                                borderStyle: 'solid',
-                                borderWidth: 2
+                                maxHeight: 50,
+                                overflow: 'hidden',
+                                justifyContent: 'flex-end',
+                                alignItems: 'flex-end',
+                                position: 'absolute',
+                                bottom: -40,
+                                backgroundColor: Colors.highlightBG,
+                                marginVertical: 10,
                             }]} >
 
                                 <Text style={[
                                     styles.texteArticle, {
-                                        // minHeight: 100,
-                                        // paddingHorizontal: 10,
-                                        // marginHorizontal: '5%',
                                         maxWidth: '90%',
-                                        // height:50,
                                         flex: 1,
                                         overflow: 'hidden',
                                         color: 'white',
                                         justifyContent: 'flex-start',
-                                        fontSize: 16,
-                                        borderColor: 'purple',// MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'coral',
-                                        borderStyle: 'solid',
-                                        borderWidth: 2
-
+                                        fontSize: 14,
                                     }
                                 ]}>
                                     {menuN?.description}
@@ -487,12 +461,7 @@ const RenderEachArticleInHome = ({
                                 {menuN?.pdjType != 'tlj' && menuN?.date != '' ? //|| varparam == 'prochainsjours'
                                     <View style={[styles.dbCol, {
 
-                                        borderColor: 'turquoise',// MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'coral',
-                                        borderStyle: 'solid',
-                                        borderWidth: 1,
-                                        minHeight: 10
                                     }]} >
-                                        {/* <Text style={{color:'white'}}>221{menuN?.date} </Text> */}
                                         {(
                                             (menuN?.pdjType == 'pdj')
                                             && menuN?.date != null && menuN?.date != '' && menuN?.date != 'Jour ?' && menuN?.date != todayfr10
@@ -501,7 +470,6 @@ const RenderEachArticleInHome = ({
                                                 backgroundColor: Colors.highlightBG,
                                                 color: Colors.primaryText
                                             }]}>
-                                                {/* 312 */}
                                                 {menuN?.date}
                                             </Text>
                                         }
@@ -525,21 +493,10 @@ const RenderEachArticleInHome = ({
                                             <Text style={[styles.texteArticleRenderJour, {
                                                 backgroundColor: Colors.highlightBG,
                                             }]}>
-                                                {/* 336 */}
-                                                {/* Plat Du Jour */}
-                                                {/* {menuN?.date + '|'+todayfr10} */}
                                                 {menuN?.date}
                                             </Text>
 
                                         }
-                                        {/* {(menuN?.pdjType == 'pdj' && menuN?.date == null) &&
-                                        <Text style={[styles.texteArticleRenderJour, {
-                                            backgroundColor: Colors.highlightBG
-                                        }]}>
-                                            346
-                                            {menuN.date = null ? '.. / .. / ..' : menuN?.date}
-                                        </Text>
-                                    } */}
 
                                         {
                                             menuN?.pdjType == 'pdjs' && menuN?.date == null &&
@@ -573,14 +530,256 @@ const RenderEachArticleInHome = ({
 
                         </Pressable>
                     </View>
-                    {barrePrix(menuN)}
-                </View>
-                :
-                <Text>barrePrix</Text>
-                // barrePrix(menuN)
-            }
+                </View> */}
+                {barrePrix(menuN)}
+
+            </View>
+
         </View>
     );
+
+    // return ( //global
+    //     <View style={{
+    //         display: 'flex', flexDirection: 'row',
+    //         justifyContent: 'flex-start', alignItems: 'flex-start',
+    //         width: '100%',
+    //         // borderColor: 'white',// menuN.qte > 0 ? Colors.primaryText : Colors.accentBG,
+
+    //         height: 400
+    //     }}>
+
+    //             <View  // 
+    //                 style={[, {
+
+    //                     flexDirection: 'row',
+    //                     // backgroundColor: Colors.primaryBG,
+    //                     backgroundColor: menuN.qte > 0 ? Colors.highlightBG : Colors.accentBG,
+    //                     // backgroundColor: menuN.qte > 0 ? Colors.highlightBG : 'orange',
+    //                     borderColor: 'green',
+    //                     borderStyle: 'solid',
+    //                     borderWidth: 5,
+    //                     width: '90%',
+    //                     padding: 5,
+    //                     minHeight: 300,
+    //                     maxHeight: 400,
+    //                     alignItems: 'flex-start',
+    //                     justifyContent: 'center',
+    //                     borderRadius: 10,
+    //                     display: 'flex',
+    //                     flexWrap: 'wrap',
+
+    //                 }]
+    //                 }  >
+
+    //                 <Text style={[styles.titreArticle, { //name
+    //                     color: Colors.primaryText,
+    //                     width: '100%',
+    //                     // width: panierView ? '45%' : '100%',
+    //                     // fontSize: panierView ? 14 : 18,
+    //                     marginVertical: 5,
+    //                     justifyContent: 'center',
+    //                     // borderColor: 'purple',
+    //                     // borderStyle: 'solid',
+    //                     // borderWidth: 3,
+    //                     overflow: 'hidden',
+    //                     alignItems: 'flex-start',
+    //                     // maxHeight: MAXWIDTH < 400 || myCoeffScreen < 1 ? 100 : 50,
+    //                     maxHeight: 65,
+    //                 }]}>
+    //                     {menuN?.name}
+    //                 </Text>
+
+    //                 <View style={{ // container d' imageViewer & figCaption
+    //                     width: '100%', // MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '60%',
+    //                     // marginHorizontal:10,
+    //                     height: 200,
+    //                     display: 'flex',
+    //                     flexWrap: 'nowrap',
+    //                     flexDirection: 'column',
+    //                     alignItems: 'flex-start',
+    //                     justifyContent: 'flex-start',
+    //                     // borderRadius: 10,
+    //                     // borderColor: 'red',
+    //                     // borderStyle: 'solid',
+    //                     // borderWidth: 8,
+    //                 }}>
+    //                     <Pressable // imageViewer & figCaption
+    //                         style={[styles.containerRowArticle, {
+    //                             borderColor: 'red',
+    //                             borderStyle: 'solid',
+    //                             borderWidth: 3,
+    //                             backgroundColor: Colors.accentBG,
+    //                             width: '98%',
+    //                             marginHorizontal: '1%',
+    //                             marginVertical: 0,
+    //                             borderRadius: 10,
+    //                             height: 100,
+    //                             display: 'flex',
+    //                             flexWrap: 'nowrap',
+    //                             // flexDirection:  MAXWIDTH < 400  || myCoeffScreen <1 ?  'column' : 'row' ,
+
+    //                             flexDirection: 'column',
+    //                             justifyContent: 'space-between',
+    //                             alignItems: 'flex-start'
+    //                         }]}
+    //                         // onPress={() => callbackFn(true, menuN, idx, false)}
+
+    //                         onPress={() => {
+    //                             // setViewModal(true),
+    //                             //     setcurrentMenuN(menuN)
+    //                         }}
+    //                     >
+
+    //                         <View style={[styles.figure, { //ImageViewer
+    //                             // paddingLeft: 10,
+    //                             minWidth: MAXWIDTH < 400 || myCoeffScreen < 1 ? '50%' : '50%',
+    //                             // height: MAXWIDTH < 400  || myCoeffScreen <1 ? '90%' : '100%',
+    //                             minHeight: 130,
+    //                             marginVertical: 0,
+    //                             borderColor: 'white',  // MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'grey',
+    //                             borderStyle: 'solid',
+    //                             borderWidth: 2,
+    //                             alignItems: 'flex-start',
+    //                             justifyContent: 'flex-start',
+    //                             display: 'flex'
+    //                         }]}>
+
+    //                             <ImageViewer placeholderImageSource={menuNImg} />
+
+    //                         </View>
+
+    //                         <View style={[styles.figcaption, {
+    //                             width: '100%', // MAXWIDTH < 400 || myCoeffScreen < 1 ? '45%' : '90%',
+    //                             maxHeight: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : 70,
+    //                             // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '20%',
+    //                             minHeight: 80,
+    //                             paddingVertical: 10,
+    //                             flex: 1,
+    //                             display: 'flex',
+    //                             minWidth: '45%',
+    //                             justifyContent: 'space-between',
+
+    //                             borderColor: 'pink',// MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'coral',
+    //                             borderStyle: 'solid',
+    //                             borderWidth: 2
+    //                         }]} >
+
+    //                             <Text style={[
+    //                                 styles.texteArticle, {
+    //                                     // minHeight: 100,
+    //                                     // paddingHorizontal: 10,
+    //                                     // marginHorizontal: '5%',
+    //                                     maxWidth: '90%',
+    //                                     // height:50,
+    //                                     flex: 1,
+    //                                     overflow: 'hidden',
+    //                                     color: 'white',
+    //                                     justifyContent: 'flex-start',
+    //                                     fontSize: 16,
+    //                                     borderColor: 'purple',// MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'coral',
+    //                                     borderStyle: 'solid',
+    //                                     borderWidth: 2
+
+    //                                 }
+    //                             ]}>
+    //                                 {menuN?.description}
+    //                             </Text>
+
+    //                             {menuN?.pdjType != 'tlj' && menuN?.date != '' ? //|| varparam == 'prochainsjours'
+    //                                 <View style={[styles.dbCol, {
+
+    //                                     borderColor: 'turquoise',// MAXWIDTH < 400  || myCoeffScreen <1 ? 'pink' : 'coral',
+    //                                     borderStyle: 'solid',
+    //                                     borderWidth: 1,
+    //                                     minHeight: 10
+    //                                 }]} >
+    //                                     {/* <Text style={{color:'white'}}>221{menuN?.date} </Text> */}
+    //                                     {(
+    //                                         (menuN?.pdjType == 'pdj')
+    //                                         && menuN?.date != null && menuN?.date != '' && menuN?.date != 'Jour ?' && menuN?.date != todayfr10
+    //                                     ) &&
+    //                                         <Text style={[styles.texteArticleRenderJour, {//date
+    //                                             backgroundColor: Colors.highlightBG,
+    //                                             color: Colors.primaryText
+    //                                         }]}>
+    //                                             {/* 312 */}
+    //                                             {menuN?.date}
+    //                                         </Text>
+    //                                     }
+
+    //                                     {(
+    //                                         (menuN?.pdjType == 'pdjs') && menuN?.date != ''
+    //                                         && menuN?.date != null && menuN?.date != 'Jour ?'
+    //                                         && menuN?.date != todayfr10
+    //                                     ) &&
+    //                                         <Text style={[styles.texteArticleRenderJour, {
+    //                                             backgroundColor: Colors.highlightBG,
+    //                                         }]}>
+    //                                             325
+    //                                             {menuN?.date}
+    //                                         </Text>
+    //                                     }
+
+    //                                     {(menuN?.pdjType == 'pdj' && menuN?.date && menuN?.date == todayfr10) &&
+
+
+    //                                         <Text style={[styles.texteArticleRenderJour, {
+    //                                             backgroundColor: Colors.highlightBG,
+    //                                         }]}>
+    //                                             {/* 336 */}
+    //                                             {/* Plat Du Jour */}
+    //                                             {/* {menuN?.date + '|'+todayfr10} */}
+    //                                             {menuN?.date}
+    //                                         </Text>
+
+    //                                     }
+    //                                     {/* {(menuN?.pdjType == 'pdj' && menuN?.date == null) &&
+    //                                     <Text style={[styles.texteArticleRenderJour, {
+    //                                         backgroundColor: Colors.highlightBG
+    //                                     }]}>
+    //                                         346
+    //                                         {menuN.date = null ? '.. / .. / ..' : menuN?.date}
+    //                                     </Text>
+    //                                 } */}
+
+    //                                     {
+    //                                         menuN?.pdjType == 'pdjs' && menuN?.date == null &&
+    //                                         !(menuN?.pdjType == 'pdj' && menuN?.date == todayfr10) &&
+    //                                         <Text style={[styles.texteArticleRenderJour, {
+    //                                             backgroundColor: Colors.highlightBG,
+    //                                         }]}>
+    //                                             386
+    //                                             {menuN?.date} </Text>
+    //                                     }
+
+    //                                 </View>
+    //                                 :
+
+    //                                 <>
+    //                                     {
+    //                                         menuN?.date != null && menuN?.date != '' && menuN?.date != 'Jour ?' &&
+
+    //                                         <Text style={[styles.texteArticle,
+    //                                         { fontSize: 30 },
+    //                                         { backgroundColor: Colors.highlightBG },
+    //                                         { color: 'white' }]} >
+    //                                             372
+    //                                             {menuN?.date}
+    //                                         </Text>
+    //                                     }
+
+    //                                 </>
+    //                             }
+    //                         </View>
+
+    //                     </Pressable>
+    //                 </View>
+
+
+    //                 {barrePrix(menuN)}
+    //             </View>
+    //     </View>
+    // );
 };
 
 export default RenderEachArticleInHome;

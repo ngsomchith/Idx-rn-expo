@@ -209,8 +209,8 @@ const ArticlesQteToShow = ({articlesList, addToCart, removeFromCart, cart }) => 
                   {
                     marginBottom: 2,
                     // width: MAXWIDTH * .45,
-                    maxWidth: 250,
-                    minWidth: 250,
+                    maxWidth: 180,
+                    minWidth: 180,
                     margin: 0,
                     minHeight: articlesMenu?.length > 0 ? 160 : 0,
                     maxHeight: '100%',
