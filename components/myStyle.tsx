@@ -401,7 +401,7 @@ export const myStyles = StyleSheet.create({
     minWidth: '100%',
     // backgroundColor: '#25292e',
     backgroundColor: '#fff',
-    height: '',
+    // height: '',
     // maxHeight: 80,
     paddingRight: 10,
     justifyContent: 'space-between',
@@ -491,7 +491,7 @@ export const myStyles = StyleSheet.create({
     // borderStyle: 'solid',
     // borderWidth: 0,
     width: '40%',
-    padding:5,
+    // padding:5,
     // fontSize :23
   },
   modalContent : {

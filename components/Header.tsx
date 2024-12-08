@@ -205,7 +205,7 @@ const Header = ({  articlesList, cart, removeFromCart, addToCart, navigation
                 }
             ]}>
                 
-                {cart.length > 0 &&
+                {cart && cart.length > 0 &&
                 <ModalPanier addToCart={addToCart} removeFromCart={removeFromCart}
                 cart={cart} navigation={undefined} route={undefined} 
                 showPanierViewModal={undefined} commande={undefined}   

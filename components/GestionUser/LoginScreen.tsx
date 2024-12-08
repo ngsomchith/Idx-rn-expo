@@ -1,15 +1,18 @@
 import { FirebaseInit, signInWithEmailAndPassword } from "@/constants/firebaseConfig";
 import { useEffect, useState } from "react";
 import { View, Text, TextInput, Button, Alert, StyleSheet, Platform } from 'react-native';
-import { ThemedView } from "./ThemedView";
-import { ThemedTitle } from "./ThemedTitle";
-import { ThemedInput } from "./ThemedInput";
-import { useAuth } from "./AuthContext";
-import { thisClone } from "./services/DataServices";
+import { ThemedView } from "../ThemedView";
+import { ThemedTitle } from "../ThemedTitle";
+import { ThemedInput } from "../ThemedInput";
+import { useAuth } from "../../app/AuthContext";
+import { thisClone } from "../services/DataServices";
 
 export const LoginScreen = () => {
 
-  const { login, currentUser } = useAuth();
+  const { 
+    login, currentUser,
+    modalSignInVisible, setModalSignInVisible
+} = useAuth();
     let currentUserTemp = thisClone(currentUser)
     const myApp = FirebaseInit()
     const [email, setEmail] = useState('');
@@ -24,7 +27,7 @@ export const LoginScreen = () => {
              
                 currentUserTemp = userCredential.user
                 console.log("user ProfileScreen 24", currentUserTemp)
-             
+                setModalSignInVisible(false)
             login(userCredential.user)
         } catch (error) {
             window.alert('Erreur', error?.message);

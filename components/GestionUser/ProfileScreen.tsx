@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Text, Button, View } from 'react-native';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../../app/AuthContext';
 
 const ProfileScreen: React.FC = () => {
   const { currentUser, logout } = useAuth();

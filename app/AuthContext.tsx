@@ -6,7 +6,7 @@ import { getItems, myApp } from '@/firebase';
 import { FirebaseInit } from '@/constants/firebaseConfig';
 import { getAuth } from 'firebase/auth';
 import { UserType } from '@/app/models/UserType';
-import { thisClone } from './services/DataServices';
+import { thisClone } from '../components/services/DataServices';
 
 // Type de données utilisateur
 // interface User {
@@ -23,6 +23,8 @@ interface AuthContextType {
   logout: () => void; // Fonction pour déconnecter
   loading: boolean
   auth :any
+  closeModalSignIn: boolean
+  modalSignInVisible:any, setModalSignInVisible:any
 }
 
 // Crée le contexte avec une valeur par défaut
@@ -32,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const  [modalSignInVisible, setModalSignInVisible] =  useState(false)
 
   const login = (userData: UserType) => {
     setUser(userData);
@@ -79,8 +81,8 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ 
-      currentUser, login, logout , user, loading, auth
-      
+      currentUser, login, logout , user, loading, auth,
+      modalSignInVisible, setModalSignInVisible,
       }}>
       {children}
     </AuthContext.Provider>

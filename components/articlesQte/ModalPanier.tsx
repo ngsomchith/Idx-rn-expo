@@ -24,7 +24,7 @@ import { Colors } from '@/constants/Colors';
 
 import { ThemedTitle } from '../ThemedTitle';
 import { signOut } from 'firebase/auth';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../../app/AuthContext';
 import { myApp } from '@/constants/firebaseConfig';
 import ModalModel from '../ModalModel';
 import ModalSignIn from '../GestionUser/ModalSignIn';

@@ -1,0 +1,42 @@
+[debug] [2024-12-08T01:36:38.092Z] ----------------------------------------------------------------------
+[debug] [2024-12-08T01:36:38.093Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only hosting:sitedist
+[debug] [2024-12-08T01:36:38.094Z] CLI Version:   13.27.0
+[debug] [2024-12-08T01:36:38.094Z] Platform:      darwin
+[debug] [2024-12-08T01:36:38.094Z] Node Version:  v21.6.2
+[debug] [2024-12-08T01:36:38.094Z] Time:          Sun Dec 08 2024 02:36:38 GMT+0100 (heure normale d’Europe centrale)
+[debug] [2024-12-08T01:36:38.094Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-12-08T01:36:38.096Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2024-12-08T01:36:38.157Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-12-08T01:36:38.157Z] > authorizing via signed-in user (delicatessen.cloud@gmail.com)
+[debug] [2024-12-08T01:36:38.157Z] [iam] checking project delicatessencloud for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2024-12-08T01:36:38.157Z] Checked if tokens are valid: false, expires at: 1733525375702
+[debug] [2024-12-08T01:36:38.157Z] Checked if tokens are valid: false, expires at: 1733525375702
+[debug] [2024-12-08T01:36:38.158Z] > refreshing access token with scopes: []
+[debug] [2024-12-08T01:36:38.158Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2024-12-08T01:36:38.158Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-12-08T01:36:38.301Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2024-12-08T01:36:38.301Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-12-08T01:36:38.316Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/delicatessencloud:testIamPermissions [none]
+[debug] [2024-12-08T01:36:38.316Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/delicatessencloud:testIamPermissions x-goog-quota-user=projects/delicatessencloud
+[debug] [2024-12-08T01:36:38.316Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/delicatessencloud:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-12-08T01:36:38.450Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2024-12-08T01:36:38.450Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2024-12-08T01:36:39.210Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/delicatessencloud:testIamPermissions 200
+[debug] [2024-12-08T01:36:39.210Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/delicatessencloud:testIamPermissions {}
+[debug] [2024-12-08T01:36:39.210Z] [iam] error while checking permissions, command may fail: Authorization failed. This account is missing the following required permissions on project delicatessencloud:
+
+  firebase.projects.get
+  firebasehosting.sites.update
+[debug] [2024-12-08T01:36:39.210Z] Checked if tokens are valid: true, expires at: 1733625397301
+[debug] [2024-12-08T01:36:39.210Z] Checked if tokens are valid: true, expires at: 1733625397301
+[debug] [2024-12-08T01:36:39.211Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/delicatessencloud [none]
+[debug] [2024-12-08T01:36:39.541Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/delicatessencloud 403
+[debug] [2024-12-08T01:36:39.541Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/delicatessencloud {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2024-12-08T01:36:39.542Z] Request to https://firebase.googleapis.com/v1beta1/projects/delicatessencloud had HTTP Error: 403, The caller does not have permission
+[debug] [2024-12-08T01:36:39.652Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects/delicatessencloud had HTTP Error: 403, The caller does not have permission
+    at responseToError (/usr/local/lib/node_modules/firebase-tools/lib/responseToError.js:52:12)
+    at RetryOperation._fn (/usr/local/lib/node_modules/firebase-tools/lib/apiv2.js:312:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to get Firebase project delicatessencloud. Please make sure the project exists and your account has permission to access it.

@@ -9,7 +9,7 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { AuthProvider } from '@/components/AuthContext';
+import { AuthProvider } from '@/app/AuthContext';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
