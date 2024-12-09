@@ -43,7 +43,7 @@ export default function PickerPageName({callback}) {
         container: {
             zIndex: 9,
             height:40,
-            width: '100%',
+            width: '50%',
             // padding: 20,
             backgroundColor: Colors.highlightBG,
         },
