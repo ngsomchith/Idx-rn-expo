@@ -51,8 +51,8 @@ function ModalMenuN({ menuN }) {
 
 
   useEffect(() => {
-    console.log("ModalMenuN31 value ", value, //Number(value.montantCB).toFixed(2)
-    )
+    // console.log("ModalMenuN31 value ", value, //Number(value.montantCB).toFixed(2)
+    // )
   }, [value])
 
   const openModal0 = () => {

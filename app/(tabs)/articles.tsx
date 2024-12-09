@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import Header from '@/components/Header';
 import { ArticleType } from '../models/ArticleType';
 import { useFb } from '@/hooks/useFb';
+import PickerPageName from '@/components/articlesQte/PickerPageName';
 
 export default function TabTwoScreen() {
 
@@ -66,10 +67,65 @@ export default function TabTwoScreen() {
   const widthMobile = 650
   const widthMobileOrWeb = MAXWIDTH > widthMobile ? '40%' : '100%'
 
-  return (
+
+  const callBackFromPickerName = (data: any) => {
+    console.log('callBackFromPickerName articles 72', data)
+
+    // if (data == 'Sushi') {
+    //   setPageNameCallBack(data)
+    //   console.log('handlePageChangeCallBackFromMySearch', data)
+    //   setPdjTitleObject2(pdjTitleSushi)
+    //   setArticlesListByCat2(pdjTitleSushi)
+    // }
+
+    // if (data == 'Traditionnel') {
+    //   setPageNameCallBack('Plats Traditionnels')
+    //   console.log('handlePageChangeCallBackFromMySearch', data)
+    //   setPdjTitleObject2(pdjTitleTradit)
+    //   setArticlesListByCat2(pdjTitleTradit)
+    // }
+
+    // if (data == 'FullCategoryScreen') {
+    //   setPageNameCallBack('Tous nos Plats')
+    //   console.log('handlePageChangeCallBackFromMySearch', data)
+    //   setPdjTitleObject2(pdjTitleObject0)
+    //   setArticlesListByCat2(pdjTitleObject0)
+    //   console.log("FullCategoryScreen : pdjTitleObject0 ", data, pdjTitleObject0)
+    // }
+
+    // if (data == 'pagePromotion') {
+    //   setPageNameCallBack('Promotions en cours')
+    //   setPdjTitleObject2(pdjTitlePromo)
+    //   setArticlesListByCat2(pdjTitlePromo)
+    // }
+
+    // if (data == 'TopVenteScreen') {
+    //   setPageNameCallBack('Meilleures Ventes')
+    //   setPdjTitleObject2(pdjTitleTopV)
+    //   setArticlesListByCat2(pdjTitleTopV)
+    // }
+
+    // if (data == 'TopVenteScreen1Article') {
+    //   console.log("currentScreen940", currentScreen, ':', articlesListByCat)
+    //   setPageNameCallBack('Meilleures Ventes')
+    //   setPdjTitleObject2(pdjTitleTopV)
+    //   setArticlesListByCat2(pdjTitleTopV)
+    // }
+
+    // if (data == 'TopVenteScreenArticle2') {
+    //   console.log("currentScreen940", currentScreen, ':', articlesListByCat)
+    //   setPageNameCallBack('Meilleures Ventes')
+    //   setPdjTitleObject2(pdjTitleTopV)
+    //   setArticlesListByCat2(pdjTitleTopV)
+    // }
+
+  }
+
+
+
+  return ( // global
 
     
-
       <View style={{ 
         width: MAXWIDTH,
         maxWidth:'100%',
@@ -87,6 +143,7 @@ export default function TabTwoScreen() {
 
          navigation={undefined} route={undefined} callback={undefined} showPanierViewModal={undefined} scrollY0={undefined} scrollX0={undefined} commande={undefined}
       />
+      <PickerPageName callback={callBackFromPickerName} />
         <ArticlesQteToShow articlesList = {articlesList} addToCart = {addToCart} removeFromCart = {removeFromCart}  cart= {cart} />
       </View>
      
