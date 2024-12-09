@@ -122,14 +122,14 @@ export  const pdjTitleObject0 = [ //sert pour générer CategoryNameList et cate
 
   export const pdjTitleSushi =[
 
-    {
-      'promoOff': {
-        key: 'PromoOff',
-        name: 'Promotion expirée',
-        detail: 'obsolète',
-        scrollYpos: 0
-      }
-    },
+    // {
+    //   'promoOff': {
+    //     key: 'PromoOff',
+    //     name: 'Promotion expirée',
+    //     detail: 'obsolète',
+    //     scrollYpos: 0
+    //   }
+    // },
     {
       // key: 'prom',
       key: 'promo',
@@ -188,21 +188,21 @@ export  const pdjTitleObject0 = [ //sert pour générer CategoryNameList et cate
     },
   ]
   export  const pdjTitleTradit = [
-    {
-      'promoOff': {
-        key: 'PromoOff',
-        name: 'Promotion expirée',
-        detail: 'obsolète',
-        scrollYpos: 0
-      }
-    },
-    {
-      // key: 'prom',
-      key: 'promo',
-      name: '1 Acheté = 1 Offert',
-      detail: "WEB exclusivement",
-      scrollYpos: 0
-    },
+    // {
+    //   'promoOff': {
+    //     key: 'PromoOff',
+    //     name: 'Promotion expirée',
+    //     detail: 'obsolète',
+    //     scrollYpos: 0
+    //   }
+    // },
+    // {
+    //   // key: 'prom',
+    //   key: 'promo',
+    //   name: '1 Acheté = 1 Offert',
+    //   detail: "WEB exclusivement",
+    //   scrollYpos: 0
+    // },
     {
       // key: 'prom',
       key: 'promoSnack',

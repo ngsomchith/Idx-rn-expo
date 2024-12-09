@@ -23,12 +23,13 @@ export default function PickerPageName({callback}) {
         switch (value) {
             case 'table1':
                 console.log('table1', 'Traditionnels')
-                callback(pdjTitleTradit)
+                // const data = []
+                callback(['Traditionnels', pdjTitleTradit])
                 break;
 
             case 'table2':
                 console.log('table2','Sushi')
-                callback(pdjTitleSushi)
+                callback(['Sushi',pdjTitleSushi])
                 break;
         
             default:

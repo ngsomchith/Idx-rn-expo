@@ -17,7 +17,7 @@ import PickerPageName from '@/components/articlesQte/PickerPageName';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Colors } from "@/constants/Colors";
 import { Icon } from 'react-native-elements';
-import { pdjTitleSushi } from '@/components/articlesQte/pdjTitleObject0';
+import { pdjTitleSushi, pdjTitleTradit } from '@/components/articlesQte/pdjTitleObject0';
 
 export default function TabTwoScreen() {
 
@@ -72,58 +72,31 @@ export default function TabTwoScreen() {
   const widthMobileOrWeb = MAXWIDTH > widthMobile ? '40%' : '100%'
 
 
+  const [categoryName, setcategoryName] = useState('')
+  const [pdjRayon, setPdjRayon] = useState([])
+
   const callBackFromPickerName = (data: any) => {
     console.log('callBackFromPickerName articles 72', data)
 
-    // if (data == 'Sushi') {
-    //   setPageNameCallBack(data)
-    //   console.log('handlePageChangeCallBackFromMySearch', data)
-    //   setPdjTitleObject2(pdjTitleSushi)
-    //   setArticlesListByCat2(pdjTitleSushi)
-    // }
+    // const myDocs:any =[]
+    // data.forEach((element:any) => {
+    //   console.log("callBackFromPickerName ", element)
+    //   myDocs.push(element)
+    // });
 
-    // if (data == 'Traditionnel') {
-    //   setPageNameCallBack('Plats Traditionnels')
-    //   console.log('handlePageChangeCallBackFromMySearch', data)
-    //   setPdjTitleObject2(pdjTitleTradit)
-    //   setArticlesListByCat2(pdjTitleTradit)
-    // }
+    // console.log('myDocs', myDocs)
+    console.log('setPdjRayon /  data[0]', data[0])
+    setcategoryName(data[0])
+    if(data[1] && data[1].length>0){
+      console.log('setPdjRayon /  data[1]', data[1])
+      setPdjRayon(data[1])
+    }else{
+      console.log('setPdjRayon length  /  data[1]', data[1].length)
+    }
 
-    // if (data == 'FullCategoryScreen') {
-    //   setPageNameCallBack('Tous nos Plats')
-    //   console.log('handlePageChangeCallBackFromMySearch', data)
-    //   setPdjTitleObject2(pdjTitleObject0)
-    //   setArticlesListByCat2(pdjTitleObject0)
-    //   console.log("FullCategoryScreen : pdjTitleObject0 ", data, pdjTitleObject0)
-    // }
-
-    // if (data == 'pagePromotion') {
-    //   setPageNameCallBack('Promotions en cours')
-    //   setPdjTitleObject2(pdjTitlePromo)
-    //   setArticlesListByCat2(pdjTitlePromo)
-    // }
-
-    // if (data == 'TopVenteScreen') {
-    //   setPageNameCallBack('Meilleures Ventes')
-    //   setPdjTitleObject2(pdjTitleTopV)
-    //   setArticlesListByCat2(pdjTitleTopV)
-    // }
-
-    // if (data == 'TopVenteScreen1Article') {
-    //   console.log("currentScreen940", currentScreen, ':', articlesListByCat)
-    //   setPageNameCallBack('Meilleures Ventes')
-    //   setPdjTitleObject2(pdjTitleTopV)
-    //   setArticlesListByCat2(pdjTitleTopV)
-    // }
-
-    // if (data == 'TopVenteScreenArticle2') {
-    //   console.log("currentScreen940", currentScreen, ':', articlesListByCat)
-    //   setPageNameCallBack('Meilleures Ventes')
-    //   setPdjTitleObject2(pdjTitleTopV)
-    //   setArticlesListByCat2(pdjTitleTopV)
-    // }
 
   }
+
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -181,7 +154,7 @@ export default function TabTwoScreen() {
         setValue={setValue}
         // setItems={setItems}
         style={styles.dropdown}
-        placeholder="Catégorie : "
+        placeholder= {"Choississez"} 
         dropDownContainerStyle={styles.dropdownContainer}
         textStyle={styles.text}
         placeholderStyle={styles.placeholder}
@@ -268,8 +241,10 @@ export default function TabTwoScreen() {
       />
       <View style={{width:'100%', flexDirection:'row', zIndex:9}}>
       <PickerPageName callback={callBackFromPickerName} />
-      {/* <PickerPageName callback={callBackFromPickerName} /> */}
-      <DropDownMenu pdjRayon={pdjTitleSushi} />
+     
+      {/* {pdjRayon && pdjRayon.length>0 &&  <DropDownMenu pdjRayon={pdjRayon && pdjRayon.length>0} />} */}
+      {categoryName ==='Sushi' && <DropDownMenu pdjRayon={pdjTitleSushi} />}
+        {categoryName ==='Traditionnels' && <DropDownMenu pdjRayon={pdjTitleTradit} />}
       </View>
       <ArticlesQteToShow articlesList={articlesList} addToCart={addToCart} removeFromCart={removeFromCart} cart={cart} />
     </View>
