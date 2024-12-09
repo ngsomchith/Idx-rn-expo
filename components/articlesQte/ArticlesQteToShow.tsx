@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Button, View, Text, ScrollView, Pressable, SafeAreaView, ActivityIndicator, RefreshControl } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
 
 import { ArticleType } from '@/app/models/ArticleType';
 import ThisDevice from '@/constants/ThisDevice';
@@ -7,334 +7,194 @@ import { Colors } from '@/constants/Colors';
 import { generateObjectToKeyAndNameWithDetail } from '../services/DataServices';
 import { pdjTitleSushi, pdjTitleTradit } from './pdjTitleObject0';
 import RenderEachArticleInHome from './RenderEachArticleInHome';
-const ArticlesQteToShow = ({articlesList, addToCart, removeFromCart, cart, currentPdjType}) => {
 
-  const myDevice = ThisDevice().device
-  const MAXWIDTH = ThisDevice().device.myMAXWIDTH
-  const widthMobile = 650
-  const widthMobileOrWeb = MAXWIDTH > widthMobile ? '40%' : '100%'
+const ArticlesQteToShow = ({ articlesList, addToCart, removeFromCart, cart, currentPdjType }) => {
+  const myDevice = ThisDevice().device;
+  const MAXWIDTH = myDevice.myMAXWIDTH;
+  const widthMobile = 650;
+  const widthMobileOrWeb = MAXWIDTH > widthMobile ? '40%' : '100%';
 
-
-  const [articlesListByCat, setArticlesListByCat] = useState(Array<ArticleType>)
-  const [articlesMenu, setArticlesMenu] = useState([]) //articlesMenu :maj final pour utiliser avec myFlatlist
-  const [categoryNameList, setcategoryNameList] = useState([])
-  const [categoryIconList, setcategoryIconList] = useState([])
-  const [pdjTitleName, setPdjTitleName] = useState([])
-  const [pdjTitleObject, setPdjTitleObject] = useState([])
-  const [categoryDetail, setcategoryDetail] = useState([])
-  const [pdjTitleObject2, setPdjTitleObject2] = useState(null)
-  const [articlesListByCatLength, setarticlesListByCatLength] = useState(0)
+  const [articlesListByCat, setArticlesListByCat] = useState<Array<ArticleType>>([]);
+  const [articlesMenu, setArticlesMenu] = useState([]);
+  const [categoryNameList, setCategoryNameList] = useState([]);
+  const [categoryIconList, setCategoryIconList] = useState([]);
+  const [pdjTitleName, setPdjTitleName] = useState([]);
+  const [pdjTitleObject, setPdjTitleObject] = useState([]);
+  const [categoryDetail, setCategoryDetail] = useState([]);
+  const [pdjTitleObject2, setPdjTitleObject2] = useState(null);
+  const [articlesListByCatLength, setArticlesListByCatLength] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
 
-  const callbackFn = (a_definir:any)=>{
-    console.log("callbackFn a_definir = ", a_definir)
-  }
-  // useEffect(() => {
-  //   // articlesList.length > 0 && console.log("articlesList18 ", articlesList)
-  //   if (articlesList.length === 0 && thisUseFB.articlesList) {
-  //     setArticlesList(thisUseFB.articlesList)
-  //   }
-  // }, [thisUseFB, articlesList])
+  const { device } = ThisDevice()
+
+  const myWidth = device.width
+  const myHeight = device.height
+  const maxHeightScrollable = device.heightBody - 10
+
+  const maxHeightArticle = 280
 
   useEffect(() => {
-  //all console.log("categoryNameList useEffect", categoryNameList)
-  }, [categoryNameList])
-
-  useEffect(() => {
-    // console.log("home41 ", "useEffect pdjTitleObject", pdjTitleObject)
-    // console.log("home42 ", "useEffect pdjTitleObject2", pdjTitleObject2)
     if (!pdjTitleObject2 || pdjTitleObject2.length === 0) {
-      const pdjTitleSushiTemp = pdjTitleSushi
-    //all console.log("pdjTitleSushi 51 ", articlesListByCat, pdjTitleSushi)
-      getPdjTitleList(pdjTitleSushiTemp)
-      // setArticlesListByCat(pdjTitleTradit)
+      const pdjTitleSushiTemp = pdjTitleSushi;
+      getPdjTitleList(pdjTitleSushiTemp);
     } else if (!pdjTitleObject || pdjTitleObject.length === 0) {
-    //all console.log("home45 ", "useEffect pdjTitleObject", pdjTitleObject)
-    //all console.log("home42 ", "useEffect pdjTitleObject2", pdjTitleObject2)
-      getPdjTitleList(pdjTitleObject2)
-    } else if (pdjTitleObject2 && pdjTitleObject.length == 0) {
-      // setPdjTitleObject2('pdjTitleSushi')
+      getPdjTitleList(pdjTitleObject2);
     }
-  }, [pdjTitleObject2, pdjTitleObject])
-
+  }, [pdjTitleObject2, pdjTitleObject]);
 
   useEffect(() => {
-    // console.log("home771 ", " pdjTitleObject", pdjTitleObject)
-  //all console.log("home626 ", "useEffect pdjTitleObject2", pdjTitleObject2)
-
-    if (!pdjTitleObject) {
-      //all console.log("home744 ", "useEffect pdjTitleObject2", pdjTitleObject2)
-
-      getPdjTitleList(pdjTitleObject2)
-    } else if (pdjTitleObject2 && pdjTitleObject.length == 0) {
-      setPdjTitleObject(pdjTitleObject2)
-      //all08042024 console.log("home162 ", " pdjTitleObject", pdjTitleObject)
-    } else if (pdjTitleObject.length > 0) {
-      // console.log("home780 ", " pdjTitleObject2", pdjTitleObject)
-
-    }
-  }, [pdjTitleObject2, pdjTitleObject])
-
-useEffect(() => {
-  console.log("pdjTitleName = ", pdjTitleName)
-}, [pdjTitleName])
-
-useEffect(() => {
-  console.log("articles84 currentPdjType,articlesListByCatLength, articlesListByCat useEffect = ", currentPdjType,':', articlesListByCatLength,':', articlesListByCat)
-}, [currentPdjType, articlesListByCat, articlesListByCatLength])
-
-  useEffect(() => {
-    articlesList.length > 0 && console.log("articlesListByCat ", articlesListByCat)
-    if (articlesListByCat.length == 0 && articlesList?.length > 0) {
-
-      getarticlesListByCat(articlesList)
+    if (articlesListByCat.length === 0 && articlesList.length > 0) {
+      getArticlesListByCat(articlesList);
     } else {
-      // articlesListByCat.length != 0 && console.log("31 articlesList", articlesList)
-      // articlesListByCat.length != 0 && console.log("31 articlesListByCat", articlesListByCat)
-      setarticlesListByCatLength(Object.keys(articlesListByCat)?.length)
+      setArticlesListByCatLength(Object.keys(articlesListByCat).length);
     }
 
-    if (Object.keys(articlesListByCat)?.length > 0) {
-      setIsLoading(false)
-      //all console.log("home797 getPdjTitleList Object.keys(pdjTitle)?.length ", Object.keys(pdjTitleObject)?.length, pdjTitleObject)
-      getPdjTitleList(pdjTitleObject2)
+    if (Object.keys(articlesListByCat).length > 0) {
+      setIsLoading(false);
+      getPdjTitleList(pdjTitleObject2);
     }
+  }, [articlesListByCat, articlesList]);
 
+  useEffect(() => {
+    console.log('articlesListByCat', articlesListByCat);
+  }, [articlesListByCat]);
 
-  }, [articlesListByCat, articlesList])
-
-  async function getarticlesListByCat(_articlesList:any) {
+  async function getArticlesListByCat(_articlesList: any) {
     if (_articlesList && _articlesList.length > 0) {
-    //all console.log("521getarticlesListByCat +++++++++++++ TOP getarticlesListByCat ++++++++++++++++", _articlesList)
-
-      // initArticlesListByCatTemp()
-      groupedByPdjType(articlesList, setArticlesListByCat)
-
-
+      groupedByPdjType(articlesList, setArticlesListByCat);
     }
   }
+
   async function getPdjTitleList(_pdjTitleObject: any) {
-  //all console.log("getPdjTitleList pdjTitleObject ", _pdjTitleObject)
-    if (_pdjTitleObject && _pdjTitleObject != null) {
-      // console.log("home804 getPdjTitleList Object.keys(pdjTitle)?.length ", Object.keys(_pdjTitleObject)?.length, _pdjTitleObject)
-      if (Object.keys(_pdjTitleObject)?.length > 0) {
-        // console.log("home711 pdjTitle Object.keys(pdjTitle)?.length ", _pdjTitleObject)
+    if (_pdjTitleObject) {
+      const result = await generateObjectToKeyAndNameWithDetail(_pdjTitleObject);
+      const [pdjTitleNameTemp, categoryNameTemp, categoryIconTemp, categoryDetailTemp] = result;
 
-        const result = await generateObjectToKeyAndNameWithDetail(_pdjTitleObject)
-
-        // console.log("home117  generateObjectToKeyAndName ", result)
-
-        const pdjTitleNameTemp: any = result[0]
-        const categoryNameTemp: any = result[1]
-        const categoryIconTemp: any = result[2]
-        const categorytDetail: any = result[3]
-        setPdjTitleName(pdjTitleNameTemp)
-        setcategoryNameList(categoryNameTemp)
-        setcategoryIconList(categoryIconTemp)
-        setcategoryDetail(categorytDetail)
-
-      }
-    } else {
-      //all console.log("home823 getPdjTitleList Object.keys(pdjTitle)?.length ",  pdjTitleObject2)
+      setPdjTitleName(pdjTitleNameTemp);
+      setCategoryNameList(categoryNameTemp);
+      setCategoryIconList(categoryIconTemp);
+      setCategoryDetail(categoryDetailTemp);
     }
-
   }
-
 
   function groupedByPdjType(_articlesList: any, _setArticlesListByCat: any) {
-    return _articlesList.reduce((acc:any, article:any) => {
+    return _articlesList.reduce((acc: any, article: any) => {
       const { pdjType } = article;
 
-      // Si le type n'existe pas encore dans l'accumulateur, on l'initialise
       if (!acc[pdjType]) {
         acc[pdjType] = [];
       }
 
-      // On ajoute l'article dans le tableau correspondant à son pdjType
       acc[pdjType].push(article);
-      _setArticlesListByCat(acc)
+      _setArticlesListByCat(acc);
       return acc;
     }, {});
   }
-  const renderItem = (item:any, index:any) => {
-    // console.log("renderItem158 ", index)
+
+  const renderItem = (item: any, index: any) => {
     return (
       <View style={styles.articleContainer}>
-
         <RenderEachArticleInHome
           addToCart={addToCart}
-          removeFromCart = {removeFromCart}
-          thiscategoryName={item.pdjType}
-          todayfr10={undefined} menuN={item}
-          menuNImg={item?.img} idx={undefined} navigation={undefined} route={undefined}
-          callbackFn={undefined} pdjType={item.pdjType}
+          removeFromCart={removeFromCart}
+          thisCategoryName={item.pdjType}
+          todayfr10={undefined}
+          menuN={item}
+          menuNImg={item?.img}
+          idx={undefined}
+          navigation={undefined}
+          route={undefined}
+          callbackFn={undefined}
+          pdjType={item.pdjType}
           PlatsToShowFilteredTemp={undefined}
           articlesListTemp={articlesList}
-          scrollY0={scrollY}
-          scrollX0={scrollX} updateScrollValue={undefined} zoomMenuN={undefined}
-        />
-
+          scrollY0={undefined}
+          scrollX0={undefined}
+          updateScrollValue={undefined}
+          zoomMenuN={undefined} thiscategoryName={undefined}        />
       </View>
     );
   };
-  
-  function myFlatListRow(_articlesMenu: any, pdjType: any, _categoryName: any, _categoryIcon: any) {
-    console.log("myFlatListRow / _categoryName,_articlesMenu?.length, _articlesMenu ", _categoryName,_articlesMenu?.length, _articlesMenu)
-    if(_articlesMenu != articlesMenu){
-      setArticlesMenu(_articlesMenu)
-    }else{
-      console.log("_articlesMenu != articlesMenu  ? ",_articlesMenu != articlesMenu, articlesMenu)
+
+  const myFlatListRow = (_articlesMenu: any, pdjType: any, _categoryName: any, _categoryIcon: any) => {
+    if (_articlesMenu !== articlesMenu) {
+      setArticlesMenu(_articlesMenu);
     }
+
     return (
-
-
-      <View
-        style={[ //container row scroollable
-          {
-            display: 'flex',
-            flexDirection: 'row',
-            flexWrap:'wrap',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            // marginVertical: 5,
-            borderColor: 'turquoise',
-            borderStyle: 'solid',
-            borderWidth: 10,
-            width: '100%',
-            height: _articlesMenu?.length > 0 ? '100%' : 100,
-            // maxHeight: device.heightBody - 120,
-            maxHeight: '100%',
-            backgroundColor: Colors.primaryBG,
-          }
-
-        ]}
-
-      >
-
-        {
-          // !panierView && //this shows mainView
-          articlesMenu?.length > 0 &&
-          articlesMenu?.map((item: any, index: any) => {
-            return (
-
-              <View key={index} style=
-                {
-                  {
-                    marginBottom: 2,
-                    // width: MAXWIDTH * .45,
-                    maxWidth: 180,
-                    minWidth: 180,
-                    margin: 0,
-                    minHeight: articlesMenu?.length > 0 ? 160 : 0,
-                    maxHeight: '100%',
-                    height: articlesMenu?.length > 0 ? '100%' : 0,
-                    // display: 'flex',
-                    // flexDirection: 'row',
-                    // flexWrap:'wrap',
-                    borderRadius: 10,
-                    justifyContent: 'center',
-                    // borderWidth: item.date == dateFact.substring(0, 10) ? 3 : 0,
-                    borderWidth: 3,
-                    borderColor: 'white',
-                    borderStyle: 'solid'
-                  }
-                }>
-                {/* {item.pdjType == pdjType ?  */}
-                {renderItem(item, index)}
-                  {/* : <Text style={{color:Colors.primaryText}}> {pdjType}::{'item.pdjType'} </Text> */}
-              {/* }  */}
-              </View>
-            );
-          })
-
-
-        }
-
+      <View style={styles.rowContainer}>
+        {_articlesMenu?.length > 0 &&
+          _articlesMenu?.map((item: any, index: any) => (
+            <View key={index} style={styles.articleWrapper}>
+              {renderItem(item, index)}
+            </View>
+          ))}
       </View>
     );
-  }
+  };
 
- 
-  const styles = StyleSheet.create({
-    image: {
-      width: '100%',
-      height: '100%',
-      // minHeight:400,
-
-      borderRadius: 18,
-    },
-    articleContainer: {
-      display: 'flex',
-      width: '100%',
-      flexDirection: 'column',
-      height: '100%',
-    },
-    articleDetails: {
-
-    },
-    articleName: {
-
-    },
-    articleDescription: {
-
-    },
-    articlePrice: {
-
-    },
-    articleQuantity: {
-
-    },
-    articleTotal: {
-
-    },
-
-    dbCol: {
-      display: 'flex',
-      flexDirection: 'column',
-      minHeight: '100%',
-      minWidth: 300,
-      height: '100%'
-    }
-  });
-
-  return ( //global
-
-    <View style={{ //myFlatListRow
-      display:'flex',
-      flexDirection: 'row',
-      maxWidth:'100%',
-      flexWrap:'wrap',
-      overflow: 'scroll',
-      backgroundColor: Colors.primaryBG,
-      borderStyle: 'solid',
-      borderWidth: 10,
-      borderColor: 'red',
-      minHeight: 300, 
-      height: myDevice.heightBody,
-      maxHeight: 400,
-      // maxHeight: articlesListByCat2[pdjTitleName[index]]?.length > 0 ? 400 : 0,
-      // height: articlesListByCat2[pdjTitleName[index]]?.length > 0 ? 400 : 0
-    }}
-    >
-
-{
-                  articlesListByCat
-                  && articlesListByCatLength > 0
-                  && currentPdjType !=''
-                  && myFlatListRow(
-                    articlesListByCat && articlesListByCat[currentPdjType],
-                    // currentPdjType,
-                    pdjTitleName[0],
-                    categoryNameList[0],
-                    categoryIconList[0])
-                }
-
-    
-
+  return (
+    <View style={styles.container}>
+      {articlesListByCat && articlesListByCatLength > 0 && currentPdjType !== '' && myFlatListRow(
+        articlesListByCat[currentPdjType],
+        pdjTitleName[0],
+        categoryNameList[0],
+        categoryIconList[0]
+      )}
     </View>
   );
+};
 
-}
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    maxWidth: '100%',
+    flexWrap: 'wrap',
+    overflow: 'scroll',
+    backgroundColor: Colors.primaryBG,
+    borderWidth: 10,
+    borderColor: 'red',
+    minHeight: 300,
+    height: ThisDevice().device.heightBody,
+    maxHeight: 400,
+  },
+  rowContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    backgroundColor: Colors.primaryBG,
+    borderColor: 'turquoise',
+    borderWidth: 10,
+  },
+  articleWrapper: {
+    marginBottom: 2,
+    maxWidth: 180,
+    minWidth: 180,
+    marginHorizontal: 0,
+    marginVertical: 10,
+    minHeight: 160,
+    maxHeight: 280,
+    height: 280,
+    borderRadius: 10,
+    justifyContent: 'center',
+    borderWidth: 3,
+    borderColor: 'white',
+  },
+  articleContainer: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'column',
+    height: '100%',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'yellow',
+  },
+});
 
-export default ArticlesQteToShow
+export default ArticlesQteToShow;
