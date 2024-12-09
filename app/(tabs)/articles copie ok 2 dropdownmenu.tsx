@@ -23,8 +23,7 @@ export default function TabTwoScreen() {
 
   const thisUseFB = useFb('articles/seller2/articlesList')
   const [articlesList, setArticlesList] = useState(Array<ArticleType>)
-  const [currentPdjType, setCurrentPdjType] = useState('');
-  
+
   // État pour le panier
   const [cart, setCart] = useState([]);
 
@@ -88,10 +87,10 @@ export default function TabTwoScreen() {
     // console.log('myDocs', myDocs)
     console.log('setPdjRayon /  data[0]', data[0])
     setcategoryName(data[0])
-    if (data[1] && data[1].length > 0) {
+    if(data[1] && data[1].length>0){
       console.log('setPdjRayon /  data[1]', data[1])
       setPdjRayon(data[1])
-    } else {
+    }else{
       console.log('setPdjRayon length  /  data[1]', data[1].length)
     }
 
@@ -104,7 +103,7 @@ export default function TabTwoScreen() {
   const [items, setItems] = useState([])
   const DropDownMenu = ({ pdjRayon }) => {
     // const pdjRayon = pdjTitleSushi
-    console.log("articles107 DropDownMenu", 'pdjList / Rayon ?', pdjRayon)
+    console.log("DropDownMenu", 'articlesListByCat ?')
     const items2: any = [];
     if (
       pdjRayon &&
@@ -128,13 +127,13 @@ export default function TabTwoScreen() {
     // setPdjRayon(items2)
 
     useEffect(() => {
-      console.log("value articles130 ", value, pdjRayon)
+      console.log("value ", value, pdjRayon)
 
       // console.log("categorySelected ", categorySelected)
-      if (value && value != '' && value != null) {
-        // setCategorySelected(true)
-        setCurrentPdjType(value)
-      }
+      // if (value && value != '' && value != null) {
+      //   setCategorySelected(true)
+      // }
+      // setCurrentPdjType('value')
 
 
       const getItemByValue = pdjRayon && pdjRayon.length > 0
@@ -155,7 +154,7 @@ export default function TabTwoScreen() {
         setValue={setValue}
         // setItems={setItems}
         style={styles.dropdown}
-        placeholder={"Choississez"}
+        placeholder= {"Choississez"} 
         dropDownContainerStyle={styles.dropdownContainer}
         textStyle={styles.text}
         placeholderStyle={styles.placeholder}
@@ -180,36 +179,36 @@ export default function TabTwoScreen() {
   }
   const styles = StyleSheet.create({
     container: {
-      zIndex: 9,
-      height: 40,
-      width: '50%',
-      // padding: 20,
-      backgroundColor: Colors.highlightBG,
+        zIndex: 9,
+        height:40,
+        width: '50%',
+        // padding: 20,
+        backgroundColor: Colors.highlightBG,
     },
     dropdown: {
-      width: '45%',
-      marginBottom: 20,
-      backgroundColor: Colors.highlightBG,
+        width: '45%',
+        marginBottom: 20,
+        backgroundColor: Colors.highlightBG,
     },
     dropdownContainer: {
-      backgroundColor: Colors.highlightBG,
+        backgroundColor: Colors.highlightBG,
     },
     dataContainer: {
-      flex: 1,
-      marginTop: 20,
+        flex: 1,
+        marginTop: 20,
     },
     item: {
-      padding: 10,
-      fontSize: 16,
-      backgroundColor: "#ffffff",
-      borderBottomWidth: 1,
-      borderBottomColor: "#eeeeee",
+        padding: 10,
+        fontSize: 16,
+        backgroundColor: "#ffffff",
+        borderBottomWidth: 1,
+        borderBottomColor: "#eeeeee",
     },
     placeholder: {
-      fontSize: 16,
-      color: "#888888",
-      textAlign: "center",
-      marginTop: 20,
+        fontSize: 16,
+        color: "#888888",
+        textAlign: "center",
+        marginTop: 20,
     },
     text: {
       color: Colors.primaryText,
@@ -218,7 +217,7 @@ export default function TabTwoScreen() {
     }, iconStyle: {
       color: Colors.primaryText
     }
-  });
+});
 
   return ( // global
 
@@ -240,14 +239,14 @@ export default function TabTwoScreen() {
 
         navigation={undefined} route={undefined} callback={undefined} showPanierViewModal={undefined} scrollY0={undefined} scrollX0={undefined} commande={undefined}
       />
-      <View style={{ width: '100%', flexDirection: 'row', zIndex: 9 }}>
-        <PickerPageName callback={callBackFromPickerName} />
-
-        {/* {pdjRayon && pdjRayon.length>0 &&  <DropDownMenu pdjRayon={pdjRayon && pdjRayon.length>0} />} */}
-        {categoryName === 'Sushi' && <DropDownMenu pdjRayon={pdjTitleSushi} />}
-        {categoryName === 'Traditionnels' && <DropDownMenu pdjRayon={pdjTitleTradit} />}
+      <View style={{width:'100%', flexDirection:'row', zIndex:9}}>
+      <PickerPageName callback={callBackFromPickerName} />
+     
+      {/* {pdjRayon && pdjRayon.length>0 &&  <DropDownMenu pdjRayon={pdjRayon && pdjRayon.length>0} />} */}
+      {categoryName ==='Sushi' && <DropDownMenu pdjRayon={pdjTitleSushi} />}
+        {categoryName ==='Traditionnels' && <DropDownMenu pdjRayon={pdjTitleTradit} />}
       </View>
-      <ArticlesQteToShow articlesList={articlesList} addToCart={addToCart} removeFromCart={removeFromCart} cart={cart} currentPdjType = {currentPdjType} />
+      <ArticlesQteToShow articlesList={articlesList} addToCart={addToCart} removeFromCart={removeFromCart} cart={cart} />
     </View>
 
   );

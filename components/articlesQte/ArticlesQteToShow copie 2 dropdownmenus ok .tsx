@@ -7,7 +7,7 @@ import { Colors } from '@/constants/Colors';
 import { generateObjectToKeyAndNameWithDetail } from '../services/DataServices';
 import { pdjTitleSushi, pdjTitleTradit } from './pdjTitleObject0';
 import RenderEachArticleInHome from './RenderEachArticleInHome';
-const ArticlesQteToShow = ({articlesList, addToCart, removeFromCart, cart, currentPdjType}) => {
+const ArticlesQteToShow = ({articlesList, addToCart, removeFromCart, cart }) => {
 
   const myDevice = ThisDevice().device
   const MAXWIDTH = ThisDevice().device.myMAXWIDTH
@@ -16,7 +16,7 @@ const ArticlesQteToShow = ({articlesList, addToCart, removeFromCart, cart, curre
 
 
   const [articlesListByCat, setArticlesListByCat] = useState(Array<ArticleType>)
-  const [articlesMenu, setArticlesMenu] = useState([]) //articlesMenu :maj final pour utiliser avec myFlatlist
+
   const [categoryNameList, setcategoryNameList] = useState([])
   const [categoryIconList, setcategoryIconList] = useState([])
   const [pdjTitleName, setPdjTitleName] = useState([])
@@ -27,9 +27,6 @@ const ArticlesQteToShow = ({articlesList, addToCart, removeFromCart, cart, curre
   const [isLoading, setIsLoading] = useState(true);
 
 
-  const callbackFn = (a_definir:any)=>{
-    console.log("callbackFn a_definir = ", a_definir)
-  }
   // useEffect(() => {
   //   // articlesList.length > 0 && console.log("articlesList18 ", articlesList)
   //   if (articlesList.length === 0 && thisUseFB.articlesList) {
@@ -76,13 +73,7 @@ const ArticlesQteToShow = ({articlesList, addToCart, removeFromCart, cart, curre
     }
   }, [pdjTitleObject2, pdjTitleObject])
 
-useEffect(() => {
-  console.log("pdjTitleName = ", pdjTitleName)
-}, [pdjTitleName])
 
-useEffect(() => {
-  console.log("articles84 currentPdjType,articlesListByCatLength, articlesListByCat useEffect = ", currentPdjType,':', articlesListByCatLength,':', articlesListByCat)
-}, [currentPdjType, articlesListByCat, articlesListByCatLength])
 
   useEffect(() => {
     articlesList.length > 0 && console.log("articlesListByCat ", articlesListByCat)
@@ -178,14 +169,10 @@ useEffect(() => {
       </View>
     );
   };
-  
-  function myFlatListRow(_articlesMenu: any, pdjType: any, _categoryName: any, _categoryIcon: any) {
-    console.log("myFlatListRow / _categoryName,_articlesMenu?.length, _articlesMenu ", _categoryName,_articlesMenu?.length, _articlesMenu)
-    if(_articlesMenu != articlesMenu){
-      setArticlesMenu(_articlesMenu)
-    }else{
-      console.log("_articlesMenu != articlesMenu  ? ",_articlesMenu != articlesMenu, articlesMenu)
-    }
+
+
+  function myFlatListRow(articlesMenu: any, pdjType: any, _categoryName: any, _categoryIcon: any) {
+    // console.log("myFlatListRow / _categoryName, articlesMenu ", _categoryName, articlesMenu)
     return (
 
 
@@ -194,15 +181,14 @@ useEffect(() => {
           {
             display: 'flex',
             flexDirection: 'row',
-            flexWrap:'wrap',
             justifyContent: 'flex-start',
             alignItems: 'center',
             // marginVertical: 5,
             borderColor: 'turquoise',
             borderStyle: 'solid',
-            borderWidth: 10,
+            borderWidth: 5,
             width: '100%',
-            height: _articlesMenu?.length > 0 ? '100%' : 100,
+            height: articlesMenu?.length > 0 ? '100%' : 100,
             // maxHeight: device.heightBody - 120,
             maxHeight: '100%',
             backgroundColor: Colors.primaryBG,
@@ -229,9 +215,8 @@ useEffect(() => {
                     minHeight: articlesMenu?.length > 0 ? 160 : 0,
                     maxHeight: '100%',
                     height: articlesMenu?.length > 0 ? '100%' : 0,
-                    // display: 'flex',
-                    // flexDirection: 'row',
-                    // flexWrap:'wrap',
+                    display: 'flex',
+                    flexDirection: 'row',
                     borderRadius: 10,
                     justifyContent: 'center',
                     // borderWidth: item.date == dateFact.substring(0, 10) ? 3 : 0,
@@ -240,10 +225,7 @@ useEffect(() => {
                     borderStyle: 'solid'
                   }
                 }>
-                {/* {item.pdjType == pdjType ?  */}
-                {renderItem(item, index)}
-                  {/* : <Text style={{color:Colors.primaryText}}> {pdjType}::{'item.pdjType'} </Text> */}
-              {/* }  */}
+                {renderItem(item, index)} 
               </View>
             );
           })
@@ -255,7 +237,6 @@ useEffect(() => {
     );
   }
 
- 
   const styles = StyleSheet.create({
     image: {
       width: '100%',
@@ -298,39 +279,91 @@ useEffect(() => {
     }
   });
 
-  return ( //global
+  return (
 
     <View style={{ //myFlatListRow
-      display:'flex',
-      flexDirection: 'row',
-      maxWidth:'100%',
-      flexWrap:'wrap',
+      flexDirection: 'column',
       overflow: 'scroll',
+      // borderColor: 'transparent',
       backgroundColor: Colors.primaryBG,
+      minHeight: myDevice.heightBody,
       borderStyle: 'solid',
       borderWidth: 10,
       borderColor: 'red',
-      minHeight: 300, 
-      height: myDevice.heightBody,
-      maxHeight: 400,
+      // minHeight: 300, 
+      maxHeight: '100%'
       // maxHeight: articlesListByCat2[pdjTitleName[index]]?.length > 0 ? 400 : 0,
       // height: articlesListByCat2[pdjTitleName[index]]?.length > 0 ? 400 : 0
     }}
     >
 
-{
+
+      {
+        // !viewModal && !panierView && // toutes les catégories
+        categoryNameList && categoryNameList?.length > 0 &&
+        categoryNameList?.map((categoryNameEach: any, index: any) => (
+
+          <View key={index} style={[
+            styles.dbCol
+            , {
+
+              minHeight: myDevice.heightBody,
+              // maxHeight: index==0 ? 0 :myDevice.heightBody,
+              maxHeight: myDevice.heightBody,
+              display: index == 0 ? 'none' : 'flex',
+              // maxHeight: index > 0 ? '100%' : 0,
+              backgroundColor: 'grey',
+              borderColor: 'coral', borderStyle: 'solid', borderWidth: 15,
+              marginVertical: 10
+            }]}
+
+          >
+            <Text style={{ color: 'white' }}>{categoryNameEach} :: {pdjTitleName[index]} :: {articlesListByCat[pdjTitleName[index]]?.length} </Text>
+            {
+              // index > 0 &&
+
+              // articlesListByCat && articlesListByCat[pdjTitleName[index]]?.length > 0 &&
+              articlesListByCat && articlesListByCat[pdjTitleName[index]] &&
+
+              <View style={{ //myFlatListRow
+                display: 'flex',
+                flexDirection: 'row',
+                overflow: 'scroll',
+                // borderColor: 'transparent',
+                backgroundColor: Colors.primaryBG,
+                borderStyle: 'solid',
+                borderWidth: 5,
+                borderColor: 'pink',
+                // minHeight: 300, 
+                maxHeight: index == 0 ? 0 : '100%',
+                minWidth: 300,
+                // maxHeight: articlesListByCat[pdjTitleName[index]]?.length > 0 ? 400 : 0,
+                // height: articlesListByCat[pdjTitleName[index]]?.length > 0 ? 400 : 0
+              }}
+              >
+
+                {
                   articlesListByCat
                   && articlesListByCatLength > 0
-                  && currentPdjType !=''
+                  && categoryNameList
+                  && categoryIconList
+                  // && !panierView
+
                   && myFlatListRow(
-                    articlesListByCat && articlesListByCat[currentPdjType],
-                    // currentPdjType,
-                    pdjTitleName[0],
-                    categoryNameList[0],
-                    categoryIconList[0])
+                    articlesListByCat && articlesListByCat[pdjTitleName[index]],
+
+                    pdjTitleName[index],
+                    categoryNameList[index],
+                    categoryIconList[index])
                 }
 
-    
+              </View>
+            }
+          </View>
+
+
+        ))
+      }
 
     </View>
   );
