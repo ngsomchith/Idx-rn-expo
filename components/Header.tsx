@@ -19,9 +19,10 @@ import ThisDevice from '@/constants/ThisDevice';
 import { myStyles } from './myStyle';
 import ModalPanier from './articlesQte/ModalPanier';
 import MyTitle from './MyTitle';
+import ImageViewer from './ImageViewer';
 
 
-const Header = ({  articlesList, cart, removeFromCart, addToCart, navigation
+const Header = ({ articlesList, cart, removeFromCart, addToCart, navigation
 }) => {
 
     const styles = myStyles
@@ -123,6 +124,15 @@ const Header = ({  articlesList, cart, removeFromCart, addToCart, navigation
                 width: 50,
                 height: 50,
                 borderRadius: 50,
+            }, 
+            logoHeader:{
+                // borderColor: 'yellow',
+                // borderStyle: 'solid',
+                // borderWidth: 5,
+                margin:10,
+                width: 50,
+                height: 50,
+                borderRadius: 50,
             }
         })
 
@@ -146,7 +156,7 @@ const Header = ({  articlesList, cart, removeFromCart, addToCart, navigation
                 backgroundColor: 'transparent',
                 //  borderWidth: 5, borderColor: 'green', borderStyle: 'solid',
             }]}>
-                
+
                 <Text style={{
                     position: 'absolute',
                     top: 25,
@@ -157,7 +167,7 @@ const Header = ({  articlesList, cart, removeFromCart, addToCart, navigation
                     borderStyle: 'solid',
                     borderWidth: 5,
                 }}>
-                   
+
                     <ButtonStd //button GO BAck
                         // iconR={currentScreen != 'WelcomeScreen' ? iconBack : ''}
                         // iconR={ iconBack } 
@@ -169,7 +179,7 @@ const Header = ({  articlesList, cart, removeFromCart, addToCart, navigation
                                 console.log(80, '!!navigation.canGoBack()', navigation.canGoBack);
                             }
                         }} onChange={undefined} bgButton={'transparent'} labelColor={undefined} iconL={undefined} iconR={undefined} />
-                    
+
                 </Text>
 
             </View>
@@ -180,17 +190,20 @@ const Header = ({  articlesList, cart, removeFromCart, addToCart, navigation
                 marginHorizontal: 'auto',
                 // display: 'flex', flexDirection: 'row', justifyContent: 'space-around',
                 display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start',
-                borderWidth: 2, borderColor: 'yellow', borderStyle: 'solid',
+                // borderWidth: 2, borderColor: 'yellow', borderStyle: 'solid',
             }]}>
                 <View style={[{ //ModalGoHome
-                    width: 50,
-                    height: '50%',
-                    margin: 10,
+                    // width: 50,
+                    // height: '50%',
+                    // margin: 10,
                     // borderWidth: 5, borderColor: 'green', borderStyle: 'solid',
-                    display: 'flex'
+                    display: 'flex',
+                    flexDirection:'row'
                 }]}>
                     {/* <ModalGoHome myImage={myImage} /> */}
-                    {/* <Text style={{ color: 'white' }}>MyTitle</Text> */}
+                    <View style={styles00.logoHeader}>
+                        <ImageViewer placeholderImageSource={'icon'} />
+                    </View>
                     <MyTitle />
                 </View>
             </View>
@@ -198,19 +211,19 @@ const Header = ({  articlesList, cart, removeFromCart, addToCart, navigation
             <View style={[ //A droite
                 styles00.dbCol15,
                 {
-                    borderColor: 'yellow',
-                    borderWidth: 2,
-                    borderStyle: 'solid',
+                    // borderColor: 'yellow',
+                    // borderWidth: 2,
+                    // borderStyle: 'solid',
                     zIndex: 999
                 }
             ]}>
-                
+
                 {cart && cart.length > 0 &&
-                <ModalPanier addToCart={addToCart} removeFromCart={removeFromCart}
-                cart={cart} navigation={undefined} route={undefined} 
-                showPanierViewModal={undefined} commande={undefined}   
-                scrollY0={undefined} scrollX0={undefined}              
-                /> }
+                    <ModalPanier addToCart={addToCart} removeFromCart={removeFromCart}
+                        cart={cart} navigation={undefined} route={undefined}
+                        showPanierViewModal={undefined} commande={undefined}
+                        scrollY0={undefined} scrollX0={undefined}
+                    />}
 
 
             </View>

@@ -65,6 +65,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import React from 'react';
+import { FontAwesome } from '@expo/vector-icons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const iconUpCircle = <Ionicons name="arrow-up-circle" size={24} color="black" />;
 const iconTop = <MaterialIcons name="arrow_upward" size={30} color="white" />;
@@ -112,7 +114,7 @@ const iconClick = <MaterialIcons name="touch_app" size={30} color="white" />;
 const iconMessage = <MaterialIcons name="sms" size={30} color="white" />;
 const iconClose = <MaterialIcons name="cancel" size={30} color="red" />;
 const iconBack = <MaterialIcons name="arrow_back" size={30} color="white" />;
-const iconBasket = <MaterialIcons name="shopping_basket" size={30} color="white" />;
+const iconBasket = <FontAwesome5 name="shopping-basket" size={24} color="white" /> // <MaterialIcons name="shopping_basket" size={30} color="white" />;
 const iconEdit = <MaterialIcons name="edit_note" size={30} color="white" />;
 const iconSmartphone = <MaterialIcons name="smartphone" size={30} color="white" />;
 const iconSmartphoneneeded = <MaterialIcons name="smartphone" size={30} color="red" />;

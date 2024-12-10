@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { pdjTitleSushi, pdjTitleTradit } from "./pdjTitleObject0";
+import { pdjTitleObject0, pdjTitleSushi, pdjTitleTradit } from "./pdjTitleObject0";
 import { Colors } from "@/constants/Colors";
 import { Icon } from 'react-native-elements';
 
-export default function PickerPageName({callback}) {
+export default function PickerPageName({ callback }) {
     // DropDown state
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([
         { label: "Traditionnels", value: "table1" },
         { label: "Sushi", value: "table2" },
+        // { label: "Tout", value: "table3" },
     ]);
 
     useEffect(() => {
@@ -28,10 +29,14 @@ export default function PickerPageName({callback}) {
                 break;
 
             case 'table2':
-                console.log('table2','Sushi')
-                callback(['Sushi',pdjTitleSushi])
+                console.log('table2', 'Sushi')
+                callback(['Sushi', pdjTitleSushi])
                 break;
-        
+
+            // case 'table3':
+            //     console.log('table2', 'Tout')
+            //     callback(['Sushi', pdjTitleObject0])
+            //     break;
             default:
                 break;
         }
@@ -43,9 +48,9 @@ export default function PickerPageName({callback}) {
     const styles = StyleSheet.create({
         container: {
             zIndex: 9,
-            height:40,
+            height: 40,
             width: '44%',
-            marginHorizontal:'1%',
+            marginHorizontal: '1%',
             // padding: 20,
             backgroundColor: Colors.highlightBG,
         },
@@ -75,17 +80,17 @@ export default function PickerPageName({callback}) {
             textAlign: "center",
         },
         text: {
-          color: Colors.primaryText,
-          fontSize: 18,
-          // borderColor: 'white', borderStyle: 'solid',borderWidth: 2,
+            color: Colors.primaryText,
+            fontSize: 18,
+            // borderColor: 'white', borderStyle: 'solid',borderWidth: 2,
         }, iconStyle: {
-          color: Colors.primaryText
+            color: Colors.primaryText
         }
     });
 
     return (
-        <View 
-        style={styles.container}
+        <View
+            style={styles.container}
         >
             <DropDownPicker
                 open={open}
@@ -94,24 +99,24 @@ export default function PickerPageName({callback}) {
                 setOpen={setOpen}
                 setValue={setValue}
                 setItems={setItems}
-                style={styles.dropdown}  placeholder="Rayon :"
+                style={styles.dropdown} placeholder="Rayon :"
                 dropDownContainerStyle={styles.dropdownContainer}
                 textStyle={styles.text}
                 placeholderStyle={styles.placeholder}
                 ArrowUpIconComponent={({ style }) => (
-                  <Icon
-                    name={open ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-                    size={24}
-                    color={open ? "white" : "white"} // Change de couleur selon l'état
-                  // style={style}
-                  />
+                    <Icon
+                        name={open ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                        size={24}
+                        color={open ? "white" : "white"} // Change de couleur selon l'état
+                    // style={style}
+                    />
                 )} ArrowDownIconComponent={({ style }) => (
-                  <Icon
-                    name={open ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-                    size={24}
-                    color={open ? "white" : "white"} // Change de couleur selon l'état
-                  // style={style}
-                  />
+                    <Icon
+                        name={open ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                        size={24}
+                        color={open ? "white" : "white"} // Change de couleur selon l'état
+                    // style={style}
+                    />
                 )}
             />
         </View>

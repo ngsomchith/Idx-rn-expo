@@ -1,13 +1,13 @@
 export  const pdjTitleObject0 = [ //sert pour générer CategoryNameList et categoryIconList
 
-    {
-      'promoOff': {
-        key: 'PromoOff',
-        name: 'Promotion expirée',
-        detail: 'obsolète',
-        scrollYpos: 0
-      }
-    },
+    // {
+    //   'promoOff': {
+    //     key: 'PromoOff',
+    //     name: 'Promotion expirée',
+    //     detail: 'obsolète',
+    //     scrollYpos: 0
+    //   }
+    // },
     {
       // key: 'prom',
       key: 'promo',
