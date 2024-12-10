@@ -1,5 +1,4 @@
 import { StyleSheet, Image, Platform, View } from 'react-native';
-
 import { Collapsible } from '@/components/Collapsible';
 import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -20,131 +19,71 @@ import { Icon } from 'react-native-elements';
 import { pdjTitleSushi, pdjTitleTradit } from '@/components/articlesQte/pdjTitleObject0';
 
 export default function TabTwoScreen() {
-
-  const thisUseFB = useFb('articles/seller2/articlesList')
-  const [articlesList, setArticlesList] = useState(Array<ArticleType>)
+  const thisUseFB = useFb('articles/seller2/articlesList');
+  const [articlesList, setArticlesList] = useState<Array<ArticleType>>([]);
   const [currentPdjType, setCurrentPdjType] = useState('');
-  
-  // État pour le panier
   const [cart, setCart] = useState([]);
+  const [categoryName, setCategoryName] = useState('');
+  const [pdjRayon, setPdjRayon] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+
+  const myDevice = ThisDevice().device;
+  const MAXWIDTH = ThisDevice().device.myMAXWIDTH;
+  const widthMobile = 650;
 
   const addToCart = (article: any) => {
-    setCart((prevCart: any) => {
-      // Vérifie si l'article est déjà dans le panier
-      const existingItem = prevCart.find((item: any) => item.id === article.id);
-
+    setCart((prevCart) => {
+      const existingItem = prevCart.find((item) => item.id === article.id);
       if (existingItem) {
-        // Augmente la quantité
-        return prevCart.map((item: any) =>
+        return prevCart.map((item) =>
           item.id === article.id ? { ...item, qte: item.qte + 1 } : item
         );
       }
-
-      // Ajoute l'article avec une quantité initiale de 1
       return [...prevCart, { ...article, qte: 1 }];
     });
   };
 
   const removeFromCart = (article: any) => {
-    setCart((prevCart: any) => {
-      return prevCart
-        .map((item: any) =>
+    setCart((prevCart) =>
+      prevCart
+        .map((item) =>
           item.id === article.id ? { ...item, qte: item.qte - 1 } : item
         )
-        .filter((item: any) => item.qte > 0); // Supprime les articles avec une quantité de 0
-    });
+        .filter((item) => item.qte > 0)
+    );
   };
 
   useEffect(() => {
-    // articlesList.length > 0 && console.log("articlesList18 ", articlesList)
     if (articlesList.length === 0 && thisUseFB.articlesList) {
-      setArticlesList(thisUseFB.articlesList)
+      setArticlesList(thisUseFB.articlesList);
     }
-  }, [thisUseFB, articlesList])
-
-  useEffect(() => {
-    console.log("cart useEffect expplore56  ", cart)
-  }, [cart])
-
-
-  const myDevice = ThisDevice().device
-  const MAXWIDTH = ThisDevice().device.myMAXWIDTH
-  const widthMobile = 650
-  const widthMobileOrWeb = MAXWIDTH > widthMobile ? '40%' : '100%'
-
-
-  const [categoryName, setcategoryName] = useState('')
-  const [pdjRayon, setPdjRayon] = useState([])
+  }, [thisUseFB, articlesList]);
 
   const callBackFromPickerName = (data: any) => {
-    console.log('callBackFromPickerName articles 72', data)
-
-    // const myDocs:any =[]
-    // data.forEach((element:any) => {
-    //   console.log("callBackFromPickerName ", element)
-    //   myDocs.push(element)
-    // });
-
-    // console.log('myDocs', myDocs)
-    console.log('setPdjRayon /  data[0]', data[0])
-    setcategoryName(data[0])
+    setCategoryName(data[0]);
     if (data[1] && data[1].length > 0) {
-      console.log('setPdjRayon /  data[1]', data[1])
-      setPdjRayon(data[1])
-    } else {
-      console.log('setPdjRayon length  /  data[1]', data[1].length)
+      setPdjRayon(data[1]);
     }
+  };
 
-
-  }
-
-
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([])
-  const DropDownMenu = ({ pdjRayon }) => {
-    // const pdjRayon = pdjTitleSushi
-    console.log("articles107 DropDownMenu", 'pdjList / Rayon ?', pdjRayon)
+  const DropDownMenu = ({ pdjRayon }: { pdjRayon: any[] }) => {
     const items2: any = [];
-    if (
-      pdjRayon &&
-      pdjRayon?.length > 0
-    ) {
-      pdjRayon.forEach((element: any) => {
-        console.log("DropDownMenu 925 -------------------- ", element)
-
-        if (element && element.key != 'pdj') {
-          items2.push({
-            key: element.key,
-            label: element.name,
-            items, element,
-            value: element.key,
-            details: element.details
-          })
-        }
-      });
-    }
-    console.log("937DropDownMenu items2", items2)
-    // setPdjRayon(items2)
+    pdjRayon.forEach((element) => {
+      if (element && element.key !== 'pdj') {
+        items2.push({
+          key: element.key,
+          label: element.name,
+          value: element.key,
+        });
+      }
+    });
 
     useEffect(() => {
-      console.log("value articles130 ", value, pdjRayon)
-
-      // console.log("categorySelected ", categorySelected)
-      if (value && value != '' && value != null) {
-        // setCategorySelected(true)
-        setCurrentPdjType(value)
+      if (value) {
+        setCurrentPdjType(value);
       }
-
-
-      const getItemByValue = pdjRayon && pdjRayon.length > 0
-        && pdjRayon.filter((item: any) => item.key === value);
-
-      console.log("value, items? ", value, getItemByValue)
-      // setcategoryName(getItemByValue && getItemByValue[0]?.name)
-      // setcategoryDetail(getItemByValue && getItemByValue[0]?.detail)
-
-    }, [value, pdjRayon])
+    }, [value, pdjRayon]);
 
     return (
       <DropDownPicker
@@ -153,102 +92,98 @@ export default function TabTwoScreen() {
         items={items2}
         setOpen={setOpen}
         setValue={setValue}
-        // setItems={setItems}
         style={styles.dropdown}
-        placeholder={"Choississez"}
+        placeholder="Choisissez"
         dropDownContainerStyle={styles.dropdownContainer}
         textStyle={styles.text}
         placeholderStyle={styles.placeholder}
-        ArrowUpIconComponent={({ style }) => (
-          <Icon
-            name={open ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-            size={24}
-            color={open ? "white" : "white"} // Change de couleur selon l'état
-          // style={style}
-          />
-        )} ArrowDownIconComponent={({ style }) => (
-          <Icon
-            name={open ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-            size={24}
-            color={open ? "white" : "white"} // Change de couleur selon l'état
-          // style={style}
-          />
+        ArrowUpIconComponent={() => (
+          <Icon name="keyboard-arrow-up" size={24} color="white" />
+        )}
+        ArrowDownIconComponent={() => (
+          <Icon name="keyboard-arrow-down" size={24} color="white" />
         )}
       />
+    );
+  };
 
-    )
-  }
   const styles = StyleSheet.create({
-    container: {
+    mainContainer: {
+      width: '100%',
+      maxWidth: '100%',
+      padding: 10,
+      height: '100%',
+      backgroundColor: Colors.background,
+    },
+    headerRow: {
+      width:'100%',
+      display:'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      height: 50,
+      backgroundColor: Colors.primaryBG,
       zIndex: 9,
-      height: 40,
-      width: '50%',
-      // padding: 20,
-      backgroundColor: Colors.highlightBG,
     },
     dropdown: {
-      width: '45%',
-      marginBottom: 20,
+      width: '48%',
+      marginHorizontal:'1%',
       backgroundColor: Colors.highlightBG,
+      // borderColor: Colors.primaryText,
+      borderColor: 'green', borderStyle: 'solid', borderWidth: 2,
     },
     dropdownContainer: {
+      width:'100%',
       backgroundColor: Colors.highlightBG,
-    },
-    dataContainer: {
-      flex: 1,
-      marginTop: 20,
-    },
-    item: {
-      padding: 10,
-      fontSize: 16,
-      backgroundColor: "#ffffff",
-      borderBottomWidth: 1,
-      borderBottomColor: "#eeeeee",
+      borderColor: Colors.primaryText,
     },
     placeholder: {
+      width:'100%',
       fontSize: 16,
-      color: "#888888",
-      textAlign: "center",
-      marginTop: 20,
+      color: '#888',
+      textAlign: 'center',
     },
     text: {
+      width:'100%',
       color: Colors.primaryText,
       fontSize: 18,
       // borderColor: 'white', borderStyle: 'solid',borderWidth: 2,
     }, iconStyle: {
       color: Colors.primaryText
+    },
+    headerContainer: {
+      height: 100
+    },
+    header: {
+      margin: 0,
+      padding: 0
     }
   });
 
-  return ( // global
-
-
-    <View style={{
-      width: MAXWIDTH,
-      maxWidth: '100%',
-      margin: 0,
-      padding: 0,
-      height: myDevice.heightBody,
-      borderColor: 'yellow', borderStyle: 'solid', borderWidth: 5,
-      left: 0,
-      position: 'relative',
-      top: 0
-    }}>
-
-      <Header addToCart={addToCart} removeFromCart={removeFromCart}
-        articlesList={articlesList} cart={cart}
-
-        navigation={undefined} route={undefined} callback={undefined} showPanierViewModal={undefined} scrollY0={undefined} scrollX0={undefined} commande={undefined}
-      />
-      <View style={{ width: '100%', flexDirection: 'row', zIndex: 9 }}>
-        <PickerPageName callback={callBackFromPickerName} />
-
-        {/* {pdjRayon && pdjRayon.length>0 &&  <DropDownMenu pdjRayon={pdjRayon && pdjRayon.length>0} />} */}
-        {categoryName === 'Sushi' && <DropDownMenu pdjRayon={pdjTitleSushi} />}
-        {categoryName === 'Traditionnels' && <DropDownMenu pdjRayon={pdjTitleTradit} />}
+  return (
+    <View style={styles.mainContainer}>
+      <View style={styles.headerContainer}>
+        <Header
+          addToCart={addToCart}
+          removeFromCart={removeFromCart}
+          articlesList={articlesList}
+          cart={cart} navigation={undefined} />
       </View>
-      <ArticlesQteToShow articlesList={articlesList} addToCart={addToCart} removeFromCart={removeFromCart} cart={cart} currentPdjType = {currentPdjType} />
+      <View style={styles.headerRow}>
+        <PickerPageName callback={callBackFromPickerName} />
+        {categoryName === 'Sushi' && <DropDownMenu pdjRayon={pdjTitleSushi} />}
+        {categoryName === 'Traditionnels' && (
+          <DropDownMenu pdjRayon={pdjTitleTradit} />
+        )}
+      </View>
+      <ArticlesQteToShow
+        articlesList={articlesList}
+        addToCart={addToCart}
+        removeFromCart={removeFromCart}
+        cart={cart}
+        currentPdjType={currentPdjType}
+      />
     </View>
-
   );
 }
+

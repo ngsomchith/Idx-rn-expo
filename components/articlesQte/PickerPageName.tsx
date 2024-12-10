@@ -44,14 +44,16 @@ export default function PickerPageName({callback}) {
         container: {
             zIndex: 9,
             height:40,
-            width: '50%',
+            width: '48%',
+            marginHorizontal:'1%',
             // padding: 20,
             backgroundColor: Colors.highlightBG,
         },
         dropdown: {
-            width: '45%',
+            // width: 130,
             marginBottom: 20,
             backgroundColor: Colors.highlightBG,
+            top: -5
         },
         dropdownContainer: {
             backgroundColor: Colors.highlightBG,
@@ -71,7 +73,6 @@ export default function PickerPageName({callback}) {
             fontSize: 16,
             color: "#888888",
             textAlign: "center",
-            marginTop: 20,
         },
         text: {
           color: Colors.primaryText,
