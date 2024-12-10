@@ -32,7 +32,7 @@ const ArticlesQteToShow = ({ articlesList, addToCart, removeFromCart, cart, curr
   const myHeight = device.height
   const maxHeightScrollable = device.heightBody - 10
 
-  const maxHeightArticle = 280
+  const maxHeightArticle = 240
 
   useEffect(() => {
     if (!pdjTitleObject2 || pdjTitleObject2.length === 0) {
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     overflow: 'scroll',
     backgroundColor: Colors.primaryBG,
-    borderWidth: 10,
+    borderWidth: 1,
     borderColor: 'red',
     minHeight: 300,
     height: ThisDevice().device.heightBody,
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: Colors.primaryBG,
     borderColor: 'turquoise',
-    borderWidth: 10,
+    borderWidth: 1,
   },
   articleWrapper: {
     marginBottom: 2,
@@ -179,11 +179,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 0,
     marginVertical: 10,
     minHeight: 160,
-    maxHeight: 280,
-    height: 280,
+    maxHeight: 240,
+    height: 240,
     borderRadius: 10,
     justifyContent: 'center',
-    borderWidth: 3,
+    borderWidth: 1,
     borderColor: 'white',
   },
   articleContainer: {
