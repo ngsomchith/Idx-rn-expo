@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     },
     articleContent: {
       flexDirection: 'column',
-      width: '96%',
+      width: '94%',
       marginHorizontal: '2%',
       paddingHorizontal: 5,
       height: '100%',
@@ -122,10 +122,10 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
       alignItems: 'center',
       width: '100%',
-      padding: 8,
+      paddingVertical: 8,
       maxHeight: 60, // Limiter la hauteur
-      borderWidth: 2,
-      borderColor: Colors.primaryText, // Couleur adaptée pour contraste
+      // borderWidth: 2,
+      // borderColor: Colors.primaryText, // Couleur adaptée pour contraste
       borderRadius: 10,
       backgroundColor: Colors.background, // Couleur de fond pour une meilleure visibilité
     },
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
       fontSize: 16,
     },
     price: {
-      fontSize: 14,
+      fontSize: 16,
       fontWeight: 'bold',
       color: Colors.primaryText,
     },

@@ -126,7 +126,7 @@ export default function TabTwoScreen() {
       zIndex: 9,
     },
     dropdown: {
-      width: '48%',
+      width: '52%',
       marginHorizontal:'1%',
       backgroundColor: Colors.highlightBG,
       // borderColor: Colors.primaryText,

@@ -44,7 +44,7 @@ export default function PickerPageName({callback}) {
         container: {
             zIndex: 9,
             height:40,
-            width: '48%',
+            width: '44%',
             marginHorizontal:'1%',
             // padding: 20,
             backgroundColor: Colors.highlightBG,
