@@ -1,12 +1,12 @@
-import { StyleSheet, Image, Platform, View } from 'react-native';
+import { StyleSheet, Image, Platform, View, Text, TextInput, Pressable, FlatList } from 'react-native';
+import ArticlesQteToShow from '@/components/articlesQte/ArticlesQteToShow';
+import ThisDevice from '@/constants/ThisDevice';
 import { Collapsible } from '@/components/Collapsible';
 import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import ArticlesQteToShow from '@/components/articlesQte/ArticlesQteToShow';
-import ThisDevice from '@/constants/ThisDevice';
 import Panier from '@/components/articlesQte/Panier';
 import { useEffect, useState } from 'react';
 import Header from '@/components/Header';
@@ -17,6 +17,8 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { Colors } from "@/constants/Colors";
 import { Icon } from 'react-native-elements';
 import { pdjTitleSushi, pdjTitleTradit } from '@/components/articlesQte/pdjTitleObject0';
+import FlatListArticles from '@/components/articlesQte/FlatListArticles';
+import { takeOffAccent } from '@/components/services/DataServices';
 
 export default function TabTwoScreen() {
   const thisUseFB = useFb('articles/seller2/articlesList');
@@ -31,6 +33,8 @@ export default function TabTwoScreen() {
   const myDevice = ThisDevice().device;
   const MAXWIDTH = ThisDevice().device.myMAXWIDTH;
   const widthMobile = 650;
+
+  const [filteredData, setFilteredData] = useState(articlesList);
 
   const addToCart = (article: any) => {
     setCart((prevCart) => {
@@ -60,6 +64,9 @@ export default function TabTwoScreen() {
     }
   }, [thisUseFB, articlesList]);
 
+  useEffect(() => {
+    console.log("articles-67 :: filteredData ", filteredData)
+  }, [filteredData])
   const callBackFromPickerName = (data: any) => {
     setCategoryName(data[0]);
     if (data[1] && data[1].length > 0) {
@@ -107,44 +114,162 @@ export default function TabTwoScreen() {
     );
   };
 
+  // const SearchableList = ({ open }) => {
+  //   const [search, setSearch] = useState('');
+
+  //   const handleSearch = (text) => {
+  //     console.log("handleSearch", text)
+  //     setSearch(text);
+
+
+  //     const resultFilter =
+  //       articlesList.filter((item: any) => {
+  //         console.log("item ", text, ':', item)
+  //         const itemData = item.name?.toUpperCase() || "";
+  //         const textData = takeOffAccent(text.toUpperCase());
+  //         // console.log("textData 45 ", textData)
+  //         // console.log("itemData ", itemData)
+  //         return itemData.includes(textData);
+  //       });
+  //     console.log("resultFilter - filteredData ", resultFilter)
+  //     setFilteredData(resultFilter)
+  //   };
+
+  //   return (
+  //     <>
+  //       {/* {!open && */}
+
+  //       <View style={styles.container}>
+  //         {/* <Text>{open ? 'opened':'not opened'} </Text> */}
+  //         <TextInput
+  //           style={styles.searchBar}
+  //           placeholder="Search items..." // {open ? 'opened':'not opened'} //
+  //           value={search}
+  //           onChangeText={handleSearch}
+  //         />
+
+  //         {/* <ArticlesQteToShow articlesList={filteredData} 
+  //           addToCart={addToCart} removeFromCart={removeFromCart} 
+  //           cart={cart} currentPdjType={currentPdjType}     
+  //                  /> */}
+
+  //         {/* <FlatList
+  //             data={filteredData}
+  //             keyExtractor={(item) => item.id}
+  //             renderItem={({ item }) => <Text style={styles.item}>{item.name}</Text>}
+  //           /> */}
+  //         <FlatListArticles addToCart={addToCart} removeFromCart={removeFromCart} articlesToWrapper={filteredData} />
+  //       </View>
+  //       {/* } */}
+  //     </>
+  //   );
+  // };
+
+
+  const SearchableList = ({ open }) => {
+    const [search, setSearch] = useState('');
+    const [filteredData, setFilteredData] = useState(articlesList);
+
+    const handleSearch = (text) => {
+      setSearch(text);
+
+
+      const resultFilter =
+        articlesList.filter((item: any) => {
+          console.log("item ", text, ':', item)
+          const itemData = item.name?.toUpperCase() || "";
+          const textData = takeOffAccent(text.toUpperCase());
+          // console.log("textData 45 ", textData)
+          // console.log("itemData ", itemData)
+          return itemData.includes(textData);
+        });
+      console.log("resultFilter - filteredData ", resultFilter)
+      setFilteredData(resultFilter)
+    };
+
+    return (
+      <>
+        {/* {!open && */}
+
+        <View style={styles.container}>
+          {/* <Text>{open ? 'opened':'not opened'} </Text> */}
+          <TextInput
+            style={styles.searchBar}
+            placeholder="Search items..." // {open ? 'opened':'not opened'} //
+            value={search}
+            onChangeText={handleSearch}
+          />
+
+          {/* <ArticlesQteToShow articlesList={filteredData} 
+            addToCart={addToCart} removeFromCart={removeFromCart} 
+            cart={cart} currentPdjType={currentPdjType}     
+                   /> */}
+
+          {/* <FlatList
+              data={filteredData}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => <Text style={styles.item}>{item.name}</Text>}
+            /> */}
+          <FlatListArticles addToCart={addToCart} removeFromCart={removeFromCart} articlesToWrapper={articlesList} />
+        </View>
+        {/* } */}
+      </>
+    );
+  };
   const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 10,
+      backgroundColor: 'grey'
+    },
+    searchBar: {
+      height: 60,
+      minHeight: 40,
+      marginVertical: 5,
+      backgroundColor: '#f0f0f0',
+      borderRadius: 10,
+      paddingHorizontal: 10,
+      marginBottom: 10,
+    },
     mainContainer: {
-      width: '100%',
-      maxWidth: '100%',
+      width: '96%',
+      maxWidth: '96%',
       padding: 10,
       height: '100%',
       backgroundColor: Colors.background,
+      borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
     },
     headerRow: {
-      width:'100%',
-      display:'flex',
+      width: '96%',
+      display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
       height: 50,
       backgroundColor: Colors.primaryBG,
       zIndex: 9,
+      borderColor: 'pink', borderStyle: 'solid', borderWidth: 2,
     },
     dropdown: {
       width: '52%',
-      marginHorizontal:'1%',
+      marginHorizontal: '1%',
       backgroundColor: Colors.highlightBG,
       // borderColor: Colors.primaryText,
       borderColor: 'green', borderStyle: 'solid', borderWidth: 2,
     },
     dropdownContainer: {
-      width:'100%',
+      width: '100%',
       backgroundColor: Colors.highlightBG,
       borderColor: Colors.primaryText,
     },
     placeholder: {
-      width:'100%',
+      width: '100%',
       fontSize: 16,
       color: '#888',
       textAlign: 'center',
     },
     text: {
-      width:'100%',
+      width: '100%',
       color: Colors.primaryText,
       fontSize: 18,
       // borderColor: 'white', borderStyle: 'solid',borderWidth: 2,
@@ -157,8 +282,87 @@ export default function TabTwoScreen() {
     header: {
       margin: 0,
       padding: 0
-    }
+    },
+    searchBarContainer: {
+      flex: 1,
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    searchInput: {
+      color: Colors.primaryText,
+    },
+    searchContainerStyle: {
+      flex: 1,
+      maxWidth: "75%",
+    },
+    searchInputContainer: {
+      height: "80%",
+    },
+    clearIcon: {
+      marginLeft: 10,
+    },
+    resultContainer: {
+      marginTop: 10,
+    },
+    filterContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
   });
+
+  // const styles = StyleSheet.create({
+  //   mainContainer: {
+  //     width: '100%',
+  //     maxWidth: '100%',
+  //     padding: 10,
+  //     height: '100%',
+  //     backgroundColor: Colors.background,
+  //   },
+  //   headerRow: {
+  //     width: '100%',
+  //     display: 'flex',
+  //     flexDirection: 'row',
+  //     alignItems: 'center',
+  //     justifyContent: 'space-between',
+  //     height: 50,
+  //     backgroundColor: Colors.primaryBG,
+  //     zIndex: 9,
+  //   },
+  //   dropdown: {
+  //     width: '52%',
+  //     marginHorizontal: '1%',
+  //     backgroundColor: Colors.highlightBG,
+  //     // borderColor: Colors.primaryText,
+  //     borderColor: 'green', borderStyle: 'solid', borderWidth: 2,
+  //   },
+  //   dropdownContainer: {
+  //     width: '100%',
+  //     backgroundColor: Colors.highlightBG,
+  //     borderColor: Colors.primaryText,
+  //   },
+  //   placeholder: {
+  //     width: '100%',
+  //     fontSize: 16,
+  //     color: '#888',
+  //     textAlign: 'center',
+  //   },
+  //   text: {
+  //     width: '100%',
+  //     color: Colors.primaryText,
+  //     fontSize: 18,
+  //     // borderColor: 'white', borderStyle: 'solid',borderWidth: 2,
+  //   }, iconStyle: {
+  //     color: Colors.primaryText
+  //   },
+  //   headerContainer: {
+  //     height: 100
+  //   },
+  //   header: {
+  //     margin: 0,
+  //     padding: 0
+  //   }
+  // });
 
   return (
     <View style={styles.mainContainer}>
@@ -176,14 +380,33 @@ export default function TabTwoScreen() {
           <DropDownMenu pdjRayon={pdjTitleTradit} />
         )}
       </View>
-      <ArticlesQteToShow
-        articlesList={articlesList}
-        addToCart={addToCart}
-        removeFromCart={removeFromCart}
-        cart={cart}
-        currentPdjType={currentPdjType}
-      />
+      {categoryName != 'Tout'
+        // && open 
+        ?
+        <>
+          <Text style={{ color: 'white' }}>{categoryName} </Text>
+          <ArticlesQteToShow
+            articlesList={articlesList}
+            addToCart={addToCart}
+            removeFromCart={removeFromCart}
+            cart={cart}
+            currentPdjType={currentPdjType} //pdjType resulted by DropdownMenu
+          />
+        </>
+        :
+        <>
+          <Text style={{ color: 'white' }}>{categoryName} </Text>
+          <SearchableList open={open} />
+          {/* <MySearchBar open={open} /> */}
+          <FlatListArticles articlesToWrapper={articlesList}
+            addToCart={addToCart} removeFromCart={removeFromCart} />
+        </>
+
+
+      }
     </View>
   );
 }
+
+
 

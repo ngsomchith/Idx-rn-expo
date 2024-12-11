@@ -12,7 +12,7 @@ export default function PickerPageName({ callback }) {
     const [items, setItems] = useState([
         { label: "Traditionnels", value: "table1" },
         { label: "Sushi", value: "table2" },
-        // { label: "Tout", value: "table3" },
+        { label: "Tout", value: "table3" },
     ]);
 
     useEffect(() => {
@@ -33,10 +33,10 @@ export default function PickerPageName({ callback }) {
                 callback(['Sushi', pdjTitleSushi])
                 break;
 
-            // case 'table3':
-            //     console.log('table2', 'Tout')
-            //     callback(['Sushi', pdjTitleObject0])
-            //     break;
+            case 'table3':
+                console.log('table3', 'Tout')
+                callback(['Tout', pdjTitleObject0])
+                break;
             default:
                 break;
         }
@@ -49,7 +49,8 @@ export default function PickerPageName({ callback }) {
         container: {
             zIndex: 9,
             height: 40,
-            width: '44%',
+            // width: '44%',
+            width: '40%',
             marginHorizontal: '1%',
             // padding: 20,
             backgroundColor: Colors.highlightBG,
