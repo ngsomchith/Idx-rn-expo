@@ -108,8 +108,7 @@ const styles = StyleSheet.create({
     },
     articleContent: {
       flexDirection: 'column',
-      width: '94%',
-      marginHorizontal: '2%',
+      width: '100%',
       paddingHorizontal: 5,
       height: '100%',
       borderRadius: 10,
@@ -133,6 +132,12 @@ const styles = StyleSheet.create({
       textDecorationLine: 'line-through',
       color: 'red',
       fontSize: 16,
+      transform: [{ rotate: '-30deg' }], // Rotation de 45 degrés
+    },
+    rotatedText: {
+      fontSize: 18,
+      color: '#333',
+      transform: [{ rotate: '-30deg' }], // Rotation de 45 degrés
     },
     price: {
       fontSize: 16,
@@ -161,8 +166,8 @@ const styles = StyleSheet.create({
     quantityInput: {
       width: 26,
       textAlign: 'center',
-      borderColor: 'gray',
-      borderWidth: 1,
+      // borderColor: 'gray',
+      // borderWidth: 1,
       borderRadius: 5,
       paddingVertical: 5,
       fontSize: 18,

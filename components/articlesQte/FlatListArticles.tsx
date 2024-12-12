@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import RenderEachArticleInHome from './RenderEachArticleInHome';
 import ThisDevice from '@/constants/ThisDevice';
 import { Colors } from '@/constants/Colors';
@@ -48,6 +48,7 @@ const FlatListArticles = ({ articlesToWrapper,addToCart, removeFromCart }) => {
 
         return (
             <View style={styles.rowContainer}>
+                {/* <Text> FlatListArticles</Text> */}
                 {articlesToWrapper?.length > 0 &&
                     articlesToWrapper?.map((item: any, index: any) => (
                         <View key={index} style={styles.articleWrapper}>
@@ -87,14 +88,14 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'flex-start',
         width: '100%',
         height: '100%',
         maxHeight: ThisDevice().device.heightBody - 100,
         backgroundColor: Colors.primaryBG,
-        borderColor: 'turquoise',
-        borderWidth: 2,
+        // borderColor: 'yellow',
+        // borderWidth: 5,
         overflow: 'scroll',
     },
     articleWrapper: {

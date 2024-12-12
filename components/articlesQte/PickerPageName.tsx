@@ -4,6 +4,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { pdjTitleObject0, pdjTitleSushi, pdjTitleTradit } from "./pdjTitleObject0";
 import { Colors } from "@/constants/Colors";
 import { Icon } from 'react-native-elements';
+import { iconSearchPlus } from "@/icons";
 
 export default function PickerPageName({ callback }) {
     // DropDown state
@@ -12,7 +13,7 @@ export default function PickerPageName({ callback }) {
     const [items, setItems] = useState([
         { label: "Traditionnels", value: "table1" },
         { label: "Sushi", value: "table2" },
-        { label: "Tout", value: "table3" },
+        { label: `Tout`, value: "table3" },
     ]);
 
     useEffect(() => {

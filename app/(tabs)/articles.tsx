@@ -20,6 +20,7 @@ import { pdjTitleSushi, pdjTitleTradit } from '@/components/articlesQte/pdjTitle
 import FlatListArticles from '@/components/articlesQte/FlatListArticles';
 import { takeOffAccent } from '@/components/services/DataServices';
 
+
 export default function TabTwoScreen() {
   const thisUseFB = useFb('articles/seller2/articlesList');
   const [articlesList, setArticlesList] = useState<Array<ArticleType>>([]);
@@ -194,7 +195,7 @@ export default function TabTwoScreen() {
         <View style={styles.container}>
           {/* <Text>{open ? 'opened':'not opened'} </Text> */}
           <TextInput
-            style={styles.searchBar}
+            style={[styles.searchBar, {color:'white', paddingHorizontal: 10,fontSize: 16}]}
             placeholder="Search items..." // {open ? 'opened':'not opened'} //
             value={search}
             onChangeText={handleSearch}
@@ -210,7 +211,7 @@ export default function TabTwoScreen() {
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => <Text style={styles.item}>{item.name}</Text>}
             /> */}
-          <FlatListArticles addToCart={addToCart} removeFromCart={removeFromCart} articlesToWrapper={articlesList} />
+          <FlatListArticles addToCart={addToCart} removeFromCart={removeFromCart} articlesToWrapper={filteredData} />
         </View>
         {/* } */}
       </>
@@ -219,28 +220,28 @@ export default function TabTwoScreen() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      padding: 10,
+      // padding: 10,
       backgroundColor: 'grey'
     },
     searchBar: {
       height: 60,
       minHeight: 40,
-      marginVertical: 5,
-      backgroundColor: '#f0f0f0',
+      // marginVertical: 5,
+      backgroundColor: '#294e80',
       borderRadius: 10,
-      paddingHorizontal: 10,
-      marginBottom: 10,
+      // paddingHorizontal: 10,
+      // marginBottom: 10,
     },
     mainContainer: {
-      width: '96%',
-      maxWidth: '96%',
-      padding: 10,
+      width: '100%',
+      maxWidth: '100%',
+      // paddingVertical: 10,
       height: '100%',
       backgroundColor: Colors.background,
       borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
     },
     headerRow: {
-      width: '96%',
+      width: '100%',
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
@@ -248,14 +249,14 @@ export default function TabTwoScreen() {
       height: 50,
       backgroundColor: Colors.primaryBG,
       zIndex: 9,
-      borderColor: 'pink', borderStyle: 'solid', borderWidth: 2,
+      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 2,
     },
     dropdown: {
-      width: '52%',
-      marginHorizontal: '1%',
+      width: '58%',
+      // marginHorizontal: '1%',
       backgroundColor: Colors.highlightBG,
       // borderColor: Colors.primaryText,
-      borderColor: 'green', borderStyle: 'solid', borderWidth: 2,
+      // borderColor: 'green', borderStyle: 'solid', borderWidth: 2,
     },
     dropdownContainer: {
       width: '100%',
@@ -289,7 +290,7 @@ export default function TabTwoScreen() {
       alignItems: "center",
     },
     searchInput: {
-      color: Colors.primaryText,
+      color: 'white',
     },
     searchContainerStyle: {
       flex: 1,
@@ -299,10 +300,10 @@ export default function TabTwoScreen() {
       height: "80%",
     },
     clearIcon: {
-      marginLeft: 10,
+      // marginLeft: 10,
     },
     resultContainer: {
-      marginTop: 10,
+      // marginTop: 10,
     },
     filterContainer: {
       flexDirection: "row",
@@ -310,59 +311,6 @@ export default function TabTwoScreen() {
       alignItems: "center",
     },
   });
-
-  // const styles = StyleSheet.create({
-  //   mainContainer: {
-  //     width: '100%',
-  //     maxWidth: '100%',
-  //     padding: 10,
-  //     height: '100%',
-  //     backgroundColor: Colors.background,
-  //   },
-  //   headerRow: {
-  //     width: '100%',
-  //     display: 'flex',
-  //     flexDirection: 'row',
-  //     alignItems: 'center',
-  //     justifyContent: 'space-between',
-  //     height: 50,
-  //     backgroundColor: Colors.primaryBG,
-  //     zIndex: 9,
-  //   },
-  //   dropdown: {
-  //     width: '52%',
-  //     marginHorizontal: '1%',
-  //     backgroundColor: Colors.highlightBG,
-  //     // borderColor: Colors.primaryText,
-  //     borderColor: 'green', borderStyle: 'solid', borderWidth: 2,
-  //   },
-  //   dropdownContainer: {
-  //     width: '100%',
-  //     backgroundColor: Colors.highlightBG,
-  //     borderColor: Colors.primaryText,
-  //   },
-  //   placeholder: {
-  //     width: '100%',
-  //     fontSize: 16,
-  //     color: '#888',
-  //     textAlign: 'center',
-  //   },
-  //   text: {
-  //     width: '100%',
-  //     color: Colors.primaryText,
-  //     fontSize: 18,
-  //     // borderColor: 'white', borderStyle: 'solid',borderWidth: 2,
-  //   }, iconStyle: {
-  //     color: Colors.primaryText
-  //   },
-  //   headerContainer: {
-  //     height: 100
-  //   },
-  //   header: {
-  //     margin: 0,
-  //     padding: 0
-  //   }
-  // });
 
   return (
     <View style={styles.mainContainer}>
@@ -384,7 +332,7 @@ export default function TabTwoScreen() {
         // && open 
         ?
         <>
-          <Text style={{ color: 'white' }}>{categoryName} </Text>
+          {/* <Text style={{backgroundColor:Colors.primaryBG, color: 'white' }}>{categoryName} </Text> */}
           <ArticlesQteToShow
             articlesList={articlesList}
             addToCart={addToCart}
@@ -395,11 +343,12 @@ export default function TabTwoScreen() {
         </>
         :
         <>
-          <Text style={{ color: 'white' }}>{categoryName} </Text>
+          {/* <Text style={{ color: 'white' }}>{categoryName} </Text> */}
           <SearchableList open={open} />
           {/* <MySearchBar open={open} /> */}
+          {categoryName !='Tout' && 
           <FlatListArticles articlesToWrapper={articlesList}
-            addToCart={addToCart} removeFromCart={removeFromCart} />
+            addToCart={addToCart} removeFromCart={removeFromCart} />}
         </>
 
 
