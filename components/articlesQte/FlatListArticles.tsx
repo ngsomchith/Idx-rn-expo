@@ -4,7 +4,7 @@ import RenderEachArticleInHome from './RenderEachArticleInHome';
 import ThisDevice from '@/constants/ThisDevice';
 import { Colors } from '@/constants/Colors';
 
-const FlatListArticles = ({ articlesToWrapper,addToCart, removeFromCart }) => {
+const FlatListArticles = ({ articlesFilteredToWrap,addToCart, removeFromCart }) => {
 
     const [articlesMenu, setArticlesMenu] = useState([]);
     const [categoryNameList, setCategoryNameList] = useState([]);
@@ -18,12 +18,12 @@ const FlatListArticles = ({ articlesToWrapper,addToCart, removeFromCart }) => {
 
     useEffect(() => {
 
-        console.log("FlatListArticles21 : articlesToWrapper = ", articlesToWrapper)
+        console.log("FlatListArticles21 : articlesFilteredToWrap = ", articlesFilteredToWrap)
         console.log("FlatListArticles22 : articlesMenu = ", articlesMenu)
-        // if(!articlesToWrapper ){
-        //     setArticlesMenu(articlesToWrapper)
+        // if(!articlesFilteredToWrap ){
+        //     setArticlesMenu(articlesFilteredToWrap)
         // }
-    }, [articlesToWrapper, articlesMenu])
+    }, [articlesFilteredToWrap, articlesMenu])
 
     const renderItem = (item: any, index: any) => {
         return (
@@ -42,15 +42,15 @@ const FlatListArticles = ({ articlesToWrapper,addToCart, removeFromCart }) => {
     const myFlatListRow = (_articlesMenu: any) => {
 
 
-        // if (_articlesMenu !== articlesToWrapper) {
-        //     setArticlesMenu(articlesToWrapper);
+        // if (_articlesMenu !== articlesFilteredToWrap) {
+        //     setArticlesMenu(articlesFilteredToWrap);
         // }
 
         return (
             <View style={styles.rowContainer}>
                 {/* <Text> FlatListArticles</Text> */}
-                {articlesToWrapper?.length > 0 &&
-                    articlesToWrapper?.map((item: any, index: any) => (
+                {articlesFilteredToWrap?.length > 0 &&
+                    articlesFilteredToWrap?.map((item: any, index: any) => (
                         <View key={index} style={styles.articleWrapper}>
                             {renderItem(item, index)}
                         </View>

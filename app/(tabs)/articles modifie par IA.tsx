@@ -19,7 +19,6 @@ import { Icon } from 'react-native-elements';
 import { pdjTitleSushi, pdjTitleTradit } from '@/components/articlesQte/pdjTitleObject0';
 import FlatListArticles from '@/components/articlesQte/FlatListArticles';
 import { takeOffAccent } from '@/components/services/DataServices';
-import SearchableList from '@/components/articlesQte/SearchableList';
 export default function TabTwoScreen() {
   const thisUseFB = useFb('articles/seller2/articlesList');
   const [articlesList, setArticlesList] = useState<Array<ArticleType>>([]);
@@ -130,29 +129,29 @@ export default function TabTwoScreen() {
     );
   };
 
-  // const SearchableList = ({ search, setSearch, filteredData, addToCart, removeFromCart }) => {
-  //   const handleSearch = (text:any) => {
-  //     console.log("Recherche pour:", text);
-  //     setSearch(text);
-  //   };
+  const SearchableList = ({ search, setSearch, filteredData, addToCart, removeFromCart }) => {
+    const handleSearch = (text:any) => {
+      console.log("Recherche pour:", text);
+      setSearch(text);
+    };
 
-  //   return (
-  //     <View style={styles.container}>
-  //       <TextInput
-  //         style={[styles.searchBar, { color: 'white', paddingHorizontal: 10, fontSize: 16 }]}
-  //         placeholder="Search items..."
-  //         placeholderTextColor="#888"
-  //         value={search}
-  //         onChangeText={handleSearch}
-  //       />
-  //       <FlatListArticles 
-  //         addToCart={addToCart} 
-  //         removeFromCart={removeFromCart} 
-  //         articlesFilteredToWrap={filteredData} 
-  //       />
-  //     </View>
-  //   );
-  // };
+    return (
+      <View style={styles.container}>
+        <TextInput
+          style={[styles.searchBar, { color: 'white', paddingHorizontal: 10, fontSize: 16 }]}
+          placeholder="Search items..."
+          placeholderTextColor="#888"
+          value={search}
+          onChangeText={handleSearch}
+        />
+        <FlatListArticles 
+          addToCart={addToCart} 
+          removeFromCart={removeFromCart} 
+          articlesFilteredToWrap={filteredData} 
+        />
+      </View>
+    );
+  };
 
   return (
     <View style={styles.mainContainer}>

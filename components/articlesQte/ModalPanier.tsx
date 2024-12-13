@@ -12,6 +12,9 @@ import { ThemedTitle } from '../ThemedTitle';
 import { useAuth } from '../../app/AuthContext';
 import { myApp } from '@/constants/firebaseConfig';
 import { iconBasket } from '@/icons';
+import MyTitle from '../MyTitle';
+import ImageViewer from '../ImageViewer';
+import Header from '../Header';
 
 const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
     const auth = myApp[1];
@@ -42,13 +45,14 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                 style={styles.openModalButton}
                 onPress={() => setModalPanierVisible(true)}
             >
-                <View style={{ position:'relative', left: -15, top: -10}}>
-                <ThemedText style={{ position: 'absolute',
-                    top: -20, left: 5,
-                    backgroundColor:'green', borderRadius:50,
-                    
+                <View style={{ position: 'relative', left: -15, top: -10 }}>
+                    <ThemedText style={{
+                        position: 'absolute',
+                        top: -20, left: 5,
+                        backgroundColor: 'green', borderRadius: 50,
+
                     }}>{cart?.length}</ThemedText>
-                    <Text style={{ position: 'absolute',top: 0, left: 0 }}>{iconBasket} </Text>
+                    <Text style={{ position: 'absolute', top: 0, left: 0 }}>{iconBasket} </Text>
                 </View>
             </Pressable>
 
@@ -56,15 +60,28 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                 <ThemedView style={styles.modalContainer}>
                     {/* Modal Header */}
                     <View style={styles.modalHeader}>
-                        <ThemedTitle style={styles.modalTitle}>Modal Panier</ThemedTitle>
+                        <View style={[{ //ModalGoHome
+                            // width: 50,
+                            // height: '50%',
+                            // margin: 10,
+                            maxWidth:'100%',
+                            borderWidth: 5, borderColor: 'green', borderStyle: 'solid',
+                            display: 'flex',
+                            flexDirection: 'row'
+                        }]}>
+                        <Header articlesList={undefined} cart={undefined} removeFromCart={undefined} addToCart={undefined} navigation={undefined} />
+                        </View>
                         <Pressable style={styles.closeButton} onPress={() => setModalPanierVisible(false)}>
                             <Text style={styles.closeButtonText}>X</Text>
                         </Pressable>
                     </View>
 
+
+
                     {/* Modal Content */}
                     <View style={styles.modalContent}>
-                        {auth?.currentUser ? (
+
+                        {/* {auth?.currentUser ? (
                             <View style={styles.userInfo}>
                                 <Text style={styles.connectedText}>Connecté : {currentUserEmail}</Text>
                                 <Pressable style={styles.logoutButton} onPress={handleLogout}>
@@ -73,12 +90,27 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                             </View>
                         ) : (
                             <ModalSignIn myImage={undefined} />
+                        )} */}
+
+                        {auth?.currentUser ? (
+                            <View style={styles.userInfo}>
+                                <Text style={styles.connectedText}>Connecté : {currentUserEmail}</Text>
+                                <Pressable style={styles.logoutButton} onPress={handleLogout}>
+                                    <Text style={styles.logoutText}>Déconnexion</Text>
+                                </Pressable>
+                            </View>
+                        ) : (
+                            <View style={styles.containerColumn}>
+                                <ModalSignIn myImage={undefined} />
+                                <ThemedTitle style={styles.modalTitle}>Modal Panier</ThemedTitle>
+                                <FlatListScrollPanier
+                                    cart={cart}
+                                    addToCart={addToCart}
+                                    removeFromCart={removeFromCart}
+                                />
+                            </View>
                         )}
 
-                        <FlatListScrollPanier
-                            cart={cart}
-                            addToCart={addToCart}
-                            removeFromCart={removeFromCart} articlesListTemp={undefined} PlatsToShowFilteredTemp={undefined} menuN={undefined} menuNImg={undefined} pdjType={undefined} navigation={undefined} callbackFn={undefined} route={undefined} />
                     </View>
                 </ThemedView>
             </Modal>
@@ -86,13 +118,27 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
     );
 };
 
-export default ModalPanier;
 const styles = StyleSheet.create({
+    logoHeader:{
+        // borderColor: 'yellow',
+        // borderStyle: 'solid',
+        // borderWidth: 5,
+        margin:10,
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+    },
+    containerColumn: {
+        flexDirection: 'column',
+        flexWrap: 'nowrap',
+        borderColor: 'white', borderStyle: 'solid', borderWidth: 2,
+    },
     mainContainer: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.background || '#f5f5f5',
+        backgroundColor: 'blue',//Colors.background || '#f5f5f5',
+        borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
     },
     openModalButton: {
         width: '80%',
@@ -102,31 +148,42 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary || '#4caf50',
         borderRadius: 10,
         marginVertical: 10,
+        borderColor: 'green', borderStyle: 'solid', borderWidth: 2,
     },
     modalContainer: {
         flex: 1,
-        backgroundColor: Colors.modalBackground || '#ffffff',
+        // backgroundColor: Colors.background || '#ffffff',
+        backgroundColor: Colors.primaryBG || '#f5f5f5',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         padding: 20,
+        borderColor: 'red', borderStyle: 'solid', borderWidth: 2,
     },
     modalHeader: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
         borderBottomWidth: 1,
-        borderColor: Colors.border || '#e0e0e0',
-        paddingBottom: 10,
+        // borderColor: Colors.border || '#e0e0e0',
+        // paddingBottom: 10,
+        // backgroundColor: Colors.primaryBG || '#ffffff',
+        borderColor: 'pink', borderStyle: 'solid', borderWidth: 2,
     },
     modalTitle: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: Colors.textPrimary || '#000000',
+        textAlign:'center',
+        marginVertical:10,
+        color: Colors.primaryText || '#000000',
+        borderColor: 'purple', borderStyle: 'solid', borderWidth: 2,
     },
     closeButton: {
-        padding: 10,
+        padding: 8,
         backgroundColor: Colors.closeButton || '#ff4d4d',
-        borderRadius: 15,
+        borderRadius:50,
+        position: 'relative',
+        left: -25,
+        borderColor: 'red', borderStyle: 'solid', borderWidth: 2,
     },
     closeButtonText: {
         color: '#ffffff',
@@ -135,18 +192,21 @@ const styles = StyleSheet.create({
     },
     modalContent: {
         flex: 1,
-        marginTop: 20,
+        // marginTop: 20,
+        borderColor: 'turquoise', borderStyle: 'solid', borderWidth: 2,
     },
     userInfo: {
         marginBottom: 20,
         padding: 10,
         backgroundColor: Colors.userInfoBackground || '#e0f7fa',
         borderRadius: 10,
+        borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
     },
     connectedText: {
         fontSize: 16,
         color: Colors.textSecondary || '#00796b',
         marginBottom: 10,
+        borderColor: 'coral', borderStyle: 'solid', borderWidth: 2,
     },
     logoutButton: {
         padding: 10,
@@ -160,3 +220,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 });
+export default ModalPanier;

@@ -17,6 +17,7 @@ import { Colors } from '@/constants/Colors';
 import ModalMenuN from './ModalMenuN';
 
 const RenderEachArticleInHome = ({
+  articlesFilteredToWrap,
   addToCart,
   removeFromCart,
   menuN,
@@ -55,6 +56,29 @@ const RenderEachArticleInHome = ({
       setQte(menuN.qte);
     }
   };
+
+
+  // const incrementQuantity = () => {
+  //   menuN.qte++;
+  //   addToCart(menuN);
+  //   const updatedMenuN = { ...menuN, qte:( Number(menuN.qte + 1)).toString() };
+  //   // Assurez-vous que `addToCart` accepte le nouvel objet
+  //   setQte(updatedMenuN.qte);
+  //   console.log("updatedMenuN ", menuN.qte, menuN)
+  //   console.log("updatedMenuN ", updatedMenuN)
+  // };
+  
+  // const decrementQuantity = () => {
+  //   if (menuN.qte > 0) {
+  //     menuN.qte--;
+  //     removeFromCart(menuN);
+  //     const updatedMenuN = { ...menuN, qte: menuN.qte - 1 };
+  //     removeFromCart(menuN);
+  //     setQte(updatedMenuN.qte);
+  //   }
+  // };
+  
+
 
   const renderPriceSection = () => (
     <View style={styles.priceSection}>
