@@ -7,11 +7,7 @@ import RenderEachPanierElt from './RenderEachPanierElt';
 import RenderEachArticleInHome from './RenderEachArticleInHome';
 
 const FlatListScrollPanier = ({
-    addToCart, removeFromCart, cart,
-    articlesListTemp,
-    PlatsToShowFilteredTemp, menuN, menuNImg,
-    pdjType, navigation, callbackFn,
-    route, ...otherprops
+    addToCart, removeFromCart, cart, ...otherprops
 }) => {
 
 
@@ -46,18 +42,25 @@ const FlatListScrollPanier = ({
             }>
 
             <RenderEachPanierElt
-                thiscategoryName={'categoryName'}
-                todayfr10={'todayfr10'} menuN={item}
-                menuNImg={item?.img} idx={undefined} navigation={navigation} route={route}
-                callbackFn={callbackFn} pdjType={pdjType}
-                PlatsToShowFilteredTemp={PlatsToShowFilteredTemp}
-                articlesListTemp={articlesListTemp}
-                fromPanier={undefined} callback={callbackFn}
                 addToCart={addToCart}
                 removeFromCart={removeFromCart}
-                scrollY0={undefined} scrollX0={undefined}
-                updateScrollValue={undefined}
-                zoomMenuN={undefined} />
+                thiscategoryName={'categoryName'}
+                todayfr10={'todayfr10'} menuN={item}
+                menuNImg={item?.img} 
+                // idx={undefined} 
+                // navigation={navigation} 
+                // route={route}
+                // callbackFn={callbackFn} 
+                // pdjType={pdjType}
+                // PlatsToShowFilteredTemp={PlatsToShowFilteredTemp}
+                // articlesListTemp={articlesListTemp}
+                // fromPanier={undefined} 
+                // callback={callbackFn}
+                scrollY0={undefined} 
+                scrollX0={undefined}
+                // updateScrollValue={undefined}
+                // zoomMenuN={undefined} 
+                />
 
         </Pressable>
     );

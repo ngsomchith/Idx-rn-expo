@@ -12,6 +12,7 @@ export class ArticleType
   'qte'?: number=0;
   'totalLigne'?: number=0;
   'description'?:string='';
+  'index'?:number=0;
 
   // 'firstImg'?:boolean = true;
   // 'panierId'?:string='';

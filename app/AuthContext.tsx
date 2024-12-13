@@ -4,7 +4,7 @@ import 'firebase/auth';
 import 'firebase/firestore'; // Si vous utilisez Firestore
 import { getItems, myApp } from '@/firebase';
 import { FirebaseInit } from '@/constants/firebaseConfig';
-import { getAuth } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 import { UserType } from '@/app/models/UserType';
 import { thisClone } from '../components/services/DataServices';
 
@@ -35,23 +35,34 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
   const  [modalSignInVisible, setModalSignInVisible] =  useState(false)
-
   const login = (userData: UserType) => {
     setUser(userData);
   };
 
-  const logout = () => {
-    setUser(null);
-  };
 
 
   const [currentUser, setCurrentUser] = useState<UserType | null>(null);
   let currentUSerTemp = thisClone(currentUser)
 
   const firebase = myApp[0]
-  const auth = getAuth(firebase)
+  
+  const [auth, setAuth] = useState(getAuth() || null);
+  
   const firestore = myApp[3]
 
+  const logout = () => {
+    console.log("logOut")
+    // setAuth(getAuth(undefined))
+    signOut(auth)
+    setUser(null);
+  };
+
+    useEffect(() => {
+      console.log("auth ", auth)  
+  }, [auth])
+  useEffect(() => {
+    setAuth(getAuth(firebase))
+  }, [])
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user:any) => {
         

@@ -150,7 +150,7 @@ const Header = ({ articlesList, cart, removeFromCart, addToCart, navigation
                 //  borderWidth: 2, borderColor: 'turquoise', borderStyle: 'solid',
             }]} >
 
-            <View style={[styles00.dbCol25, { //A gauche //relative
+            {/* <View style={[styles00.dbCol25, { //A gauche //relative
                 width: 100,
                 height: '100%',
                 backgroundColor: 'transparent',
@@ -182,7 +182,7 @@ const Header = ({ articlesList, cart, removeFromCart, addToCart, navigation
 
                 </Text>
 
-            </View>
+            </View> */}
             <View style={[styles00.dbCol70, {  //myTitle
                 height: '100%',
                 // width: myWidth - 100,

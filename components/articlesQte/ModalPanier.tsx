@@ -15,13 +15,14 @@ import { iconBasket } from '@/icons';
 import MyTitle from '../MyTitle';
 import ImageViewer from '../ImageViewer';
 import Header from '../Header';
+import ModalProfile from '../GestionUser/ModalProfile';
 
 const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
     const auth = myApp[1];
     const thisAuth = useAuth();
     const device = ThisDevice().device;
     const MAXWIDTH = ThisDevice().device.myMAXWIDTH;
-
+    const [totalPanier, setTotalPanier] = useState(0)
     const [modalPanierVisible, setModalPanierVisible] = useState(false);
     const [currentUserEmail, setCurrentUserEmail] = useState('');
 
@@ -39,6 +40,109 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
         }
     }, [auth]);
 
+    useEffect(() => {
+        getTotalPanier(cart)
+    }, [cart])
+
+    useEffect(() => {
+        console.log("totalPanier ", totalPanier)
+    }, [totalPanier])
+
+
+    const getTotalPanier = (cart: any
+        // , remiseSushi: any, remiseObtenue:any, 
+        // setTotalPanier:any, setTotalPanierJap:any, 
+        // setTotalPanierNoJap:any
+    ) => {
+        const totalLigne: any = []
+        const totalQte0: any = []
+        // const totalLigneJap: any = []
+        // const totalLigneNoJap: any = []
+        // const totalLignePdjsja: any = []
+
+        cart?.forEach((element: any) => {
+            // console.log("ARTI", "510element.prix ", element.qte, ' * ', element.prix, Number(element.prix), Number('3,45')), Number('3.45')
+            totalLigne.push(element.qte * Number(element.prix))
+            totalQte0.push(element.qte)
+            //   if (element.pdjType == 'jap') {
+            //     totalLigneJap.push(element.qte * Number(element.prix))
+            //   } else if (element.pdjType == 'pdjsja') {
+            //     totalLignePdjsja.push(element.qte * Number(element.prix))
+            //   }
+            //   else {
+            //     totalLigneNoJap.push(element.qte * Number(element.prix))
+            //   }
+
+        });
+        // somme sum
+        // console.log("ARTI", totalLigne)
+        const total = totalLigne.reduce((a: any, b: any) => a + b, 0)
+        const totalQte = totalQte0.reduce((a: any, b: any) => a + b, 0)
+        // - promoAccord
+        //   - (remiseSushi ? remiseSushi : 0)
+        //   - (remiseObtenue ? remiseObtenue : 0)
+
+        // const totalJap = await totalLigneJap.reduce((a: any, b: any) => a + b, 0)
+        // const totalPdjsja = await totalLignePdjsja.reduce((a: any, b: any) => a + b, 0)
+
+        //All console.log("ARTI1490", "totalLigneNoJap ", totalLigneNoJap)
+        // const totalNoJap = await totalLigneNoJap.reduce((a: any, b: any) => a + b, 0)
+
+        console.log("total ", total)
+        if (total > 0 && total != totalPanier) {
+            setTotalPanier(total ? total : 0)
+        }
+
+        // if (totalJap >= 0) setTotalPanierJap(totalJap ? totalJap : 0)
+
+        // if (totalNoJap >= 0) setTotalPanierNoJap(totalNoJap ? totalNoJap : 0)
+
+
+        return (
+
+            <View style={[
+                // styles.dbRow
+                , {
+                    // paddingHorizontal: 5,
+                    // width: MAXWIDTH,
+                    width: '100%',
+                    maxWidth: '100%',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-end',
+                    borderColor: 'red',
+                    borderStyle: 'solid',
+                    borderWidth: 10,
+                    display: 'flex',
+                    flexDirection: 'row'
+                }]} >
+                <Text style={{
+                    color: 'white',
+                    width: MAXWIDTH * 0.4,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    borderColor: 'white',
+                    borderStyle: 'solid',
+                    borderWidth: 3,
+                }
+
+                } >
+                    Total à payer:
+
+                </Text>
+
+
+                <Text style={[, { color: 'white', width: '10%', textAlign: 'left' }]} > {totalQte}  </Text>
+                <Text style={[, { color: 'white', width: '17%', textAlign: 'left' }]} >{total.toFixed(2)}€ </Text>
+            </View>
+
+            // <Text style={{ color: 'white', width: '17%', textAlign: 'left' }} >total prix </Text>
+        )
+
+    }
+
+    // --------------------------------- 
     return (
         <View style={styles.mainContainer}>
             <Pressable
@@ -64,12 +168,12 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                             // width: 50,
                             // height: '50%',
                             // margin: 10,
-                            maxWidth:'100%',
+                            maxWidth: '100%',
                             borderWidth: 5, borderColor: 'green', borderStyle: 'solid',
                             display: 'flex',
                             flexDirection: 'row'
                         }]}>
-                        <Header articlesList={undefined} cart={undefined} removeFromCart={undefined} addToCart={undefined} navigation={undefined} />
+                            <Header articlesList={undefined} cart={undefined} removeFromCart={undefined} addToCart={undefined} navigation={undefined} />
                         </View>
                         <Pressable style={styles.closeButton} onPress={() => setModalPanierVisible(false)}>
                             <Text style={styles.closeButtonText}>X</Text>
@@ -79,35 +183,41 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
 
 
                     {/* Modal Content */}
-                    <View style={styles.modalContent}>
+                    <View
+                    // style={styles.modalContent}
+                    >
 
-                        {/* {auth?.currentUser ? (
-                            <View style={styles.userInfo}>
-                                <Text style={styles.connectedText}>Connecté : {currentUserEmail}</Text>
-                                <Pressable style={styles.logoutButton} onPress={handleLogout}>
-                                    <Text style={styles.logoutText}>Déconnexion</Text>
-                                </Pressable>
-                            </View>
-                        ) : (
-                            <ModalSignIn myImage={undefined} />
-                        )} */}
+
 
                         {auth?.currentUser ? (
-                            <View style={styles.userInfo}>
-                                <Text style={styles.connectedText}>Connecté : {currentUserEmail}</Text>
-                                <Pressable style={styles.logoutButton} onPress={handleLogout}>
-                                    <Text style={styles.logoutText}>Déconnexion</Text>
-                                </Pressable>
+                            <View style={{width:'100%'}}>
+                                <View style={styles.userInfo}>
+                                    <Text style={styles.connectedText}>Connecté : {currentUserEmail}
+                                        {/* <Pressable style={styles.logoutButton} onPress={handleLogout}>
+                                        <Text style={styles.logoutText}>Déconnexion</Text>
+                                        </Pressable> */}
+                                        
+                                    </Text>
+                                    <ModalProfile myImage={undefined} />
+                                </View>
+
+                                <FlatListScrollPanier
+                                        cart={cart}
+                                        addToCart={addToCart}
+                                        removeFromCart={removeFromCart} />
+
+                                    {getTotalPanier(cart)}
                             </View>
                         ) : (
                             <View style={styles.containerColumn}>
                                 <ModalSignIn myImage={undefined} />
-                                <ThemedTitle style={styles.modalTitle}>Modal Panier</ThemedTitle>
+                                {/* <ThemedTitle style={styles.modalTitle}>Modal Panier</ThemedTitle> */}
                                 <FlatListScrollPanier
                                     cart={cart}
                                     addToCart={addToCart}
-                                    removeFromCart={removeFromCart}
-                                />
+                                    removeFromCart={removeFromCart} />
+
+                                {getTotalPanier(cart)}
                             </View>
                         )}
 
@@ -119,26 +229,30 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
 };
 
 const styles = StyleSheet.create({
-    logoHeader:{
+    logoHeader: {
         // borderColor: 'yellow',
         // borderStyle: 'solid',
         // borderWidth: 5,
-        margin:10,
+        margin: 10,
         width: 50,
         height: 50,
         borderRadius: 50,
     },
     containerColumn: {
+        // height:200,
+        // width:300,
         flexDirection: 'column',
         flexWrap: 'nowrap',
-        borderColor: 'white', borderStyle: 'solid', borderWidth: 2,
+        borderColor: 'yellow',
+        borderStyle: 'solid',
+        borderWidth: 5,
     },
     mainContainer: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'blue',//Colors.background || '#f5f5f5',
-        borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
+        // backgroundColor: 'blue',//Colors.background || '#f5f5f5',
+        // borderColor: 'pink', borderStyle: 'solid', borderWidth: 5,
     },
     openModalButton: {
         width: '80%',
@@ -148,7 +262,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary || '#4caf50',
         borderRadius: 10,
         marginVertical: 10,
-        borderColor: 'green', borderStyle: 'solid', borderWidth: 2,
+        // borderColor: 'green', borderStyle: 'solid', borderWidth: 2,
     },
     modalContainer: {
         flex: 1,
@@ -157,7 +271,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         padding: 20,
-        borderColor: 'red', borderStyle: 'solid', borderWidth: 2,
+        borderColor: 'red', borderStyle: 'solid', borderWidth: 10,
     },
     modalHeader: {
         flexDirection: 'row',
@@ -172,15 +286,15 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontSize: 24,
         fontWeight: 'bold',
-        textAlign:'center',
-        marginVertical:10,
+        textAlign: 'center',
+        marginVertical: 10,
         color: Colors.primaryText || '#000000',
         borderColor: 'purple', borderStyle: 'solid', borderWidth: 2,
     },
     closeButton: {
         padding: 8,
         backgroundColor: Colors.closeButton || '#ff4d4d',
-        borderRadius:50,
+        borderRadius: 50,
         position: 'relative',
         left: -25,
         borderColor: 'red', borderStyle: 'solid', borderWidth: 2,
@@ -196,17 +310,27 @@ const styles = StyleSheet.create({
         borderColor: 'turquoise', borderStyle: 'solid', borderWidth: 2,
     },
     userInfo: {
-        marginBottom: 20,
+
+        // marginBottom: 20,
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        // flexWrap: 'wrap',
         padding: 10,
-        backgroundColor: Colors.userInfoBackground || '#e0f7fa',
+        // backgroundColor: Colors.userInfoBackground || '#e0f7fa',
         borderRadius: 10,
-        borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
+        borderColor: 'coral', borderStyle: 'solid', borderWidth: 2,
     },
     connectedText: {
+        flex: 1,
         fontSize: 16,
-        color: Colors.textSecondary || '#00796b',
+        color: Colors.primaryText || '#00796b',
+        // backgroundColor: Colors.userInfoBackground || '#e0f7fa',
         marginBottom: 10,
-        borderColor: 'coral', borderStyle: 'solid', borderWidth: 2,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderColor: 'black', borderStyle: 'solid', borderWidth: 2,
     },
     logoutButton: {
         padding: 10,

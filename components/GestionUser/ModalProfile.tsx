@@ -13,8 +13,8 @@ import ProfileScreen from "./ProfileScreen";
 import { Colors } from "@/constants/Colors";
 
 
-function ModalSignin({ myImage }) {
-
+function ModalProfile({ myImage }) {
+  const [modalProfileVisible, setModalProfileVisible] =useState(false)
   const device = ThisDevice().device
   const MAXWIDTH = ThisDevice().device.width - 5
   const [value, setValue] = useState({
@@ -27,23 +27,23 @@ function ModalSignin({ myImage }) {
     error: "",
   });
   const { user,
-    modalSignInVisible, setModalSignInVisible
+    // 
    } = useAuth();
 
   useEffect(() => {
-    console.log("ModalSignin31 value ", value, //Number(value.montantCB).toFixed(2)
+    console.log("ModalProfile31 value ", value, //Number(value.montantCB).toFixed(2)
       
     )
   }, [value])
 
   useEffect(() => {
-    console.log("ModalSignin36 user ", user)
+    console.log("ModalProfile36 user ", user)
     if (user) {
-      console.log("ModalSignin36 user ", user.email)
+      console.log("ModalProfile36 user ", user.email)
     }
   }, [user])
 
-  const openModal = () => {
+  const openModalButton = () => {
     return (
       <Pressable
         style={{
@@ -54,7 +54,7 @@ function ModalSignin({ myImage }) {
           alignItems: 'flex-end',
           borderWidth: 3, borderColor: 'blue', borderStyle: 'solid',
         }}
-        onPress={() => setModalSignInVisible(true)}>
+        onPress={() => setModalProfileVisible(true)}>
         
         <Text style={{ 
           width:'100%',
@@ -77,26 +77,35 @@ function ModalSignin({ myImage }) {
     <View
       style={{
         backgroundColor: 'transparent',
-        width: '100%',
+        width: 50,
         borderWidth: 3, borderColor: 'pink', borderStyle: 'solid',
       }
       }
     >
-      { openModal()}
+      {/* { openModalButton()} */}
+      <Pressable
+                style={styles.openModalButton}
+                onPress={() => setModalProfileVisible(true)}
+            >
+                <View style={{ position: 'relative', left: -15, top: -10 }}>
+                    
+                    <Text style={{ position: 'absolute', top: 0, left: 0 }}>{iconUser} </Text>
+                </View>
+            </Pressable>
 
       <Modal // Modal-in
-        animationType="slide" transparent={true} visible={modalSignInVisible}>
+        animationType="slide" transparent={true} visible={modalProfileVisible}>
 
         <ThemedView style={{ //headerTitle Modal  with close button Close
           flexDirection: 'row',
           justifyContent: 'space-between',
           borderWidth: 5, borderColor: 'pink', borderStyle: 'solid',
-          marginVertical: 10
+          // marginVertical: 10
         }}>
-          <ThemedTitle style={{ fontSize: 30 }}> Modal Connexion</ThemedTitle>
+          <ThemedTitle style={{ fontSize: 30 }}> Votre Profil</ThemedTitle>
 
-          <Pressable onPress={() => { setModalSignInVisible(false) }}>
-            <ThemedText>X103</ThemedText>
+          <Pressable onPress={() => { setModalProfileVisible(false) }}>
+            <ThemedText>X(P)</ThemedText>
           </Pressable>
 
         </ThemedView>
@@ -109,18 +118,14 @@ function ModalSignin({ myImage }) {
             minHeight: 50,
             justifyContent: "flex-start",
             // backgroundColor: 'transparent',
-            backgroundColor: 'coral',// Colors.primaryBG,
+            backgroundColor:  Colors.primaryBG,
             alignItems: "center",
             padding: 10,
             borderWidth: 3, borderColor: 'yellow', borderStyle: 'solid',
           }}
         >
           
-          {/* {!user ? */}
-            <LoginScreen />
-            {/* :
-            <ProfileScreen />
-          } */}
+          <ProfileScreen />
         </View>
       </Modal>
     </View>
@@ -217,4 +222,4 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
   },
 });
-export default ModalSignin;
+export default ModalProfile;

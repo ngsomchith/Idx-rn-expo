@@ -17,13 +17,24 @@ import { ThemedText } from '../ThemedText';
 
 
 const RenderEachPanierElt = ({
-    addToCart, removeFromCart, menuN,
+
+    addToCart,
+    removeFromCart,
     thiscategoryName,
-    articlesListTemp, PlatsToShowFilteredTemp,
-    todayfr10, menuNImg, idx, pdjType,
-    navigation, route, callbackFn,
-    scrollY0, scrollX0, updateScrollValue,
-    zoomMenuN,
+    todayfr10,
+    menuN,
+    menuNImg, 
+
+    // addToCart, removeFromCart, menuN,
+    // thiscategoryName,
+    // articlesListTemp, PlatsToShowFilteredTemp,
+    // todayfr10, menuNImg, idx, pdjType,
+    // navigation, route, callbackFn,
+    scrollY0, scrollX0, 
+    // updateScrollValue,
+    // zoomMenuN,
+
+
     ...otherprops }) => {
 
 

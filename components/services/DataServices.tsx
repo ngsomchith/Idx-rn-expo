@@ -75,11 +75,11 @@ export async function objectLength(myObject: Object) {
   //all06112023 console.log(956, (Object.keys(myObject).length))
   if (myObject) {
     return (Object.keys(myObject).length)
-  }else{
+  } else {
     return 0
   }
 }
-export function takeOffAccent(word:string){
+export function takeOffAccent(word: string) {
   var accent = [
     /[\300-\306]/g, /[\340-\346]/g, // A, a
     /[\310-\313]/g, /[\350-\353]/g, // E, e
@@ -89,13 +89,14 @@ export function takeOffAccent(word:string){
     /[\321]/g, /[\361]/g, // N, n
     /[\307]/g, /[\347]/g, // C, c
   ];
-  var noaccent = ['A','a','E','e','I','i','O','o','U','u','N','n','C','c'];
-  
+  var noaccent = ['A', 'a', 'E', 'e', 'I', 'i', 'O', 'o', 'U', 'u', 'N', 'n', 'C', 'c'];
+
   var str = word;
-  for(var i = 0; i < accent.length; i++){
+  for (var i = 0; i < accent.length; i++) {
     str = str.replace(accent[i], noaccent[i]);
   }
-  
+
   return str;
 }
+
 

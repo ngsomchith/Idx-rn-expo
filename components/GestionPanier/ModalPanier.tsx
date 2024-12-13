@@ -213,9 +213,9 @@ function ModalPanier({ }) {
               paddingHorizontal: 10,
               marginHorizontal: 'auto',
               display: 'flex',
-              // borderColor: 'white',
-              // borderWidth: 5,
-              // borderStyle: 'solid',
+              borderColor: 'white',
+              borderWidth: 5,
+              borderStyle: 'solid',
             }} >
               <View
                 style={{
