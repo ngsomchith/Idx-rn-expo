@@ -149,8 +149,8 @@ const RenderEachPanierElt = ({
                 </Text>
 
 
-                <Text style={[styles0.Text,{ color: 'white', width: '10%',textAlign:'left' }]} >{item.qte} </Text>
-                <Text style={[styles0.Text,{ color: 'white', width: '17%',textAlign:'left' }]} >{
+                <Text style={[styles0.Text,{ color: 'white', width: '10%',textAlign:'right' }]} >{item.qte} </Text>
+                <Text style={[styles0.Text,{ color: 'white', width: '17%',textAlign:'right' }]} >{
 
                     Number(item.prix).toFixed(2) + ' €'
                 } </Text>
@@ -190,7 +190,7 @@ const RenderEachPanierElt = ({
             // marginVertical: 20,
             paddingVertical: 5,
             borderWidth: 2, borderColor: Colors.highlightBG, borderStyle: 'solid',
-
+            width:'100%'
         }}>
 
             {panierLigne(menuN)}

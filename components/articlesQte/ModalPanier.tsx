@@ -18,8 +18,12 @@ import Header from '../Header';
 import ModalProfile from '../GestionUser/ModalProfile';
 
 const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
-    const auth = myApp[1];
-    const thisAuth = useAuth();
+   
+    // const {thisAuth} = useAuth();
+    const { 
+        login, currentUser, auth, user,
+        modalSignInVisible, setModalSignInVisible
+    } = useAuth();
     const device = ThisDevice().device;
     const MAXWIDTH = ThisDevice().device.myMAXWIDTH;
     const [totalPanier, setTotalPanier] = useState(0)
@@ -145,7 +149,7 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
     // --------------------------------- 
     return (
         <View style={styles.mainContainer}>
-            <Pressable
+            <Pressable //open modal
                 style={styles.openModalButton}
                 onPress={() => setModalPanierVisible(true)}
             >
@@ -189,24 +193,24 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
 
 
 
-                        {auth?.currentUser ? (
-                            <View style={{width:'100%'}}>
+                        {user? (
+                            <View style={{ width: '100%' }}>
                                 <View style={styles.userInfo}>
                                     <Text style={styles.connectedText}>Connecté : {currentUserEmail}
                                         {/* <Pressable style={styles.logoutButton} onPress={handleLogout}>
                                         <Text style={styles.logoutText}>Déconnexion</Text>
                                         </Pressable> */}
-                                        
+
                                     </Text>
                                     <ModalProfile myImage={undefined} />
                                 </View>
 
                                 <FlatListScrollPanier
-                                        cart={cart}
-                                        addToCart={addToCart}
-                                        removeFromCart={removeFromCart} />
+                                    cart={cart}
+                                    addToCart={addToCart}
+                                    removeFromCart={removeFromCart} />
 
-                                    {getTotalPanier(cart)}
+                                {getTotalPanier(cart)}
                             </View>
                         ) : (
                             <View style={styles.containerColumn}>
@@ -218,6 +222,7 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                                     removeFromCart={removeFromCart} />
 
                                 {getTotalPanier(cart)}
+                                {/*  //total */}
                             </View>
                         )}
 
@@ -310,16 +315,15 @@ const styles = StyleSheet.create({
         borderColor: 'turquoise', borderStyle: 'solid', borderWidth: 2,
     },
     userInfo: {
-
-        // marginBottom: 20,
         width: '100%',
         flexDirection: 'row',
+        height: 60,
         justifyContent: 'space-between',
         // flexWrap: 'wrap',
-        padding: 10,
+        padding: 5,
         // backgroundColor: Colors.userInfoBackground || '#e0f7fa',
         borderRadius: 10,
-        borderColor: 'coral', borderStyle: 'solid', borderWidth: 2,
+        borderColor: 'pink', borderStyle: 'solid', borderWidth: 2,
     },
     connectedText: {
         flex: 1,
@@ -330,7 +334,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        borderColor: 'black', borderStyle: 'solid', borderWidth: 2,
+        borderColor: 'black', borderStyle: 'solid', borderWidth: 4,
     },
     logoutButton: {
         padding: 10,

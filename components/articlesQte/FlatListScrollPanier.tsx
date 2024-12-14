@@ -83,12 +83,15 @@ const FlatListScrollPanier = ({
 
             <FlatList
                 style={{
-                    flex: 1,
+                    // flex: 1,
                     maxWidth: 600,
-                    borderColor: Colors.highlightBG,
+                    // borderColor: Colors.highlightBG,
                     borderRadius: 10,
                     marginHorizontal: 'auto',
+                    width:'100%',
                     height: '100%',
+                    borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
+                    
                 }}
                 ref={flatListRef}
 

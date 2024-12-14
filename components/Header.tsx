@@ -34,9 +34,9 @@ const Header = ({ articlesList, cart, removeFromCart, addToCart, navigation
     const myHeight = device.height * 1.3
     const myCoeffScreen = myWidth / myHeight
 
-    useEffect(() => {
-        console.log("Header articlesList = ", articlesList)
-    }, [articlesList])
+    // useEffect(() => {
+    //     console.log("Header articlesList = ", articlesList)
+    // }, [articlesList])
 
 
 

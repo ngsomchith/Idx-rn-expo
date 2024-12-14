@@ -83,7 +83,9 @@ const RenderEachArticleInHome = ({
   const renderPriceSection = () => (
     <View style={styles.priceSection}>
       {menuN?.prixbarre > 0 && (
-        <Text style={styles.strikethroughPrice}>
+        <Text style={[styles.strikethroughPrice, {
+          position: 'absolute', top: -20
+        }]}>
           {Number(menuN.prixbarre).toFixed(2)}€
         </Text>
       )}
@@ -155,6 +157,8 @@ const styles = StyleSheet.create({
     strikethroughPrice: {
       textDecorationLine: 'line-through',
       color: 'red',
+      backgroundColor:'white',
+      padding:3,
       fontSize: 16,
       transform: [{ rotate: '-30deg' }], // Rotation de 45 degrés
     },

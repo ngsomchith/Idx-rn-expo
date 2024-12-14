@@ -2,9 +2,14 @@ import React, { useEffect } from 'react';
 import { Text, Button, View, StyleSheet } from 'react-native';
 import { useAuth } from '../../app/AuthContext';
 import { Colors } from '@/constants/Colors';
+import { EditUser } from './EditUser';
 
 const ProfileScreen: React.FC = () => {
-  const { currentUser, logout } = useAuth();
+  const { 
+    currentUser, logout ,
+    gAuth, setGAuth
+  
+  } = useAuth();
     useEffect(() => {
         console.log("user / ProfileScreen 8 ", currentUser)
     }, [currentUser])
@@ -12,8 +17,11 @@ const ProfileScreen: React.FC = () => {
     <View style={styles.containerColumn}>
       {currentUser ? (
         <>
+          <Text style={{textAlign:'center'}}> ProfileScreen</Text>
           <Text style={{ color:Colors.primaryText}}>Bienvenue, {(currentUser.name!='' && currentUser.name!=undefined) ? 'nom :' + currentUser.name :  currentUser.email}!</Text>
           <Button title="Se déconnecter" onPress={logout} />
+          <EditUser navigation={undefined} thisCurrentUser={currentUser} />
+
         </>
       ) : (
         <Text>Vous n'êtes pas connecté.</Text>

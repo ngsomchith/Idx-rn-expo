@@ -67,7 +67,7 @@ export default function TabTwoScreen() {
   }, [thisUseFB, articlesList]);
 
   useEffect(() => {
-    console.log("filteredData mise à jour:", filteredData);
+    filteredData.length>0 && console.log("articles70 filteredData mise à jour:", filteredData);
   }, [filteredData]);
 
   useEffect(() => {

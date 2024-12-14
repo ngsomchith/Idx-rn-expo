@@ -78,18 +78,28 @@ function ModalProfile({ myImage }) {
       style={{
         backgroundColor: 'transparent',
         width: 50,
-        borderWidth: 3, borderColor: 'pink', borderStyle: 'solid',
+        // borderWidth: 3, borderColor: 'pink', borderStyle: 'solid',
       }
       }
     >
       {/* { openModalButton()} */}
       <Pressable
                 style={styles.openModalButton}
-                onPress={() => setModalProfileVisible(true)}
+                onPress={() => {
+                  console.log("ModalProfile80 setModalProfileVisible(true)")
+                  setModalProfileVisible(true)
+                }}
             >
-                <View style={{ position: 'relative', left: -15, top: -10 }}>
+                <View 
+                // style={{ position: 'relative', left: -15, top: -10 }}
+                >
                     
-                    <Text style={{ position: 'absolute', top: 0, left: 0 }}>{iconUser} </Text>
+                    <Text 
+                    style={{ 
+                      display: 'flex',justifyContent: 'center', alignItems:'center'
+                      // position: 'absolute', top: 0, left: 0 
+                    }}
+                    >{iconUser} </Text>
                 </View>
             </Pressable>
 
@@ -154,7 +164,7 @@ const styles = StyleSheet.create({
       backgroundColor: Colors.primary || '#4caf50',
       borderRadius: 10,
       marginVertical: 10,
-      borderColor: 'green', borderStyle: 'solid', borderWidth: 2,
+      borderColor: 'green', borderStyle: 'solid', borderWidth: 12,
   },
   // modalContainer: {
   //     flex: 1,

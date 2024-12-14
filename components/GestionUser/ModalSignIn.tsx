@@ -11,6 +11,7 @@ import { LoginScreen } from "./LoginScreen";
 import { useAuth } from "../../app/AuthContext";
 import ProfileScreen from "./ProfileScreen";
 import { Colors } from "@/constants/Colors";
+import SignInComp from "./SignInComp";
 
 
 function ModalSignin({ myImage }) {
@@ -52,9 +53,12 @@ function ModalSignin({ myImage }) {
           flexDirection:'row',
           justifyContent: 'flex-end',
           alignItems: 'flex-end',
-          borderWidth: 3, borderColor: 'blue', borderStyle: 'solid',
+          borderWidth: 13, borderColor: 'blue', borderStyle: 'solid',
         }}
-        onPress={() => setModalSignInVisible(true)}>
+        onPress={() =>{ 
+          console.log('ModalSignIn59 setModalSignInVisible(true)')
+          setModalSignInVisible(true)
+          }}>
         
         <Text style={{ 
           width:'100%',
@@ -62,7 +66,10 @@ function ModalSignin({ myImage }) {
           flexDirection: 'row', 
           justifyContent:'flex-end',
           height: '100%', 
+          color:Colors.primaryText,
+          borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
           minWidth: 300 }}>
+          {/* {!user ? iconLogin : iconUser} */}
           {!user ? iconLogin : iconUser}
         </Text>
 
@@ -116,11 +123,11 @@ function ModalSignin({ myImage }) {
           }}
         >
           
-          {/* {!user ? */}
-            <LoginScreen />
-            {/* :
+          {!user ? 
+            <SignInComp />
+            :
             <ProfileScreen />
-          } */}
+          }
         </View>
       </Modal>
     </View>

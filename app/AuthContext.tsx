@@ -18,13 +18,17 @@ import { thisClone } from '../components/services/DataServices';
 // Type des valeurs du contexte
 interface AuthContextType {
   user: UserType | null; // null si non connecté
+  setUser: any
   currentUser:  UserType | null; // null si non connecté
+  setCurrentUser: any
   login: (user: UserType) => void; // Fonction pour connecter un utilisateur
   logout: () => void; // Fonction pour déconnecter
   loading: boolean
   auth :any
   closeModalSignIn: boolean
   modalSignInVisible:any, setModalSignInVisible:any
+  gAuth:any, setGAuth: any,
+  userInfo:any, setUserInfo:any
 }
 
 // Crée le contexte avec une valeur par défaut
@@ -35,6 +39,8 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
   const  [modalSignInVisible, setModalSignInVisible] =  useState(false)
+
+  const [gAuth, setGAuth] = useState(); // getPersistedAuth
   const login = (userData: UserType) => {
     setUser(userData);
   };
@@ -46,13 +52,21 @@ export const AuthProvider = ({ children }) => {
 
   const firebase = myApp[0]
   
-  const [auth, setAuth] = useState(getAuth() || null);
+  const [auth, setAuth] = useState(getAuth() || null || undefined);
   
+  const [userInfo, setUserInfo] = useState({})
   const firestore = myApp[3]
 
   const logout = () => {
     console.log("logOut")
     // setAuth(getAuth(undefined))
+    // setAuth(getAuth())
+    // if(auth){
+    //   setAuth(undefined)
+    // }
+    setCurrentUser(null)
+    setUser(null)
+    setGAuth(undefined)
     signOut(auth)
     setUser(null);
   };
@@ -92,8 +106,13 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ 
-      currentUser, login, logout , user, loading, auth,
+      currentUser, setCurrentUser,
+      login, logout , 
+      user, setUser,
+      loading, auth,
       modalSignInVisible, setModalSignInVisible,
+      userInfo, setUserInfo,
+      gAuth, setGAuth
       }}>
       {children}
     </AuthContext.Provider>

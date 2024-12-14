@@ -27,7 +27,7 @@ export const LoginScreen = () => {
              
                 currentUserTemp = userCredential.user
                 console.log("user ProfileScreen 24", currentUserTemp)
-                setModalSignInVisible(false)
+                // setModalSignInVisible(false)
             login(userCredential.user)
         } catch (error) {
             window.alert('Erreur', error?.message);
