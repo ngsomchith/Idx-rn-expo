@@ -40,9 +40,9 @@ export const TextInput = ({
         maxWidth:'100%',
         paddingHorizontal:0,
         height:60,
-        // borderStyle: 'solid',
-        // borderColor: 'turquoise',
-        // borderWidth: 2,
+        borderStyle: 'solid',
+        borderBottomColor: 'grey',
+        borderWidth: 1,
         // marginHorizontal:'auto',
 
         ...otherProps

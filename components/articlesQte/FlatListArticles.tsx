@@ -60,7 +60,62 @@ const FlatListArticles = ({ articlesFilteredToWrap,addToCart, removeFromCart }) 
     };
 
 
+    const styles = StyleSheet.create({
+        container: {
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            maxWidth: '100%',
+            flexWrap: 'wrap',
+            backgroundColor: Colors.primaryBG,
+            borderWidth: 3,
+            borderColor: 'red',
+            minHeight: 200,
+            height: ThisDevice().device.heightBody,
+            maxHeight: 300,
+            borderStyle:'solid'
+        },
+        rowContainer: {
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            width: '100%',
+            height: '100%',
+            maxHeight: ThisDevice().device.heightBody - 100,
+            backgroundColor: Colors.primaryBG,
+            // borderColor: 'yellow',
+            // borderWidth: 5,
+            overflow: 'scroll',
+        },
+        articleWrapper: {
+            marginBottom: 2,
+            maxWidth: 174,
+            minWidth: 174,
+            marginHorizontal: 0,
+            marginVertical: 10,
+            minHeight: 160,
+            maxHeight: 240,
+            height: 240,
+            borderRadius: 10,
+            justifyContent: 'center',
+            overflow: 'scroll',
+            // borderWidth: 1,
+            // borderColor: 'white',
+        },
+        articleContainer: {
+            display: 'flex',
+            width: '100%',
+            flexDirection: 'column',
+            height: '100%',
+            justifyContent: 'center',
+            // borderWidth: 1,
+            // borderColor: 'yellow',
+        },
+    });
 
+    
     return (
         <>
             {myFlatListRow(articlesMenu)}
@@ -69,59 +124,6 @@ const FlatListArticles = ({ articlesFilteredToWrap,addToCart, removeFromCart }) 
 
 };
 
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-        maxWidth: '100%',
-        flexWrap: 'wrap',
-        backgroundColor: Colors.primaryBG,
-        borderWidth: 3,
-        borderColor: 'red',
-        minHeight: 200,
-        height: ThisDevice().device.heightBody,
-        maxHeight: 300,
-        borderStyle:'solid'
-    },
-    rowContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        width: '100%',
-        height: '100%',
-        maxHeight: ThisDevice().device.heightBody - 100,
-        backgroundColor: Colors.primaryBG,
-        // borderColor: 'yellow',
-        // borderWidth: 5,
-        overflow: 'scroll',
-    },
-    articleWrapper: {
-        marginBottom: 2,
-        maxWidth: 174,
-        minWidth: 174,
-        marginHorizontal: 0,
-        marginVertical: 10,
-        minHeight: 160,
-        maxHeight: 240,
-        height: 240,
-        borderRadius: 10,
-        justifyContent: 'center',
-        overflow: 'scroll',
-        // borderWidth: 1,
-        // borderColor: 'white',
-    },
-    articleContainer: {
-        display: 'flex',
-        width: '100%',
-        flexDirection: 'column',
-        height: '100%',
-        justifyContent: 'center',
-        // borderWidth: 1,
-        // borderColor: 'yellow',
-    },
-});
+
 
 export default FlatListArticles;

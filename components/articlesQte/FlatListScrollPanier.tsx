@@ -90,7 +90,7 @@ const FlatListScrollPanier = ({
                     marginHorizontal: 'auto',
                     width:'100%',
                     height: '100%',
-                    borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
+                    // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
                     
                 }}
                 ref={flatListRef}

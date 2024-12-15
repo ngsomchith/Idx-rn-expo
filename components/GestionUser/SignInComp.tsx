@@ -221,7 +221,7 @@ const SignInComp = ({
 
     useEffect(() => {
         console.log(" SignInComp302 currentUser useEffect", currentUser)
-       
+
     }, [currentUser])
 
 
@@ -371,14 +371,14 @@ const SignInComp = ({
                 checkUserEmailExist(email)
 
 
-                if (!userInfo || !userInfo?.email 
+                if (!userInfo || !userInfo?.email
                     // && (currentUser.codePromo == ''
                     //     || currentUser.codePromo == 'noCode'
                     //     || !currentUser.codePromo
                     // )
                 ) {
-                    console.log ("128currentUser ", currentUser)
-                    console.log ("userInfo ", userInfo)
+                    console.log("128currentUser ", currentUser)
+                    console.log("userInfo ", userInfo)
                     let currentUserTemp = thisClone(currentUser)
                     // const result = promoOuverture ? 'promoOuverture' : 'noCode138'
 
@@ -388,7 +388,7 @@ const SignInComp = ({
             }
             //all console.log("271resultLogin =", resultLogin['codePromo'])
             // setpromoOuverture(resultLogin['codePromo'])
- 
+
 
 
 
@@ -409,12 +409,12 @@ const SignInComp = ({
             if (result?.length > 0) { //user exist after PhoneSignin
                 const emailTemp = result[0].email
                 console.log("result600 checkUserByEmail Exist", emailTemp, result)
-
+                // checkUserEmailExist(emailTemp)
                 // console.log("result590 checkUserByEmail Exist", emailTemp, result)
 
                 setCurrentUser(result[0])
-                if(currentUser){
-                    
+                if (currentUser) {
+
                     // login(userCredential.user)
                     login(currentUser)
                 }
@@ -524,7 +524,7 @@ const SignInComp = ({
                     <View style={[styles.textInputContainer, { //email Pwd sign in
                         maxHeight: 270,
                         width: '100%',
-                        paddingHorizontal: 5,
+                        // paddingHorizontal: 5,
                         minWidth: 300,
                         marginHorizontal: 0,
                         marginVertical: 10,
@@ -560,7 +560,7 @@ const SignInComp = ({
                                 paddingVertical: 10,
                                 backgroundColor: Colors.highlightBG,
                                 color: Colors.primaryText,
-                                fontSize: 20,
+                                fontSize: 18,
                                 flex: 1,
                                 width: '100%'
                             }}>
@@ -570,17 +570,24 @@ const SignInComp = ({
 
 
                         {thisSignInByEmailChoosed &&
-                            <View style={{ width: '100%' }}>
+                            <View style={{
+                                width: '100%',
 
-                                <Text style={{
+                                // borderWidth: 2,
+                                // borderColor: 'yellow',
+                                // borderStyle: 'solid',
+                                maxHeight: 400
+                            }}>
+
+                                {/* <Text style={{
                                     color: Colors.primaryText,
                                     fontSize: 20,
                                     textDecorationLine: 'underline'
-                                }}> Vous avez déjà un compte :</Text>
+                                }}> Vous avez déjà un compte :</Text> */}
 
                                 {/* Input fields */}
                                 <View //Input  email 
-                                    style={{ maxHeight: 40, width: '100%' }} >
+                                    style={{ maxHeight: 100, width: '100%' }} >
                                     <TextInput
                                         style={{
                                             maxHeight: 40, flex: 1,
@@ -610,9 +617,28 @@ const SignInComp = ({
                                 />
 
                                 <View //Input  password 
-                                    style={{ maxHeight: 40, width: '100%' }} >
+                                    style={{
+                                        // maxHeight: 60,
+                                        width: '100%',
+                                        borderWidth: 2,
+                                        borderColor: 'transparent',
+                                        // borderBottomColor: 'white',
+                                        borderStyle: 'solid',
+                                        marginVertical: 15,
 
-                                    <TextInput
+                                    }} >
+
+                                    <TextInput // password
+                                        // style = {{borderBottomwidht:2, borderColor: 'white', borderStyle: 'solid'}}
+                                        style={{
+                                            maxHeight: 40, flex: 1,
+                                            // backgroundColor:'grey',
+                                            color: Colors.primaryText,
+                                            borderWidth: 2,
+                                            borderColor: 'transparent',
+                                            borderStyle: 'solid',
+                                            borderBottomColor: Colors.primaryText
+                                        }}
                                         name='password'
                                         leftIconName='key-variant'
                                         placeholder='Mot de passe'
@@ -642,13 +668,23 @@ const SignInComp = ({
                         bgButton={Colors.accentBG}
                         labelColor={Colors.primaryText} /> */}
 
-
-                                <ButtonStd iconR={undefined}
-                                    label={'Connexion'}
-                                    onPress={handleSubmit}
-                                    onChange={undefined} bgButton={Colors.accentBG}
-                                    labelColor={Colors.primaryText} icon1={undefined}
-                                    iconL={undefined} />
+                                <View style={{
+                                    height: 40, width: '100%',
+                                    backgroundColor: Colors.accentBG,
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderColor: Colors.accentBG,
+                                    borderStyle: 'solid',
+                                    borderWidth: 5,
+                                }}>
+                                    <ButtonStd iconR={undefined}
+                                        label={'Connexion'}
+                                        onPress={handleSubmit}
+                                        onChange={undefined} bgButton={Colors.accentBG}
+                                        labelColor={Colors.primaryText} icon1={undefined}
+                                        iconL={undefined} />
+                                </View>
                             </View>
                         }
                     </View>
@@ -748,12 +784,26 @@ const SignInComp = ({
                             <FormErrorMessage error={errorState} visible={true} />
                         ) : null}
                         {/* Signup button */}
+                        <View style={{
+                            height: 40, width: '100%',
+                            backgroundColor: Colors.accentBG,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderColor: Colors.accentBG,
+                            borderStyle: 'solid',
+                            borderWidth: 5,
+                            marginVertical: 10,
+                            borderRadius: 10
+                        }}>
 
-                        <ButtonStd style={styles.button}
-                            onPress={handleSubmit} title={undefined}
-                            iconL={undefined} iconR={undefined}
-                            label={"S'enregistrer"} labelColor={Colors.primaryText}
-                            onChange={undefined} bgButton={Colors.accentBG} />
+                            <ButtonStd style={styles.button}
+                                onPress={handleSubmit} title={undefined}
+                                iconL={undefined} iconR={undefined}
+                                label={"S'enregistrer"} labelColor={Colors.primaryText}
+                                onChange={undefined} bgButton={Colors.accentBG} />
+                        </View>
+
                     </>
                 )}
             </Formik>
@@ -785,7 +835,7 @@ const SignInComp = ({
                     onChange={undefined} bgButton={Colors.accentBG} labelColor={Colors.primaryText} icon1={undefined} iconL={undefined} /> */}
                 {/* <ModalSignUp /> */}
 
-                <ButtonStd iconR={undefined} //Forgot Password
+                {/* <ButtonStd iconR={undefined} //Forgot Password
                     style={{
                         borderColor: '#white',
                         borderStyle: 'solid',
@@ -793,7 +843,7 @@ const SignInComp = ({
                     }}
                     label={'Mot de passe oublié'}
                     onPress={() => console.log(" navigation.navigate('ForgotPasswordScreen')")}
-                    onChange={undefined} bgButton={Colors.accentBG} labelColor={Colors.primaryText} icon1={undefined} iconL={undefined} />
+                    onChange={undefined} bgButton={Colors.accentBG} labelColor={Colors.primaryText} icon1={undefined} iconL={undefined} /> */}
 
             </View>
         )
@@ -816,71 +866,17 @@ const SignInComp = ({
         // <Text style={{ color: 'white' }}> Sign in Screen</Text>
         <View style={{
 
-            borderColor: 'green',
-            borderWidth: 5,
+            // borderColor: 'green',
+            // borderWidth: 5,
+            // borderStyle: 'solid',
+            paddingHorizontal : 10,
             minHeight: 40,
-            borderStyle: 'solid',
             width: MAXWIDTH,
             maxWidth: '100%',
             position: 'absolute',
             backgroundColor: 'transparent',
             flexDirection: 'column'
         }}>
-
-            {/* <Pressable style={{ //setModalSignInVisible(false)
-
-                // borderColor: 'red',
-                // borderWidth: 5,
-                // borderStyle: 'solid',
-                width: MAXWIDTH,
-                maxWidth: '100%',
-                backgroundColor: 'transparent',
-                flexDirection: 'row',
-            }}
-                onPress={() => {
-                    console.log("actions ? icon Back cliked")
-                    // setModalSignInVisible(false),
-                    //     setpanierView(false),
-                    //     setConnexionView(false),
-                    //     setShowPanierforbidden(false)
-                    //  setScrollY(scrollY0)
-                    // setScrollX(scrollX0)
-                    // setScrollYAgain(true)
-                }}>
-                <Text // soit Annuler , soit bouton suivant
-                    style={{
-                        width: 30,
-                        backgroundColor: Colors.primaryBG,
-                        // minHeight:120,
-                        maxWidth: 30,
-                        height: 40,
-                        display: 'flex',
-                        // position:'absolute',
-                        flexDirection: 'column',
-                        color: 'white',
-                        marginVertical: 30,
-                        // borderColor: 'red',
-                        // borderWidth: 1,
-                        // borderStyle: 'solid',
-                    }}
-                >
-                    {'iconBack'}
-                </Text>
-
-                <Text style={{
-                    flex: 1,
-                    // borderColor: 'lightgreen',
-                    // borderWidth: 5,
-                    // borderStyle: 'solid',
-                    // minHeight:120,
-                    display: 'flex',
-                    alignItems: 'flex-end'
-                }}>
-                    text back
-                </Text>
-            </Pressable> */}
-
-
 
             {
                 auth ?
@@ -894,9 +890,9 @@ const SignInComp = ({
                                 maxWidth: '100%',
 
                                 marginHorizontal: 'auto',
-                                borderColor: 'blue',
-                                borderWidth: 5,
-                                borderStyle: 'solid',
+                                // borderColor: 'blue',
+                                // borderWidth: 5,
+                                // borderStyle: 'solid',
                                 backgroundColor: Colors.primaryBG,
                                 marginVertical: 10,
                                 paddingVertical: 0,
@@ -922,28 +918,18 @@ const SignInComp = ({
                                 borderWidth: 5,
                                 borderRadius: 10,
                                 padding: 3,
-                                marginVertical: 20
-                                // backgroundColor: Colors.highlightBG
+                                marginVertical: 30,
+                                backgroundColor: Colors.accentBG
                             }}>
-                                <Text style={{ // titre
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    paddingVertical: 10,
-                                    backgroundColor: Colors.highlightBG,
-                                    color: Colors.primaryText,
-                                    fontSize: 20
-                                }}>
-                                    Par bouton Google: a cache ?
-                                </Text>
+
                                 <ButtonStd
                                     iconL={iconGoogle}
                                     iconR={undefined}
-                                    label={' Connexion via Google-Web'}
+                                    label={' Par Google-Web'}
                                     labelColor={Colors.primaryText}
                                     onPress={() => thisPromptAsync()}
                                     onChange={undefined}
-                                    bgButton={Colors.highlightBG}
+                                    bgButton={Colors.accentBG}
                                 />
                             </View>
 
@@ -951,19 +937,50 @@ const SignInComp = ({
 
                         {formikSignInVisible && thisFormikSignIn()}
 
-                        {!formikSignInVisible && thisFormikSignUp()}
+                        {!formikSignInVisible &&
 
-                        {formikSignInVisible && <ButtonStd iconL={undefined} iconR={undefined}
-                            label={'Créer un Compte'} labelColor={Colors.primaryText}
-                            onPress={() => setFormikSignInVisible(false)}
-                            onChange={undefined} bgButton={Colors.accentBG}
-                        />}
+                            thisFormikSignUp()
+                        }
 
-                        {!formikSignInVisible && <ButtonStd iconL={undefined} iconR={undefined}
-                            label={'Compte déjà enregistré'} labelColor={Colors.primaryText}
-                            onPress={() => setFormikSignInVisible(true)}
-                            onChange={undefined} bgButton={Colors.accentBG}
-                        />}
+                        {formikSignInVisible &&
+                            <View style={{
+                                height: 40, width: '100%',
+                                backgroundColor: Colors.accentBG,
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderColor: Colors.accentBG,
+                                borderStyle: 'solid',
+                                borderWidth: 5,
+                            }}>
+                                <ButtonStd iconL={undefined} iconR={undefined}
+                                    label={'Créer un Compte'} labelColor={Colors.primaryText}
+                                    onPress={() => setFormikSignInVisible(false)}
+                                    onChange={undefined} bgButton={Colors.accentBG}
+                                />
+                            </View>
+
+                        }
+
+                        {!formikSignInVisible &&
+
+                            <View style={{
+                                height: 40, width: '100%',
+                                backgroundColor: Colors.accentBG,
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderColor: Colors.accentBG,
+                                borderStyle: 'solid',
+                                borderWidth: 5,
+                            }}>
+                                <ButtonStd iconL={undefined} iconR={undefined}
+                                    label={'Compte déjà enregistré'} labelColor={Colors.primaryText}
+                                    onPress={() => setFormikSignInVisible(true)}
+                                    onChange={undefined} bgButton={Colors.accentBG}
+                                />
+                            </View>
+                        }
 
                         {buttonPasswordForget()}
 

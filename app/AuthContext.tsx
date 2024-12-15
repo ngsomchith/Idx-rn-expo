@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
 
   const firebase = myApp[0]
   
-  const [auth, setAuth] = useState(getAuth() || null || undefined);
+  const [auth, setAuth] = useState(myApp[1] || null || undefined);
   
   const [userInfo, setUserInfo] = useState({})
   const firestore = myApp[3]

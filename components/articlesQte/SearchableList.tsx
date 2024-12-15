@@ -8,7 +8,55 @@ const SearchableList = ({ search, setSearch, filteredData, addToCart, removeFrom
       console.log("Recherche pour:", text);
       setSearch(text);
     };
-
+    const styles = StyleSheet.create({
+      mainContainer: {
+        flex: 1,
+        backgroundColor: Colors.background,
+      },
+      headerContainer: {
+        height: 100,
+      },
+      headerRow: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        height: 50,
+        backgroundColor: Colors.primaryBG,
+        zIndex: 9,
+      },
+      dropdown: {
+        width: '58%',
+        backgroundColor: Colors.highlightBG,
+      },
+      dropdownContainer: {
+        width: '100%',
+        backgroundColor: Colors.highlightBG,
+        borderColor: Colors.primaryText,
+      },
+      placeholder: {
+        width: '100%',
+        fontSize: 16,
+        color: '#888',
+        textAlign: 'center',
+      },
+      text: {
+        width: '100%',
+        color: Colors.primaryText,
+        fontSize: 18,
+      },
+      container: {
+        flex: 1,
+        backgroundColor: 'grey',
+      },
+      searchBar: {
+        height: 60,
+        minHeight: 40,
+        backgroundColor: '#294e80',
+        borderRadius: 10,
+      },
+      // ... autres styles
+    });
     return (
       <View style={styles.container}>
         <TextInput
@@ -27,54 +75,5 @@ const SearchableList = ({ search, setSearch, filteredData, addToCart, removeFrom
     );
   };
 
-  const styles = StyleSheet.create({
-    mainContainer: {
-      flex: 1,
-      backgroundColor: Colors.background,
-    },
-    headerContainer: {
-      height: 100,
-    },
-    headerRow: {
-      width: '100%',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      height: 50,
-      backgroundColor: Colors.primaryBG,
-      zIndex: 9,
-    },
-    dropdown: {
-      width: '58%',
-      backgroundColor: Colors.highlightBG,
-    },
-    dropdownContainer: {
-      width: '100%',
-      backgroundColor: Colors.highlightBG,
-      borderColor: Colors.primaryText,
-    },
-    placeholder: {
-      width: '100%',
-      fontSize: 16,
-      color: '#888',
-      textAlign: 'center',
-    },
-    text: {
-      width: '100%',
-      color: Colors.primaryText,
-      fontSize: 18,
-    },
-    container: {
-      flex: 1,
-      backgroundColor: 'grey',
-    },
-    searchBar: {
-      height: 60,
-      minHeight: 40,
-      backgroundColor: '#294e80',
-      borderRadius: 10,
-    },
-    // ... autres styles
-  });
 
 export default SearchableList;

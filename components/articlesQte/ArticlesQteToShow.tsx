@@ -134,17 +134,7 @@ const ArticlesQteToShow = ({ articlesList, addToCart, removeFromCart, cart, curr
     );
   };
 
-  return (
-    <View style={styles.container}>
-      {articlesListByCat && articlesListByCatLength > 0 && currentPdjType !== '' && myFlatListRow(
-        articlesListByCat[currentPdjType],
-        pdjTitleName[0],
-        categoryNameList[0],
-        categoryIconList[0]
-      )}
-    </View>
-  );
-};
+
 
 const styles = StyleSheet.create({
   container: {
@@ -197,5 +187,18 @@ const styles = StyleSheet.create({
     // borderColor: 'yellow',
   },
 });
+
+  return (
+    <View style={styles.container}>
+      {articlesListByCat && articlesListByCatLength > 0 && currentPdjType !== '' && myFlatListRow(
+        articlesListByCat[currentPdjType],
+        pdjTitleName[0],
+        categoryNameList[0],
+        categoryIconList[0]
+      )}
+    </View>
+  );
+};
+
 
 export default ArticlesQteToShow;

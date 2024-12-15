@@ -2,7 +2,7 @@ import { StyleSheet, Image, Platform, View, Text, TextInput, Pressable, FlatList
 import ArticlesQteToShow from '@/components/articlesQte/ArticlesQteToShow';
 import ThisDevice from '@/constants/ThisDevice';
 import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
+// import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -67,7 +67,7 @@ export default function TabTwoScreen() {
   }, [thisUseFB, articlesList]);
 
   useEffect(() => {
-    filteredData.length>0 && console.log("articles70 filteredData mise à jour:", filteredData);
+    filteredData.length > 0 && console.log("articles70 filteredData mise à jour:", filteredData);
   }, [filteredData]);
 
   useEffect(() => {
@@ -130,29 +130,55 @@ export default function TabTwoScreen() {
     );
   };
 
-  // const SearchableList = ({ search, setSearch, filteredData, addToCart, removeFromCart }) => {
-  //   const handleSearch = (text:any) => {
-  //     console.log("Recherche pour:", text);
-  //     setSearch(text);
-  //   };
-
-  //   return (
-  //     <View style={styles.container}>
-  //       <TextInput
-  //         style={[styles.searchBar, { color: 'white', paddingHorizontal: 10, fontSize: 16 }]}
-  //         placeholder="Search items..."
-  //         placeholderTextColor="#888"
-  //         value={search}
-  //         onChangeText={handleSearch}
-  //       />
-  //       <FlatListArticles 
-  //         addToCart={addToCart} 
-  //         removeFromCart={removeFromCart} 
-  //         articlesFilteredToWrap={filteredData} 
-  //       />
-  //     </View>
-  //   );
-  // };
+  const styles = StyleSheet.create({
+    mainContainer: {
+      flex: 1,
+      backgroundColor: Colors.background,
+    },
+    headerContainer: {
+      height: 100,
+    },
+    headerRow: {
+      width: '100%',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      height: 50,
+      backgroundColor: Colors.primaryBG,
+      zIndex: 9,
+    },
+    dropdown: {
+      width: '58%',
+      backgroundColor: Colors.highlightBG,
+    },
+    dropdownContainer: {
+      width: '100%',
+      backgroundColor: Colors.highlightBG,
+      borderColor: Colors.primaryText,
+    },
+    placeholder: {
+      width: '100%',
+      fontSize: 16,
+      color: '#888',
+      textAlign: 'center',
+    },
+    text: {
+      width: '100%',
+      color: Colors.primaryText,
+      fontSize: 18,
+    },
+    container: {
+      flex: 1,
+      backgroundColor: 'grey',
+    },
+    searchBar: {
+      height: 60,
+      minHeight: 40,
+      backgroundColor: '#294e80',
+      borderRadius: 10,
+    },
+    // ... autres styles
+  });
 
   return (
     <View style={styles.mainContainer}>
@@ -161,8 +187,8 @@ export default function TabTwoScreen() {
           addToCart={addToCart}
           removeFromCart={removeFromCart}
           articlesList={articlesList}
-          cart={cart} 
-          navigation={undefined} 
+          cart={cart}
+          navigation={undefined}
         />
       </View>
       <View style={styles.headerRow}>
@@ -171,6 +197,10 @@ export default function TabTwoScreen() {
         {categoryName === 'Traditionnels' && <DropDownMenu pdjRayon={pdjTitleTradit} />}
       </View>
       {categoryName !== 'Tout' ? (
+
+        // <View>
+        //   <Text style={{ color: 'white' }}>ArticlesQteToShow</Text>
+        // </View>
         <ArticlesQteToShow
           articlesList={articlesList}
           addToCart={addToCart}
@@ -179,6 +209,9 @@ export default function TabTwoScreen() {
           currentPdjType={currentPdjType} //pdjType résulté par DropDownMenu
         />
       ) : (
+        // <View>
+        //   <Text style={{ color: 'white' }}>SearchableList</Text>
+        // </View>
         <SearchableList 
           search={search} 
           setSearch={setSearch} 
@@ -190,53 +223,3 @@ export default function TabTwoScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
-  headerContainer: {
-    height: 100,
-  },
-  headerRow: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: 50,
-    backgroundColor: Colors.primaryBG,
-    zIndex: 9,
-  },
-  dropdown: {
-    width: '58%',
-    backgroundColor: Colors.highlightBG,
-  },
-  dropdownContainer: {
-    width: '100%',
-    backgroundColor: Colors.highlightBG,
-    borderColor: Colors.primaryText,
-  },
-  placeholder: {
-    width: '100%',
-    fontSize: 16,
-    color: '#888',
-    textAlign: 'center',
-  },
-  text: {
-    width: '100%',
-    color: Colors.primaryText,
-    fontSize: 18,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: 'grey',
-  },
-  searchBar: {
-    height: 60,
-    minHeight: 40,
-    backgroundColor: '#294e80',
-    borderRadius: 10,
-  },
-  // ... autres styles
-});

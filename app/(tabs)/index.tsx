@@ -10,6 +10,8 @@ import LoginScreen from '@/firebase';
 import ArticlesToShow from '@/components/articles/ArticlesToShow';
 import ContactForm from '@/components/contact/ContactCallable';
 import ThisDevice from '@/constants/ThisDevice';
+import ExternalLink from '@/components/ExternalLink';
+// import { ExternalLink } from '@/components/ExternalLink';
 
 
 export default function HomeIndex() {
@@ -68,7 +70,7 @@ export default function HomeIndex() {
 
   return (
     // <ExternalLink href="https://docs.expo.dev/router/introduction">
-    //   <ThemedText type="link">Learn more</ThemedText>
+      // <ThemedText type="link">Learn more</ThemedText>
     // </ExternalLink>
     <ParallaxScrollView //background image
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}

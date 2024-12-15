@@ -6,12 +6,13 @@ import ThisDevice from "@/constants/ThisDevice";
 import { ThemedView } from "../ThemedView";
 import { ThemedTitle } from "../ThemedTitle";
 import { ThemedText } from "../ThemedText";
-import { iconLogin, iconUser, iconUsers } from "@/icons";
+import { iconClose, iconLogin, iconUser, iconUsers } from "@/icons";
 import { LoginScreen } from "./LoginScreen";
 import { useAuth } from "../../app/AuthContext";
 import ProfileScreen from "./ProfileScreen";
 import { Colors } from "@/constants/Colors";
 import SignInComp from "./SignInComp";
+import Header from "../Header";
 
 
 function ModalSignin({ myImage }) {
@@ -29,11 +30,11 @@ function ModalSignin({ myImage }) {
   });
   const { user,
     modalSignInVisible, setModalSignInVisible
-   } = useAuth();
+  } = useAuth();
 
   useEffect(() => {
     console.log("ModalSignin31 value ", value, //Number(value.montantCB).toFixed(2)
-      
+
     )
   }, [value])
 
@@ -50,27 +51,30 @@ function ModalSignin({ myImage }) {
         style={{
           width: '100%',
           // height: 100,
-          flexDirection:'row',
+          flexDirection: 'row',
           justifyContent: 'flex-end',
           alignItems: 'flex-end',
-          borderWidth: 13, borderColor: 'blue', borderStyle: 'solid',
+          // borderWidth: 13, borderColor: 'blue', borderStyle: 'solid',
         }}
-        onPress={() =>{ 
+        onPress={() => {
           console.log('ModalSignIn59 setModalSignInVisible(true)')
           setModalSignInVisible(true)
-          }}>
-        
-        <Text style={{ 
-          width:'100%',
-          display: 'flex', 
-          flexDirection: 'row', 
-          justifyContent:'flex-end',
-          height: '100%', 
-          color:Colors.primaryText,
-          borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
-          minWidth: 300 }}>
+        }}>
+
+        <Text style={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+          height: '100%',
+          fontSize: 16,
+          color: Colors.primaryText,
+          // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
+          minWidth: 300
+        }}>
           {/* {!user ? iconLogin : iconUser} */}
-          {!user ? iconLogin : iconUser}
+          {!user && 'connexion'} {!user ? iconLogin : iconUser}
         </Text>
 
 
@@ -79,56 +83,86 @@ function ModalSignin({ myImage }) {
     )
   }
 
-  
+
   return (
     <View
       style={{
         backgroundColor: 'transparent',
         width: '100%',
-        borderWidth: 3, borderColor: 'pink', borderStyle: 'solid',
+        borderWidth: 1, borderColor: 'white', borderStyle: 'solid',
       }
       }
     >
-      { openModal()}
+      {openModal()}
 
       <Modal // Modal-in
         animationType="slide" transparent={true} visible={modalSignInVisible}>
 
-        <ThemedView style={{ //headerTitle Modal  with close button Close
+
+        <ThemedView style={styles.modalContainer}>
+          <View style={styles.modalHeader}>
+            <View style={[{ //ModalGoHome
+              // width: 50,
+              // height: '50%',
+              // margin: 10,
+              maxWidth: '100%',
+              // borderWidth: 5, borderColor: 'green', borderStyle: 'solid',
+              display: 'flex',
+              flexDirection: 'row'
+            }]}>
+              <Header articlesList={undefined} cart={undefined} removeFromCart={undefined} addToCart={undefined} navigation={undefined} />
+              <Pressable style={[
+                // styles.closeButton
+                ,{
+                position: 'absolute', right:'0'
+              } ]} onPress={() => setModalSignInVisible(false)}>
+                <Text style={styles.closeButtonText}>{iconClose}</Text>
+              </Pressable>
+            </View>
+
+          </View>
+
+
+
+          {/* <ThemedView style={{ //headerTitle Modal  with close button Close
           flexDirection: 'row',
           justifyContent: 'space-between',
-          borderWidth: 5, borderColor: 'pink', borderStyle: 'solid',
-          marginVertical: 10
+          backgroundColor: Colors.primaryBG,
+          // borderWidth: 5, borderColor: 'pink', borderStyle: 'solid',
+          padding: 25
         }}>
+         
           <ThemedTitle style={{ fontSize: 30 }}> Modal Connexion</ThemedTitle>
 
           <Pressable onPress={() => { setModalSignInVisible(false) }}>
-            <ThemedText>X103</ThemedText>
+            <ThemedText>{iconClose} </ThemedText>
           </Pressable>
 
+        </ThemedView> */}
+
+          <View //mondal Content
+            style={{
+              width: '100%',
+              height: '100%',
+              minWidth: 100,
+              minHeight: 50,
+              justifyContent: "flex-start",
+              // backgroundColor: 'transparent',
+              // backgroundColor: 'coral',// Colors.primaryBG,
+              alignItems: "center",
+              padding: 10,
+              // borderWidth: 3, borderColor: 'yellow', borderStyle: 'solid',
+            }}
+          >
+
+            {!user ?
+              <SignInComp />
+              :
+              <ProfileScreen />
+            }
+          </View>
         </ThemedView>
 
-        <View //mondal Content
-          style={{
-            width: '100%',
-            height: '100%',
-            minWidth: 100,
-            minHeight: 50,
-            justifyContent: "flex-start",
-            // backgroundColor: 'transparent',
-            backgroundColor: 'coral',// Colors.primaryBG,
-            alignItems: "center",
-            padding: 10,
-            borderWidth: 3, borderColor: 'yellow', borderStyle: 'solid',
-          }}
-        >
-          
-          {!user ? 
-            <SignInComp />
-            :
-            <ProfileScreen />
-          }
-        </View>
       </Modal>
     </View>
   );
@@ -137,9 +171,9 @@ function ModalSignin({ myImage }) {
 
 const styles = StyleSheet.create({
   containerColumn: {
-      flexDirection: 'column',
-      flexWrap: 'nowrap',
-      borderColor: 'white', borderStyle: 'solid', borderWidth: 2,
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+    borderColor: 'white', borderStyle: 'solid', borderWidth: 2,
   },
   // mainContainer: {
   //     flex: 1,
@@ -149,79 +183,79 @@ const styles = StyleSheet.create({
   //     borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
   // },
   openModalButton: {
-      width: '80%',
-      height: 50,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: Colors.primary || '#4caf50',
-      borderRadius: 10,
-      marginVertical: 10,
-      borderColor: 'green', borderStyle: 'solid', borderWidth: 2,
+    width: '80%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.primary || '#4caf50',
+    borderRadius: 10,
+    marginVertical: 10,
+    borderColor: 'green', borderStyle: 'solid', borderWidth: 2,
   },
-  // modalContainer: {
-  //     flex: 1,
-  //     // backgroundColor: Colors.background || '#ffffff',
-  //     backgroundColor: Colors.primaryBG || '#f5f5f5',
-  //     borderTopLeftRadius: 20,
-  //     borderTopRightRadius: 20,
-  //     padding: 20,
-  //     borderColor: 'red', borderStyle: 'solid', borderWidth: 2,
-  // },
+  modalContainer: {
+    flex: 1,
+    // backgroundColor: Colors.background || '#ffffff',
+    backgroundColor: Colors.primaryBG || '#f5f5f5',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+    borderColor: 'white', borderStyle: 'solid', borderWidth: 2,
+  },
   modalHeader: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      borderBottomWidth: 1,
-      // borderColor: Colors.border || '#e0e0e0',
-      paddingBottom: 10,
-      backgroundColor: Colors.background || '#ffffff',
-      borderColor: 'pink', borderStyle: 'solid', borderWidth: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    // borderColor: Colors.border || '#e0e0e0',
+    paddingBottom: 10,
+    backgroundColor: Colors.background || '#ffffff',
+    borderColor: 'pink', borderStyle: 'solid', borderWidth: 2,
   },
   modalTitle: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      color: Colors.textPrimary || '#000000',
-      borderColor: 'purple', borderStyle: 'solid', borderWidth: 2,
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: Colors.textPrimary || '#000000',
+    borderColor: 'purple', borderStyle: 'solid', borderWidth: 2,
   },
   closeButton: {
-      padding: 10,
-      backgroundColor: Colors.closeButton || '#ff4d4d',
-      borderRadius: 15,
-      borderColor: 'red', borderStyle: 'solid', borderWidth: 2,
+    padding: 10,
+    backgroundColor: Colors.closeButton || '#ff4d4d',
+    borderRadius: 15,
+    borderColor: 'red', borderStyle: 'solid', borderWidth: 2,
   },
   closeButtonText: {
-      color: '#ffffff',
-      fontSize: 16,
-      fontWeight: 'bold',
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   modalContent: {
-      flex: 1,
-      marginTop: 20,
-      borderColor: 'turquoise', borderStyle: 'solid', borderWidth: 2,
+    flex: 1,
+    marginTop: 20,
+    borderColor: 'turquoise', borderStyle: 'solid', borderWidth: 2,
   },
   userInfo: {
-      marginBottom: 20,
-      padding: 10,
-      // backgroundColor: Colors.userInfoBackground || '#e0f7fa',
-      borderRadius: 10,
-      borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
+    marginBottom: 20,
+    padding: 10,
+    // backgroundColor: Colors.userInfoBackground || '#e0f7fa',
+    borderRadius: 10,
+    borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
   },
   connectedText: {
-      fontSize: 16,
-      color: Colors.textSecondary || '#00796b',
-      marginBottom: 10,
-      borderColor: 'coral', borderStyle: 'solid', borderWidth: 2,
+    fontSize: 16,
+    color: Colors.textSecondary || '#00796b',
+    marginBottom: 10,
+    borderColor: 'coral', borderStyle: 'solid', borderWidth: 2,
   },
   logoutButton: {
-      padding: 10,
-      backgroundColor: Colors.primary || '#4caf50',
-      borderRadius: 10,
-      alignItems: 'center',
+    padding: 10,
+    backgroundColor: Colors.primary || '#4caf50',
+    borderRadius: 10,
+    alignItems: 'center',
   },
   logoutText: {
-      color: '#ffffff',
-      fontSize: 16,
-      fontWeight: 'bold',
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 export default ModalSignin;

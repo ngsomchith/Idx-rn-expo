@@ -12,6 +12,8 @@ import { Colors } from '@/constants/Colors';
 import ButtonStd from '../ButtonTypeStd';
 import { myStyles } from '../myStyle';
 import { useAuth } from '@/app/AuthContext';
+import { createObjectFromModel, updateItemModel } from '@/firebase';
+import { Toaster } from 'react-native-toastboard';
 
 
 
@@ -22,68 +24,17 @@ const yellow2 = '#ffe38d'
 const white = "#fff"
 const black = '#000'
 
-export const EditUser = ({  }) => {
+export const EditUser = ({ thisCurrentUser  }) => {
     const device = ThisDevice().device
-    // console.log("device ", device)
-    // const {
+    
 
+    const [currentUserEmail, setCurrentUserEmail] = useState('')
+    const {currentUser, setCurrentUser}=useAuth()
 
-    //     user, setUser,
-    //     viewModal, setViewModal,
-    //     currentUserEmail, setCurrentUserEmail,
-    //     currentUserEmailNew, setCurrentUserEmailNew,
-    //     userInfo, setUserInfo,
-    //     articlesList,
-    //     setArticlesList,
-    //     currentMenuN, setcurrentMenuN,
-    //     newArticlesList, setNewArticlesList,
-    //     panier, setPanier,
-    //     panierQte, setPanierQte,
-    //     // callPanier,setcallPanier,
-    //     panierView, setpanierView,
-    //     isLoading, setIsLoading,
-    //     totalPanier, setTotalPanier,
-    //     currentPdjType, setCurrentPdjType,
-    //     myDaysList, setMyDaysList,
-    //     currentUser, setCurrentUser,
-    //     cdeEnCours, setCdeEnCours,
-    //     cdeEnCoursAllEmail, setCdeEnCoursAllEmail,
-
-    //     currentCdeEnCours, setCurrentCdeEnCours,
-    //     cdeEnCoursList, setCdeEnCoursList,
-    //     currentScreen, setCurrentScreen,
-    //     filteredDataSource, setFilteredDataSource,
-    //     masterDataSource, setMasterDataSource,
-    //     search, setSearch,
-    //     searchAble, setSearchAble,
-    //     MyModalPageVisible, setMyModalPageVisible,
-    //     PlatsToShowFiltered, setPlatsToShowFiltered,
-    //     PlatsToShowFilteredPanier, setPlatsToShowFilteredPanier,
-    //     gAuth, setGAuth,
-    //     stateBar, setstateBar,
-    //     todayfr10, setTodayfr10,
-    //     articlesListByCat, setArticlesListByCat,
-    //     monthDocStr, setMonthDocStr,
-    //     dayDocStr, setDayDocStr,
-    //     pdjTypeList, setPdjTypeList,
-    //     scrollTo, setscrollTo,
-    //     allCdeEnCours, setallCdeEnCours,
-    //     categoryName, setcategoryName,
-    //     categoryIcon, setcategoryIcon,
-    //     modalSignInVisiblePublic, setModalSignInVisiblePublic,
-    //     promoAccordN, setPromoAccordN,
-    //     categoryNameList, setcategoryNameList,
-    //     categoryIconList, setcategoryIconList,
-    //     categoryDetail, setcategoryDetail,
-    //     currentcategoryNameAndIcon, setcurrentcategoryNameAndIcon,
-    //     dateFact, setdateFact,
-    //     showPanierForbidden, setShowPanierforbidden,
-    //     phoneKnown, setPhoneKnown,
-    //     notConnected
-
-    // } = useContext(AuthenticatedUserContext);
-
-    const {currentUser}=useAuth()
+    useEffect(() => {
+        setCurrentUser(thisCurrentUser)
+        setCurrentUserEmail(thisCurrentUser?.email)
+    }, [])
     const styles = myStyles
 
     const MAXWIDTH = ThisDevice().device.width - 5

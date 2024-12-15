@@ -1,6 +1,6 @@
 // // Importez Firebase
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword as webSignInWithEmailAndPassword, createUserWithEmailAndPassword as webCreateUserWithEmailAndPassword, PhoneAuthProvider } from 'firebase/auth';
+import { getAuth, PhoneAuthProvider, signInWithEmailAndPassword as webSignInWithEmailAndPassword } from 'firebase/auth';
 import { Persistence, ReactNativeAsyncStorage, browserSessionPersistence, initializeAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { Platform, useWindowDimensions } from 'react-native';
@@ -84,53 +84,39 @@ export const FirebaseInit = () => {
         // measurementId: "G-C1T5MT1GGZ"
 
     };
+ // Initialisez Firebase
+ const firebaseApp: any = [];
+ if (Platform.OS === 'web') {
+     firebaseApp[0] = initializeApp(firebaseConfig); // Initialisation pour le web
+     if (firebaseApp[0]) {
 
-    // Initialisez Firebase
-    const firebaseApp: any = [];
-    if (Platform.OS === 'web') {
-        firebaseApp[0] = initializeApp(firebaseConfig); // Initialisation pour le web
-        if (firebaseApp[0]) {
+         const auth = getAuth(firebaseApp[0]);
+         firebaseApp[1] = getAuth(initializeApp(firebaseConfig));
+         firebaseApp[2] = getFunctions(initializeApp(firebaseConfig));
+         firebaseApp[3] = getFirestore(initializeApp(firebaseConfig));
+         // firebaseApp[4] = new PhoneAuthProvider(getAuth(firebaseApp[0]));
+         console.log("auth 96 ", firebaseApp[1])
+         try {
+             firebaseApp[4]  = new PhoneAuthProvider(auth);
+             console.log("PhoneAuthProvider initialized:", firebaseApp[4] );
+         } catch (error) {
+             console.error("Failed to initialize PhoneAuthProvider:", error);
+         }
+     }
+ } else {
+     if (!firebase.apps.length) {
+         firebaseApp[0] = firebase.app(); // Initialisation pour mobile
 
-            const auth = getAuth(firebaseApp[0]);
-            firebaseApp[1] = getAuth(initializeApp(firebaseConfig));
-            firebaseApp[2] = getFunctions(initializeApp(firebaseConfig));
-            firebaseApp[3] = getFirestore(initializeApp(firebaseConfig));
-            // firebaseApp[4] = new PhoneAuthProvider(getAuth(firebaseApp[0]));
-            // console.log("auth 96 ", firebaseApp[1])
-            // try {
-            //     firebaseApp[4]  = new PhoneAuthProvider(auth);
-            //     console.log("PhoneAuthProvider initialized:", firebaseApp[4] );
-            // } catch (error) {
-            //     console.error("Failed to initialize PhoneAuthProvider:", error);
-            // }
-        }
-    } else {
-        if (!firebase.apps.length) {
-            firebaseApp[0] = firebase.app(); // Initialisation pour mobile
-
-        } else {
-            firebaseApp[0] = firebase.app(); // Recyclage de l'instance existante
-        }
-    }
+     } else {
+         firebaseApp[0] = firebase.app(); // Recyclage de l'instance existante
+     }
+ }
 
     // console.log("auth 104")
-
-    // firebaseApp[0] = initializeApp(firebaseConfig); 
     // const auth = getAuth(firebaseApp[0]);
+    // console.log("auth 105 ", firebaseApp)
 
-    // const myPhoneAuthProvider = new PhoneAuthProvider(auth);
-    // try {
-    //     const myPhoneAuthProvider = new PhoneAuthProvider(auth);
-    //     console.log("PhoneAuthProvider initialized:", myPhoneAuthProvider);
-    // } catch (error) {
-    //     console.error("Failed to initialize PhoneAuthProvider:", error);
-    // }
-
-    // console.log("firebaseConfig114 ", myPhoneAuthProvider)
-
-    return { firebaseApp, 
-        // myPhoneAuthProvider 
-    }
+    return (firebaseApp)
 
 };
 
@@ -149,23 +135,6 @@ export const signInWithEmailAndPassword = async (firebaseApp: any, email: any, p
     }
 
     return _signInWithEmailAndPassword[0]
-};
-
-export const createUserWithEmailAndPassword = async (firebaseApp: any, email: any, password: any) => {
-    // info firebaseApp = undefined if mobile-app
-
-    const _createUserWithEmailAndPassword: any = []
-    if (Platform.OS === 'web') {
-        // console.log("createUserWithEmailAndPassword 115", firebaseApp, email, password)
-
-        const authInstance = firebaseApp[1]; // Instance Firebase pour le web
-
-        _createUserWithEmailAndPassword[0] = webCreateUserWithEmailAndPassword(authInstance, email, password);
-    } else {
-        _createUserWithEmailAndPassword[0] = auth().createUserWithEmailAndPassword(email, password); // Instance Firebase pour mobile
-    }
-
-    return _createUserWithEmailAndPassword[0]
 };
 
 export const myApp = FirebaseInit()

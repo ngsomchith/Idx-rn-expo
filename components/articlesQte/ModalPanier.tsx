@@ -113,9 +113,10 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                     maxWidth: '100%',
                     justifyContent: 'space-between',
                     alignItems: 'flex-end',
-                    borderColor: 'red',
+                    paddingVertical:10,
+                    borderColor: 'white',
                     borderStyle: 'solid',
-                    borderWidth: 10,
+                    borderWidth: 1,
                     display: 'flex',
                     flexDirection: 'row'
                 }]} >
@@ -126,9 +127,10 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    borderColor: 'white',
-                    borderStyle: 'solid',
-                    borderWidth: 3,
+                    fontWeight:'600'
+                    // borderColor: 'white',
+                    // borderStyle: 'solid',
+                    // borderWidth: 3,
                 }
 
                 } >
@@ -137,8 +139,8 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                 </Text>
 
 
-                <Text style={[, { color: 'white', width: '10%', textAlign: 'left' }]} > {totalQte}  </Text>
-                <Text style={[, { color: 'white', width: '17%', textAlign: 'left' }]} >{total.toFixed(2)}€ </Text>
+                <Text style={[, { color: 'white', width: '10%', textAlign: 'left',fontWeight:'600' }]} > {totalQte}  </Text>
+                <Text style={[, { color: 'white', width: '17%', textAlign: 'left',fontWeight:'600' }]} >{total.toFixed(2)}€ </Text>
             </View>
 
             // <Text style={{ color: 'white', width: '17%', textAlign: 'left' }} >total prix </Text>
@@ -173,7 +175,7 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                             // height: '50%',
                             // margin: 10,
                             maxWidth: '100%',
-                            borderWidth: 5, borderColor: 'green', borderStyle: 'solid',
+                            // borderWidth: 5, borderColor: 'green', borderStyle: 'solid',
                             display: 'flex',
                             flexDirection: 'row'
                         }]}>
@@ -244,13 +246,11 @@ const styles = StyleSheet.create({
         borderRadius: 50,
     },
     containerColumn: {
-        // height:200,
-        // width:300,
         flexDirection: 'column',
         flexWrap: 'nowrap',
-        borderColor: 'yellow',
-        borderStyle: 'solid',
-        borderWidth: 5,
+        // borderColor: 'yellow',
+        // borderStyle: 'solid',
+        // borderWidth: 5,
     },
     mainContainer: {
         flex: 1,
@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         padding: 20,
-        borderColor: 'red', borderStyle: 'solid', borderWidth: 10,
+        // borderColor: 'red', borderStyle: 'solid', borderWidth: 10,
     },
     modalHeader: {
         flexDirection: 'row',
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
         // borderColor: Colors.border || '#e0e0e0',
         // paddingBottom: 10,
         // backgroundColor: Colors.primaryBG || '#ffffff',
-        borderColor: 'pink', borderStyle: 'solid', borderWidth: 2,
+        // borderColor: 'pink', borderStyle: 'solid', borderWidth: 2,
     },
     modalTitle: {
         fontSize: 24,
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginVertical: 10,
         color: Colors.primaryText || '#000000',
-        borderColor: 'purple', borderStyle: 'solid', borderWidth: 2,
+        // borderColor: 'purple', borderStyle: 'solid', borderWidth: 2,
     },
     closeButton: {
         padding: 8,
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         position: 'relative',
         left: -25,
-        borderColor: 'red', borderStyle: 'solid', borderWidth: 2,
+        // borderColor: 'red', borderStyle: 'solid', borderWidth: 2,
     },
     closeButtonText: {
         color: '#ffffff',
@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
     modalContent: {
         flex: 1,
         // marginTop: 20,
-        borderColor: 'turquoise', borderStyle: 'solid', borderWidth: 2,
+        // borderColor: 'turquoise', borderStyle: 'solid', borderWidth: 2,
     },
     userInfo: {
         width: '100%',
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
         padding: 5,
         // backgroundColor: Colors.userInfoBackground || '#e0f7fa',
         borderRadius: 10,
-        borderColor: 'pink', borderStyle: 'solid', borderWidth: 2,
+        // borderColor: 'pink', borderStyle: 'solid', borderWidth: 2,
     },
     connectedText: {
         flex: 1,
@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        borderColor: 'black', borderStyle: 'solid', borderWidth: 4,
+        // borderColor: 'black', borderStyle: 'solid', borderWidth: 4,
     },
     logoutButton: {
         padding: 10,

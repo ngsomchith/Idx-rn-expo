@@ -1,160 +1,54 @@
 
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { View, TextInput, Button, Text, Pressable } from 'react-native';
-// import { auth } from './firebaseConfig';
+import { View, TextInput, Text, Pressable } from 'react-native';
 import { PhoneAuthProvider, getAuth, signInWithPhoneNumber } from "firebase/auth";
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
+
 import { doc, getFirestore, setDoc } from 'firebase/firestore';
-import { useAuth } from '@/app/AuthContext';
-import { addItemAndSetId, getItemsWhere } from '@/firebase';
 import { UserType } from '@/app/models/UserType';
+import { addItemAndSetId, getItemsWhere } from '@/firebase';
 import { Colors } from '@/constants/Colors';
-import { iconSmartphone } from '@/icons';
+import { iconSend, iconSmartphone } from '@/icons';
 import ButtonStd from '../ButtonTypeStd';
-import { FirebaseInit } from '@/constants/firebaseConfig';
+import { useAuth } from '@/app/AuthContext';
 
 
-const PhoneSignIn = () => {
+const PhoneSignIn = ({ }) => {
+  let commande: any = []
 
 
-  // const {
-  //   user, setUser,
-  //   viewModal, setViewModal,
-  //   currentUserEmail, setCurrentUserEmail,
-  //   // currentUserEmailNew, setCurrentUserEmailNew,
-  //   userInfo, setUserInfo,
-  //   articlesList, setArticlesList,
-  //   articlesListByCat, setArticlesListByCat,
-  //   currentMenuN, setcurrentMenuN,
-  //   newArticlesList, setNewArticlesList,
-  //   panier, setPanier,
-  //   panierQte, setPanierQte,
-  //   // callPanier,setcallPanier,
-  //   panierView, setpanierView,
-  //   totalPanier, setTotalPanier,
-  //   totalPanierJap, setTotalPanierJap,
-  //   totalPanierNoJap, setTotalPanierNoJap,
-  //   currentPdjType, setCurrentPdjType,
-  //   myDaysList, setMyDaysList,
-  //   currentUser, setCurrentUser,
-  //   currentUserFinal, setCurrentUserFinal,
-  //   todayfr10, setTodayfr10,
-  //   cdeEnCours, setCdeEnCours,
-  //   currentCdeEnCours, setCurrentCdeEnCours,
-  //   cdeEnCoursList, setCdeEnCoursList,
-  //   cdeEnCoursAllEmail, setCdeEnCoursAllEmail,
-  //   filteredDataSource, setFilteredDataSource,
-  //   masterDataSource, setMasterDataSource,
-  //   search, setSearch,
-  //   searchAble, setSearchAble,
-  //   MyModalPageVisible, setMyModalPageVisible,
-  //   PlatsToShowFiltered, setPlatsToShowFiltered,
-  //   PlatsToShowFilteredPanier, setPlatsToShowFilteredPanier,
-  //   gAuth, setGAuth,
-  //   pdjTypeList, setPdjTypeList,
-  //   promoOuverture, setpromoOuverture,
-  //   categoryBeforePanier, setcategoryBeforePanier,
-  //   navAdminState, setNavAdminState,
-  //   // user, setUser,
-  //   arrayUser, lastFixtures,
-  //   lastDateFixtures, currentDateFixtures,
-  //   dateSaisie, setDateSaisie,
-  //   datePush, setDatePush,
-  //   newFixtureAble, setNewFixtureAble,
-  //   chooseDateAble, setChooseDateAble,
-  //   addFixtureState, setAddFixtureState,
-  //   chooseTimeAble, setChooseTimeAble,
-  //   updateFixtureAble, setUpdateFixtureAble,
-  //   fixtureAdd, setFixtureAdd,
-  //   fixtureEdit, setFixtureEdit,
-  //   fixture2Update, setFixture2Update,
-  //   selectedDate, setSelectedDate,
-  //   selectedTime, setSelectedTime,
-  //   currentNavIdx, setCurrentNavIdx,
-  //   fixturesForOdds, setFixturesForOdds,
-  //   fixturesImport, setFixturesImport,
-  //   currentIndex, setCurrentIndex,
-  //   nextIndex, setNextIndex,
-  //   newState, setNewState,
-  //   dayDocStr, setDayDocStr,
-  //   startState, setStartState,
-  //   cancelState, setCancelState,
-  //   updateState, setUpdateState,
-  //   MyModalAuthPageVisible, setMyModalAuthPageVisible,
-  //   deleteState, setDeleteState,
-  //   fixtures2Months, setFixtures2Months,
-  //   saveAble, setSaveAble,
-  //   screenBt, setScreenBt,
-  //   goToHomeScreen, setgoToHomeScreen,
-  //   debuteunefois, setdebuteunefois,
-  //   fixtViewed, setfixtViewed,
-  //   fixturesListData, setfixturesListData,
-  //   currentScreen, setCurrentScreen,
-  //   isLoading, setIsLoading,
-  //   stateBar, setstateBar,
-  //   monthDocStr, setMonthDocStr,
-  //   dateFact, setdateFact,
-  //   chooseDay, setChooseDay,
-  //   chooseDayTime, setChooseDayTime,
-  //   scrollTo, setscrollTo,
-  //   categoryName, setcategoryName,
-  //   categoryIcon, setcategoryIcon,
-  //   categoryNameList, setcategoryNameList,
-  //   categoryIconList, setcategoryIconList,
-  //   allCdeEnCours, setAllCdeEnCours,
-  //   currentcategoryNameAndIcon, setcurrentcategoryNameAndIcon,
-  //   idx, setIdx,
-  //   promoAccord, setPromoAccord,
-  //   remiseSushi, setRemiseSushi,
-  //   notConnected, setNotConnected
-
-
-  // } = useContext(AuthenticatedUserContext);
-
-  // const auth = myAuth
-  
-  const {auth, user
+  const { auth, user, setUser,
+    setCurrentUser,
   } = useAuth()
   auth.languageCode = 'fr';
 
-
-      const myApp = FirebaseInit()
-      const phoneProvider =  myApp[4]  
-const [currentUserEmail, setCurrentUserEmail] =useState('')
+  // const auth = myAuth
+  auth.languageCode = 'fr';
   const [phoneNumber, setPhoneNumber] = useState('');
   const [verificationId, setVerificationId] = useState(null);
   const [verificationCode, setVerificationCode] = useState('');
   const recaptchaVerifier = useRef(null);
   const [thisSignInByPhoneChoosed, setThisSignInByPhoneChoosed] = useState(false);
+  const [currentUserEmail, setCurrentUserEmail] = useState('')
 
+  // const [user, setUser] = useState(null)
+
+  // const thisCollection = 'shoppinUsers/test/phoneSignIn'
   const thisCollection = 'shoppinUsers'
   useEffect(() => {
     console.log("124auth = ", auth)
 
-
-    // const result = codePaysToChiffres()
-    // console.log("codePaysToChiffres = ", result)
-    // const result2 = tel10chiffresToCodePays()
-    // console.log("tel10chiffresToCodePays = ", result2)
-
-    // pour test
-    // setPhoneNumber('+33637374799')
-    // setPhoneNumber('+33616817426')
-
-    console.log("phoneNumber136 user = ", user)
     // checkUserByPhoneExist(phoneNumber) // ne pas lancer check ici , car action à chaque changement
 
-  }, [auth, user])
+  }, [auth])
 
   useEffect(() => {
     console.log("phoneNumber134 = ", phoneNumber)
   }, [phoneNumber])
-  
-
 
   useEffect(() => {
-    console.log("recaptchaVerifier = ", recaptchaVerifier)
-  }, [recaptchaVerifier])
+    console.log("commande = ", phoneNumber)
+  }, [commande])
 
   async function checkUserByPhoneExist(thisValue: string) {
 
@@ -167,13 +61,14 @@ const [currentUserEmail, setCurrentUserEmail] =useState('')
         const emailTemp = result[0].email
         console.log("result 153 checkUserByPhoneExist", emailTemp, result[0])
 
-        // setTimeout(() => {
+        setTimeout(() => {
 
-        //   setCurrentUser(result[0])
-        //   console.log("setCurrentUserEmail ")
-        //   setCurrentUserEmail(emailTemp)
-        //   setpanierView(true)
-        // }, 500);
+          setUser(result[0])
+          setCurrentUser(result[0])
+          console.log("setCurrentUserEmail ")
+          setCurrentUserEmail(emailTemp)
+          // setpanierView(true)
+        }, 500);
 
         // createUserProfile(result[0])
       } else { // user does not exist after PhoneSignin
@@ -181,15 +76,15 @@ const [currentUserEmail, setCurrentUserEmail] =useState('')
         const userTemp = new UserType()
         userTemp.phonehand = thisValue
         userTemp.email = '0' + thisValue?.substring(1)
-        // setTimeout(() => {
-        //   console.log("setCurrentUserEmail ", '0' + thisValue?.substring(1))
+        setTimeout(() => {
+          console.log("setCurrentUserEmail ", '0' + thisValue?.substring(1))
 
-        //   if (thisValue && thisValue != 'udex.invited@gmail.com') {
-        //     setCurrentUserEmail('0' + thisValue?.substring(1))
-        //     setCurrentUser(userTemp)
-        //     setpanierView(true)
-        //   }
-        // }, 500);
+          if (thisValue && thisValue != 'udex.invited@gmail.com') {
+            setCurrentUserEmail('0' + thisValue?.substring(1))
+            setCurrentUser(userTemp)
+            // setpanierView(true)
+          }
+        }, 500);
         addItemAndSetId(thisCollection, userTemp)
         // createUserProfile(userTemp)
 
@@ -215,7 +110,7 @@ const [currentUserEmail, setCurrentUserEmail] =useState('')
     console.log(result)
     return result
   }
-  function tel10chiffresToCodePays(tel10chiffres:any) {
+  function tel10chiffresToCodePays(tel10chiffres: any) {
     // let tel10chiffres = '0616817427'
     const result = ('+33' + tel10chiffres.substring(1))
     console.log(result)
@@ -224,39 +119,21 @@ const [currentUserEmail, setCurrentUserEmail] =useState('')
 
   const db = getFirestore();
 
-  // const createUserProfile = async (user) => {
-  //   console.log("187createUserProfiler", user)
-  //   console.log("188auth", auth)
-  //   if(user){
-  //     const userRef = doc(db, thisCollection, user?.id);
-  //     console.log("54createUserProfiler user?.id", user?.id)
-  //     const userProfile = {
-  //       uid: user?.id,
-  //       phoneNumber:  phoneNumber,
-  //       createdAt: new Date(),
-  //       // Ajoutez d'autres informations utilisateur si nécessaire
-  //     };
-  //     setCurrentUserEmail(user.email)
-  //     console.log('createUserProfile68 = ', user, user.email)
 
-  //     await setDoc(userRef, userProfile);
-  //   }
-  // };
-
-  auth.onAuthStateChanged((user:any) => {
+  auth.onAuthStateChanged((user: any) => {
     if (user) {
-      // createUserProfile(user);
       console.log("auth.onAuthStateChanged", auth.onAuthStateChanged)
-      console.log("auth.onAuthStateChanged : user ", user)
+      console.log("createUserProfile ??? : user ", user)
     }
   });
 
   const sendVerification = async () => {
     try {
-      // const phoneProvider = new PhoneAuthProvider(auth); // voir en haut
+      const phoneProvider = new PhoneAuthProvider(auth);
 
-      const id = recaptchaVerifier && recaptchaVerifier.current != null && phoneProvider.verifyPhoneNumber(tel10chiffresToCodePays(phoneNumber), recaptchaVerifier.current);
+      const id = phoneProvider.verifyPhoneNumber(tel10chiffresToCodePays(phoneNumber), recaptchaVerifier?.current);
       setVerificationId(id);
+      // setThisSignInByPhoneChoosed(!thisSignInByPhoneChoosed)
     } catch (error) {
       console.error(error);
     }
@@ -264,14 +141,10 @@ const [currentUserEmail, setCurrentUserEmail] =useState('')
   };
 
   const confirmCode = async () => {
+    console.log("confirmCode")
     try {
 
-      const credential =verificationId && PhoneAuthProvider.credential(verificationId, verificationCode);
-      // await signInWithPhoneNumber(auth, credential);
-
-
-      //  #################    désactiver la ligne suivante pour forcer test
-      // await signInWithPhoneNumber(auth, tel10chiffresToCodePays(phoneNumber), recaptchaVerifier.current);
+      const credential = PhoneAuthProvider.credential(verificationId, verificationCode);
 
       console.log('sign in auth :', auth)
       console.log('sign in credential :', credential)
@@ -281,7 +154,6 @@ const [currentUserEmail, setCurrentUserEmail] =useState('')
         // && currentUserEmail !='udex.invited@gmail.com' 
       ) {
         console.log("© currentUserEmail =", phoneNumber)
-        // checkUserByPhoneExist(currentUserEmail) // currentUserEmail = phoneNumber
         setCurrentUserEmail(phoneNumber)
         if (phoneNumber != 'udex.invited@gmail.com') {
           checkUserByPhoneExist(phoneNumber) // currentUserEmail = phoneNumber
@@ -295,129 +167,92 @@ const [currentUserEmail, setCurrentUserEmail] =useState('')
 
 
   return (
-    // <></>
     <View style={{
-      borderColor: Colors.accentBG,
-      borderStyle: 'solid',
-      borderWidth: 5,
       borderRadius: 10,
       padding: 3,
-      height: 100
-      // backgroundColor: Colors.highlightBG
     }}>
-      <Pressable
-        style={{ flexDirection: 'row', flexWrap: 'nowrap' }}
-        onPress={() => {
-          setThisSignInByPhoneChoosed(!thisSignInByPhoneChoosed)
-        }}
-      >
+      <Pressable onPress={() => {
+        setVerificationId(null),
+          console.log("setVerificationId")
+        setThisSignInByPhoneChoosed(!thisSignInByPhoneChoosed)
+      }}>
         <Text style={{
           backgroundColor: Colors.highlightBG,
+          paddingVertical: 10,
+          color: Colors.primaryText,
+          fontSize: 18,
           display: 'flex',
-          height: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'space-between',
         }}>
           {iconSmartphone}
-        </Text>
-        
-        <Text style={{ // iconSmartphone
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          paddingVertical: 10,
-          backgroundColor: Colors.highlightBG,
-          color: Colors.primaryText,
-          fontSize: 20,
-          flex: 1
-        }}>
-          Par Téléphone:
+          <Text style={{ flex: 1, textAlign: 'center', fontSize: 20 }}>Par Téléphone</Text>
         </Text>
       </Pressable>
 
-      {verificationId == null &&
-        thisSignInByPhoneChoosed &&
+      {verificationId == null && (
         <View style={{
-          width: '100%',
+          marginVertical: 10,
           flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'space-around',
+          justifyContent: 'space-between',
           alignItems: 'center',
-          // backgroundColor:Colors.accentBG,
-          backgroundColor: 'transparent',
-          borderBottomColor: Colors.accentBG,
-          // borderWidth:1,
-          borderStyle: 'solid',
-          marginVertical: 10
-
         }}>
-          <Text style={{ // iconSmartphone
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 40
-          }}>
-            {iconSmartphone}
-          </Text>
-
           <TextInput
             style={{
               color: Colors.primaryText,
               height: 40,
-              // backgroundColor: Colors.accentBG,
-              backgroundColor: "transparent",
-              borderColor: 'transparent',
               borderBottomColor: Colors.primaryText,
-              borderWidth: 3,
-              borderStyle: 'solid',
+              borderBottomWidth: 2,
               paddingHorizontal: 10,
               marginVertical: 10,
-              fontSize: 16
             }}
-            placeholder="tel ? : 0612345678"
+            placeholder="Numéro de téléphone"
             onChangeText={setPhoneNumber}
             keyboardType="phone-pad"
-            autoComplete="tel"
           />
-          {/* <Button title="Send Verification Code" onPress={sendVerification} /> */}
-          <ButtonStd iconL={undefined} iconR={undefined}
-            label={"Connexion / Tel"}
-            labelColor={Colors.primaryText}
-            onPress={sendVerification}
-            onChange={undefined}
-            bgButton={Colors.accentBG}
-          />
+          <View style={{
+            width: 50,
+            // borderWidth: 5,
+            borderRadius: 10,
+            backgroundColor: Colors.accentBG,
+            padding: 3,
+            borderWidth: 5, borderColor: Colors.accentBG, borderStyle: 'solid',
+          }}>
+            <ButtonStd
+              label={iconSend}
+              labelColor={Colors.primaryText}
 
+              onPress={sendVerification}
+              bgButton={Colors.accentBG} iconL={undefined}
+              iconR={undefined} onChange={undefined} />
+          </View>
         </View>
-      }
+      )}
 
-      {/* <FirebaseRecaptchaVerifierModal
+      <FirebaseRecaptchaVerifierModal
         ref={recaptchaVerifier}
         firebaseConfig={auth.app.options}
-      /> */}
-      {verificationId != null &&
+      />
+
+      {verificationId != null && (
         <>
           <TextInput
             style={{
               color: Colors.primaryText,
               height: 40,
               backgroundColor: Colors.accentBG,
-              paddingHorizontal: 10
+              paddingHorizontal: 10,
             }}
-            placeholder="Code Vérif / sms"
+            placeholder="Captcha ... puis Code vérification / sms"
             onChangeText={setVerificationCode}
             keyboardType="number-pad"
           />
-          <Button title="Vérifiez votre code" onPress={confirmCode} />
-          <ButtonStd iconL={undefined} iconR={undefined}
-            label={"Confirmez votre code"}
+          <ButtonStd
+            label="Confirmer le code"
             labelColor={Colors.primaryText}
             onPress={confirmCode}
-            onChange={undefined}
-            bgButton={Colors.accentBG}
-          />
+            bgButton={Colors.accentBG} iconL={undefined} iconR={undefined} onChange={undefined} />
         </>
-      }
+      )}
     </View>
   );
 };
