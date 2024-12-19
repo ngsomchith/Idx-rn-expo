@@ -50,6 +50,7 @@ function ModalSignin({ myImage }) {
       <Pressable
         style={{
           width: '100%',
+          // maxWidth: 100,
           // height: 100,
           flexDirection: 'row',
           justifyContent: 'flex-end',
@@ -62,16 +63,19 @@ function ModalSignin({ myImage }) {
         }}>
 
         <Text style={{
-          width: '100%',
           display: 'flex',
+          width: 150,
+          maxWidth: 150,
+          borderRadius: 10,
           flexDirection: 'row',
-          justifyContent: 'flex-end',
+          justifyContent:'center',
           alignItems: 'center',
           height: '100%',
           fontSize: 16,
+          backgroundColor:Colors.accentBG,
           color: Colors.primaryText,
           // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
-          minWidth: 300
+          // minWidth: 300
         }}>
           {/* {!user ? iconLogin : iconUser} */}
           {!user && 'connexion'} {!user ? iconLogin : iconUser}
@@ -89,7 +93,8 @@ function ModalSignin({ myImage }) {
       style={{
         backgroundColor: 'transparent',
         width: '100%',
-        borderWidth: 1, borderColor: 'white', borderStyle: 'solid',
+        marginVertical: 10,
+        // borderWidth: 1, borderColor: 'white', borderStyle: 'solid',
       }
       }
     >
@@ -111,11 +116,8 @@ function ModalSignin({ myImage }) {
               flexDirection: 'row'
             }]}>
               <Header articlesList={undefined} cart={undefined} removeFromCart={undefined} addToCart={undefined} navigation={undefined} />
-              <Pressable style={[
-                // styles.closeButton
-                ,{
-                position: 'absolute', right:'0'
-              } ]} onPress={() => setModalSignInVisible(false)}>
+              <Pressable style={{ position: 'absolute', right:0}} 
+              onPress={() => setModalSignInVisible(false)}>
                 <Text style={styles.closeButtonText}>{iconClose}</Text>
               </Pressable>
             </View>

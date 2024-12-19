@@ -14,7 +14,14 @@ const ThisDevice = () => {
     heightBody: useWindowDimensions()?.height - 200,
     myCoeffScreen : useWindowDimensions()?.width / useWindowDimensions().height,
     myMAXWIDTH : useWindowDimensions()?.width, 
-    myMAXWIDTH1_3 : useWindowDimensions()?.width / 3
+    myMAXWIDTH1_3 : useWindowDimensions()?.width / 3,
+
+      maxHeightArticle : 230,
+    
+      widthMobile : 650
+      // const widthMobileOrWeb = MAX_WIDTH > widthMobile ? '40%' : '100%'
+    
+      // const padHorizNotMobile = MAX_WIDTH > widthMobile ? '10%' : 0
   };
 
   const styles0 = StyleSheet.create({

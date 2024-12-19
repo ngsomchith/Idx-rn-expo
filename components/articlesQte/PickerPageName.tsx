@@ -15,7 +15,7 @@ export default function PickerPageName({ callback }) {
         { label: "Sushi", value: "table2" },
         { label: `Tout`, value: "table3" },
     ]);
-
+    const [selectedData, setSelectedData] = useState(pdjTitleObject0)
     useEffect(() => {
         // callback(value)
         // if( value ==='table1'){
@@ -26,16 +26,19 @@ export default function PickerPageName({ callback }) {
             case 'table1':
                 console.log('table1', 'Traditionnels')
                 // const data = []
+                setSelectedData(pdjTitleTradit)
                 callback(['Traditionnels', pdjTitleTradit])
                 break;
 
             case 'table2':
                 console.log('table2', 'Sushi')
+                setSelectedData(pdjTitleSushi)
                 callback(['Sushi', pdjTitleSushi])
                 break;
 
             case 'table3':
                 console.log('table3', 'Tout')
+                setSelectedData(pdjTitleObject0)
                 callback(['Tout', pdjTitleObject0])
                 break;
             default:
@@ -44,7 +47,7 @@ export default function PickerPageName({ callback }) {
     }, [value, items])
 
     // Choix des données en fonction de la sélection
-    const selectedData = value === "table1" ? pdjTitleTradit : value === "table2" ? pdjTitleSushi : [];
+    // const selectedData = value === "table1" ? pdjTitleTradit : value === "table2" ? pdjTitleSushi : [];
 
     const styles = StyleSheet.create({
         container: {

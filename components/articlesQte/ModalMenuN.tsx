@@ -107,6 +107,9 @@ const styles = StyleSheet.create({
   modalContainer: {
     backgroundColor: 'transparent',
     width: '100%',
+    borderWidth: 5,
+    borderColor: 'yellow',
+    borderStyle: 'solid',
   },
   openModalButton: {
     width: '100%',

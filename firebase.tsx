@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet, Platform } from 'react-native';
 
 import { FirebaseInit, signInWithEmailAndPassword } from './constants/firebaseConfig';
-import { addDoc, collection, doc, getDocs, query, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, getDocs, query, setDoc } from 'firebase/firestore';
 import { ThemedView } from './components/ThemedView';
 import { ThemedTitle } from './components/ThemedTitle';
 import { ThemedText } from './components/ThemedText';
@@ -269,3 +269,18 @@ export async function addItemAndSetId(collectionStr: string, thisItem: any) {
  
   return myResult;
 }
+
+export async function getmyDoc(docStr: string) {
+  const docRef = await docStrToRef(docStr);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    // console.log("1540 checkIsNewUSer Document data:", docSnap.data());
+    return docSnap.data()['ref']
+
+  } else {
+    // docSnap.data() will be undefined in this case
+    console.log("No such document!");
+  }
+}
+

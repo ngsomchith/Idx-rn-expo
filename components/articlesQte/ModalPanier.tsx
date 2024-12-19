@@ -114,9 +114,9 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                     justifyContent: 'space-between',
                     alignItems: 'flex-end',
                     paddingVertical:10,
-                    borderColor: 'white',
-                    borderStyle: 'solid',
-                    borderWidth: 1,
+                    // borderColor: 'white',
+                    // borderStyle: 'solid',
+                    // borderWidth: 1,
                     display: 'flex',
                     flexDirection: 'row'
                 }]} >

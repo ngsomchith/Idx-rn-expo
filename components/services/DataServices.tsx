@@ -1,3 +1,301 @@
+
+export function formeMyDate(journee: Date) {
+  // console.log("formeMyDate journee", journee);
+  if (journee) {
+    let thisYear;
+    let thisMonth;
+    let thisDate;
+    thisYear = journee.getFullYear().toString();
+    let zeroNeedMonth = 2 - Number(journee.getMonth().toString().length);
+
+    thisMonth = '0'.repeat(zeroNeedMonth) + (journee.getMonth() + 1).toString();
+    if (thisMonth.length > 2) {
+
+      // alert("dataservice 85 " + thisMonth);
+      thisMonth = thisMonth.substring(1, 2);
+      // console.log("thisMonth", thisMonth);
+    }
+
+    let zeroNeedDate = 2 - Number(journee.getDate().toString().length);
+    thisDate = '0'.repeat(zeroNeedDate) + journee.getDate().toString();
+    // console.log(thisYear+thisMonth+thisDate);
+    return thisYear + thisMonth + thisDate;
+  }
+}
+export function formeMyDatefr(journee: Date) {
+  // console.log("formeMyDate journee", journee);
+  // if (journee) {
+  //   let thisYear;
+  //   let thisMonth;
+  //   let thisDate;
+  //   thisYear = journee.getFullYear().toString();
+  //   let zeroNeedMonth = 2 - Number(journee.getMonth().toString().length);
+  //   if (zeroNeedMonth > 0) {
+  //     thisMonth = '0'.repeat(zeroNeedMonth) + (journee.getMonth() + 1).toString();
+  //     if (thisMonth.length > 2) {
+
+  //       // alert("dataservice 85 " + thisMonth);
+  //       thisMonth = thisMonth.substring(1, 2);
+  //       // console.log("thisMonth", thisMonth);
+  //     }
+
+
+  //     let zeroNeedDate = 2 - Number(journee.getDate().toString().length);
+
+  //     thisDate = '0'.repeat(zeroNeedDate) + journee.getDate().toString();
+
+  //     // console.log(thisYear+thisMonth+thisDate);
+  //   }
+  //   return thisYear + thisMonth + thisDate;
+  // }
+  let result0
+  const result = formeMyDateTable(journee)
+  result.then((res:any) => {
+    //all console.log("result ",res.yy+res.mm+res.dd, res) 
+    return res.yy + res.mm + res.dd
+    result0 = res.yy + res.mm + res.dd
+  })
+  return result0
+}
+export function getCurrentDate() {
+  const thisDate = formeMyDateTable(new Date)
+  //all0810 console.log("thisDate ", thisDate)
+  return thisDate
+}
+export async function convertToFormeDatefr(eltDateVenteFr: string) {
+  // let eltDateVenteFr = element.dateVente
+//all console.log("91eltDateVenteFr ", eltDateVenteFr)
+  let eltDateVenteEn = eltDateVenteFr.substr(6, 4) + '-' + eltDateVenteFr.substr(3, 2) + '-' + eltDateVenteFr.substr(0, 2)
+  let thisDate:any = new Date(eltDateVenteEn)
+  if ((thisDate)) {
+    thisDate = await formeMyDatefr(thisDate)
+  }
+//all console.log("thisDate /formeMyDatefr", thisDate)
+  return thisDate
+
+}
+export async function formeMyDateTable(journee: Date) {
+  const mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+    'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
+  
+  const jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+  
+  //all0810 console.log(91, "journee ", journee)
+  if (journee) {
+    let thisYear;
+    let thisMonth;
+    let thisDate;
+    let thisDow;
+    let thisHours;
+    let thisMinutes;
+    let thisSecondes;
+    thisYear = journee.getFullYear().toString();
+    let thisMonthTemp = (journee.getMonth() + 1).toString()
+    //all console.log("102journee : thisMonthTemp, Number(thisMonthTemp),Number(thisMonthTemp.length)", thisMonthTemp, Number(thisMonthTemp),Number(thisMonthTemp.length))
+    let zeroNeedMonth = 2 - Number(thisMonthTemp.length);
+    //all console.log("104journee :: journee,  zeroNeedMonth, thisMonth, thisMonthTemp = ",journee, zeroNeedMonth, thisMonth, thisMonthTemp)
+    if (zeroNeedMonth > 0) {
+      thisMonth = '0'.repeat(zeroNeedMonth) + (journee.getMonth() + 1).toString();
+      if (thisMonth.length > 2) {
+
+        thisMonth = thisMonthTemp.substring(1, 2);
+      }
+    } else {
+      thisMonth = thisMonthTemp
+    }
+
+    let zeroNeedDate = 2 - Number(journee.getDate().toString().length);
+
+    if (zeroNeedDate >= 0) {
+      thisDate = '0'.repeat(zeroNeedDate) + journee.getDate().toString();
+
+      thisMinutes = journee.getMinutes()
+      if (Number(thisMinutes) < 10) { thisMinutes = '0' + thisMinutes }
+      thisHours = journee.getHours()
+      thisSecondes = journee.getSeconds()
+      if (Number(thisSecondes) < 10) { thisSecondes = '0' + thisSecondes }
+      thisDow = journee.getDay()
+      return {
+        yy: thisYear,
+        mm: thisMonth,
+        dd: thisDate,
+        dow: thisDow,
+        dowChaine: thisDow-1 >=0 ? jours[thisDow - 1] : 'Dimanche',
+        mmText: mois[Number(thisMonth) - 1],
+        hh: thisHours,
+        min: thisMinutes,
+        sec: thisSecondes,
+        dayMonth: thisDate + '/' + thisMonth,
+        hourMin: thisHours + ':' + thisMinutes,
+        hourMinSec: thisHours + ':' + thisMinutes + ':' + thisSecondes,
+        thisDMY: thisDate + '-' + thisMonth + '-' + thisYear,
+        frenchDate: jours[thisDow - 1] + ' ' + thisDate + ' ' + mois[Number(thisMonth) - 1] + ' '
+        // + thisYear
+      };
+    }
+  }
+
+
+}
+
+
+export async function formeMyDateTable2(journee: Date) {
+  const mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+    'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
+  
+  const jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+  
+  // console.log(67, new Date())
+  if (journee) {
+    let thisYear;
+    let thisMonth;
+    let thisDate;
+    let thisDow;
+    let thisHours;
+    let thisMinutes;
+    let thisSecondes;
+    thisYear = journee.getFullYear().toString();
+    let zeroNeedMonth = 2 - Number(journee.getMonth().toString().length);
+    //all0403 console.log("zeroNeedMonth = ", zeroNeedMonth)
+    if (zeroNeedMonth > 0) {
+      thisMonth = '0'.repeat(zeroNeedMonth) + (journee.getMonth() + 1).toString();
+      if (thisMonth.length > 2) {
+
+        thisMonth = thisMonth.substring(1, 2);
+      }
+    }
+
+    let zeroNeedDate = 2 - Number(journee.getDate().toString().length);
+
+    if (zeroNeedDate >= 0) {
+      thisDate = '0'.repeat(zeroNeedDate) + journee.getDate().toString();
+
+      thisMinutes = journee.getMinutes()
+      thisHours = journee.getHours()
+      thisSecondes = journee.getSeconds()
+      thisDow = journee.getDay()
+      return {
+        yy: thisYear,
+        mm: thisMonth,
+        dd: thisDate,
+        dow: thisDow,
+        dowChaine: jours[thisDow - 1] ,
+        mmText: mois[Number(thisMonth) - 1],
+        hh: thisHours,
+        min: thisMinutes,
+        sec: thisSecondes,
+        dayMonth: thisDate + '/' + thisMonth,
+        hourMin: thisHours + ':' + thisMinutes,
+        fullDate6: thisDate + '-' + thisMonth + '-' + thisYear,
+        frenchDate: jours[thisDow - 1] + ' ' + thisDate + ' ' + mois[Number(thisMonth) - 1] + ' ' + thisYear
+      };
+    }
+  }
+
+
+}
+
+export function jourIndexToDate(jourIndex: string) {
+  // console.log("68 jourIndexToDate : yyyymmaa --> new Date(yyyy-mm-aa)", jourIndex)
+  let thisYear;
+  let thisMonth;
+  let thisDate;
+  thisYear = jourIndex.substring(0, 4);
+  //console.log(thisYear)
+  let thisMonthIndex = jourIndex.substring(4);
+  //console.log(71,thisMonthIndex)
+  thisMonth = thisMonthIndex.substring(0, 2);
+  //console.log(73,thisMonth)
+  thisDate = thisMonthIndex.substring(2);
+  //console.log(75,thisDate)
+  let myDate = thisYear + '-' + thisMonth + '-' + thisDate;
+  //console.log(myDate)
+  return new Date(myDate);
+}
+export function convertDatefrToDayDocStrIndex(dateFr: string) {
+  let resultFinal = ''
+  if (dateFr && (dateFr.indexOf('-') > 0 || dateFr.indexOf('/') > 0)) {
+
+    // let result = dateFr.replace('-', '')
+    // resultFinal=result
+    // console.log("resultFinal", resultFinal)
+    let thisYear;
+    let thisMonth;
+    let thisDate;
+
+    thisDate = dateFr.substring(0,2);
+    //all console.log(75,thisDate)
+    
+
+    let thisMonthIndex = dateFr.substring(3);
+    //all console.log(188,thisMonthIndex)
+    thisMonth = thisMonthIndex.substring(0, 2);
+    //all console.log(190,thisMonth)
+
+
+
+    let thisYearIndex = dateFr.substring(6);
+    //all console.log(71,thisMonthIndex)
+    thisYear = thisYearIndex.substring(0, 4);
+    // thisYear = dateFr.substring(5, 4);
+    //all console.log(198,thisYear)
+
+    resultFinal = thisYear+thisMonth+thisDate
+  }
+
+  //all console.log("resultFinal", resultFinal)
+  return resultFinal
+}
+
+export function date_From_dd_mm_yyyy(jourIndex: string) {
+  // console.log("68 jourIndexToDate : yyyymmaa --> new Date(yyyy-mm-aa)", jourIndex)
+  let thisYear;
+  let thisMonth;
+  let thisDate;
+  let posTiret = jourIndex.indexOf('-')
+  //all0810 console.log(posTiret)
+  thisDate = jourIndex.substring(0, posTiret);
+  //all0810 console.log("thisDate ", thisDate)
+  let thisMonthIndex = jourIndex.substring(posTiret + 1);
+  //all0810 console.log("thisMonthIndex", thisMonthIndex)
+  thisMonth = thisMonthIndex.substring(0, posTiret);
+  //all0810 console.log("thisMonth ", thisMonth)
+  thisYear = thisMonthIndex.substring(posTiret + 1);
+  //all0810 console.log("thisYear ", thisYear)
+  let myDate = thisYear + '-' + thisMonth + '-' + thisDate;
+  //console.log(myDate)
+  return new Date(myDate);
+}
+
+export function timestamp2time(element: any) {
+
+  let ts = element
+
+  //allconsole.log(ts)
+
+
+  return (new Date(ts.seconds * 1000)).toString()
+}
+export function timestamp2timeD(element: any) {
+  // console.log("85 timestamp2timeD ",element)
+  let ts = element
+  return (new Date(ts?.seconds * 1000))
+}
+
+export function timeFromTimeStampOrDate(elementTime: any) {
+  //allconsole.log(93, elementTime)
+  //allconsole.log(94, elementTime['seconds'])
+  //allconsole.log(95, elementTime['nanoseconds'])
+
+  if (elementTime['seconds'] > 0 || elementTime['nanoseconds'] > 0) {
+    //all0403 console.log(97,timestamp2timeD(elementTime) )
+    return timestamp2timeD(elementTime)
+  } else {
+    //all0403 console.log(100,typeof(elementTime), elementTime)
+    return (elementTime)
+  }
+}
+
 export function generateObjectToKeyAndNameWithDetail(thisArrayObject: any[]) {
 
   const thisObjectKey: any = []
@@ -98,5 +396,35 @@ export function takeOffAccent(word: string) {
 
   return str;
 }
+export function getTodayfr10 ( monthDocStr:any,setMonthDocStr:any,dayDocStr:any, setDayDocStr:any,dateFact:any, setdateFact:any) {
+  const todayfr10TempResult:any = [];
+  // if (!todayfr10) {
+    let todayfr10Temp = formeMyDateTable(new Date())
+    todayfr10Temp.then(
+      (res:any) => {
+        //all20102023 console.log("554 res.fullDate6", res.thisDMY, res.thisDMY + '/' + res.hourMinSec, res)
+        setdateFact(res.thisDMY + '/' + res.hourMinSec)
+        setMonthDocStr(res.yy + res.mm)
+        setDayDocStr(res.yy + res.mm + res.dd)
+        // setTodayfr10(res.thisDMY)
+        todayfr10TempResult[0] = res.thisDMY
+         //all console.log("DATASERVICE1026 ", todayfr10TempResult[0])
+        return todayfr10TempResult[0]
+      }
+    )
+  // }
+}
 
+export function groupedByPdjType(_articlesList: any, _setArticlesListByCat: any) {
+  return _articlesList.reduce((acc: any, article: any) => {
+    const { pdjType } = article;
 
+    if (!acc[pdjType]) {
+      acc[pdjType] = [];
+    }
+
+    acc[pdjType].push(article);
+    _setArticlesListByCat(acc);
+    return acc;
+  }, {});
+}

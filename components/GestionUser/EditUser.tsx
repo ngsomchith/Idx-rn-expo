@@ -7,7 +7,7 @@ import { Text, StyleSheet, TouchableOpacity, ScrollView, View, SafeAreaView, Pre
 
 import { TextInput } from 'react-native-gesture-handler';
 import { ToasterContainer } from '../ToasterContainer';
-import { iconEmail, iconSmartphone, iconSmartphoneneeded, iconStreetView } from '@/icons';
+import { iconEmail, iconPointer, iconSmartphone, iconSmartphoneneeded, iconStreetView } from '@/icons';
 import { Colors } from '@/constants/Colors';
 import ButtonStd from '../ButtonTypeStd';
 import { myStyles } from '../myStyle';
@@ -17,20 +17,20 @@ import { Toaster } from 'react-native-toastboard';
 
 
 
-let thisCurrentUser : UserType | null | undefined 
+let thisCurrentUser: UserType | null | undefined
 
 
 const yellow2 = '#ffe38d'
 const white = "#fff"
 const black = '#000'
 
-export const EditUser = ({ thisCurrentUser  }) => {
+export const EditUser = ({ thisCurrentUser, setModalProfileVisible }) => {
     const device = ThisDevice().device
-    
+
 
     const [currentUserEmail, setCurrentUserEmail] = useState('')
-    const {currentUser, setCurrentUser}=useAuth()
-
+    const { currentUser, setCurrentUser } = useAuth()
+    const [currentScreen, setcurrentScreen]= useState('')
     useEffect(() => {
         setCurrentUser(thisCurrentUser)
         setCurrentUserEmail(thisCurrentUser?.email)
@@ -52,7 +52,7 @@ export const EditUser = ({ thisCurrentUser  }) => {
     const [errorInput, setErrorInput] = useState('')
     const [resultCheckNewUser, setResultCheckNewUser] = useState(false)
     const [editorhasChanged, seteditorhasChanged] = useState(false)
-    const [phoneKnown, setPhoneKnown] = useState(false)
+    // const [phoneKnown, setPhoneKnown] = useState(false)
     // const [currentUser, setCurrentUser] = useState(new UserType())
 
     const numericRegex = /^[0-9]+$/;
@@ -71,52 +71,24 @@ export const EditUser = ({ thisCurrentUser  }) => {
     //     console.log("currentScreen = ", currentScreen)
     //     console.log("phoneKnown = ", phoneKnown)
     // }, [])
- 
+
 
     function switchBackToPanier() {
         // setShowPanierforbidden(false) 
 
-        setPhoneKnown(true)
-        console.log(" phoneKnown" , phoneKnown)
+        // setPhoneKnown(true)
+        // console.log(" phoneKnown", phoneKnown)
     }
 
-    function goBackFn(_currentUser:any) {
-        console.log("goBackFn142 == ArticleScreen ", currentScreen,"_currentUser.goBackFn140?.length ", _currentUser.phonehand?.length, "panierView == panierView", panierView == panierView)
+    function goBackFn(_currentUser: any) {
+        console.log("goBackFn142 == ArticleScreen ", currentScreen, "_currentUser.goBackFn140?.length ", _currentUser.phonehand?.length)
 
         if (_currentUser.phonehand?.length == 10) {
-            console.log('goBackFn145 goBackFn140 = ', _currentUser.phonehand)
-            if (currentScreen == 'HomeScreen' 
-                // && panierView
-            ) {
-                console.log('goBackFn147 ')
-                setPhoneKnown(true)
-                // cas principal : venant de 'ArticleScreen avec avec PanierView
-                // -> phoneKnown retour automatique
-            } else {
-                // cas appelé par tabs profile
-                // setTimeout(async () => {
-                console.log('goBackFn154 currentScreen, panierView = ', currentScreen, panierView)
-                const thisParams = {
-                    articlesList: articlesList,
-                    articlesListByCat: articlesListByCat,
-                    categoryNameList: categoryNameList,
-
-                    panierQte: panierQte ? panierQte : []
-                }
-
-                // console.log('goBackFn155')
-                // console.log('845thisParams ', thisParams)
-                // setpanierView(false)
-                navigation.navigate('HomeScreen', {
-
-                    thisParams: thisParams
-
-                });
-
-            }
+            console.log('goBackFn87 setModalProfileVisible(false)  = ', _currentUser.phonehand)
+            setModalProfileVisible(false)
         } else {
             console.log("phonehand.length, phoneKnown = ", _currentUser.phonehand.length, ':', _currentUser.phonehand)
-            setPhoneKnown(false)
+            // setPhoneKnown(false)
             Toaster.error('10 DIGIT')
             setErrorInput("PHONE incorrect ")
             setTimeout(() => {
@@ -126,7 +98,7 @@ export const EditUser = ({ thisCurrentUser  }) => {
         }
 
     }
-    function getPhoneKnown(_currentUser:any) {
+    function getPhoneKnown(_currentUser: any) {
         console.log("171getPhoneKnown ", _currentUser)
 
         // console.log("getPhoneKnown ",_currentUser, _currentUser.phonehand.lzngth)
@@ -137,7 +109,7 @@ export const EditUser = ({ thisCurrentUser  }) => {
         }, 1000);
         return _currentUser.phonehand?.length
     }
-    function handleEmailChange(email:any) {
+    function handleEmailChange(email: any) {
         seteditorhasChanged(true)
         console.log("168alphanumericRegex / email : |", email.trim(), '|', alphanumericRegex.test(email))
         // console.log("169alphanumericRegex / email : ",email,alphanumericRegex.test('email#'))
@@ -156,7 +128,7 @@ export const EditUser = ({ thisCurrentUser  }) => {
         }
 
     }
-    function handleAlphaNumeriqueChangeModel(code:any) {
+    function handleAlphaNumeriqueChangeModel(code: any) {
         seteditorhasChanged(true)
         console.log("188alphanumericRegex / email : ", code, numericRegex.test(code))
         // console.log("169alphanumericRegex / email : ",email,alphanumericRegex.test('email#'))
@@ -175,7 +147,7 @@ export const EditUser = ({ thisCurrentUser  }) => {
         }
 
     }
-    function handleAlphaNumeriqueChange(field:any, value:any) {
+    function handleAlphaNumeriqueChange(field: any, value: any) {
         seteditorhasChanged(true)
         console.log("188alphanumericRegex / email : ", value, numericRegex.test(value))
         // console.log("169alphanumericRegex / email : ",email,alphanumericRegex.test('email#'))
@@ -195,7 +167,7 @@ export const EditUser = ({ thisCurrentUser  }) => {
 
     }
 
-    function handlephonehandChange(phoneNumberField:any, phoneNumber:any) {
+    function handlephonehandChange(phoneNumberField: any, phoneNumber: any) {
 
         seteditorhasChanged(true)
         // console.log("169alphanumericRegex / email : ",email,alphanumericRegex.test('email#'))
@@ -228,7 +200,7 @@ export const EditUser = ({ thisCurrentUser  }) => {
 
     // const alphanumericRegex = /^[@.a-zA-Z0-9 \s]+$/;
 
-    function handleAdresseChange(adresseField:any, adresse:any) {
+    function handleAdresseChange(adresseField: any, adresse: any) {
 
         seteditorhasChanged(true)
         console.log("188alphanumericRegex / email : ", adresse, alphanumericRegex.test(adresse))
@@ -250,7 +222,7 @@ export const EditUser = ({ thisCurrentUser  }) => {
     // let userEditTemp = thisClone(currentUser)
 
 
-    function handlepostalCodeChange(postalCodeField:any, postalCode:any) {
+    function handlepostalCodeChange(postalCodeField: any, postalCode: any) {
 
         seteditorhasChanged(true)
         console.log("188alphanumericRegex / email : ", postalCode, numericRegex.test(postalCode))
@@ -270,7 +242,7 @@ export const EditUser = ({ thisCurrentUser  }) => {
         }
 
     }
-    function handlevilleChange(villeField:any, ville:any) {
+    function handlevilleChange(villeField: any, ville: any) {
 
         seteditorhasChanged(true)
         console.log("188alphanumericRegex / email : ", ville, alphanumericRegex.test(ville))
@@ -291,7 +263,7 @@ export const EditUser = ({ thisCurrentUser  }) => {
     }
 
     useEffect(() => {
-        console.log("currentUser = ", currentUser)
+        console.log("EditUser294 currentUser  = ", currentUser)
     }, [currentUser])
 
     useEffect(() => {
@@ -299,11 +271,9 @@ export const EditUser = ({ thisCurrentUser  }) => {
         getPhoneKnown(userEdit)
     }, [userEdit])
 
-    useEffect(() => {
-        console.log("phoneKnown useEffect", phoneKnown)
-    }, [phoneKnown])
+ 
 
-    async function updateUser(currentUser:any) {
+    async function updateUser(currentUser: any) {
         seteditorhasChanged(false)
         console.log(249, "updateUser ", currentUser, currentUser.phonehand.length)
 
@@ -345,15 +315,15 @@ export const EditUser = ({ thisCurrentUser  }) => {
             // setCurrentScreen('SignInScreen')
         }
     }
-  
-    // useEffect(() => {
-    //     if (thisCurrentUser) {
-    //     // console.log("237 currentUser/ thisCurrentUser =+++++++++++ ", thisCurrentUser)
-    //     setUserEdit(thisCurrentUser)
-    //     setIsLoading(false)
-    //     // }
-    // }, [thisCurrentUser])
- 
+
+    useEffect(() => {
+        if (thisCurrentUser) {
+            console.log("351EditUSer currentUser/ thisCurrentUser =+++++++++++ ", thisCurrentUser)
+            setUserEdit(thisCurrentUser)
+            // setIsLoading(false)
+        }
+    }, [thisCurrentUser])
+
     const warningToaster = () => { //success Toaster
         return (
             <View
@@ -843,14 +813,23 @@ export const EditUser = ({ thisCurrentUser  }) => {
                         />
                     </Text>
                     :
-                    <ButtonStd iconL={undefined}
-                        iconR={undefined}
-                        label={editorhasChanged ? 'Enregistrer' : 'Continuer'}
-                        labelColor={Colors.primaryText}
-                        onPress={() => { editorhasChanged ? updateUser(userEdit) : goBackFn(userEdit) }}
-                        // onPress={() => { editorhasChanged ? updateUser(userEdit) : switchBackToPanier() }}
-                        onChange={undefined}
-                        bgButton={editorhasChanged ? 'green': Colors.accentBG} />
+                    <View style={{
+                        display: 'flex', justifyContent: 'space-around',
+                        borderWidth: 3, borderColor: 'white', borderStyle: 'solid',
+                        width:'90%',
+                        margin:'auto',
+                        padding:10, 
+                        backgroundColor: Colors.accentBG
+                    }}>
+                        <ButtonStd iconL={undefined}
+                            iconR={iconPointer}
+                            label={editorhasChanged ? 'Enregistrer' : 'Continuer'}
+                            labelColor={Colors.primaryText}
+                            onPress={() => { editorhasChanged ? updateUser(userEdit) : goBackFn(userEdit) }}
+                            // onPress={() => { editorhasChanged ? updateUser(userEdit) : switchBackToPanier() }}
+                            onChange={undefined}
+                            bgButton={editorhasChanged ? 'green' : Colors.accentBG} />
+                    </View>
                     // <Text
                     //     style={{//icon Left
                     //         width: '100%',

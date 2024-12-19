@@ -113,7 +113,7 @@ const RenderEachArticleInHome = ({
       <View
         style={[
           styles.articleContent,
-          { backgroundColor: menuN.qte > 0 ? Colors.highlightBG : Colors.accentBG },
+          { backgroundColor: menuN?.qte > 0 ? Colors.highlightBG : Colors.accentBG },
         ]}
       >
         <ModalMenuN menuN={menuN} />

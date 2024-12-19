@@ -5,7 +5,7 @@ import ThisDevice from '@/constants/ThisDevice';
 import { Colors } from '@/constants/Colors';
 
 const FlatListArticles = ({ articlesFilteredToWrap,addToCart, removeFromCart }) => {
-
+    const myDevice = ThisDevice()
     const [articlesMenu, setArticlesMenu] = useState([]);
     const [categoryNameList, setCategoryNameList] = useState([]);
     const [categoryIconList, setCategoryIconList] = useState([]);
@@ -68,12 +68,12 @@ const FlatListArticles = ({ articlesFilteredToWrap,addToCart, removeFromCart }) 
             maxWidth: '100%',
             flexWrap: 'wrap',
             backgroundColor: Colors.primaryBG,
-            borderWidth: 3,
-            borderColor: 'red',
-            minHeight: 200,
+            // borderWidth: 3,
+            // borderColor: 'red',
+            // borderStyle:'solid',
+            minHeight: 300,
             height: ThisDevice().device.heightBody,
-            maxHeight: 300,
-            borderStyle:'solid'
+            maxHeight: 350,
         },
         rowContainer: {
             display: 'flex',
@@ -82,12 +82,13 @@ const FlatListArticles = ({ articlesFilteredToWrap,addToCart, removeFromCart }) 
             justifyContent: 'space-between',
             alignItems: 'flex-start',
             width: '100%',
-            height: '100%',
-            maxHeight: ThisDevice().device.heightBody - 100,
+            height: ThisDevice().device.heightBody -50,
+            maxHeight: ThisDevice().device.heightBody - 50,
             backgroundColor: Colors.primaryBG,
+            overflow:'scroll'
             // borderColor: 'yellow',
             // borderWidth: 5,
-            overflow: 'scroll',
+            // overflow: 'scroll',
         },
         articleWrapper: {
             marginBottom: 2,

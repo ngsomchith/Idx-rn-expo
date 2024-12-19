@@ -135,7 +135,7 @@ function ModalProfile({ myImage }) {
           }}
         >
           
-          <ProfileScreen />
+          <ProfileScreen setModalProfileVisible = {setModalProfileVisible} />
         </View>
       </Modal>
     </View>

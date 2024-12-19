@@ -14,6 +14,9 @@ export const useFb = (collectionStr: any) => {
 
   const myDocs: any = []
   const thisApp = myApp
+  useEffect(() => {
+    console.log("useFb useEffect articlesList = ", articlesList)
+  }, [articlesList])
   async function fetchData2() {
     console.log("collectionStr = ", collectionStr)
     const db = myApp[3]
@@ -26,8 +29,9 @@ export const useFb = (collectionStr: any) => {
 
       myDocs[0] = querySnapshot
       const loadedArticles = querySnapshot && querySnapshot.docs?.map(doc => doc.data().value); // Extrait les valeurs
-      setArticlesList((querySnapshot)); // Met à jour l'état
-      console.log("loadedArticles = ", querySnapshot)
+      if(querySnapshot.length>0){
+        setArticlesList((querySnapshot)); // Met à jour l'état
+      }
 
     } catch (error) {
       console.error('Erreur lors du chargement des chaînes :', error);

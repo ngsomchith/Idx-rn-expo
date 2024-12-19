@@ -20,11 +20,10 @@ import { pdjTitleSushi, pdjTitleTradit } from '@/components/articlesQte/pdjTitle
 import FlatListArticles from '@/components/articlesQte/FlatListArticles';
 import { takeOffAccent } from '@/components/services/DataServices';
 import SearchableList from '@/components/articlesQte/SearchableList';
+import { useAuth } from '../AuthContext';
+
 export default function TabTwoScreen() {
-  const thisUseFB = useFb('articles/seller2/articlesList');
-  const [articlesList, setArticlesList] = useState<Array<ArticleType>>([]);
   const [currentPdjType, setCurrentPdjType] = useState('');
-  const [cart, setCart] = useState([]);
   const [categoryName, setCategoryName] = useState('');
   const [pdjRayon, setPdjRayon] = useState([]);
   const [open, setOpen] = useState(false);
@@ -37,27 +36,15 @@ export default function TabTwoScreen() {
   const [search, setSearch] = useState('');
   const [filteredData, setFilteredData] = useState<Array<ArticleType>>([]);
 
-  const addToCart = (article: any) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === article.id);
-      if (existingItem) {
-        return prevCart.map((item) =>
-          item.id === article.id ? { ...item, qte: item.qte + 1 } : item
-        );
-      }
-      return [...prevCart, { ...article, qte: 1 }];
-    });
-  };
+  const {articlesList, setArticlesList, thisUseFB, cart,setCart,addToCartFn,removeFromCartFn} = useAuth()
 
-  const removeFromCart = (article: any) => {
-    setCart((prevCart) =>
-      prevCart
-        .map((item) =>
-          item.id === article.id ? { ...item, qte: item.qte - 1 } : item
-        )
-        .filter((item) => item.qte > 0)
-    );
-  };
+  // const [cart, setCart] = useState([]);
+  const addToCart = addToCartFn ;
+
+
+  const removeFromCart = removeFromCartFn ;
+
+
 
   useEffect(() => {
     if (articlesList.length === 0 && thisUseFB.articlesList) {
@@ -74,9 +61,11 @@ export default function TabTwoScreen() {
     if (search === '') {
       setFilteredData(articlesList);
     } else {
+      console.log("articlesList / filter ", articlesList)
       const resultFilter = articlesList.filter((item) => {
         const itemData = item.name?.toUpperCase() || "";
         const textData = takeOffAccent(search.toUpperCase());
+        console.log("itemData.includes(textData) ", itemData.includes(textData))
         return itemData.includes(textData);
       });
       setFilteredData(resultFilter);
@@ -84,6 +73,8 @@ export default function TabTwoScreen() {
   }, [search, articlesList]);
 
   const callBackFromPickerName = (data: any) => {
+    console.log("articles89 callBackFromPickerName data =", data)
+    console.log("data[0] =", data[0])
     setCategoryName(data[0]);
     if (data[1] && data[1].length > 0) {
       setPdjRayon(data[1]);
@@ -134,6 +125,7 @@ export default function TabTwoScreen() {
     mainContainer: {
       flex: 1,
       backgroundColor: Colors.background,
+      borderColor: 'yellow', borderStyle: 'solid', borderWidth: 1,
     },
     headerContainer: {
       height: 100,
@@ -169,7 +161,7 @@ export default function TabTwoScreen() {
     },
     container: {
       flex: 1,
-      backgroundColor: 'grey',
+      // backgroundColor: 'grey',
     },
     searchBar: {
       height: 60,
@@ -208,16 +200,17 @@ export default function TabTwoScreen() {
           cart={cart}
           currentPdjType={currentPdjType} //pdjType résulté par DropDownMenu
         />
+
       ) : (
         // <View>
         //   <Text style={{ color: 'white' }}>SearchableList</Text>
         // </View>
-        <SearchableList 
-          search={search} 
-          setSearch={setSearch} 
-          filteredData={filteredData} 
-          addToCart={addToCart} 
-          removeFromCart={removeFromCart} 
+        <SearchableList
+          search={search}
+          setSearch={setSearch}
+          filteredData={filteredData}
+          addToCart={addToCart}
+          removeFromCart={removeFromCart}
         />
       )}
     </View>

@@ -68,6 +68,7 @@ import React from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
+const iconPointer = <MaterialIcons name="ads-click" size={24} color="white" />
 const iconSend = <FontAwesome name="send" size={24} color= 'white' />
 const iconUpCircle = <Ionicons name="arrow-up-circle" size={24} color="black" />;
 const iconTop = <MaterialIcons name="arrow_upward" size={30} color="white" />;
@@ -123,8 +124,10 @@ const iconPause = <MaterialIcons name="pause_circle" size={30} color="white" />;
 const iconSearchPlus = <MaterialIcons name="search" size={30} color="white" />;
 const iconFilter = <MaterialIcons name="filter_alt" size={30} color="white" />;
 const iconCalendarClock = <MaterialIcons name="today" size={30} color="white" />;
-
+const iconLogout = <MaterialIcons name="logout" size={30} color="red" />
 export {
+  iconLogout,
+  iconPointer,
   iconSend,
   iconUpCircle,
   iconTop,

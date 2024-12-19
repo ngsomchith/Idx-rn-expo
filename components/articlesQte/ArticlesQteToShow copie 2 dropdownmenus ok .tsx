@@ -289,8 +289,7 @@ const ArticlesQteToShow = ({articlesList, addToCart, removeFromCart, cart }) => 
       minHeight: myDevice.heightBody,
       borderStyle: 'solid',
       borderWidth: 10,
-      borderColor: 'red',
-      // minHeight: 300, 
+      borderColor: 'white',
       maxHeight: '100%'
       // maxHeight: articlesListByCat2[pdjTitleName[index]]?.length > 0 ? 400 : 0,
       // height: articlesListByCat2[pdjTitleName[index]]?.length > 0 ? 400 : 0
@@ -312,7 +311,7 @@ const ArticlesQteToShow = ({articlesList, addToCart, removeFromCart, cart }) => 
               maxHeight: myDevice.heightBody,
               display: index == 0 ? 'none' : 'flex',
               // maxHeight: index > 0 ? '100%' : 0,
-              backgroundColor: 'grey',
+              // backgroundColor: 'grey',
               borderColor: 'coral', borderStyle: 'solid', borderWidth: 15,
               marginVertical: 10
             }]}

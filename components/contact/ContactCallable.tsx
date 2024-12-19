@@ -40,7 +40,7 @@ const ContactForm = () => {
             emailFrom: `udex.web //  ${email}`,
             emailTo:  'delicatessen.cloud@gmail.com',
             subject: `Contact message de:${email}`,
-            isHtml: `${message}`,
+            isHtml: `${message}`
           };
           let thisCollection = "submissions";
           let thisDoc = "mesageToBuyer";
