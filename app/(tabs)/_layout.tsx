@@ -17,7 +17,7 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 // import RenderHtmlIcon from '@/components/RenderHtmlIcon';
-
+import * as Font from 'expo-font';
 // Obtenir les dimensions de l'écran
 const { width } = Dimensions.get('window');
 // import { MaterialIcons } from '@expo/vector-icons';
@@ -47,9 +47,17 @@ export default function TabLayout() {
   document.head.appendChild(style);
 
   const colorScheme = useColorScheme();
+
   useEffect(() => {
     // Charger la police en arrière-plan
     Icon.loadFont();
+
+    async function loadFonts() {
+      await Font.loadAsync({
+        FontAwesome: require('@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/FontAwesome.ttf'),
+      });
+    }
+    loadFonts();
   }, []);
 
    const RenderHtmlIcon = () => {

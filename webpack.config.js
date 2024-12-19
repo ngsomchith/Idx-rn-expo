@@ -12,6 +12,7 @@ module.exports = async function (env, argv) {
 
     config.plugins = preloadPlugins;
     // Ajoutez une règle pour les fichiers de polices
+
     config.module.rules.push({
         // test: /\.(ttf|otf)$/,
         test: /\.ttf$/,
