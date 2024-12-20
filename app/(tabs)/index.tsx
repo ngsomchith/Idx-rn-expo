@@ -21,7 +21,7 @@ import BackgroundImage from '@/components/BackGroundImage';
 import { ThemedTitle } from '@/components/ThemedTitle';
 import ContactForm from '@/components/contact/ContactCallable';
 import { LoginScreen } from '@/components/GestionUser/LoginScreen';
-import {  groupedByPdjType, thisClone } from '@/components/services/DataServices';
+import { groupedByPdjType, thisClone } from '@/components/services/DataServices';
 import { getmyDoc } from '@/firebase';
 import RenderEachArticleInHome from '@/components/articlesQte/RenderEachArticleInHome';
 import { useAuth } from '../AuthContext';
@@ -68,7 +68,7 @@ export default function HomeScreen() {
   // const styles = myStyles
   const MAXWIDTH1_3 = ThisDevice().device.myMAXWIDTH
 
-  const maxHeightArticle = 600
+  const maxHeightArticle = 570
   const device = ThisDevice().device
   const myHeight = device.height * 1.3
   // const myCoeffScreen = myWidth / myHeight
@@ -148,9 +148,10 @@ export default function HomeScreen() {
       backgroundColor: 'transparent',
       height: '100%',
       width: '100%',
+      padding: 10,
       // paddingHorizontal: padHorizNotMobile,
       position: 'relative',
-      borderColor: 'white', borderStyle: 'solid', borderWidth: 4,
+      // borderColor: 'white', borderStyle: 'solid', borderWidth: 4,
     },
     eachContainerArticle: {
       // width: '100%',
@@ -160,22 +161,26 @@ export default function HomeScreen() {
       // minHeight: MAXWIDTH > widthMobile ? 500 : 500,
       // marginVertical: 10
 
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-            width: MAXWIDTH > widthMobile ? '46%' : '100%',
-            minWidth:  MAXWIDTH > widthMobile ? '46%' : '100%',
-            borderColor: 'green',
-            borderWidth: 10,
-            borderStyle: 'solid',
-            margin: 0,
-            // marginHorizontal: 'auto',
-            // maxHeight: '100%',
-            height: maxHeightArticle,
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
+      width: MAXWIDTH > widthMobile ? '46%' : '100%',
+      minWidth: MAXWIDTH > widthMobile ? '46%' : '100%',
+      backgroundColor: Colors.primaryBG,
+      marginVertical: 20,
+      // borderColor: 'green',
+      // borderWidth: 10,
+      // borderStyle: 'solid',
+      padding: 8,
+      margin: 0,
+      borderRadius: 10,
+      // marginHorizontal: 'auto',
+      // maxHeight: '100%',
+      height: maxHeightArticle,
     },
     titleContainer: {
-      borderColor: 'pink', borderStyle: 'solid', borderWidth: 10,
+      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 10,
       // position:'absolute',
       // top: 0,
       // left: 0,
@@ -243,7 +248,7 @@ export default function HomeScreen() {
 
   });
   // const renderHtmlIcon = (nameIcon) => {
-  
+
   // const styles = StyleSheet.create({
   //     container: {
   //       flex: 1,
@@ -251,7 +256,7 @@ export default function HomeScreen() {
   //       alignItems: 'center',
   //     },
   //   });
-    
+
   //     return (
   //         <View style={styles.container}>
   //         <FontAwesome name ={nameIcon} size={50} color="blue" />
@@ -267,43 +272,58 @@ export default function HomeScreen() {
 
 
     <ParallaxScrollView //background image
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: '#A1CEDC', dark: Colors.primaryBG }}
       headerImage={
         <BackgroundImage />
 
       }>
 
-      <View style={styles.pageContainer}>
+      <ThemedView style={styles.pageContainer}>
 
 
         <ThemedView style={[styles.stepContainer, {
-          borderColor: 'yellow', borderStyle: 'solid', borderWidth: 8,
-          display: 'flex', flexWrap: 'wrap', flexDirection: 'row', justifyContent:'space-between'
+          // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 8,
+          display: 'flex', flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'space-between'
         }]}>
 
           <ThemedTitle type="subtitle">Bienvenue chez Delicatessen
             {/* <RenderHtmlIcon nameIcon={iconSend} /> */}
             {/* {renderHtmlIcon('send')} */}
-            Découvrez une expérience culinaire unique où la fraîcheur et la tradition se rencontrent. Chez Delicatessen, nous livrons des sushis et d'autres plats vietnamiens faits maison à la demande.</ThemedTitle>
+          </ThemedTitle>
+          <ThemedText>
+            Découvrez une expérience culinaire unique où la fraîcheur et la tradition se rencontrent. Chez Delicatessen, nous livrons des sushis et d'autres plats vietnamiens faits maison à la demande.
 
-          {articlesListByCat && articlesListByCat?.topV && 
-          <View style={styles.eachContainerArticle}>
-            <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
-              addToCart={addToCart} removeFromCart={removeFromCart}
-              menuN={articlesListByCat?.topV[2]} scrollY0={undefined}
-              scrollX0={undefined} updateScrollValue={undefined} />
-          </View>}
+          </ThemedText>
+          <ThemedText style={{ width: '100%' }}> Site en cours en finition, Pour commander: Appelez nous :07 43 33 12 34</ThemedText>
 
 
+          {articlesListByCat && articlesListByCat?.topV &&
+            <View style={[styles.eachContainerArticle, { position: 'relative' }]}>
 
-          {articlesListByCat && articlesListByCat?.japspe && 
-          <View style={styles.eachContainerArticle}>
-            <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
-              addToCart={addToCart} removeFromCart={removeFromCart}
+              <ThemedText type='defaultSemiBold' style={{
+                position: 'absolute', fontSize: 30, zIndex: 9,
+                top: '30%', color: Colors.primaryBG,
+                backgroundColor: '#ffffff6e', textAlign: 'center',
+                padding: 5, width: '70%',
+                transform: [{ rotate: '-30deg' }], // Rotation de 45 degrés
+              }}> Idéale pour vos soirées exceptionnelles
+              </ThemedText>
+              <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
+                addToCart={addToCart} removeFromCart={removeFromCart}
+                menuN={articlesListByCat?.topV[0]} scrollY0={undefined}
+                scrollX0={undefined} updateScrollValue={undefined} />
+            </View>}
 
-              menuN={articlesListByCat?.japspe[19]} scrollY0={undefined}
-              scrollX0={undefined} updateScrollValue={undefined} />
-          </View>}
+
+
+          {articlesListByCat && articlesListByCat?.promo &&
+            <View style={styles.eachContainerArticle}>
+              <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
+                addToCart={addToCart} removeFromCart={removeFromCart}
+
+                menuN={articlesListByCat?.promo['0']} scrollY0={undefined}
+                scrollX0={undefined} updateScrollValue={undefined} />
+            </View>}
 
         </ThemedView>
 
@@ -312,8 +332,8 @@ export default function HomeScreen() {
 
 
         <ThemedView style={[styles.stepContainer, {
-          borderColor: 'yellow', borderStyle: 'solid', borderWidth: 8,
-          display: 'flex', flexWrap: 'wrap', flexDirection: 'row', justifyContent:'space-between'
+          // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 8,
+          display: 'flex', flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'space-between'
         }]}>
           <ThemedTitle type="subtitle">🍕🍣🍔 Des saveurs pour tous les goûts, à prix malin !</ThemedTitle>
           {/* 
@@ -329,20 +349,20 @@ export default function HomeScreen() {
 
 
 
-          {articlesListByCat && articlesListByCat?.topV && 
-          <View style={styles.eachContainerArticle}>
-            <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
-              addToCart={addToCart} removeFromCart={removeFromCart}
-              menuN={articlesListByCat?.topV[3]} scrollY0={undefined}
-              scrollX0={undefined} updateScrollValue={undefined} />
-          </View>}
+          {articlesListByCat && articlesListByCat?.topV &&
+            <View style={styles.eachContainerArticle}>
+              <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
+                addToCart={addToCart} removeFromCart={removeFromCart}
+                menuN={articlesListByCat?.topV[3]} scrollY0={undefined}
+                scrollX0={undefined} updateScrollValue={undefined} />
+            </View>}
 
 
           {articlesListByCat && articlesListByCat?.topV &&
             <View style={styles.eachContainerArticle}>
               <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
                 addToCart={addToCart} removeFromCart={removeFromCart}
-                menuN={articlesListByCat?.topV[0]} scrollY0={undefined}
+                menuN={articlesListByCat?.topV[1]} scrollY0={undefined}
                 scrollX0={undefined} updateScrollValue={undefined} />
             </View>}
         </ThemedView>
@@ -353,7 +373,7 @@ export default function HomeScreen() {
           Découvrez, commandez, dégustez : c'est bon pour vous et pour votre portefeuille ! 🥂✨
         </ThemedText>
 
-      </View>
+      </ThemedView>
 
     </ParallaxScrollView>
   );

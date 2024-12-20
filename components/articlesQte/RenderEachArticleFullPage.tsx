@@ -84,16 +84,39 @@ const RenderEachArticleFullPage = ({
         width: '100%',
         maxWidth:'100%',
         height: '80%',
-        borderWidth: 5,
-        borderColor: 'blue',
-        borderStyle: 'solid',
-        // display: 'flex',
-        // flexDirection: 'column',
-        // alignItems: 'flex-start',
-        // justifyContent: 'flex-start',
+        position:'relative',
+        // borderWidth: 5,
+        // borderColor: 'blue',
+        // borderStyle: 'solid',
       }]}>
         <Text style={styles.icon}>{iconSearchPlus}</Text>
         <ImageViewer placeholderImageSource={menuN?.img} />
+        {menuN &&
+                    menuN.pdjType === 'promo'
+                    // && menuN.qte >= 1
+                    &&
+                    <Text style={[styles.texteArticlePrix, {
+                        fontSize: 20,
+                        width: 100,
+                        // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '30%',
+                        display: 'flex', justifyContent: 'flex-end',
+                        paddingHorizontal: 5,
+                        alignItems: 'flex-end',
+                        color: Colors.primaryText,
+                        position: 'absolute',
+                        backgroundColor: 'green',
+                        left: '10%',
+                        top: '10%',
+                        borderRadius: 5,
+                        padding: 10
+                        // borderWidth: 5,
+                        // borderColor: 'white',
+                        // borderStyle: 'solid',
+                    }]}>
+                        {/* + {Math.round((menuN.qte / 2) - 0.5)} gratuit */}
+                        + 1 gratuit
+                    </Text>
+                }
       </View>
       <Text style={[styles.imageDescription, {
 
@@ -101,15 +124,12 @@ const RenderEachArticleFullPage = ({
         width: '100%',
         // height: '90%',
         color: 'white',
-        
-        borderWidth: 5,
         fontSize: 16,
-        borderColor: 'green',
-        borderStyle: 'solid',
-        // display: 'flex',
-        // flexDirection: 'column',
-        // alignItems: 'flex-start',
-        // justifyContent: 'flex-start',
+        
+        // borderWidth: 5,
+        // borderColor: 'green',
+        // borderStyle: 'solid',
+
       }]}
       // style={styles.icon}
       >{menuN?.description}</Text>
@@ -221,9 +241,9 @@ const RenderEachArticleFullPage = ({
     modalContainer: {
       backgroundColor: 'transparent',
       width: '100%',
-      borderWidth: 5,
-      borderColor: 'yellow',
-      borderStyle: 'solid',
+      // borderWidth: 5,
+      // borderColor: 'yellow',
+      // borderStyle: 'solid',
     },
     openModalButton: {
       width: '100%',
@@ -242,8 +262,8 @@ const RenderEachArticleFullPage = ({
       width: '100%',
 
       height: 500, //MAX_WIDTH > widthMobile ? 400 : 350,
-      borderColor: 'pink',
-      borderWidth: 3,
+      // borderColor: 'pink',
+      // borderWidth: 3,
     },
 
     descriptionContainer: {
@@ -254,8 +274,8 @@ const RenderEachArticleFullPage = ({
       maxWidth: '100%',
 
       height: MAX_WIDTH > widthMobile ? 450 : 350,
-      borderColor: 'red',
-      borderWidth: 3,
+      // borderColor: 'red',
+      // borderWidth: 3,
     },
     menuTitle: {
     },
@@ -324,8 +344,8 @@ const RenderEachArticleFullPage = ({
       height: '80%',
       width: '100%',
       justifyContent: 'space-around',
-      borderWidth: 3,
-      borderColor: 'white',
+      // borderWidth: 3,
+      // borderColor: 'white',
     },
     lienTitle: {
       color: 'white',
@@ -387,9 +407,9 @@ const RenderEachArticleFullPage = ({
             display: 'flex',
             alignItems: 'flex-start',
             justifyContent: 'space-between',
-            borderColor: 'coral',
-            borderWidth: 15,
-            borderStyle: 'solid',
+            // borderColor: 'coral',
+            // borderWidth: 15,
+            // borderStyle: 'solid',
           },
         ]}
       >

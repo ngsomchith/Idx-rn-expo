@@ -40,7 +40,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Index',
+          title: 'Accueil',
           tabBarIcon: ({ color }) => (
             // <ThemedView>
             // <ThemedTitle> Explorer Page</ThemedTitle>
@@ -67,7 +67,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="articles"
         options={{
-          title: 'Articles',
+          title: 'Menus',
           tabBarIcon: ({ color }) => (
             // <IconSymbol size={width > 600 ? 32 : 28} name="paperplane.fill" color={color} />
                   <FontAwesomeIcon icon={faBookOpen}  size={32} color="brown"/>

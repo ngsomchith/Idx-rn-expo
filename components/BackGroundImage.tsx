@@ -4,6 +4,7 @@ import images from '../constants/images';
 // import { myPLatform } from '../config/firebase';
 // import { myStyles } from './style';
 import ThisDevice from '../constants/ThisDevice';
+import { Colors } from '@/constants/Colors';
 
 const BackgroundImage = () => {
 
@@ -27,8 +28,10 @@ const BackgroundImage = () => {
 
       }]}
       >
-        <Text style={styles.text}>Commander vos repas </Text>
-        <Text style={styles.text}>Directement</Text>
+        <View style = {{backgroundColor: '#294e807d', width: '84%',padding:5, margin:'auto'}}>
+        <Text style={styles.text}>Vos repas préparés sur Commande </Text>
+        <Text style={styles.text}>Vous ne serez pas déçus, c'est Promis .</Text>
+        </View>
         {/* <Text style={styles.text}>Text upon Background</Text> */}
       </ImageBackground>
     </View>
