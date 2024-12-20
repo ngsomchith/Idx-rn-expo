@@ -17,6 +17,7 @@ import { Colors } from '@/constants/Colors';
 import ModalMenuN from './ModalMenuN';
 import images from '@/constants/images';
 import { iconSearchPlus } from '@/icons';
+import { ThemedTitle } from '../ThemedTitle';
 
 const RenderEachArticleFullPage = ({
   articlesFilteredToWrap,
@@ -67,7 +68,7 @@ const RenderEachArticleFullPage = ({
 
   const renderMenuContent = () => (
     <View style={styles.menuContainer}>
-      <Text style={[styles.menuTitle, {
+      <ThemedTitle style={[styles.menuTitle, {
         color: Colors.primaryText,
         fontSize: 20,
         width: '100%',
@@ -76,7 +77,11 @@ const RenderEachArticleFullPage = ({
         overflow: 'hidden',
         padding: 0,
         height: 50,
-      }]}>{menuN?.name}</Text>
+        marginVertical: 10,
+        // borderWidth: 5,
+        // borderColor: 'blue',
+        // borderStyle: 'solid',
+      }]}>{menuN?.name}</ThemedTitle>
 
 <View style={styles.descriptionContainer}>
       <View style={[styles.imageContainer, {
