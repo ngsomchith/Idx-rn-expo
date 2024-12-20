@@ -19,7 +19,7 @@ const BackgroundImage = () => {
     }]}>
      
 
-      <ImageBackground source={images['livreursToulon']} 
+      <ImageBackground source={images['laCuisiniere']} 
       // <ImageBackground source={images['pub_Delicatessen']} 
       style={[
         styles.image, 

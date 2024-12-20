@@ -3,9 +3,11 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { pdjTitleObject0, pdjTitleSushi, pdjTitleTradit } from "./pdjTitleObject0";
 import { Colors } from "@/constants/Colors";
-import { Icon } from 'react-native-elements';
-import { iconSearchPlus } from "@/icons";
+// import { Icon } from 'react-native-elements';
+// import { iconSearchPlus } from "@/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { faBookOpen, faCaretDown, faCaretUp, faCoffee, faHouseChimney } from '@fortawesome/free-solid-svg-icons';
 export default function PickerPageName({ callback }) {
     // DropDown state
     const [open, setOpen] = useState(false);
@@ -15,7 +17,7 @@ export default function PickerPageName({ callback }) {
         { label: "Sushi", value: "table2" },
         { label: `Tout`, value: "table3" },
     ]);
-
+    const [selectedData, setSelectedData] = useState(pdjTitleObject0)
     useEffect(() => {
         // callback(value)
         // if( value ==='table1'){
@@ -26,16 +28,19 @@ export default function PickerPageName({ callback }) {
             case 'table1':
                 console.log('table1', 'Traditionnels')
                 // const data = []
+                setSelectedData(pdjTitleTradit)
                 callback(['Traditionnels', pdjTitleTradit])
                 break;
 
             case 'table2':
                 console.log('table2', 'Sushi')
+                setSelectedData(pdjTitleSushi)
                 callback(['Sushi', pdjTitleSushi])
                 break;
 
             case 'table3':
                 console.log('table3', 'Tout')
+                setSelectedData(pdjTitleObject0)
                 callback(['Tout', pdjTitleObject0])
                 break;
             default:
@@ -44,7 +49,7 @@ export default function PickerPageName({ callback }) {
     }, [value, items])
 
     // Choix des données en fonction de la sélection
-    const selectedData = value === "table1" ? pdjTitleTradit : value === "table2" ? pdjTitleSushi : [];
+    // const selectedData = value === "table1" ? pdjTitleTradit : value === "table2" ? pdjTitleSushi : [];
 
     const styles = StyleSheet.create({
         container: {
@@ -106,19 +111,24 @@ export default function PickerPageName({ callback }) {
                 textStyle={styles.text}
                 placeholderStyle={styles.placeholder}
                 ArrowUpIconComponent={({ style }) => (
-                    <Icon
-                        name={open ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-                        size={24}
-                        color={open ? "white" : "white"} // Change de couleur selon l'état
-                    // style={style}
-                    />
+
+                  <FontAwesomeIcon icon={faCaretDown}  size={32} color="white"/>
+                    // <Icon
+                    //     name={open ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                    //     size={24}
+                    //     color={open ? "white" : "white"} 
+                    //     // Change de couleur selon l'état
+                    // // style={style}
+                    // />
                 )} ArrowDownIconComponent={({ style }) => (
-                    <Icon
-                        name={open ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-                        size={24}
-                        color={open ? "white" : "white"} // Change de couleur selon l'état
-                    // style={style}
-                    />
+
+                  <FontAwesomeIcon icon={faCaretUp}  size={32} color="white"/>
+                    // <Icon
+                    //     name={open ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                    //     size={24}
+                    //     color={open ? "white" : "white"} // Change de couleur selon l'état
+                    // // style={style}
+                    // />
                 )}
             />
         </View>

@@ -7,6 +7,8 @@ import { FirebaseInit } from '@/constants/firebaseConfig';
 import { getAuth, signOut } from 'firebase/auth';
 import { UserType } from '@/app/models/UserType';
 import { thisClone } from '../components/services/DataServices';
+import { useFb } from '@/hooks/useFb';
+import { ArticleType } from './models/ArticleType';
 
 // Type de données utilisateur
 // interface User {
@@ -29,12 +31,17 @@ interface AuthContextType {
   modalSignInVisible:any, setModalSignInVisible:any
   gAuth:any, setGAuth: any,
   userInfo:any, setUserInfo:any
+  articlesList:any, setArticlesList:any
+  cart:any, setCart:any
+  addToCartFn:any
+  removeFromCartFn:any
+  thisUseFB:any
 }
 
 // Crée le contexte avec une valeur par défaut
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ( {children} ) => {
 
   const [user, setUser] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
@@ -45,6 +52,44 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);
   };
 
+  const [articlesList, setArticlesList] = useState<Array<ArticleType>>([]);
+  const thisUseFB = useFb('articles/seller2/articlesList');
+
+    const [cart, setCart] = useState([]);
+    const addToCartFn = (article: any) => {
+      setCart((prevCart:any) => {
+        const existingItem = prevCart.find((item:any) => item.id === article.id);
+        if (existingItem) {
+          return prevCart.map((item:any) =>
+            item.id === article.id ? { ...item, qte: item.qte + 1 } : item
+          );
+        }
+        return [...prevCart, { ...article, qte: 1 }];
+      });
+    };
+    const removeFromCartFn = (article: any) => {
+      setCart((prevCart:any) =>
+        prevCart
+          .map((item:any) =>
+            item.id === article.id ? { ...item, qte: item.qte - 1 } : item
+          )
+          .filter((item:any) => item.qte > 0)
+      );
+    };
+
+  // useEffect(()=>{
+  //   console.log("thisUseFB ", thisUseFB)
+   
+  // }[thisUseFB, articlesList])
+ 
+
+  useEffect(() => {
+    console.log("thisUseFB 87 ", thisUseFB)
+    console.log("useFb useEffect 88 articlesList = ", articlesList)
+      if (thisUseFB.articlesList != articlesList){
+        setArticlesList(thisUseFB.articlesList)
+     }
+  }, [thisUseFB, articlesList])
 
 
   const [currentUser, setCurrentUser] = useState<UserType | null>(null);
@@ -52,7 +97,7 @@ export const AuthProvider = ({ children }) => {
 
   const firebase = myApp[0]
   
-  const [auth, setAuth] = useState(myApp[1] || null || undefined);
+  const [auth, setAuth] = useState(getAuth() || null || undefined);
   
   const [userInfo, setUserInfo] = useState({})
   const firestore = myApp[3]
@@ -112,7 +157,11 @@ export const AuthProvider = ({ children }) => {
       loading, auth,
       modalSignInVisible, setModalSignInVisible,
       userInfo, setUserInfo,
-      gAuth, setGAuth
+      gAuth, setGAuth,
+      cart, setCart,
+      addToCartFn, removeFromCartFn,
+      articlesList, setArticlesList,
+      thisUseFB
       }}>
       {children}
     </AuthContext.Provider>

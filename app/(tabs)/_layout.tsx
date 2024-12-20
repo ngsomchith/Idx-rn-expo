@@ -8,8 +8,8 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { ThemedTitle } from '@/components/ThemedTitle';
-import { ThemedView } from '@/components/ThemedView';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faBookOpen, faCoffee, faHouseChimney } from '@fortawesome/free-solid-svg-icons';
 
 // Obtenir les dimensions de l'écran
 const { width } = Dimensions.get('window');
@@ -18,6 +18,7 @@ const { width } = Dimensions.get('window');
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
+  console.log("process.env.NODE_ENV ", process.env.NODE_ENV); // Doit afficher 'development'
 
   return (
     <Tabs
@@ -43,7 +44,9 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             // <ThemedView>
             // <ThemedTitle> Explorer Page</ThemedTitle>
-            <IconSymbol size={width > 600 ? 32 : 28} name="house.fill" color={color} />
+            //    faBookOpen
+                  <FontAwesomeIcon icon={faHouseChimney}  size={32} color="brown"/>
+            // <IconSymbol size={width > 600 ? 32 : 28} name="house.fill" color={color} />
             // </ThemedView>
           ),
         }}
@@ -66,7 +69,8 @@ export default function TabLayout() {
         options={{
           title: 'Articles',
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={width > 600 ? 32 : 28} name="paperplane.fill" color={color} />
+            // <IconSymbol size={width > 600 ? 32 : 28} name="paperplane.fill" color={color} />
+                  <FontAwesomeIcon icon={faBookOpen}  size={32} color="brown"/>
           ),
         }}
       />

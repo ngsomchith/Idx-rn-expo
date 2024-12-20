@@ -16,11 +16,13 @@ import MyTitle from '../MyTitle';
 import ImageViewer from '../ImageViewer';
 import Header from '../Header';
 import ModalProfile from '../GestionUser/ModalProfile';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faBasketShopping } from '@fortawesome/free-solid-svg-icons';
 
 const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
-   
+
     // const {thisAuth} = useAuth();
-    const { 
+    const {
         login, currentUser, auth, user,
         modalSignInVisible, setModalSignInVisible
     } = useAuth();
@@ -113,7 +115,7 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                     maxWidth: '100%',
                     justifyContent: 'space-between',
                     alignItems: 'flex-end',
-                    paddingVertical:10,
+                    paddingVertical: 10,
                     borderColor: 'white',
                     borderStyle: 'solid',
                     borderWidth: 1,
@@ -127,7 +129,7 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    fontWeight:'600'
+                    fontWeight: '600'
                     // borderColor: 'white',
                     // borderStyle: 'solid',
                     // borderWidth: 3,
@@ -139,8 +141,8 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                 </Text>
 
 
-                <Text style={[, { color: 'white', width: '10%', textAlign: 'left',fontWeight:'600' }]} > {totalQte}  </Text>
-                <Text style={[, { color: 'white', width: '17%', textAlign: 'left',fontWeight:'600' }]} >{total.toFixed(2)}€ </Text>
+                <Text style={[, { color: 'white', width: '10%', textAlign: 'left', fontWeight: '600' }]} > {totalQte}  </Text>
+                <Text style={[, { color: 'white', width: '17%', textAlign: 'left', fontWeight: '600' }]} >{total.toFixed(2)}€ </Text>
             </View>
 
             // <Text style={{ color: 'white', width: '17%', textAlign: 'left' }} >total prix </Text>
@@ -162,7 +164,11 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                         backgroundColor: 'green', borderRadius: 50,
 
                     }}>{cart?.length}</ThemedText>
-                    <Text style={{ position: 'absolute', top: 0, left: 0 }}>{iconBasket} </Text>
+                    <Text style={{ position: 'absolute', top: 0, left: 0 }}>
+                        {/* {iconBasket}  */}
+
+                        <FontAwesomeIcon icon={faBasketShopping} size={32} color="white" />
+                    </Text>
                 </View>
             </Pressable>
 
@@ -195,7 +201,7 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
 
 
 
-                        {user? (
+                        {user ? (
                             <View style={{ width: '100%' }}>
                                 <View style={styles.userInfo}>
                                     <Text style={styles.connectedText}>Connecté : {currentUserEmail}
