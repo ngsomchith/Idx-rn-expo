@@ -1,5 +1,5 @@
 
-import laCuisiniere from '@/assets/images/la_cuisiniere_Delicatessen.png';
+import laCuisiniere from 'https://delicatessen.cloud/assets/assets/images/seller2/fonduduo.062ee08134567565ffd514adfbc794a1.png';
 // import laCuisiniereDelicatessen from '@/assets/images/.png';
 import image1achete1offert from '@/assets/images/image-1achete-1offert.png';
 import livreur from '@/assets/images/image-livreur-delicatessen.png';
