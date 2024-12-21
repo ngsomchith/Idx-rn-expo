@@ -1,5 +1,5 @@
-import { useEffect, type PropsWithChildren, type ReactElement } from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import type { PropsWithChildren, ReactElement } from 'react';
+import { StyleSheet } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -13,6 +13,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import ThisDevice from '@/constants/ThisDevice';
 import { Colors } from '@/constants/Colors';
 
+const HEADER_HEIGHT = 250;
 
 type Props = PropsWithChildren<{
   headerImage: ReactElement;
@@ -24,71 +25,36 @@ export default function ParallaxScrollView({
   headerImage,
   headerBackgroundColor,
 }: Props) {
+  const myDevice = ThisDevice().device
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 4,
+      backgroundColor: Colors.primaryBG
+    },
+    header: {
+      // height: HEADER_HEIGHT,
+      minHeight: myDevice.height ,
+      height:  myDevice.height ,
+      overflow: 'hidden',
+      // borderColor: 'green', borderStyle: 'solid', borderWidth: 4,
+    },
+    content: {
+      // flex: 1,
+      padding: 32,
+      gap: 16,
+      overflow: 'hidden',
+      backgroundColor:'transparent'
+    },
+  });
+
   const colorScheme = useColorScheme() ?? 'light';
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
   const bottom = useBottomTabOverflow();
-
-  const screenHeight = Dimensions.get('window').height;
-  const screenWidth = Dimensions.get('window').width;
-
-  const myDevice = ThisDevice().device;
-  const HEADER_HEIGHT = screenHeight;
-
-  useEffect(() => {
-    console.log('HEADER_HEIGHT=', HEADER_HEIGHT)
-  }, [HEADER_HEIGHT])
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 8,
-      backgroundColor :Colors.primaryBG
-    },
-    header: {
-      height: '100%', //
-      maxHeight: HEADER_HEIGHT,
-      width:'100%',
-      maxWidth: screenWidth,
-      overflow: 'hidden',
-      display:'flex',
-      justifyContent:'flex-start',
-
-      // minHeight: myDevice.height ,
-      // height:  myDevice.height ,
-      // borderColor: 'green', borderStyle: 'solid', borderWidth: 10,
-    },
-    content: {
-      flex: 1,
-      padding: 32,
-      gap: 16,
-      overflow: 'hidden',
-      backgroundColor: 'transparent'
-    },
-  });
-
-  // const styles = StyleSheet.create({
-  //   container: {
-  //     flex: 1,
-  //     borderColor: 'yellow', borderStyle: 'solid', borderWidth: 4,
-  //     backgroundColor: Colors.primaryBG
-  //   },
-  //   header: {
-  //     // height: HEADER_HEIGHT,
-  //     minHeight: myDevice.height ,
-  //     height:  myDevice.height ,
-  //     overflow: 'hidden',
-  //     borderColor: 'green', borderStyle: 'solid', borderWidth: 4,
-  //   },
-  //   content: {
-  //     // flex: 1,
-  //     padding: 32,
-  //     gap: 16,
-  //     overflow: 'hidden',
-  //     backgroundColor:'transparent'
-  //   },
-  // });
   const headerAnimatedStyle = useAnimatedStyle(() => {
+
+
     return {
       transform: [
         {
@@ -105,13 +71,20 @@ export default function ParallaxScrollView({
     };
   });
 
+
+
+
   return (
     <ThemedView style={styles.container}>
       <Animated.ScrollView
         ref={scrollRef}
         scrollEventThrottle={16}
         scrollIndicatorInsets={{ bottom }}
-        contentContainerStyle={{ paddingBottom: bottom }}>
+        contentContainerStyle={{
+          paddingBottom: bottom,
+          height:'100%',
+          // borderColor: 'red', borderStyle: 'solid', borderWidth: 4,
+        }}>
         <Animated.View
           style={[
             styles.header,

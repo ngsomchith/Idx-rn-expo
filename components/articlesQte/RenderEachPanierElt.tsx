@@ -95,7 +95,11 @@ const RenderEachPanierElt = ({
                 // paddingHorizontal: 5,
                 // width: MAXWIDTH,
                 width:'100%',
-                maxWidth: '100%',
+                maxWidth: 500,
+                // borderColor: 'white',
+                // borderStyle: 'solid',
+                // borderWidth: 1,
+                marginHorizontal: 'auto',
                 justifyContent:'space-between',
                 alignItems:'flex-end',
                 // borderColor: 'red',
@@ -110,9 +114,9 @@ const RenderEachPanierElt = ({
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    borderColor: 'white',
-                    borderStyle: 'solid',
-                    borderWidth: 3,
+                    // borderColor: 'white',
+                    // borderStyle: 'solid',
+                    // borderWidth: 3,
                 }
 
                 } >{item.name}
@@ -129,9 +133,9 @@ const RenderEachPanierElt = ({
                             paddingHorizontal: 5,
                             alignItems: 'center',
                             color: Colors.primaryText,
-                            borderColor: 'yellow',
-                            borderStyle: 'solid',
-                            borderWidth: 1,
+                            // borderColor: 'yellow',
+                            // borderStyle: 'solid',
+                            // borderWidth: 1,
                             width: 50,
                             // position: 'absolute',
                             backgroundColor: 'green',
@@ -161,9 +165,9 @@ const RenderEachPanierElt = ({
 
     const styles0 = StyleSheet.create({
         Text: {
-            borderColor: 'yellow',
-            borderStyle: 'solid',
-            borderWidth: 1,
+            // borderColor: 'yellow',
+            // borderStyle: 'solid',
+            // borderWidth: 1,
         },
         buttonAddRemove: {
 
@@ -175,9 +179,9 @@ const RenderEachPanierElt = ({
             maxHeight: 50,
             justifyContent: 'center',
             alignItems: 'center',
-            borderColor: 'yellow',
-            borderStyle: 'solid',
-            borderWidth: 2,
+            // borderColor: 'yellow',
+            // borderStyle: 'solid',
+            // borderWidth: 2,
             position: 'relative'
         },
 
@@ -189,7 +193,7 @@ const RenderEachPanierElt = ({
             backgroundColor: Colors.primaryBG,
             // marginVertical: 20,
             paddingVertical: 5,
-            borderWidth: 2, borderColor: Colors.highlightBG, borderStyle: 'solid',
+            // borderWidth: 2, borderColor: Colors.highlightBG, borderStyle: 'solid',
             width:'100%'
         }}>
 

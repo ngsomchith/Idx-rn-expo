@@ -57,6 +57,66 @@ export function formeMyDatefr(journee: Date) {
   })
   return result0
 }
+
+
+export async function formeMyDateTable(journee: Date) {
+  const mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+    'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+  
+  const jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+  
+  if (journee) {
+    let thisYear;
+    let thisMonth;
+    let thisDate;
+    let thisDow;
+    let thisHours;
+    let thisMinutes;
+    let thisSecondes;
+
+    // Récupérer l'année, le mois, le jour, les heures, minutes, secondes
+    thisYear = journee.getFullYear().toString();
+    thisMonth = (journee.getMonth() + 1).toString();  // Mois en format '1' -> '12'
+    
+    // Ajouter un zéro devant le mois si nécessaire
+    if (thisMonth.length === 1) {
+      thisMonth = '0' + thisMonth;
+    }
+
+    thisDate = journee.getDate().toString();
+    
+    // Ajouter un zéro devant le jour si nécessaire
+    let zeroNeedDate = 2 - thisDate.length;
+    if (zeroNeedDate > 0) {
+      thisDate = '0'.repeat(zeroNeedDate) + thisDate;
+    }
+
+    thisMinutes = journee.getMinutes();
+    thisHours = journee.getHours();
+    thisSecondes = journee.getSeconds();
+    thisDow = journee.getDay();  // Jour de la semaine (0-6)
+    
+    // La journée commence à 0 (dimanche), donc il faut ajuster l'index de `jours`
+    if (thisDow === 0) thisDow = 6;  // Dimanche (0) doit être le dernier jour de la semaine
+
+    return {
+      yy: thisYear,
+      mm: thisMonth,
+      dd: thisDate,
+      dow: thisDow,
+      dowChaine: jours[thisDow],
+      mmText: mois[Number(thisMonth) - 1],
+      hh: thisHours,
+      min: thisMinutes,
+      sec: thisSecondes,
+      dayMonth: thisDate + '/' + thisMonth,
+      hourMin: thisHours + ':' + thisMinutes,
+      fullDate6: thisDate + '-' + thisMonth + '-' + thisYear,
+      frenchDate: jours[thisDow] + ' ' + thisDate + ' ' + mois[Number(thisMonth) - 1] + ' ' + thisYear
+    };
+  }
+}
+
 export function getCurrentDate() {
   const thisDate = formeMyDateTable(new Date)
   //all0810 console.log("thisDate ", thisDate)
@@ -72,126 +132,6 @@ export async function convertToFormeDatefr(eltDateVenteFr: string) {
   }
 //all console.log("thisDate /formeMyDatefr", thisDate)
   return thisDate
-
-}
-export async function formeMyDateTable(journee: Date) {
-  const mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-    'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
-  
-  const jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-  
-  //all0810 console.log(91, "journee ", journee)
-  if (journee) {
-    let thisYear;
-    let thisMonth;
-    let thisDate;
-    let thisDow;
-    let thisHours;
-    let thisMinutes;
-    let thisSecondes;
-    thisYear = journee.getFullYear().toString();
-    let thisMonthTemp = (journee.getMonth() + 1).toString()
-    //all console.log("102journee : thisMonthTemp, Number(thisMonthTemp),Number(thisMonthTemp.length)", thisMonthTemp, Number(thisMonthTemp),Number(thisMonthTemp.length))
-    let zeroNeedMonth = 2 - Number(thisMonthTemp.length);
-    //all console.log("104journee :: journee,  zeroNeedMonth, thisMonth, thisMonthTemp = ",journee, zeroNeedMonth, thisMonth, thisMonthTemp)
-    if (zeroNeedMonth > 0) {
-      thisMonth = '0'.repeat(zeroNeedMonth) + (journee.getMonth() + 1).toString();
-      if (thisMonth.length > 2) {
-
-        thisMonth = thisMonthTemp.substring(1, 2);
-      }
-    } else {
-      thisMonth = thisMonthTemp
-    }
-
-    let zeroNeedDate = 2 - Number(journee.getDate().toString().length);
-
-    if (zeroNeedDate >= 0) {
-      thisDate = '0'.repeat(zeroNeedDate) + journee.getDate().toString();
-
-      thisMinutes = journee.getMinutes()
-      if (Number(thisMinutes) < 10) { thisMinutes = '0' + thisMinutes }
-      thisHours = journee.getHours()
-      thisSecondes = journee.getSeconds()
-      if (Number(thisSecondes) < 10) { thisSecondes = '0' + thisSecondes }
-      thisDow = journee.getDay()
-      return {
-        yy: thisYear,
-        mm: thisMonth,
-        dd: thisDate,
-        dow: thisDow,
-        dowChaine: thisDow-1 >=0 ? jours[thisDow - 1] : 'Dimanche',
-        mmText: mois[Number(thisMonth) - 1],
-        hh: thisHours,
-        min: thisMinutes,
-        sec: thisSecondes,
-        dayMonth: thisDate + '/' + thisMonth,
-        hourMin: thisHours + ':' + thisMinutes,
-        hourMinSec: thisHours + ':' + thisMinutes + ':' + thisSecondes,
-        thisDMY: thisDate + '-' + thisMonth + '-' + thisYear,
-        frenchDate: jours[thisDow - 1] + ' ' + thisDate + ' ' + mois[Number(thisMonth) - 1] + ' '
-        // + thisYear
-      };
-    }
-  }
-
-
-}
-
-
-export async function formeMyDateTable2(journee: Date) {
-  const mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-    'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre']
-  
-  const jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-  
-  // console.log(67, new Date())
-  if (journee) {
-    let thisYear;
-    let thisMonth;
-    let thisDate;
-    let thisDow;
-    let thisHours;
-    let thisMinutes;
-    let thisSecondes;
-    thisYear = journee.getFullYear().toString();
-    let zeroNeedMonth = 2 - Number(journee.getMonth().toString().length);
-    //all0403 console.log("zeroNeedMonth = ", zeroNeedMonth)
-    if (zeroNeedMonth > 0) {
-      thisMonth = '0'.repeat(zeroNeedMonth) + (journee.getMonth() + 1).toString();
-      if (thisMonth.length > 2) {
-
-        thisMonth = thisMonth.substring(1, 2);
-      }
-    }
-
-    let zeroNeedDate = 2 - Number(journee.getDate().toString().length);
-
-    if (zeroNeedDate >= 0) {
-      thisDate = '0'.repeat(zeroNeedDate) + journee.getDate().toString();
-
-      thisMinutes = journee.getMinutes()
-      thisHours = journee.getHours()
-      thisSecondes = journee.getSeconds()
-      thisDow = journee.getDay()
-      return {
-        yy: thisYear,
-        mm: thisMonth,
-        dd: thisDate,
-        dow: thisDow,
-        dowChaine: jours[thisDow - 1] ,
-        mmText: mois[Number(thisMonth) - 1],
-        hh: thisHours,
-        min: thisMinutes,
-        sec: thisSecondes,
-        dayMonth: thisDate + '/' + thisMonth,
-        hourMin: thisHours + ':' + thisMinutes,
-        fullDate6: thisDate + '-' + thisMonth + '-' + thisYear,
-        frenchDate: jours[thisDow - 1] + ' ' + thisDate + ' ' + mois[Number(thisMonth) - 1] + ' ' + thisYear
-      };
-    }
-  }
-
 
 }
 

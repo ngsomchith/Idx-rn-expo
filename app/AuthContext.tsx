@@ -10,42 +10,37 @@ import { thisClone } from '../components/services/DataServices';
 import { useFb } from '@/hooks/useFb';
 import { ArticleType } from './models/ArticleType';
 
-// Type de données utilisateur
-// interface User {
-//   id: string;
-//   name: string;
-//   email: string;
-// }
+
 
 // Type des valeurs du contexte
 interface AuthContextType {
   user: UserType | null; // null si non connecté
   setUser: any
-  currentUser:  UserType | null; // null si non connecté
+  currentUser: UserType | null; // null si non connecté
   setCurrentUser: any
   login: (user: UserType) => void; // Fonction pour connecter un utilisateur
   logout: () => void; // Fonction pour déconnecter
   loading: boolean
-  auth :any
+  auth: any
   closeModalSignIn: boolean
-  modalSignInVisible:any, setModalSignInVisible:any
-  gAuth:any, setGAuth: any,
-  userInfo:any, setUserInfo:any
-  articlesList:any, setArticlesList:any
-  cart:any, setCart:any
-  addToCartFn:any
-  removeFromCartFn:any
-  thisUseFB:any
+  modalSignInVisible: any, setModalSignInVisible: any
+  gAuth: any, setGAuth: any,
+  userInfo: any, setUserInfo: any
+  articlesList: any, setArticlesList: any
+  cart: any, setCart: any
+  addToCartFn: any
+  removeFromCartFn: any
+  thisUseFB: any
 }
 
 // Crée le contexte avec une valeur par défaut
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ( {children} ) => {
+export const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
-  const  [modalSignInVisible, setModalSignInVisible] =  useState(false)
+  const [modalSignInVisible, setModalSignInVisible] = useState(false)
 
   const [gAuth, setGAuth] = useState(); // getPersistedAuth
   const login = (userData: UserType) => {
@@ -55,40 +50,40 @@ export const AuthProvider = ( {children} ) => {
   const [articlesList, setArticlesList] = useState<Array<ArticleType>>([]);
   const thisUseFB = useFb('articles/seller2/articlesList');
 
-    const [cart, setCart] = useState([]);
-    const addToCartFn = (article: any) => {
-      setCart((prevCart:any) => {
-        const existingItem = prevCart.find((item:any) => item.id === article.id);
-        if (existingItem) {
-          return prevCart.map((item:any) =>
-            item.id === article.id ? { ...item, qte: item.qte + 1 } : item
-          );
-        }
-        return [...prevCart, { ...article, qte: 1 }];
-      });
-    };
-    const removeFromCartFn = (article: any) => {
-      setCart((prevCart:any) =>
-        prevCart
-          .map((item:any) =>
-            item.id === article.id ? { ...item, qte: item.qte - 1 } : item
-          )
-          .filter((item:any) => item.qte > 0)
-      );
-    };
+  const [cart, setCart] = useState([]);
+  const addToCartFn = (article: any) => {
+    setCart((prevCart: any) => {
+      const existingItem = prevCart.find((item: any) => item.id === article.id);
+      if (existingItem) {
+        return prevCart.map((item: any) =>
+          item.id === article.id ? { ...item, qte: item.qte + 1 } : item
+        );
+      }
+      return [...prevCart, { ...article, qte: 1 }];
+    });
+  };
+  const removeFromCartFn = (article: any) => {
+    setCart((prevCart: any) =>
+      prevCart
+        .map((item: any) =>
+          item.id === article.id ? { ...item, qte: item.qte - 1 } : item
+        )
+        .filter((item: any) => item.qte > 0)
+    );
+  };
 
+  
   // useEffect(()=>{
   //   console.log("thisUseFB ", thisUseFB)
-   
   // }[thisUseFB, articlesList])
- 
+
 
   useEffect(() => {
     console.log("thisUseFB 87 ", thisUseFB)
     console.log("useFb useEffect 88 articlesList = ", articlesList)
-      if (thisUseFB.articlesList != articlesList){
-        setArticlesList(thisUseFB.articlesList)
-     }
+    if (thisUseFB.articlesList != articlesList) {
+      setArticlesList(thisUseFB.articlesList)
+    }
   }, [thisUseFB, articlesList])
 
 
@@ -96,9 +91,9 @@ export const AuthProvider = ( {children} ) => {
   let currentUSerTemp = thisClone(currentUser)
 
   const firebase = myApp[0]
-  
+
   const [auth, setAuth] = useState(getAuth() || null || undefined);
-  
+
   const [userInfo, setUserInfo] = useState({})
   const firestore = myApp[3]
 
@@ -116,20 +111,20 @@ export const AuthProvider = ( {children} ) => {
     setUser(null);
   };
 
-    useEffect(() => {
-      console.log("auth ", auth)  
+  useEffect(() => {
+    console.log("auth ", auth)
   }, [auth])
   useEffect(() => {
     setAuth(getAuth(firebase))
   }, [])
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user:any) => {
-        
-        setTimeout(() => {
-            console.log('user AuthContext', user )
-        }, 2000);
+    const unsubscribe = auth.onAuthStateChanged(async (user: any) => {
+
+      setTimeout(() => {
+        console.log('user AuthContext', user)
+      }, 2000);
       setCurrentUser(user);
-     
+
       if (user) {
 
         // Récupérer les données utilisateur supplémentaires depuis Firestore (si nécessaire)
@@ -138,9 +133,9 @@ export const AuthProvider = ( {children} ) => {
         if (userDoc.exists) {
           // Mettre à jour l'état avec les données utilisateur
           setCurrentUser({ ...user, ...userDoc.data() });
-        }else{
+        } else {
           user = new UserType()
-            // window.alert ("No user connected")
+          // window.alert ("No user connected")
         }
       }
       setLoading(false);
@@ -150,9 +145,9 @@ export const AuthProvider = ( {children} ) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ 
+    <AuthContext.Provider value={{
       currentUser, setCurrentUser,
-      login, logout , 
+      login, logout,
       user, setUser,
       loading, auth,
       modalSignInVisible, setModalSignInVisible,
@@ -162,7 +157,7 @@ export const AuthProvider = ( {children} ) => {
       addToCartFn, removeFromCartFn,
       articlesList, setArticlesList,
       thisUseFB
-      }}>
+    }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
 import images from '../constants/images';
 // import { myPLatform } from '../config/firebase';
 // import { myStyles } from './style';
@@ -19,21 +19,20 @@ const BackgroundImage = () => {
       position: 'absolute',
     }]}>
      
-
-      <ImageBackground source={images['laCuisiniere']} 
+     <Image
+            source={require('@/assets/images/la_cuisiniere_Delicatessen.png')}
+            style={styles.image}
+           />
+      {/* <ImageBackground source={images['laCuisiniere']} 
       // <ImageBackground source={images['pub_Delicatessen']} 
       style={[
         styles.image, 
         {
 
       }]}
-      >
-        <View style = {{backgroundColor: '#294e807d', width: '84%',padding:5, margin:'auto'}}>
-        <Text style={styles.text}>Vos repas préparés sur Commande </Text>
-        <Text style={styles.text}>Vous ne serez pas déçus, c'est Promis .</Text>
-        </View>
+      > */}
         {/* <Text style={styles.text}>Text upon Background</Text> */}
-      </ImageBackground>
+      {/* </ImageBackground> */}
     </View>
   )
 
@@ -58,7 +57,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 42,
     fontWeight: 'bold',
-    textAlign: 'center',
+    textAlign: 'right',
     // backgroundColor: '#000000a0',
     backgroundColor: 'transparent',
   },

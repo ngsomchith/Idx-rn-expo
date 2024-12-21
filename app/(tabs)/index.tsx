@@ -1,40 +1,33 @@
 
 import React, { useEffect } from 'react';
-import { StyleSheet, View, Text, Image, Button, Pressable, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, Image, Button, Pressable, ScrollView, Dimensions } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import Panier from '@/components/articlesQte/Panier';
 import ThisDevice from '@/constants/ThisDevice';
 
 import { useState } from 'react';
 import { ArticleType } from '../models/ArticleType';
-import { useFb } from '@/hooks/useFb';
-import { myStyles } from '@/components/myStyle';
 import { useFonts } from 'expo-font';
 import { useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
-import images from '@/constants/images';
-import BackgroundImage from '@/components/BackGroundImage';
 import { ThemedTitle } from '@/components/ThemedTitle';
-import ContactForm from '@/components/contact/ContactCallable';
-import { LoginScreen } from '@/components/GestionUser/LoginScreen';
 import { groupedByPdjType, thisClone } from '@/components/services/DataServices';
-import { getmyDoc } from '@/firebase';
-import RenderEachArticleInHome from '@/components/articlesQte/RenderEachArticleInHome';
 import { useAuth } from '../AuthContext';
 import RenderEachArticleFullPage from '@/components/articlesQte/RenderEachArticleFullPage';
 import { FontAwesome } from '@expo/vector-icons';
-// import { renderHtmlIcon } from '@/components/RenderHtmlIcon';
-// import RenderHtmlIcon from '@/components/renderHtmlIcon';
+import Header from '@/components/Header';
+import BackgroundImage from '@/components/BackGroundImage';
 
 
 export default function HomeScreen() {
   const myDevice = ThisDevice().device
   const MAXWIDTH = ThisDevice().device.myMAXWIDTH
   const widthMobile = 650
+
+  const screenHeight = Dimensions.get('window').height;
+  const screenWidth = Dimensions.get('window').width;
   const widthMobileOrWeb = MAXWIDTH > widthMobile ? '40%' : '100%'
 
   const [todayfr10, setTodayfr10] = useState()
@@ -71,30 +64,9 @@ export default function HomeScreen() {
   const maxHeightArticle = 570
   const device = ThisDevice().device
   const myHeight = device.height * 1.3
-  // const myCoeffScreen = myWidth / myHeight
-
-  // const [my2Months, setmy2Months] = useState([])
   const [_cdeFrom2Months, set_CdeFrom2Months] = useState([])
-  // let allCurrentCdeTemp = thisClone(allCurrentCde)
-  // let articlesListByCatTemp = thisClone(articlesListByCat)
-
-  // useEffect(() => {
-  //   if (articlesList.length === 0 && thisUseFB.articlesList) {
-  //     setArticlesList(thisUseFB.articlesList);
-  //   }
-  // }, [thisUseFB, articlesList]);
-  // const panierTemp = new Array<ArticleType>()
   const [platDuJour, setPlatDuJour] = useState()
-  const [platNum0, setPlatNum0] = useState()
-  const [platNum1, setPlatNum1] = useState()
-  const [platNum2, setPlatNum2] = useState()
-  const [platNum3, setPlatNum3] = useState()
 
-  let platDuJourTemp = platDuJour ? thisClone(platDuJour) : []
-  // const platNum1 ="topV140"
-  // const platNum2 ="topV142"
-  // const platNum3 ="topV140"
-  // const platNum4 ="topV169"
 
 
 
@@ -130,12 +102,7 @@ export default function HomeScreen() {
 
     console.log("198PlatDuJour", resultPDJ)
 
-    // platDuJourTemp.name = resultPDJ
-    // platDuJourTemp.pdjType = 'pdj'
-    // platDuJourTemp.date = todayfr10 // dayDocStr // resultPDJ.date
-    // platDuJourTemp.explication = resultPDJ?.explication
 
-    // setPlatDuJour(platDuJourTemp)
     setPlatDuJour(resultPDJ[0])
 
 
@@ -154,12 +121,7 @@ export default function HomeScreen() {
       // borderColor: 'white', borderStyle: 'solid', borderWidth: 4,
     },
     eachContainerArticle: {
-      // width: '100%',
-      // borderColor: 'white',
-      // borderWidth: 10,
-      // borderStyle: 'solid',
-      // minHeight: MAXWIDTH > widthMobile ? 500 : 500,
-      // marginVertical: 10
+
 
       display: 'flex',
       flexDirection: 'row',
@@ -192,13 +154,22 @@ export default function HomeScreen() {
     stepContainer: {
       gap: 8,
       marginBottom: 8,
+      marginVertical: 40,
+      padding:10,
+      backgroundColor: Colors.primaryBG,
+      // borderColor: 'coral', borderStyle: 'solid', borderWidth: 10,
     },
     reactLogo: {
+      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
+      resizeMode: 'cover',
       height: '100%',
-      width: '100%',
+      // height:device.heightBody,
+      // minHeight:device.heightBody,
+      width: screenWidth,
+      margin: 'auto',
       bottom: 0,
       left: 0,
-      // position: 'absolute',
+      position: 'absolute',
     },
     cardContainer: {
       padding: 20,
@@ -208,10 +179,16 @@ export default function HomeScreen() {
     },
     text: {
       marginBottom: 10,
-      color: 'grey'
+      color: Colors.primaryText,
+      fontSize: 30,
+      padding: 10
     },
 
-
+    headerContainer: {
+      height: 100,
+      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 10,
+      position: 'relative'
+    },
 
     container: {
       flexGrow: 1,
@@ -247,96 +224,121 @@ export default function HomeScreen() {
 
 
   });
-  // const renderHtmlIcon = (nameIcon) => {
-
-  // const styles = StyleSheet.create({
-  //     container: {
-  //       flex: 1,
-  //       justifyContent: 'center',
-  //       alignItems: 'center',
-  //     },
-  //   });
-
-  //     return (
-  //         <View style={styles.container}>
-  //         <FontAwesome name ={nameIcon} size={50} color="blue" />
-  //         {/* <Text>'nameIcon'</Text> */}
-  //       </View>
-  //     );
-  // };
-
-
-  // const iconSend= 'send'
 
   return (
+    <>
+      <View style={styles.headerContainer}>
+        <Header
+          addToCart={addToCart}
+          removeFromCart={removeFromCart}
+          articlesList={articlesList}
+          cart={cart}
+          navigation={undefined}
+        />
 
 
-    <ParallaxScrollView //background image
-      headerBackgroundColor={{ light: '#A1CEDC', dark: Colors.primaryBG }}
-      headerImage={
-        <BackgroundImage />
+      </View>
 
-      }>
+      <ParallaxScrollView //background image
 
-      <ThemedView style={styles.pageContainer}>
+        headerBackgroundColor={{ light: '#A1CEDC', dark: Colors.primaryBG }}
+        headerImage={
+          // <BackgroundImage />
+          <View style={{
+            height: screenHeight,
+            width: screenHeight,
+            // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 1,
+            position: 'relative',
+
+          }}>
+            <Image
+              source={require('@/assets/images/la_cuisiniere_Delicatessen.png')}
+              style={styles.reactLogo}
+            />
+
+            <View style={{
+              position: 'absolute',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'flex-end',
+              width: screenWidth,
+              height: screenHeight
+              // backgroundColor: Colors.highlightBG
+              // backgroundColor: '#294e807d', width: '84%', padding: 5, margin: 'auto' 
+            }}
+            >
+              <View style={{
+                backgroundColor: Colors.primaryBGlight
+              }}>
+                <ThemedText type='defaultSemiBold' style={styles.text}>La fraicheur : je vous garantis . </ThemedText>
+                <ThemedText type='defaultSemiBold' style={styles.text}>Le meilleur goût : aussi .</ThemedText>
+
+                <ThemedText type='defaultSemiBold' style={styles.text}>Vous ne serez pas déçus, c'est Promis .</ThemedText>
+
+              </View>
+            </View>
+          </View>
+
+        }>
+
+        <ThemedView style={styles.pageContainer}>
+
+          <ThemedView style={[styles.stepContainer, {
+            // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 8,
+            display: 'flex', flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'space-between'
+          }]}>
+
+            <ThemedTitle type="subtitle">Bienvenue chez Delicatessen
+              {/* <RenderHtmlIcon nameIcon={iconSend} /> */}
+              {/* {renderHtmlIcon('send')} */}
+            </ThemedTitle>
+            <ThemedText>
+              Découvrez une expérience culinaire unique où la fraîcheur et la tradition se rencontrent. Chez Delicatessen, nous livrons des sushis et d'autres plats vietnamiens faits maison à la demande.
+
+            </ThemedText>
+            <ThemedText style={{ width: '100%', textAlign:'left' }}> Site en cours en finition, N'hésitez pas à nous appeler :07 43 33 12 34</ThemedText>
 
 
-        <ThemedView style={[styles.stepContainer, {
-          // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 8,
-          display: 'flex', flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'space-between'
-        }]}>
+            {articlesListByCat && articlesListByCat?.topV &&
+              <View style={[styles.eachContainerArticle, { position: 'relative' }]}>
 
-          <ThemedTitle type="subtitle">Bienvenue chez Delicatessen
-            {/* <RenderHtmlIcon nameIcon={iconSend} /> */}
-            {/* {renderHtmlIcon('send')} */}
-          </ThemedTitle>
-          <ThemedText>
-            Découvrez une expérience culinaire unique où la fraîcheur et la tradition se rencontrent. Chez Delicatessen, nous livrons des sushis et d'autres plats vietnamiens faits maison à la demande.
-
-          </ThemedText>
-          <ThemedText style={{ width: '100%' }}> Site en cours en finition, Pour commander: Appelez nous :07 43 33 12 34</ThemedText>
-
-
-          {articlesListByCat && articlesListByCat?.topV &&
-            <View style={[styles.eachContainerArticle, { position: 'relative' }]}>
-
-              <ThemedText type='defaultSemiBold' style={{
-                position: 'absolute', fontSize: 30, zIndex: 9,
-                top: '30%', color: Colors.primaryBG,
-                backgroundColor: '#ffffff6e', textAlign: 'center',
-                padding: 5, width: '70%',
-                transform: [{ rotate: '-30deg' }], // Rotation de 45 degrés
-              }}> Idéale pour vos soirées exceptionnelles
-              </ThemedText>
-              <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
-                addToCart={addToCart} removeFromCart={removeFromCart}
-                menuN={articlesListByCat?.topV[0]} scrollY0={undefined}
-                scrollX0={undefined} updateScrollValue={undefined} />
-            </View>}
+                <ThemedText type='defaultSemiBold' style={{
+                  position: 'absolute', fontSize: 30, zIndex: 9,
+                  top: '30%', color: Colors.primaryBG,
+                  backgroundColor: '#ffffff6e', textAlign: 'center',
+                  padding: 5, width: '70%',
+                  transform: [{ rotate: '-30deg' }], // Rotation de 45 degrés
+                }}> Idéale pour vos soirées exceptionnelles
+                </ThemedText>
+                <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
+                  addToCart={addToCart} removeFromCart={removeFromCart}
+                  menuN={articlesListByCat?.topV[0]} scrollY0={undefined}
+                  scrollX0={undefined} updateScrollValue={undefined} />
+              </View>}
 
 
 
-          {articlesListByCat && articlesListByCat?.promo &&
-            <View style={styles.eachContainerArticle}>
-              <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
-                addToCart={addToCart} removeFromCart={removeFromCart}
+            {articlesListByCat && articlesListByCat?.promo &&
+              <View style={styles.eachContainerArticle}>
+                <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
+                  addToCart={addToCart} removeFromCart={removeFromCart}
 
-                menuN={articlesListByCat?.promo['0']} scrollY0={undefined}
-                scrollX0={undefined} updateScrollValue={undefined} />
-            </View>}
+                  menuN={articlesListByCat?.promo['0']} scrollY0={undefined}
+                  scrollX0={undefined} updateScrollValue={undefined} />
+              </View>}
 
-        </ThemedView>
+          </ThemedView>
 
 
 
 
 
-        <ThemedView style={[styles.stepContainer, {
-          // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 8,
-          display: 'flex', flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'space-between'
-        }]}>
-          <ThemedTitle type="subtitle">🍕🍣🍔 Des saveurs pour tous les goûts, à prix malin !</ThemedTitle>
-          {/* 
+          <ThemedView style={[styles.stepContainer, {
+            // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 8,
+            display: 'flex', flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'space-between'
+          }]}>
+            <ThemedTitle type="subtitle">🍕🍣🍔 Des saveurs pour tous les goûts, à prix malin !</ThemedTitle>
+            {/* 
           {articlesListByCat && articlesListByCat?.topV && <View style={{
             minHeight: MAXWIDTH > widthMobile ? 500 : 500,
             marginVertical: 10
@@ -349,33 +351,36 @@ export default function HomeScreen() {
 
 
 
-          {articlesListByCat && articlesListByCat?.topV &&
-            <View style={styles.eachContainerArticle}>
-              <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
-                addToCart={addToCart} removeFromCart={removeFromCart}
-                menuN={articlesListByCat?.topV[3]} scrollY0={undefined}
-                scrollX0={undefined} updateScrollValue={undefined} />
-            </View>}
+            {articlesListByCat && articlesListByCat?.topV &&
+              <View style={styles.eachContainerArticle}>
+                <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
+                  addToCart={addToCart} removeFromCart={removeFromCart}
+                  menuN={articlesListByCat?.topV[3]} scrollY0={undefined}
+                  scrollX0={undefined} updateScrollValue={undefined} />
+              </View>}
 
 
-          {articlesListByCat && articlesListByCat?.topV &&
-            <View style={styles.eachContainerArticle}>
-              <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
-                addToCart={addToCart} removeFromCart={removeFromCart}
-                menuN={articlesListByCat?.topV[1]} scrollY0={undefined}
-                scrollX0={undefined} updateScrollValue={undefined} />
-            </View>}
+            {articlesListByCat && articlesListByCat?.topV &&
+              <View style={styles.eachContainerArticle}>
+                <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
+                  addToCart={addToCart} removeFromCart={removeFromCart}
+                  menuN={articlesListByCat?.topV[1]} scrollY0={undefined}
+                  scrollX0={undefined} updateScrollValue={undefined} />
+              </View>}
+          </ThemedView>
+
+          {/* <ThemedView style={styles.stepContainer}> */}
+          <ThemedText type="defaultSemiBold">📍 Livraison rapide à Toulon et alentours.</ThemedText>
+          <ThemedText type="default">
+            Découvrez, commandez, dégustez : c'est bon pour vous et pour votre portefeuille ! 🥂✨
+          </ThemedText>
+
         </ThemedView>
 
-        {/* <ThemedView style={styles.stepContainer}> */}
-        <ThemedText type="defaultSemiBold">📍 Livraison rapide à Toulon et alentours.</ThemedText>
-        <ThemedText type="default">
-          Découvrez, commandez, dégustez : c'est bon pour vous et pour votre portefeuille ! 🥂✨
-        </ThemedText>
+      </ParallaxScrollView>
 
-      </ThemedView>
+    </>
 
-    </ParallaxScrollView>
   );
 }
 

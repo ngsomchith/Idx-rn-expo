@@ -12,50 +12,50 @@ import { ThemedInput } from './components/ThemedInput';
 export const myApp = FirebaseInit()
 
 export const LoginScreen = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    const handleSignIn = async () => {
-        console.log('handleSignIn')
-        try {
-            const userCredential = await signInWithEmailAndPassword(myApp, email, password);
-            console.log(userCredential)
-            console.log('Connexion réussie', `Bienvenue ${userCredential.user.email}`);
-        } catch (error) {
-            Alert.alert('Erreur', error.message);
-        }
-    };
-    const styles = StyleSheet.create({
-        containerColumn: { flex: 1, justifyContent: 'flex-start', padding: 20, backgroundColor: 'white' },
-        title: { fontSize: 24, marginBottom: 20, textAlign: 'center' },
-        input: { height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 10 },
-    });
+  const handleSignIn = async () => {
+    console.log('handleSignIn')
+    try {
+      const userCredential = await signInWithEmailAndPassword(myApp, email, password);
+      console.log(userCredential)
+      console.log('Connexion réussie', `Bienvenue ${userCredential.user.email}`);
+    } catch (error) {
+      Alert.alert('Erreur', error.message);
+    }
+  };
+  const styles = StyleSheet.create({
+    containerColumn: { flex: 1, justifyContent: 'flex-start', padding: 20, backgroundColor: 'white' },
+    title: { fontSize: 24, marginBottom: 20, textAlign: 'center' },
+    input: { height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 10 },
+  });
 
 
-    return (
-        <ThemedView
-        // style={styles.containerColumn}
-        >
-            <ThemedTitle style={styles.title}>Connexion Firebase</ThemedTitle>
-            {/* <ThemedText>  */}
-                <ThemedInput
-                    style={styles.input}
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={setEmail}
-                />
-                <ThemedInput
-                    style={styles.input}
-                    placeholder="Mot de passe"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
-                />
-            {/* </ThemedText> */}
+  return (
+    <ThemedView
+    // style={styles.containerColumn}
+    >
+      <ThemedTitle style={styles.title}>Connexion Firebase</ThemedTitle>
+      {/* <ThemedText>  */}
+      <ThemedInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <ThemedInput
+        style={styles.input}
+        placeholder="Mot de passe"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+      {/* </ThemedText> */}
 
-            <Button title="Se connecter" onPress={handleSignIn} />
-        </ThemedView>
-    );
+      <Button title="Se connecter" onPress={handleSignIn} />
+    </ThemedView>
+  );
 };
 
 
@@ -63,154 +63,152 @@ export const LoginScreen = () => {
 export default LoginScreen;
 
 export async function updateItem(
-    thisCollection: string,
-    thisItem: Object,
-    thisDoc: string
+  thisCollection: string,
+  thisItem: Object,
+  thisDoc: string
 ) {
-    console.log("233 updateItem ", thisCollection, thisItem, "thisDoc:", thisDoc);
+  console.log("233 updateItem ", thisCollection, thisItem, "thisDoc:", thisDoc);
 
-    const myApp = FirebaseInit()
-    const db = myApp[3]
-    if (thisDoc && thisItem) {
-        let myRefDoc;
+  const myApp = FirebaseInit()
+  const db = myApp[3]
+  if (thisDoc && thisItem) {
+    let myRefDoc;
 
-        myRefDoc = doc(db, thisCollection, thisDoc);
-        //all0810 console.log("185 thisItem", myRefDoc, thisItem);
-        await setDoc(myRefDoc, thisItem);
-    }
+    myRefDoc = doc(db, thisCollection, thisDoc);
+    //all0810 console.log("185 thisItem", myRefDoc, thisItem);
+    await setDoc(myRefDoc, thisItem);
+  }
 }
-
-
 export async function getItems(thisCollection: string) {
-    // ++++++++++++++++++++++++++++++++++++++++++++++
-    //model :  import { collection, query, where, getDocs } from "firebase/firestore";
-    // const q = query(collection(db, "cities"), where("capital", "==", true));
+  // ++++++++++++++++++++++++++++++++++++++++++++++
+  //model :  import { collection, query, where, getDocs } from "firebase/firestore";
+  // const q = query(collection(db, "cities"), where("capital", "==", true));
 
-    const db = myApp[3]
-    let items: any = [];
-    let i = 0;
-    const querySnapshot = await getDocs(collection(db, thisCollection));
-    querySnapshot.forEach((doc) => {
-        // console.log(`175,${doc.id} => ${doc.data()}`);
-        items.push(doc.data());
-        i++;
-    });
-    return items;
+  const db = myApp[3]
+  let items: any = [];
+  let i = 0;
+  const querySnapshot = await getDocs(collection(db, thisCollection));
+  querySnapshot.forEach((doc) => {
+    // console.log(`175,${doc.id} => ${doc.data()}`);
+    items.push(doc.data());
+    i++;
+  });
+  return items;
 }
 
 export async function getItemsWhere(
-    thisCollection: string,
-    thisField: string,
-    thisValue: string
-  ) {
-    const db = myApp[3]
-    // console.log("getItemsWhere thisCollection", thisCollection);
-    // console.log("getItemsWhere thisField", thisField);
-    // console.log("getItemsWhere thisValue", thisValue);
-    /*
-      /// example
-      import { collection, query, where, getDocs } from "firebase/firestore";
-   
-      const q = query(collection(db, "cities"), where("capital", "==", true));
-   
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        //all0810 console.log(doc.id, " => ", doc.data());
-      });
-    */
-    // myDocs;
-    const q = query(
-      collection(db, thisCollection)
-      // where(thisField, "==", thisValue)
-    );
+  thisCollection: string,
+  thisField: string,
+  thisValue: string
+) {
+  const db = myApp[3]
+  // console.log("getItemsWhere thisCollection", thisCollection);
+  // console.log("getItemsWhere thisField", thisField);
+  // console.log("getItemsWhere thisValue", thisValue);
+  /*
+    /// example
+    import { collection, query, where, getDocs } from "firebase/firestore";
+ 
+    const q = query(collection(db, "cities"), where("capital", "==", true));
+ 
     const querySnapshot = await getDocs(q);
-    let myDocs: any = [];
-    // console.log("259 querySnapshot", querySnapshot);
-    // console.log("getItemsWhere thisCollection", thisCollection);
-    // console.log("getItemsWhere thisField", thisField);
-    // console.log("getItemsWhere thisValue", thisValue);
-    let i = 0
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      //  console.log("myId", doc.id, " => ", doc.data());
-      // console.log(254,i,thisField , doc.data()[thisField],thisValue ,doc.data()[thisField]==thisValue )
-      if (doc.data()[thisField] == thisValue) {
-        // console.log(253, thisField, doc.data()['email'],doc.data()[thisField]);
-        myDocs.push(doc.data());
-      } else {
-        // console.log(
-        //   257,
-        //   thisField,
-        //   doc.data()[thisField],
-        //   thisValue,
-        //   doc.data()[thisField] == thisValue
-        // );
-      }
-      i++
+      //all0810 console.log(doc.id, " => ", doc.data());
     });
-  
-     console.log("266 getItemsWhere myDocs ", myDocs);
-  
-    return myDocs;
-  }
-  // =============================
+  */
+  // myDocs;
+  const q = query(
+    collection(db, thisCollection)
+    // where(thisField, "==", thisValue)
+  );
+  const querySnapshot = await getDocs(q);
+  let myDocs: any = [];
+  // console.log("259 querySnapshot", querySnapshot);
+  // console.log("getItemsWhere thisCollection", thisCollection);
+  // console.log("getItemsWhere thisField", thisField);
+  // console.log("getItemsWhere thisValue", thisValue);
+  let i = 0
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    //  console.log("myId", doc.id, " => ", doc.data());
+    // console.log(254,i,thisField , doc.data()[thisField],thisValue ,doc.data()[thisField]==thisValue )
+    if (doc.data()[thisField] == thisValue) {
+      // console.log(253, thisField, doc.data()['email'],doc.data()[thisField]);
+      myDocs.push(doc.data());
+    } else {
+      // console.log(
+      //   257,
+      //   thisField,
+      //   doc.data()[thisField],
+      //   thisValue,
+      //   doc.data()[thisField] == thisValue
+      // );
+    }
+    i++
+  });
 
-  export async function fbLoginUser(
-    email: string,
-    password: string,
-    // codePromo: string
-  ) {
-    try {
-      const result = await signInWithEmailAndPassword(myApp, email, password);
-      //all0810 console.log(result);
-      // return { result, codePromo };
-      return { result };
-    } catch (error) {
-      //all0810 console.log(error);
-      return false;
-    }
+  console.log("266 getItemsWhere myDocs ", myDocs);
+
+  return myDocs;
+}
+// =============================
+
+export async function fbLoginUser(
+  email: string,
+  password: string,
+  // codePromo: string
+) {
+  try {
+    const result = await signInWithEmailAndPassword(myApp, email, password);
+    //all0810 console.log(result);
+    // return { result, codePromo };
+    return { result };
+  } catch (error) {
+    //all0810 console.log(error);
+    return false;
+  }
+}
+
+// =============================
+export async function updateItemModel(
+  thisCollection: string,
+  thisItemModel: any,
+  thisDoc: string
+) {
+  if (thisItemModel["codePromo"] == undefined) {
+    thisItemModel["codePromo"] = "";
+  }
+  console.log(
+    "183updateItemModel ",
+    thisItemModel,
+    "thisCollection:",
+    thisCollection,
+    "thisDoc:",
+    thisDoc
+  );
+  let myRefDoc;
+  myRefDoc = docStrToRef(thisCollection + "/" + thisDoc);
+  const myObject = [];
+  myObject[0] = await createObjectFromModel(thisItemModel);
+  console.log("359 myObject", myObject);
+  console.log("360 myObject[0]", myObject[0]);
+  //all0810 console.log("317 thisCollection, thisDoc", thisCollection, thisDoc);
+
+  let result;
+  try {
+    await setDoc(myRefDoc, myObject[0]);
+    result = "success";
+    console.log("====================== result SUCCESS", result);
+  } catch (error) {
+    result = error;
+    console.log("====================== result ERROR ", result);
   }
 
-  // =============================
-  export async function updateItemModel(
-    thisCollection: string,
-    thisItemModel: any,
-    thisDoc: string
-  ) {
-    if (thisItemModel["codePromo"] == undefined) {
-      thisItemModel["codePromo"] = "";
-    }
-    console.log(
-      "406updateItemModel ",
-      thisItemModel,
-      "thisCollection:",
-      thisCollection,
-      "thisDoc:",
-      thisDoc
-    );
-    let myRefDoc;
-    myRefDoc = docStrToRef(thisCollection + "/" + thisDoc);
-    const myObject = [];
-    myObject[0] = await createObjectFromModel(thisItemModel);
-    console.log("359 myObject", myObject);
-    console.log("360 myObject[0]", myObject[0]);
-    //all0810 console.log("317 thisCollection, thisDoc", thisCollection, thisDoc);
-  
-    let result;
-    try {
-      await setDoc(myRefDoc, myObject[0]);
-      result = "success";
-      console.log("====================== result SUCCESS", result);
-    } catch (error) {
-      result = error;
-      console.log("====================== result ERROR ", result);
-    }
-  
-    // console.log("327 result", result);
-    return result;
-  }
-  
+  // console.log("327 result", result);
+  return result;
+}
+
 export function docStrToRef(docStr: string) {
 
   const myApp = FirebaseInit()
@@ -266,6 +264,76 @@ export async function addItemAndSetId(collectionStr: string, thisItem: any) {
     updateItemModel(collectionStr, thisItem, thisItem.id);
   });
 
- 
+
   return myResult;
+}
+export async function informClientvalidPanier(
+  sellerName: string,
+  sellerEmail: string,
+  numFact: any,
+  userEmail: string,
+  thisPanier: any
+) {
+  console.log("1070 informClientvalidPanier panier", thisPanier);
+  //all0810 console.log(sellerName, sellerEmail, numFact, userEmail); // ok Chez Tao seller0@yahoo.fr 202206251 sg83auc@gmail.com
+  let emailOptions = {
+    // data need in index.ts functions
+    emailFrom: sellerEmail,
+    emailTo: `${userEmail}`,
+    subject: `Commande de:${userEmail}`,
+    isHtml: `nous vous remercions, ${userEmail}, pour votre commande n°:${numFact} pour : ${thisPanier} €, toute l'équipe  de ${sellerName} s'active pour vous offrir le meilleur service `,
+    // isHtml:"true string",
+  };
+  let thisCollection = "submissions";
+  let thisDoc = "mesageToBuyer";
+  //all0810 console.log("emailOptions = ", emailOptions);
+
+  updateItem(thisCollection, emailOptions, thisDoc);
+}
+
+export async function messagesToSellers(
+  sellerName: string,
+  sellerEmail: string,
+  numFact: any,
+  userEmail: string,
+  thisPanier: any
+) {
+  console.log("1134 messagesToSellers ", thisPanier);
+  console.log(sellerName, sellerEmail, numFact, userEmail); // ok Chez Tao seller0@yahoo.fr 202206251 sg83auc@gmail.com
+  let emailOptions = {
+    // data need in index.ts functions
+    emailFrom: sellerEmail,
+    emailTo: `${userEmail}`,
+    subject: `Commande de:${userEmail}`,
+    content: `1119Commande n°:${numFact} validée pour : ${thisPanier} €,    de ${userEmail} à préparer `,
+    // isHtml:"true string",
+  };
+  let thisCollection = "messagesToSeller";
+  let thisDoc = "seller2"
+  // let thisDoc = "${sellerId}";
+  console.log("emailOptions = ", emailOptions);
+
+  updateItemModel(thisCollection, emailOptions, thisDoc);
+}
+export async function informClientCdeRecu(
+  sellerName: string,
+  sellerEmail: string,
+  numFact: any,
+  userEmail: string
+) {
+  //all0810 console.log("informClientCdeRecu");
+  //all0810 console.log(sellerName, sellerEmail, numFact, userEmail); // ok Chez Tao seller0@yahoo.fr 202206251 sg83auc@gmail.com
+  let emailOptions = {
+    // data need in index.ts functions
+    emailFrom: sellerEmail,
+    emailTo: `${userEmail}`,
+    subject: `Commande de:${userEmail}`,
+    isHtml: `nous vous remercions pour votre commande n°:${numFact}/${userEmail} , toute l'équipe  de ${sellerName} s'active pour vous offrir le meilleur service`,
+    // isHtml:"true string",
+  };
+  let thisCollection = "submissions";
+  let thisDoc = "mesageToBuyer";
+  //all0810 console.log("emailOptions = ", emailOptions);
+
+  updateItem(thisCollection, emailOptions, thisDoc);
 }

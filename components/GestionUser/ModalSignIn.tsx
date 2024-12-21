@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   containerColumn: {
     flexDirection: 'column',
     flexWrap: 'nowrap',
-    borderColor: 'white', borderStyle: 'solid', borderWidth: 2,
+    // borderColor: 'white', borderStyle: 'solid', borderWidth: 2,
   },
   // mainContainer: {
   //     flex: 1,
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary || '#4caf50',
     borderRadius: 10,
     marginVertical: 10,
-    borderColor: 'green', borderStyle: 'solid', borderWidth: 2,
+    // borderColor: 'green', borderStyle: 'solid', borderWidth: 2,
   },
   modalContainer: {
     flex: 1,
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 20,
-    borderColor: 'white', borderStyle: 'solid', borderWidth: 2,
+    // borderColor: 'white', borderStyle: 'solid', borderWidth: 2,
   },
   modalHeader: {
     flexDirection: 'row',
@@ -209,19 +209,19 @@ const styles = StyleSheet.create({
     // borderColor: Colors.border || '#e0e0e0',
     paddingBottom: 10,
     backgroundColor: Colors.background || '#ffffff',
-    borderColor: 'pink', borderStyle: 'solid', borderWidth: 2,
+    // borderColor: 'pink', borderStyle: 'solid', borderWidth: 2,
   },
   modalTitle: {
     fontSize: 24,
     fontWeight: 'bold',
     color: Colors.textPrimary || '#000000',
-    borderColor: 'purple', borderStyle: 'solid', borderWidth: 2,
+    // borderColor: 'purple', borderStyle: 'solid', borderWidth: 2,
   },
   closeButton: {
     padding: 10,
     backgroundColor: Colors.closeButton || '#ff4d4d',
     borderRadius: 15,
-    borderColor: 'red', borderStyle: 'solid', borderWidth: 2,
+    // borderColor: 'red', borderStyle: 'solid', borderWidth: 2,
   },
   closeButtonText: {
     color: '#ffffff',
@@ -231,20 +231,20 @@ const styles = StyleSheet.create({
   modalContent: {
     flex: 1,
     marginTop: 20,
-    borderColor: 'turquoise', borderStyle: 'solid', borderWidth: 2,
+    // borderColor: 'turquoise', borderStyle: 'solid', borderWidth: 2,
   },
   userInfo: {
     marginBottom: 20,
     padding: 10,
     // backgroundColor: Colors.userInfoBackground || '#e0f7fa',
     borderRadius: 10,
-    borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
+    // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
   },
   connectedText: {
     fontSize: 16,
     color: Colors.textSecondary || '#00796b',
     marginBottom: 10,
-    borderColor: 'coral', borderStyle: 'solid', borderWidth: 2,
+    // borderColor: 'coral', borderStyle: 'solid', borderWidth: 2,
   },
   logoutButton: {
     padding: 10,
