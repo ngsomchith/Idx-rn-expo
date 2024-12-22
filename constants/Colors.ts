@@ -19,7 +19,7 @@ export const Colors: { [key: string]: string } = {
   primaryText:'white',
   secondaryBG:'#f2c2c2',
   secondaryText:'#333333',
-  accentBG:'#f8b8008a',
+  accentBG: '#c3731d' , //'#f8b8008a',
   accentText:'#ffffff',
   highlightBG:'#294e80',
   highlightText:'#ffffff',

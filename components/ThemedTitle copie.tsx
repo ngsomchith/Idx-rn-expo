@@ -18,9 +18,9 @@ export function ThemedTitle({
   children,
   ...rest
 }: ThemedTitleProps) {
-  darkColor = 'yellow'// Colors.primaryText
-  lightColor = 'white' // Colors.primaryText
-  const color = 'white' // useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  darkColor = Colors.primaryText
+  lightColor = Colors.primaryText
+  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
   // Helper function to render HTML tags for Web
   const renderContent = () => {

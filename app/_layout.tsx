@@ -10,6 +10,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { AuthProvider } from './AuthContext';
+import { ActivityIndicator } from 'react-native';
 // import AuthProvider from './AuthContext';
 // import { AuthProvider } from '@/app/AuthContext';
 
@@ -19,8 +20,19 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require('@/assets/fonts/SpaceMono-Regular.ttf'),
   });
+
+  // const [fontsLoaded] = useFonts({
+  //   // Déclare ta police ici
+  //   'OpenSans-Regular': require('../assets/fonts/OpenSans-Regular.ttf'),
+  //   // 'OpenSans-Bold': require('../assets/fonts/OpenSans-Bold.ttf'),
+  // });
+
+  // if (!fontsLoaded) {
+  //   // Affiche un indicateur de chargement si les polices ne sont pas encore prêtes
+  //   return <ActivityIndicator size="large" />;
+  // }
 
   useEffect(() => {
     if (loaded) {
@@ -38,14 +50,27 @@ export default function RootLayout() {
     <AuthProvider>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
 
-        <Stack>
+        <Stack
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+            headerTintColor: '#000',
+            headerTitleStyle: {
+              fontFamily: 'SpaceMono', // Utilise la police déclarée
+            },
+          }}
+        >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>
+
+
+
         <StatusBar style="auto" />
 
       </ThemeProvider>
 
-    </AuthProvider>
+    </AuthProvider >
   );
 }

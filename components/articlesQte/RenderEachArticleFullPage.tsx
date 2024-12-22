@@ -18,9 +18,12 @@ import ModalMenuN from './ModalMenuN';
 import images from '@/constants/images';
 import { iconSearchPlus } from '@/icons';
 import { ThemedTitle } from '../ThemedTitle';
+import { ThemedView } from '../ThemedView';
+import { ThemedText } from '../ThemedText';
 
 const RenderEachArticleFullPage = ({
   articlesFilteredToWrap,
+  maxHeightArticle,
   addToCart,
   removeFromCart,
   menuN,
@@ -33,14 +36,15 @@ const RenderEachArticleFullPage = ({
   const [qte, setQte] = useState(menuN?.qte || 0);
 
   const MAX_WIDTH = ThisDevice().device.width - 5;
-  const maxHeightArticle = 230;
 
   const myDevice = ThisDevice().device
-  const widthMobile = 650
-  const widthMobileOrWeb = MAX_WIDTH > widthMobile ? '40%' : '100%'
+  const widthMobile = 450
+  const sectionPriceHeight = 60
+  const widthMobileOrWeb = MAX_WIDTH > widthMobile ? widthMobile * .4 : '100%'
 
   const padHorizNotMobile = MAX_WIDTH > widthMobile ? '10%' : 0
 
+  const thisBackGround = menuN?.qte > 0 ? Colors.highlightBG : Colors.accentBG
   useEffect(() => {
     if (scrollY0 > 0 && scrollY0 !== scrollYLastVal) {
       setTimeout(() => {
@@ -67,101 +71,104 @@ const RenderEachArticleFullPage = ({
   };
 
   const renderMenuContent = () => (
-    <View style={styles.menuContainer}>
-      <ThemedTitle style={[styles.menuTitle, {
-        color: Colors.primaryText,
-        fontSize: 20,
-        width: '100%',
-        margin: 0,
-        textAlign: 'center',
-        overflow: 'hidden',
-        padding: 0,
-        height: 50,
-        marginVertical: 10,
-        // borderWidth: 5,
-        // borderColor: 'blue',
-        // borderStyle: 'solid',
-      }]}>{menuN?.name}</ThemedTitle>
-
-<View style={styles.descriptionContainer}>
-      <View style={[styles.imageContainer, {
-        // width: widthMobileOrWeb,
-        width: '100%',
-        maxWidth:'100%',
-        height: '80%',
-        position:'relative',
-        // borderWidth: 5,
-        // borderColor: 'blue',
-        // borderStyle: 'solid',
-      }]}>
-        <Text style={styles.icon}>{iconSearchPlus}</Text>
-        <ImageViewer placeholderImageSource={menuN?.img} />
-        {menuN &&
-                    menuN.pdjType === 'promo'
-                    // && menuN.qte >= 1
-                    &&
-                    <Text style={[styles.texteArticlePrix, {
-                        fontSize: 20,
-                        width: 100,
-                        // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '30%',
-                        display: 'flex', justifyContent: 'flex-end',
-                        paddingHorizontal: 5,
-                        alignItems: 'flex-end',
-                        color: Colors.primaryText,
-                        position: 'absolute',
-                        backgroundColor: 'green',
-                        left: '10%',
-                        top: '10%',
-                        borderRadius: 5,
-                        padding: 10
-                        // borderWidth: 5,
-                        // borderColor: 'white',
-                        // borderStyle: 'solid',
-                    }]}>
-                        {/* + {Math.round((menuN.qte / 2) - 0.5)} gratuit */}
-                        + 1 gratuit
-                    </Text>
-                }
-      </View>
-      <Text style={[styles.imageDescription, {
-
-        // width: widthMobileOrWeb,
-        width: '100%',
-        // height: '90%',
-        color: 'white',
-        fontSize: 16,
-        
+    <ThemedView style={styles.menuContainer}>
+      <View style={{//name
+        height: 70, maxHeight: 70,
         // borderWidth: 5,
         // borderColor: 'green',
         // borderStyle: 'solid',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        padding: 0
+      }}>
+        <ThemedText type="subtitle" style={[styles.menuTitle, {
 
-      }]}
-      // style={styles.icon}
-      >{menuN?.description}</Text>
-</View>
+        }]}>{menuN?.name}
+        </ThemedText>
+      </View>
+      <ThemedView style={styles.descriptionContainer}>
+        <ThemedView //imageViewer
+          style={[styles.imageContainer, {
+            // width: widthMobileOrWeb,
+            width: '100%',
+            maxWidth: '100%',
+            position: 'relative',
+            backgroundColor: thisBackGround,
+            // borderWidth: 5,
+            // borderColor: 'blue',
+            // borderStyle: 'solid',
+            height: widthMobileOrWeb
+          }]}>
+          {/* <ThemedText style={styles.icon}>{iconSearchPlus}</ThemedText> */}
+          <ImageViewer placeholderImageSource={menuN?.img} />
+          {menuN &&
+            menuN.pdjType === 'promo'
+            // && menuN.qte >= 1
+            &&
+            <ThemedText style={[styles.texteArticlePrix, {
+              fontSize: 20,
+              width: 100,
+              // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '30%',
+              display: 'flex', justifyContent: 'flex-end',
+              paddingHorizontal: 5,
+              alignItems: 'flex-end',
+              // color: Colors.primaryText,
+              color: 'white',
+              position: 'absolute',
+              backgroundColor: 'green',
+              left: '10%',
+              top: '10%',
+              borderRadius: 5,
+              padding: 10,
+              borderWidth: 5,
+              borderColor: 'white',
+              borderStyle: 'solid',
+            }]}>
+              {/* + {Math.round((menuN.qte / 2) - 0.5)} gratuit */}
+              + 1 gratuit
+            </ThemedText>
+          }
+        </ThemedView>
+        <ThemedText type="default" style={[styles.imageDescription, {
 
-      {/* <View style={styles.figCaption}>
-        <Text style={styles.description}>{menuN?.description}</Text>
+          width: '100%',
+          // color: 'white',
+          fontSize: 16,
+          // borderWidth: 5,
+          // borderColor: 'green',
+          // borderStyle: 'solid',
+
+        }]}
+        // style={styles.icon}
+        >{menuN?.explication}
+        </ThemedText>
+
+      </ThemedView>
+
+      {/* <ThemedView style={styles.figCaption}>
+        <ThemedText style={styles.description}>{menuN?.description}</ThemedText>
         {renderDateContent()}
-      </View> */}
-    </View>
+      </ThemedView> */}
+    </ThemedView>
   );
 
   const renderPriceSection = () => (
-    <View style={styles.priceSection}>
+    <ThemedView style={styles.priceSection}>
       {menuN?.prixbarre > 0 && (
-        <Text style={[styles.strikethroughPrice, {
+        <ThemedText style={[styles.strikethroughPrice, {
           position: 'absolute', top: -20
         }]}>
           {Number(menuN.prixbarre).toFixed(2)}€
-        </Text>
+        </ThemedText>
       )}
       {menuN?.prix > 0 && (
-        <Text style={styles.price}>{Number(menuN.prix).toFixed(2)}€</Text>
+        <ThemedText style={styles.price}>{Number(menuN.prix).toFixed(2)}€</ThemedText>
       )}
-      <View style={styles.quantityControls}>
+      <ThemedView style={styles.quantityControls}>
         <Pressable style={styles.quantityButton} onPress={decrementQuantity}>
-          <Text style={styles.quantityButtonText}>-</Text>
+          <ThemedText style={styles.quantityButtonText}>-</ThemedText>
         </Pressable>
         <TextInput
           style={styles.quantityInput}
@@ -169,10 +176,10 @@ const RenderEachArticleFullPage = ({
           value={String(qte)}
         />
         <Pressable style={styles.quantityButton} onPress={incrementQuantity}>
-          <Text style={styles.quantityButtonText}>+</Text>
+          <ThemedText style={styles.quantityButtonText}>+</ThemedText>
         </Pressable>
-      </View>
-    </View>
+      </ThemedView>
+    </ThemedView>
   );
 
 
@@ -180,6 +187,8 @@ const RenderEachArticleFullPage = ({
 
   const styles = StyleSheet.create({
     articleContainer: {
+      borderColor: thisBackGround, borderStyle: 'solid', borderWidth: 8,
+      borderRadius: 18
     },
     articleContent: {
     },
@@ -189,17 +198,17 @@ const RenderEachArticleFullPage = ({
       alignItems: 'center',
       width: '100%',
       paddingVertical: 8,
-      maxHeight: 60, // Limiter la hauteur
-      // borderWidth: 2,
-      // borderColor: Colors.primaryText, // Couleur adaptée pour contraste
+      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
+      height: sectionPriceHeight,
       borderRadius: 10,
-      backgroundColor: Colors.background, // Couleur de fond pour une meilleure visibilité
+      backgroundColor: thisBackGround, // Couleur de fond pour une meilleure visibilité
     },
     strikethroughPrice: {
       textDecorationLine: 'line-through',
       color: 'red',
       backgroundColor: 'white',
       padding: 3,
+      position:'absolute',
       fontSize: 16,
       transform: [{ rotate: '-30deg' }], // Rotation de 45 degrés
     },
@@ -216,6 +225,7 @@ const RenderEachArticleFullPage = ({
     quantityControls: {
       flexDirection: 'row',
       alignItems: 'center',
+      borderColor: Colors.primaryBG, borderStyle: 'solid', borderWidth: 3,
     },
     quantityButton: {
       backgroundColor: Colors.highlightBG, // Couleur plus visible
@@ -262,31 +272,61 @@ const RenderEachArticleFullPage = ({
     menuContainer: {
       display: 'flex',
       flexDirection: 'column',
-      // justifyContent: 'space-around',
+      backgroundColor: thisBackGround,
+      justifyContent: 'flex-start',
       // flexWrap: 'nowrap',
       width: '100%',
+      minHeight: maxHeightArticle - sectionPriceHeight,
+      height: '100%',// maxHeightArticle - sectionPriceHeight, //MAX_WIDTH > widthMobile ? 400 : 350,
 
-      height: 500, //MAX_WIDTH > widthMobile ? 400 : 350,
-      // borderColor: 'pink',
-      // borderWidth: 3,
+      // borderColor: 'red', borderStyle: 'solid', borderWidth: 5,
+      // backgroundColor: 'transparent'
     },
 
     descriptionContainer: {
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-around',
+      justifyContent: 'flex-start',
       flexWrap: 'nowrap',
+      flex: 1,
       maxWidth: '100%',
-
-      height: MAX_WIDTH > widthMobile ? 450 : 350,
-      // borderColor: 'red',
-      // borderWidth: 3,
+      backgroundColor: thisBackGround,
+      // borderWidth: 5,
+      // borderColor: 'pink',
+      // borderStyle: 'solid',
+      height: '80%',
+      maxHeight:MAX_WIDTH > widthMobile ?  widthMobile *.8 : widthMobile * 1.5 ,
+      overflow: 'hidden',  
     },
     menuTitle: {
+      color: 'white',
+      fontSize: 20,
+      width: '100%',
+      margin: 0,
+      textAlign: 'center',
+      overflow: 'hidden',
+      backgroundColor:thisBackGround,
+      padding: 0,
+      height: 70,
+      // minHeight: 70,
+      maxHeight: 70,
+      paddingVertical: 0,
+      // backgroundColor:Colors.accentBG
     },
     imageContainer: {
+      height: widthMobileOrWeb,
+      width: widthMobile,
+      maxHeight: widthMobile
     },
     imageDescription: {
+      display: 'flex',
+      height: widthMobile * .3,
+      maxHeight: widthMobile * .3,
+      overflow: 'hidden',
+      backgroundColor: thisBackGround,
+      // borderWidth: 10,
+      // borderColor: 'white',
+      // borderStyle: 'solid',
     },
     icon: {
       position: 'absolute',
@@ -297,16 +337,16 @@ const RenderEachArticleFullPage = ({
     },
     figCaption: {
       width: '100%',
-      minHeight: 60,
+      // minHeight: 60,
       flex: 1,
       display: 'flex',
-      maxHeight: 60,
+      // maxHeight: 60,
       overflow: 'hidden',
       justifyContent: 'flex-end',
       alignItems: 'flex-end',
       position: 'absolute',
       bottom: -60,
-      backgroundColor: Colors.highlightBG,
+      backgroundColor: thisBackGround,
       marginVertical: 10,
     },
     description: {
@@ -319,85 +359,90 @@ const RenderEachArticleFullPage = ({
       color: 'white',
       fontSize: 14,
       height: 64,
+      backgroundColor: thisBackGround,
       // minHeight:50,
       maxHeight: 64,
       margin: 0,
       padding: 0
     },
-    dateContainer: {
-      width: '100%',
-      marginVertical: 5,
-    },
-    dateText: {
-      backgroundColor: Colors.highlightBG,
-      color: Colors.primaryText,
-      fontSize: 16,
-    },
-    lienContainer: {
-      flex: 1,
-      width: '100%',
-      backgroundColor: '#ecf0f1',
-      marginVertical: 10,
-      borderRadius: 10,
-      // borderColor: 'gold',
-      // borderWidth: 5,
-      // borderStyle: 'solid',
-      // minHeight: device.heightBody,
-      justifyContent: 'space-around',
-    },
-    lienContent: {
-      height: '80%',
-      width: '100%',
-      justifyContent: 'space-around',
-      // borderWidth: 3,
-      // borderColor: 'white',
-    },
-    lienTitle: {
-      color: 'white',
-      fontSize: 26,
-    },
-    lienButtonContainer: {
-      marginVertical: 20,
-      padding: 10,
-      borderRadius: 18,
-      width: '80%',
-      alignItems: 'center',
-    },
-    lienButton: {
-      color: 'white',
-      fontSize: 26,
-    },
-    modalHeader: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginVertical: 10,
-      // borderWidth: 5,
-      // borderColor: 'pink',
-      // borderStyle: 'solid',
-    },
-    modalTitle: {
-      fontSize: 30,
-    },
-    modalContent: {
-      width: '100%',
-      height: '100%',
-      minWidth: 100,
-      minHeight: 50,
-      justifyContent: "flex-start",
-      backgroundColor: 'coral',
-      alignItems: "center",
-      padding: 10,
-      // borderWidth: 3,
-      // borderColor: 'yellow',
-    },
+    // dateContainer: {
+    //   width: '100%',
+    //   marginVertical: 5,
+    // },
+    // dateText: {
+    //   backgroundColor: Colors.highlightBG,
+    //   color: Colors.primaryText,
+    //   fontSize: 16,
+    // },
+    // lienContainer: {
+    //   flex: 1,
+    //   width: '100%',
+    //   backgroundColor: '#ecf0f1',
+    //   marginVertical: 10,
+    //   borderRadius: 10,
+    //   // borderColor: 'gold',
+    //   // borderWidth: 5,
+    //   // borderStyle: 'solid',
+    //   // minHeight: device.heightBody,
+    //   justifyContent: 'space-around',
+    // },
+    // lienContent: {
+    //   height: '80%',
+    //   width: '100%',
+    //   justifyContent: 'space-around',
+    //   // borderWidth: 3,
+    //   // borderColor: 'white',
+    // },
+    // lienTitle: {
+    //   color: 'white',
+    //   fontSize: 26,
+    // },
+    // lienButtonContainer: {
+    //   marginVertical: 20,
+    //   padding: 10,
+    //   borderRadius: 18,
+    //   width: '80%',
+    //   alignItems: 'center',
+    // },
+    // lienButton: {
+    //   color: 'white',
+    //   fontSize: 26,
+    // },
+    // modalHeader: {
+    //   flexDirection: 'row',
+    //   justifyContent: 'space-between',
+    //   marginVertical: 10,
+    //   // borderWidth: 5,
+    //   // borderColor: 'pink',
+    //   // borderStyle: 'solid',
+    // },
+    // modalTitle: {
+    //   fontSize: 30,
+    // },
+    // modalContent: {
+    //   width: '100%',
+    //   height: '100%',
+    //   minWidth: 100,
+    //   minHeight: '100%',
+    //   maxHeight:'100%',
+    //   display: 'flex',
+    //   justifyContent: "flex-start",
+    //   backgroundColor: 'coral',
+    //   alignItems: "center",
+    //   padding: 10,
+    //   // borderWidth: 3,
+    //   // borderColor: 'yellow',
+    // },
   });
 
-  return (
-    <View style={[styles.articleContainer, {
+  return ( //global
+    <ThemedView style={[styles.articleContainer, {
       minWidth: '100%',
-      maxWidth:'100%'
+      maxWidth: '100%',
+      height: '100%',
+      // borderColor: 'white', borderStyle: 'solid', borderWidth: 10,
     }]}>
-      <View
+      <ThemedView
         style={[
           styles.articleContent,
 
@@ -406,14 +451,16 @@ const RenderEachArticleFullPage = ({
             flexDirection: 'column',
             width: '100%',
             minWidth: '100%',
+            minHeight: '100%',
             paddingHorizontal: 5,
-            height: '100%',
+            height: maxHeightArticle,//height of price section
+
             borderRadius: 10,
             display: 'flex',
             alignItems: 'flex-start',
             justifyContent: 'space-between',
             // borderColor: 'coral',
-            // borderWidth: 15,
+            // borderWidth: 5,
             // borderStyle: 'solid',
           },
         ]}
@@ -421,8 +468,8 @@ const RenderEachArticleFullPage = ({
         {/* <ModalMenuN menuN={menuN} /> */}
         {renderMenuContent()}
         {renderPriceSection()}
-      </View>
-    </View>
+      </ThemedView>
+    </ThemedView>
   );
 };
 
