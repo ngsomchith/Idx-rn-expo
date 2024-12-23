@@ -123,14 +123,15 @@ export default function ButtonStd({ iconL,iconR, label, labelColor, onPress, onC
         justifyContent: 'center',
         alignItems: 'center',
         // borderWidth: 2, 
-        borderColor: 'yellow',
+        // borderColor: 'yellow',
         // borderStyle:'solid' ,
       }}
         onPress={onPress}>
         <Text style={{ marginHorizontal: 'auto', height: '100%',margin:0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}> {iconL}</Text>
 
         <Text style={[styles.buttonLabelNoIcon,{flex:1} ]}>{label}</Text>
-        <Text style={{ marginHorizontal: 'auto', height: '100%',margin:0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}> {iconR}</Text>
+        {iconR}
+        {/* <Text style={{ marginHorizontal: 'auto', height: '100%',margin:0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}> {iconR}</Text> */}
       </Pressable>
 
 

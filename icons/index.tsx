@@ -1,6 +1,8 @@
 
 import { StyleSheet, Button, View, Text, ScrollView, Pressable, SafeAreaView, ScrollViewComponent, FlatList, Platform } from 'react-native';
 
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faBasketShopping, faBookOpen, faCoffee, faHouseChimney } from '@fortawesome/free-solid-svg-icons';
 // import {
 //     AntDesign, Entypo, Feather,
 //     FontAwesome, FontAwesome5, Fontisto, Ionicons,
@@ -98,7 +100,9 @@ const iconMinus = <MaterialIcons name="do_not_disturb_on" size={30} color="white
 const iconPlusUn = <MaterialIcons name="add_circle" size={30} color="#e1a805" />;
 const iconEuro = <MaterialIcons name="euro" size={30} color="white" />;
 const iconVisitor = <MaterialIcons name="location_away" size={30} color="white" />;
-const iconHome = <MaterialIcons name="home" size={30} color="white" />;
+
+const iconHome = <FontAwesomeIcon icon={faHouseChimney} size ={24} color="brown"/>;
+const iconMenu = <FontAwesomeIcon icon={faBookOpen} size ={48} color={Colors.primaryBG} />;
 const iconInfo = <MaterialIcons name="info" size={30} color="white" />;
 const iconClock = <MaterialIcons name="schedule" size={30} color="white" />;
 const iconCheck = <MaterialIcons name="check" size={30} color="white" />;
@@ -115,7 +119,7 @@ const iconClick = <MaterialIcons name="touch_app" size={30} color="white" />;
 const iconMessage = <MaterialIcons name="sms" size={30} color="white" />;
 const iconClose = <MaterialIcons name="cancel" size={30} color="red" />;
 const iconBack = <MaterialIcons name="arrow_back" size={30} color="white" />;
-const iconBasket = <FontAwesome5 name="shopping-basket" style={{ fontSize: 24 }} color="white" /> // <MaterialIcons name="shopping_basket" size={30} color="white" />;
+const iconBasket = <FontAwesomeIcon icon={faBasketShopping} size={32} color="white" /> // <MaterialIcons name="shopping_basket" size={30} color="white" />;
 const iconEdit = <MaterialIcons name="edit_note" size={30} color="white" />;
 const iconSmartphone = <MaterialIcons name="smartphone" size={30} color="white" />;
 const iconSmartphoneneeded = <MaterialIcons name="smartphone" size={30} color="red" />;
@@ -125,6 +129,7 @@ const iconFilter = <MaterialIcons name="filter_alt" size={30} color="white" />;
 const iconCalendarClock = <MaterialIcons name="today" size={30} color="white" />;
 
 export {
+  iconMenu,
   iconSend,
   iconUpCircle,
   iconTop,

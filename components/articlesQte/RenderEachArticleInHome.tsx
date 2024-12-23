@@ -54,7 +54,8 @@ const RenderEachArticleInHome = ({
   };
 
   const decrementQuantity = (menuN:any) => {
-    if (menuN.qte > 0) {
+    console.log("RInHome decrementQuantity menuN.qte = ",menuN.qte, " :: qte = ", qte )
+    if (qte > 0 ) {
       menuN.qte--;
       removeFromCart(menuN);
       setQte(typeof(qte)=='number' ? qte-1 : Number(qte)-1);
@@ -108,11 +109,11 @@ const RenderEachArticleInHome = ({
   const renderPriceSection = (menuN: any) => (
     <ThemedView style={styles.priceSection}>
       {menuN?.prixbarre > 0 && (
-        <ThemedText style={[styles.strikethroughPrice, {
+        <Text style={[styles.strikethroughPrice, {
           position: 'absolute', top: -20
         }]}>
           {Number(menuN.prixbarre).toFixed(2)}€
-        </ThemedText>
+        </Text>
       )}
       {menuN?.prix > 0 && (
         <ThemedText style={styles.price}>{Number(menuN.prix).toFixed(2)}€</ThemedText>

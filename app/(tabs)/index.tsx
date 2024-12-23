@@ -22,6 +22,7 @@ import ButtonStd from '@/components/ButtonTypeStd';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { iconMenu } from '@/icons';
 
 
 export default function HomeScreen({ }) { //navigation, route
@@ -120,7 +121,7 @@ export default function HomeScreen({ }) { //navigation, route
   }, [topVentesList])
 
 
-  async function goTo(url: any) {
+  async function goTo(url: any,rayon:string) {
 
     // setTimeout(async () => {
     const itemPdjType0 = platDuJour && platDuJour['pdjType']
@@ -132,7 +133,8 @@ export default function HomeScreen({ }) { //navigation, route
       articlesList: articlesList,
       articlesListByCat: articlesListByCat,
       cart: cart,
-      currentUser: currentUser
+      currentUser: currentUser,
+      rayon: rayon
     }
 
     // Construire les paramètres à passer à la route
@@ -150,10 +152,17 @@ export default function HomeScreen({ }) { //navigation, route
 
   }
 
-  const buttonGoToMenu = (url: any) => {
+  const buttonGoToMenu = (url: any, thisIcon: any,rayon:string) => {
     return (
-      <ButtonStd iconL={undefined} iconR={undefined} label={url} labelColor={Colors.primaryText}
-        onPress={() => goTo(url)} onChange={undefined} bgButton={Colors.accentBG} />
+      <View style={{width: 50, position:'relative'}}>
+        <ButtonStd iconL={undefined} iconR={thisIcon} label={''} labelColor={Colors.primaryText}
+          onPress={() => goTo(url,rayon)} onChange={undefined} bgButton={Colors.accentBG} />
+        <Text style={{
+          color: Colors.primaryText,
+          position:'absolute',
+          bottom: 0
+        }}>{rayon} </Text>
+      </View>
 
     )
   }
@@ -175,11 +184,11 @@ export default function HomeScreen({ }) { //navigation, route
       _topVente?.forEach((element: any, index: any) => {
         // console.log('98', element.name, index)
         if (element.name, element.name.indexOf('Fondu') >= 0) { topVentesListTemp[0] = element }//, console.log("topVentesListTemp93 ", index, element, topVentesListTemp[index]) }
-        if (element.name, element.name.indexOf('Bo Bun Boeuf Nem') >= 0) { topVentesListTemp[1] = element }//, console.log("topVentesListTemp94 ", index, element, topVentesListTemp[index]) }
+        if (element.name, element.name.indexOf('Bo Bun Boeuf') >= 0) { topVentesListTemp[1] = element }//, console.log("topVentesListTemp94 ", index, element, topVentesListTemp[index]) }
         if (element.name, element.name.indexOf('Phat Thai') >= 0) { topVentesListTemp[2] = element }//, console.log("topVentesListTemp95 ", index, element, topVentesListTemp[index]) }
         if (element.name, element.name.indexOf('Riz Cantonnais') >= 0) { topVentesListTemp[3] = element }//, console.log("topVentesListTemp96 ", index, element, topVentesListTemp[index]) }
         if (element.name, element.name.indexOf('Poke Thon Saumon') >= 0) { topVentesListTemp[4] = element }//, console.log("topVentesListTemp97 ", index, element, topVentesListTemp[index]) }
-        if (element.name, element.name.indexOf('Pho (Soupe de Bœuf et pates de riz)') >= 0) { topVentesListTemp[5] = element }//, console.log("topVentesListTemp98 ", index, element, topVentesListTemp[index]) }
+        if (element.name, element.name.indexOf('Cali Saumon Avocat') >= 0) { topVentesListTemp[5] = element }//, console.log("topVentesListTemp98 ", index, element, topVentesListTemp[index]) }
         // if (element.name,element.name.indexOf('Cali Saumon Avocat') >= 0) { topVentesListTemp[index] = element}//, console.log("topVentesListTemp93 ", index, element, topVentesListTemp[index]) }
 
       })
@@ -211,7 +220,7 @@ export default function HomeScreen({ }) { //navigation, route
       backgroundColor: 'transparent',
       height: '100%',
       width: '100%',
-      padding: 10,
+      padding: 4,
       // paddingHorizontal: padHorizNotMobile,
       position: 'relative',
       // borderColor: 'white', borderStyle: 'solid', borderWidth: 4,
@@ -229,9 +238,11 @@ export default function HomeScreen({ }) { //navigation, route
     stepContainer: {
       gap: 8,
       marginBottom: 8,
+      minWidth:'90%',
       marginVertical: 40,
-      padding: 10,
-      backgroundColor: Colors.primaryBG,
+      padding: 4,
+      paddingVertical: 10,
+      backgroundColor:  Colors.primaryBG,
       // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 8,
       display: 'flex', flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'space-between'
     },
@@ -260,14 +271,14 @@ export default function HomeScreen({ }) { //navigation, route
       flexDirection: 'row',
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
-      width: MAXWIDTH > widthMobile ? '46%' : '100%',
-      minWidth: MAXWIDTH > widthMobile ? '46%' : '100%',
+      width: MAXWIDTH > widthMobile ? '48%' : '100%',
+      minWidth: MAXWIDTH > widthMobile ? '48%' : '100%',
       backgroundColor: Colors.primaryBG,
       marginVertical: 20,
       // borderColor: MAXWIDTH > widthMobile ? 'green': 'yellow' ,
-      // borderWidth: 5,
+      // borderWidth: 2,
       // borderStyle: 'solid',
-      padding: 8,
+      padding: 4,
       margin: 0,
       borderRadius: 10,
       height: maxHeightArticle,
@@ -336,13 +347,15 @@ export default function HomeScreen({ }) { //navigation, route
 
       <ParallaxScrollView //background image
 
-          headerBackgroundColor={{ light: '#A1CEDC', dark: Colors.primaryBG }}
-          headerImage={ // BackgroundImage
+        headerBackgroundColor={{ light: '#A1CEDC', dark: Colors.primaryBG }}
+        headerImage={ // BackgroundImage
           // <BackgroundImage />
           <View style={{
             height: screenHeight,
-            width: screenHeight,
-            // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 1,
+            width: screenWidth,
+            // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 3,
+            padding: 0,
+            
             position: 'relative',
 
           }}>
@@ -388,7 +401,7 @@ export default function HomeScreen({ }) { //navigation, route
               {/* {renderHtmlIcon('send')} */}
             </ThemedText>
             <ThemedText type="default">
-              Découvrez une expérience culinaire unique où la fraîcheur et la tradition se rencontrent. Chez Delicatessen, nous livrons des sushis et d'autres plats vietnamiens faits maison à la demande.
+              Découvrez une expérience culinaire unique où la fraîcheur et la tradition se rencontrent. Chez Delicatessen, nous livrons des Sushis et d'autres plats vietnamiens faits maison à la demande.
 
             </ThemedText>
             <ThemedText style={{ width: '100%', textAlign: 'left' }}> Site en cours en finition, N'hésitez pas à nous appeler :07 43 33 12 34</ThemedText>
@@ -409,7 +422,7 @@ export default function HomeScreen({ }) { //navigation, route
                 </Text>
                 <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
                   addToCart={addToCart} removeFromCart={removeFromCart}
-                  buttonGoToMenu={buttonGoToMenu('articles')}
+                  buttonGoToMenu={buttonGoToMenu('articles', iconMenu,'Tout')}
                   menuN={topVentesList[0]} scrollY0={undefined}
                   scrollX0={undefined} updateScrollValue={undefined} />
 
@@ -430,7 +443,7 @@ export default function HomeScreen({ }) { //navigation, route
                 </Text> */}
                 <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
                   addToCart={addToCart} removeFromCart={removeFromCart}
-
+                  buttonGoToMenu={buttonGoToMenu('articles', iconMenu,'Traditionnels')}
                   menuN={topVentesList[1]} scrollY0={undefined}
                   scrollX0={undefined} updateScrollValue={undefined} />
               </View>
@@ -440,12 +453,13 @@ export default function HomeScreen({ }) { //navigation, route
 
           <ThemedView style={[styles.stepContainer, {
           }]}>
-            <Text style={{ width: '100%' }}>🍕🍣🍔 Des saveurs pour tous les goûts, à prix malin !</Text>
+            <ThemedText style={{ width: '100%' }}>🍕🍣🍔 Des saveurs pour tous les goûts, à prix malin !</ThemedText>
 
             {topVentesList &&
               <View style={styles.eachContainerArticle}>
                 <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
                   addToCart={addToCart} removeFromCart={removeFromCart}
+                  buttonGoToMenu={buttonGoToMenu('articles', iconMenu,'Traditionnels')}
                   menuN={topVentesList[2]} scrollY0={undefined}
                   scrollX0={undefined} updateScrollValue={undefined} />
               </View>}
@@ -455,6 +469,7 @@ export default function HomeScreen({ }) { //navigation, route
               <View style={styles.eachContainerArticle}>
                 <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
                   addToCart={addToCart} removeFromCart={removeFromCart}
+                  buttonGoToMenu={buttonGoToMenu('articles', iconMenu,'Traditionnels')}
                   menuN={topVentesList[3]} scrollY0={undefined}
                   scrollX0={undefined} updateScrollValue={undefined} />
               </View>}
@@ -468,6 +483,7 @@ export default function HomeScreen({ }) { //navigation, route
               <View style={styles.eachContainerArticle}>
                 <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
                   addToCart={addToCart} removeFromCart={removeFromCart}
+                  buttonGoToMenu={buttonGoToMenu('articles', iconMenu,'Sushi')}
                   menuN={topVentesList[4]} scrollY0={undefined}
                   scrollX0={undefined} updateScrollValue={undefined} />
               </View>}
@@ -477,6 +493,7 @@ export default function HomeScreen({ }) { //navigation, route
               <View style={styles.eachContainerArticle}>
                 <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
                   addToCart={addToCart} removeFromCart={removeFromCart}
+                  buttonGoToMenu={buttonGoToMenu('articles', iconMenu,'Sushi')}
                   menuN={topVentesList[5]} scrollY0={undefined}
                   scrollX0={undefined} updateScrollValue={undefined} />
               </View>}
@@ -485,7 +502,7 @@ export default function HomeScreen({ }) { //navigation, route
 
         </ThemedView>
 
-        {/* <ThemedView style={styles.stepContainer}> */}
+
         <ThemedText type="defaultSemiBold">📍 Livraison rapide à Toulon et alentours.</ThemedText>
         <ThemedText type="default">
           Découvrez, commandez, dégustez : c'est bon pour vous et pour votre portefeuille ! 🥂✨

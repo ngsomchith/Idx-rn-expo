@@ -111,31 +111,32 @@ const RenderEachArticleFullPage = ({
             
           <ImageViewer placeholderImageSource={menuN?.img} />
           {menuN &&
-            menuN.pdjType === 'promo'
+            menuN.ref === "topV175"
             // && menuN.qte >= 1
             &&
-            <ThemedText style={[styles.texteArticlePrix, { //  + 1 gratuit
+            <Text style={[styles.texteArticlePrix, { //  + 1 gratuit
               fontSize: 20,
-              width: 100,
+              width: 220,
+              textAlign:'center',
               // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '30%',
-              display: 'flex', justifyContent: 'flex-end',
+              display: 'flex', justifyContent: 'center',
               paddingHorizontal: 5,
-              alignItems: 'flex-end',
+              alignItems: 'center',
               // color: Colors.primaryText,
               color: 'white',
-              position: 'absolute',
+              position: 'relative',
               backgroundColor: 'green',
-              left: '10%',
-              top: '10%',
+              left: 10,
+              top: 50,
               borderRadius: 5,
               padding: 10,
-              // borderWidth: 5,
-              // borderColor: 'white',
-              // borderStyle: 'solid',
+              borderWidth: 5,
+              borderColor: 'white',
+              borderStyle: 'solid',
             }]}>
               {/* + {Math.round((menuN.qte / 2) - 0.5)} gratuit */}
-              + 1 gratuit
-            </ThemedText>
+              1 Acheté = 1 Offert
+            </Text>
           }
         </ThemedView>
         <ThemedText type="default" style={[styles.imageDescription, {
@@ -458,7 +459,7 @@ const RenderEachArticleFullPage = ({
             width: '100%',
             minWidth: '100%',
             minHeight: '100%',
-            paddingHorizontal: 5,
+            paddingHorizontal: 0,
             height: maxHeightArticle,//height of price section
             maxHeight: '100%',
             borderRadius: 10,

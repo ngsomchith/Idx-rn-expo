@@ -10,7 +10,7 @@ const SearchableList = ({ search, setSearch, filteredData, addToCart, removeFrom
     };
     const styles = StyleSheet.create({
       mainContainer: {
-        flex: 1,
+        // flex: 1,
         backgroundColor: Colors.background,
       },
       headerContainer: {
@@ -47,7 +47,7 @@ const SearchableList = ({ search, setSearch, filteredData, addToCart, removeFrom
       },
       container: {
         flex: 1,
-        backgroundColor: 'grey',
+        backgroundColor: Colors.primaryBG,
       },
       searchBar: {
         height: 60,
@@ -60,7 +60,18 @@ const SearchableList = ({ search, setSearch, filteredData, addToCart, removeFrom
     return (
       <View style={styles.container}>
         <TextInput
-          style={[styles.searchBar, { color: 'white', paddingHorizontal: 10, fontSize: 16 }]}
+          style={[styles.searchBar, { 
+            color: 'white', 
+            paddingHorizontal: 10, 
+            fontSize: 16,
+            marginHorizontal: '1%',
+            width:'98%',
+            height: 50,
+            marginVertical: 5,
+            // borderWidth: 5,
+            // borderColor: 'yellow',
+            // borderStyle: 'solid',
+          }]}
           placeholder="Search items..."
           placeholderTextColor="#888"
           value={search}

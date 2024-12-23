@@ -25,6 +25,7 @@ import { getItems, informClientvalidPanier, messagesToSellers, updateItemModel }
 import { CommandeType } from '@/app/models/CommandeType';
 import { Toaster } from 'react-native-toastboard';
 import { ToasterContainer } from '../ToasterContainer';
+import GestCodePromo from './GestCodePromo';
 
 const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
 
@@ -291,12 +292,12 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                 <View style={[
                     // styles.dbRow
                     , {
-                        
+
                         maxWidth: 500,
                         // borderColor: 'white',
                         // borderStyle: 'solid',
                         // borderWidth: 1,
-                        marginHorizontal:'auto',
+                        marginHorizontal: 'auto',
                         width: '100%',
                         // maxWidth: '100%',
                         justifyContent: 'space-between',
@@ -328,10 +329,14 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                     <Text style={[, { color: 'white', width: '10%', textAlign: 'left', fontWeight: '600' }]} > {totalQte}  </Text>
                     <Text style={[, { color: 'white', width: '17%', textAlign: 'left', fontWeight: '600' }]} >{total.toFixed(2)}€ </Text>
                 </View>
+
+                {/* <View style={{ backgroundColor: Colors.highlightBG, padding: 10 }}>
+                    <GestCodePromo />
+                </View> */}
                 {/* {warningToaster()} */}
                 <Pressable onPress={() => saveCurrentCde()}
-                style={{padding: 10, backgroundColor: '#c3731d', marginVertical: 10, borderRadius: 10}}>
-                    <Text style={{color: 'white', textAlign:'center', fontSize: 20}}>Valider votre commande</Text>
+                    style={{ padding: 10, backgroundColor: '#c3731d', marginVertical: 10, borderRadius: 10 }}>
+                    <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>Valider votre commande</Text>
                 </Pressable>
                 {/* <ButtonStd iconL={undefined} iconR={undefined}
                     label={'Valider votre commande'} labelColor={Colors.primaryText}
@@ -339,9 +344,9 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                     bgButton={'#c3731d'} /> */}
 
                 {commandeRecu &&
-                    <View style={{backgroundColor: Colors.highlightBG, padding : 10}}>
+                    <View style={{ backgroundColor: Colors.highlightBG, padding: 10 }}>
                         <ThemedText>Merci pour votre commande </ThemedText>
-                        <ThemedText> 
+                        <ThemedText>
                             Nous vous rappellons dnas peu de temps
                         </ThemedText>
                         <ThemedText>Si besoin, contactez nous au 07 43 30 12 34</ThemedText>
@@ -409,7 +414,7 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                     left: -15, top: -10,
                     width: 50,
                     borderWidth: 1, borderColor: 'green', borderStyle: 'solid',
-                     }}>
+                }}>
                     <ThemedText style={{
                         position: 'absolute',
                         top: -30, left: 30,
@@ -418,7 +423,7 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                     <Text style={{ position: 'relative', top: 0, left: 0 }}>
                         {/* {iconBasket}  */}
 
-                        <FontAwesomeIcon icon={faBasketShopping}style={{ fontSize: 32 }} color="white" />
+                        <FontAwesomeIcon icon={faBasketShopping} size={32} color="white" />
                     </Text>
                 </View>
             </Pressable>

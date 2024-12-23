@@ -44,12 +44,12 @@ export default function TabTwoScreen() {
   const route = useRoute();
   // const { thisParams0 } = route?.params;
   useEffect(() => {
-    setThisParams(route?.params)
+    setThisParams(route?.params?.thisParams)
   }, [])
   const navigation = useNavigation<NavigationProps>();
   const [currentPdjType, setCurrentPdjType] = useState('');
   const [categoryName, setCategoryName] = useState('');
-  const [pdjRayon, setPdjRayon] = useState([]);
+  const [pdjRayon, setPdjRayon] = useState(pdjTitleObject0);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
 
@@ -82,7 +82,7 @@ export default function TabTwoScreen() {
     );
   };
   useEffect(() => {
-    callBackFromPickerName(['Tout', pdjTitleObject0])
+    // callBackFromPickerName(['Tout', pdjTitleObject0])
   }, [])
 
   useEffect(() => {
@@ -102,9 +102,24 @@ export default function TabTwoScreen() {
 
 
   useEffect(() => {
-    console.log("articles80 thisParams :", thisParams);
-    if (thisParams && thisParams.articlesList?.length > 0)
+    console.log("articles80 thisParams :", thisParams, thisParams?.rayon);
+    if (thisParams && thisParams.articlesList?.length > 0){
       setFilteredData(thisParams.articlesList)
+      console.log("articles08 thisParams :", thisParams, thisParams?.rayon=='Traditionnels');
+      if(thisParams && thisParams?.rayon=='Traditionnels'){
+        setCategoryName('Traditionnels')
+        setPdjRayon(pdjTitleTradit)
+        callBackFromPickerName(['Traditionnels', pdjTitleTradit])
+
+      }else if(thisParams && thisParams?.rayon=='Sushi'){
+        setCategoryName('Sushi')
+        callBackFromPickerName(['Sushi', pdjTitleSushi])
+      }
+      else{
+        console.log("callBackFromPickerName ?",thisParams.rayon )
+        // callBackFromPickerName(['Tout', pdjTitleObject0])
+      }
+    }
   }, [thisParams]);
 
   useEffect(() => {
@@ -121,9 +136,12 @@ export default function TabTwoScreen() {
   }, [search, articlesList]);
 
   const callBackFromPickerName = (data: any) => {
+    console.log("callBackFromPickerName data =", data)
     setCategoryName(data[0]);
     if (data[1] && data[1].length > 0) {
+      console.log("setPdjRayon ", data[1])
       setPdjRayon(data[1]);
+
     }
   };
 
