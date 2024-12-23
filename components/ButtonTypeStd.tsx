@@ -14,7 +14,7 @@ import { Colors } from '@/constants/Colors';
 export default function ButtonStd({ iconL,iconR, label, labelColor, onPress, onChange, bgButton,
   ...otherProps }) {
   // console.log("21 actif , lessThanNavIdx" , actif , lessThanNavIdx )
-  const thisIcon = <MaterialCommunityIcons name="monitor-screenshot" size={24} color={bgButton} />
+  const thisIcon = <MaterialCommunityIcons name="monitor-screenshot" style={{ fontSize: 24 }} color={bgButton} />
   const yellow2 = '#ffe38d'
   const black = '#000'
   const white = '#fff'

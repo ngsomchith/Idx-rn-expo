@@ -112,20 +112,20 @@ export default function PickerPageName({ callback }) {
                 placeholderStyle={styles.placeholder}
                 ArrowUpIconComponent={({ style }) => (
 
-                  <FontAwesomeIcon icon={faCaretDown}  size={32} color="white"/>
+                  <FontAwesomeIcon icon={faCaretDown} style={{ fontSize: 32 }} color="white"/>
                     // <Icon
                     //     name={open ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-                    //     size={24}
+                    //     style={{ fontSize: 24 }}
                     //     color={open ? "white" : "white"} 
                     //     // Change de couleur selon l'état
                     // // style={style}
                     // />
                 )} ArrowDownIconComponent={({ style }) => (
 
-                  <FontAwesomeIcon icon={faCaretUp}  size={32} color="white"/>
+                  <FontAwesomeIcon icon={faCaretUp} style={{ fontSize: 32 }} color="white"/>
                     // <Icon
                     //     name={open ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-                    //     size={24}
+                    //     style={{ fontSize: 24 }}
                     //     color={open ? "white" : "white"} // Change de couleur selon l'état
                     // // style={style}
                     // />

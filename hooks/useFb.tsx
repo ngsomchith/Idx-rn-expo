@@ -15,19 +15,25 @@ export const useFb = (collectionStr: any) => {
   const myDocs: any = []
   const thisApp = myApp
   async function fetchData2() {
-    console.log("collectionStr = ", collectionStr)
+    //all console.log("collectionStr = ", collectionStr)
     const db = myApp[3]
     let setDataOnce = 1
     try {
       // const querySnapshot = await getDocs(collection(db, collectionStr)); // Récupère les documents
       const querySnapshot = await getItems(collectionStr)
-       console.log("querySnapshot  = ",collectionStr, querySnapshot)
 
 
-      myDocs[0] = querySnapshot
-      const loadedArticles = querySnapshot && querySnapshot.docs?.map(doc => doc.data().value); // Extrait les valeurs
-      setArticlesList((querySnapshot)); // Met à jour l'état
-      console.log("loadedArticles = ", querySnapshot)
+      if(querySnapshot && querySnapshot.length>0){
+        console.log("querySnapshot27  = ",collectionStr, querySnapshot)
+        myDocs[0] = querySnapshot.filter((article: any, idx: any, PlatsToShowFilteredElt: any) => {
+  
+          return article.pdjType?.indexOf('Off')<0
+        })
+        console.log("myDocs[0] = ", myDocs[0])
+      }
+      const loadedArticles = myDocs[0] && myDocs[0].docs?.map(doc => doc.data().value); // Extrait les valeurs
+      setArticlesList((myDocs[0])); // Met à jour l'état
+      //all console.log("loadedArticles = ", querySnapshot)
 
     } catch (error) {
       console.error('Erreur lors du chargement des chaînes :', error);
@@ -42,7 +48,7 @@ export const useFb = (collectionStr: any) => {
   }, []);
 
   useEffect(() => {
-    console.log("thisApp = ", thisApp)
+    //all console.log("thisApp = ", thisApp)
   }, [thisApp])
 
 
@@ -71,7 +77,7 @@ export const useFb = (collectionStr: any) => {
 
 // // collectionStr='articles/seller2/articlesList'
 // export async function useFb (collectionStr: string) {
-//   console.log("useFb9 collectionStr +", collectionStr)
+//   //all console.log("useFb9 collectionStr +", collectionStr)
 //   const {
 
 //     user, setUser,
@@ -167,7 +173,7 @@ export const useFb = (collectionStr: any) => {
 //   const [error, setError] = useState(null);
 
 //   useEffect(() => {
-//     console.log("useFb106 data useEffect =", data)
+//     //all console.log("useFb106 data useEffect =", data)
 
 //   }, [data])
 
@@ -192,7 +198,7 @@ export const useFb = (collectionStr: any) => {
 //               // for (let key in articleTemp) {
 //               //   if (articleTemp.hasOwnProperty(key)) {
 //               //     articleTemp[key] = element[key]
-//               //     console.log(20,key, articleTemp[key]);
+//               //     //all console.log(20,key, articleTemp[key]);
 //               //   }
 //               // }
 //               let result = await setArticleType(articleTemp,element)
@@ -213,7 +219,7 @@ export const useFb = (collectionStr: any) => {
 //             });
 
 //           } else {
-//             console.log(57, " ECHEC ? :::> NO articlesList / res =", res)
+//             //all console.log(57, " ECHEC ? :::> NO articlesList / res =", res)
 //           }
 //         })
 //         // console.log("useFb151 articlesList BY myDocs +", myDocs)
@@ -222,7 +228,7 @@ export const useFb = (collectionStr: any) => {
 //     }
 //     catch (error) { 
 //       setError(error);
-//       console.log(error)
+//       //all console.log(error)
 //     }
 //     finally {
 //       setIsLoading(false);

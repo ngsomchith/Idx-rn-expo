@@ -44,7 +44,7 @@ const RenderEachPanierElt = ({
     const widthMobileOrWeb = MAXWIDTH > widthMobile ? '40%' : '100%'
     const [scrollXLastVal, setScrollXLastVal] = useState(0)
     const [scrollYLastVal, setScrollYLastVal] = useState(0)
-    const iconSearchMinus = <FontAwesome name="search-minus" size={24} color="#821e1e" />
+    const iconSearchMinus = <FontAwesome name="search-minus" style={{ fontSize: 24 }} color="#821e1e" />
     const [chooseDayTime, setChooseDayTime] = useState(false)
     const [remiseObtenue, setRemiseObtenue] = useState(0)
     const [totalAPayer, setTotalAPayer] = useState(0)

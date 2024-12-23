@@ -31,6 +31,8 @@ interface AuthContextType {
   addToCartFn: any
   removeFromCartFn: any
   thisUseFB: any
+  thisParams: any
+  setThisParams: any
 }
 
 // Crée le contexte avec une valeur par défaut
@@ -41,7 +43,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
   const [modalSignInVisible, setModalSignInVisible] = useState(false)
-
+  const [thisParams, setThisParams]= useState([])
   const [gAuth, setGAuth] = useState(); // getPersistedAuth
   const login = (userData: UserType) => {
     setUser(userData);
@@ -74,13 +76,13 @@ export const AuthProvider = ({ children }) => {
 
   
   // useEffect(()=>{
-  //   console.log("thisUseFB ", thisUseFB)
+  //   //all console.log("thisUseFB ", thisUseFB)
   // }[thisUseFB, articlesList])
 
 
   useEffect(() => {
-    console.log("thisUseFB 87 ", thisUseFB)
-    console.log("useFb useEffect 88 articlesList = ", articlesList)
+    //all console.log("thisUseFB 87 ", thisUseFB)
+    //all console.log("useFb useEffect 88 articlesList = ", articlesList)
     if (thisUseFB.articlesList != articlesList) {
       setArticlesList(thisUseFB.articlesList)
     }
@@ -98,7 +100,7 @@ export const AuthProvider = ({ children }) => {
   const firestore = myApp[3]
 
   const logout = () => {
-    console.log("logOut")
+    //all console.log("logOut")
     // setAuth(getAuth(undefined))
     // setAuth(getAuth())
     // if(auth){
@@ -112,7 +114,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log("auth ", auth)
+    //all console.log("auth ", auth)
   }, [auth])
   useEffect(() => {
     setAuth(getAuth(firebase))
@@ -121,7 +123,7 @@ export const AuthProvider = ({ children }) => {
     const unsubscribe = auth.onAuthStateChanged(async (user: any) => {
 
       setTimeout(() => {
-        console.log('user AuthContext', user)
+        //all console.log('user AuthContext', user)
       }, 2000);
       setCurrentUser(user);
 
@@ -156,6 +158,7 @@ export const AuthProvider = ({ children }) => {
       cart, setCart,
       addToCartFn, removeFromCartFn,
       articlesList, setArticlesList,
+      thisParams, setThisParams,
       thisUseFB
     }}>
       {children}

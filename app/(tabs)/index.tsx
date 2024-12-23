@@ -10,7 +10,6 @@ import ThisDevice from '@/constants/ThisDevice';
 import { useState } from 'react';
 import { ArticleType } from '../models/ArticleType';
 import { useFonts } from 'expo-font';
-import { useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
 import { ThemedTitle } from '@/components/ThemedTitle';
 import { groupedByPdjType, thisClone } from '@/components/services/DataServices';
@@ -19,9 +18,41 @@ import RenderEachArticleFullPage from '@/components/articlesQte/RenderEachArticl
 import { FontAwesome } from '@expo/vector-icons';
 import Header from '@/components/Header';
 import BackgroundImage from '@/components/BackGroundImage';
+import ButtonStd from '@/components/ButtonTypeStd';
+
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
 
-export default function HomeScreen() {
+export default function HomeScreen({ }) { //navigation, route
+
+  const { articlesList, setArticlesList, thisParams,
+    thisUseFB, cart, setCart, currentUser,
+    addToCartFn, removeFromCartFn } = useAuth()
+
+  // Définir les routes et leurs paramètres
+  type RootStackParamList = {
+    Home: undefined;
+    DestinationScreen: { thisParams: any }; // Remplacez `any` par le type réel si possible
+  };
+
+  // Type pour navigation
+  type NavigationProps = StackNavigationProp<RootStackParamList, 'DestinationScreen'>;
+
+  // Type pour route
+  type RouteProps = RouteProp<RootStackParamList, 'DestinationScreen'>;
+
+  // Props combinées pour le composant
+  type Props = {
+    navigation: NavigationProps;
+    route: RouteProps;
+  };
+
+  // const navigation= useNavigation()
+  // const route = useRouter()
+  const navigation = useNavigation<NavigationProps>();
+  const route = useRoute<RouteProps>();
+
   const myDevice = ThisDevice().device
   const MAXWIDTH = ThisDevice().device.myMAXWIDTH
   const widthMobile = 450
@@ -38,15 +69,11 @@ export default function HomeScreen() {
 
   const [thisImport, setThisImport] = useState(false)
 
-  const router = useRouter()
   const [sound, setSound] = useState(null);
 
   const [articlesListByCat, setArticlesListByCat] = useState<Array<ArticleType>>([]);
   const [articlesListByCatLength, setArticlesListByCatLength] = useState(0);
 
-  const { articlesList, setArticlesList,
-    thisUseFB, cart, setCart,
-    addToCartFn, removeFromCartFn } = useAuth()
   // const [cart, setCart] = useState([]);
   const addToCart = addToCartFn;
   const removeFromCart = removeFromCartFn;
@@ -72,7 +99,7 @@ export default function HomeScreen() {
 
 
   useEffect(() => {
-    console.log('ArticlesQteToShow48 articlesList', articlesList);
+    //all console.log('index75 articlesList', articlesList);
     if (articlesListByCat?.length === 0 && articlesList?.length > 0) {
       getArticlesListByCat(articlesList);
     } else {
@@ -89,9 +116,47 @@ export default function HomeScreen() {
 
 
   useEffect(() => {
-    console.log("topVentesList", topVentesList)
+    //all console.log("topVentesList", topVentesList)
   }, [topVentesList])
 
+
+  async function goTo(url: any) {
+
+    // setTimeout(async () => {
+    const itemPdjType0 = platDuJour && platDuJour['pdjType']
+    // console.log("goTo ... 1195 currentPdjType, categoryNameList, categoryIconList ", itemPdjType0, categoryNameList)
+    //All console.log("goTo ... 1154, pageChoisi ",url, pageChoisi)
+
+    // Construire les paramètres à passer à la route
+    const thisParams = {
+      articlesList: articlesList,
+      articlesListByCat: articlesListByCat,
+      cart: cart,
+      currentUser: currentUser
+    }
+
+    // Construire les paramètres à passer à la route
+    // const thisParams = {
+    //   articlesList,
+    //   articlesListByCat,
+    //   cart,
+    //   currentUser,
+    // };
+
+    console.log("thisParams ", thisParams)
+    navigation.navigate(url, {
+      thisParams: thisParams
+    });
+
+  }
+
+  const buttonGoToMenu = (url: any) => {
+    return (
+      <ButtonStd iconL={undefined} iconR={undefined} label={url} labelColor={Colors.primaryText}
+        onPress={() => goTo(url)} onChange={undefined} bgButton={Colors.accentBG} />
+
+    )
+  }
   async function getArticlesListByCat(_articlesList: any) {
     if (_articlesList && _articlesList.length > 0) {
       groupedByPdjType(articlesList, setArticlesListByCat);
@@ -101,14 +166,14 @@ export default function HomeScreen() {
   function getTopVentesList() {
     const _topVente = articlesListByCat?.topV
     if (!topVentesListTemp) { topVentesListTemp = [] }
-    console.log("top Vente91", _topVente?.length > 0, _topVente)
+    //all console.log("top Vente91", _topVente?.length > 0, _topVente)
 
     if (_topVente?.length > 0) {
       // console.log("top Vente94", _topVente?.length > 0, _topVente)
       // _topVente && 
       // _topVente?.length > 0 &&
       _topVente?.forEach((element: any, index: any) => {
-        console.log('98', element.name, index)
+        // console.log('98', element.name, index)
         if (element.name, element.name.indexOf('Fondu') >= 0) { topVentesListTemp[0] = element }//, console.log("topVentesListTemp93 ", index, element, topVentesListTemp[index]) }
         if (element.name, element.name.indexOf('Bo Bun Boeuf Nem') >= 0) { topVentesListTemp[1] = element }//, console.log("topVentesListTemp94 ", index, element, topVentesListTemp[index]) }
         if (element.name, element.name.indexOf('Phat Thai') >= 0) { topVentesListTemp[2] = element }//, console.log("topVentesListTemp95 ", index, element, topVentesListTemp[index]) }
@@ -120,19 +185,19 @@ export default function HomeScreen() {
       })
 
     } else {
-      console.log("top Vente 114", _topVente?.length > 0, _topVente)
+      //all console.log("top Vente 114", _topVente?.length > 0, _topVente)
     }
     if (topVentesListTemp.length > 0) {
-      console.log("topVentesListTemp 119 ", topVentesListTemp)
+      //all console.log("topVentesListTemp 119 ", topVentesListTemp)
       setTopVentesList(topVentesListTemp)
     }
   }
 
   async function getPlatsDJ(articlesList: any, pdjRef: any) {
-    console.log("getPlatsDJ90 articlesList", articlesList)
+    //all console.log("getPlatsDJ90 articlesList", articlesList)
     const resultPDJ = await articlesList.filter((elt: any) => elt.ref === pdjRef)
 
-    console.log("198PlatDuJour", resultPDJ)
+    //all console.log("198PlatDuJour", resultPDJ)
 
 
     setPlatDuJour(resultPDJ[0])
@@ -271,8 +336,8 @@ export default function HomeScreen() {
 
       <ParallaxScrollView //background image
 
-        headerBackgroundColor={{ light: '#A1CEDC', dark: Colors.primaryBG }}
-        headerImage={
+          headerBackgroundColor={{ light: '#A1CEDC', dark: Colors.primaryBG }}
+          headerImage={ // BackgroundImage
           // <BackgroundImage />
           <View style={{
             height: screenHeight,
@@ -344,9 +409,10 @@ export default function HomeScreen() {
                 </Text>
                 <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
                   addToCart={addToCart} removeFromCart={removeFromCart}
-
+                  buttonGoToMenu={buttonGoToMenu('articles')}
                   menuN={topVentesList[0]} scrollY0={undefined}
                   scrollX0={undefined} updateScrollValue={undefined} />
+
               </View>
 
             }

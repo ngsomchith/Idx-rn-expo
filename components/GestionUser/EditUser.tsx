@@ -40,12 +40,12 @@ export const EditUser = ({ thisCurrentUser  }) => {
     const MAXWIDTH = ThisDevice().device.width - 5
     const styles0 = ThisDevice().styles0
 
-    const iconVisitor = <MaterialIcons name="flight-takeoff" size={48} color={Colors.highlightBG} />
-    const iconHome = <MaterialCommunityIcons name="home" size={48} color={Colors.highlightBG} />
-    const iconInfo = <FontAwesome5 name="info-circle" size={48} color={Colors.highlightBG} />
-    const iconClock = <Feather name="clock" size={48} color={Colors.highlightBG} />
-    const iconClose = <AntDesign name="closecircle" size={24} color="red" />
-    const iconCheck = <FontAwesome name="check" size={24} color={Colors.accentText} backgroundColor={Colors.accentBG} />
+    const iconVisitor = <MaterialIcons name="flight-takeoff"  size={'xl'} color={Colors.highlightBG} />
+    const iconHome = <MaterialCommunityIcons name="home"  size={'xl'} color={Colors.highlightBG} />
+    const iconInfo = <FontAwesome5 name="info-circle"  size={'xl'} color={Colors.highlightBG} />
+    const iconClock = <Feather name="clock"  size={'xl'} color={Colors.highlightBG} />
+    const iconClose = <AntDesign name="closecircle" style={{ fontSize: 24 }} color="red" />
+    const iconCheck = <FontAwesome name="check" style={{ fontSize: 24 }} color={Colors.accentText} backgroundColor={Colors.accentBG} />
 
     const buttonTrigger = useRef(null);
     const [newEmailValid, setNewEmailValid] = useState(false)

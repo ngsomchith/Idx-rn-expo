@@ -45,7 +45,7 @@ export default function TabLayout() {
             // <ThemedView>
             // <ThemedTitle> Explorer Page</ThemedTitle>
             //    faBookOpen
-                  <FontAwesomeIcon icon={faHouseChimney}  size={32} color="brown"/>
+                  <FontAwesomeIcon icon={faHouseChimney} style={{ fontSize: 32 }} color="brown"/>
             // <IconSymbol size={width > 600 ? 32 : 28} name="house.fill" color={color} />
             // </ThemedView>
           ),
@@ -70,7 +70,7 @@ export default function TabLayout() {
           title: 'Menus',
           tabBarIcon: ({ color }) => (
             // <IconSymbol size={width > 600 ? 32 : 28} name="paperplane.fill" color={color} />
-                  <FontAwesomeIcon icon={faBookOpen}  size={32} color="brown"/>
+                  <FontAwesomeIcon icon={faBookOpen} style={{ fontSize: 32 }} color="brown"/>
           ),
         }}
       />

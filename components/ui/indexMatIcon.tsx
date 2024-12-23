@@ -97,7 +97,7 @@ const iconLogin = <Text style={{width:30,height:30, fontSize: 30, color: 'white'
 const iconMinus = <Text style={{width:30,height:30, fontSize: 30, color: Colors.accentBG , fontFamily: 'Material Icons' }}>do_not_disturb_on</Text>
 
 const iconPlusUn = <Text style={{width:30,height:30, fontSize: 30, color: Colors.accentBG, fontFamily: 'Material Icons' }}>add_circle</Text>
-// const iconPlusUn = <FontAwesome name="plus-circle" size={24} color={Colors.accentBG} />
+// const iconPlusUn = <FontAwesome name="plus-circle" style={{ fontSize: 24 }} color={Colors.accentBG} />
 // const iconPlusUn = <AntDesign name="pluscircle" size={28} color="#821e1e" />
 // const iconMinus = <FontAwesome name="minus-circle" size={28} color={Colors.accentBG} />
 const iconEuro = <Text style={{width:30,height:30, fontSize: 30, color: 'white', fontFamily: 'Material Icons' }}>euro</Text>

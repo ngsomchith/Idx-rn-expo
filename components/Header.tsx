@@ -46,7 +46,7 @@ const Header = ({ articlesList, cart, removeFromCart, addToCart, navigation
         // console.log("Header : cart  ", cart)
     }, [cart])
 
-    const iconUser = <Ionicons name="person-outline" size={24} color="white" />
+    const iconUser = <Ionicons name="person-outline" style={{ fontSize: 24 }} color="white" />
 
     const [thisCanGoBack, setThisCanGoBack] = useState(navigation?.canGoBack() || null)
 

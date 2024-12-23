@@ -1,30 +1,53 @@
 import { StyleSheet, Image, Platform, View, Text, TextInput, Pressable, FlatList } from 'react-native';
 import ArticlesQteToShow from '@/components/articlesQte/ArticlesQteToShow';
 import ThisDevice from '@/constants/ThisDevice';
-import { Collapsible } from '@/components/Collapsible';
-// import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import Panier from '@/components/articlesQte/Panier';
 import { useEffect, useState } from 'react';
 import Header from '@/components/Header';
 import { ArticleType } from '../models/ArticleType';
-import { useFb } from '@/hooks/useFb';
 import PickerPageName from '@/components/articlesQte/PickerPageName';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Colors } from "@/constants/Colors";
 import { Icon } from 'react-native-elements';
-import { pdjTitleSushi, pdjTitleTradit } from '@/components/articlesQte/pdjTitleObject0';
-import FlatListArticles from '@/components/articlesQte/FlatListArticles';
+import { pdjTitleObject0, pdjTitleSushi, pdjTitleTradit } from '@/components/articlesQte/pdjTitleObject0';
 import { takeOffAccent } from '@/components/services/DataServices';
 import SearchableList from '@/components/articlesQte/SearchableList';
+
+
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { useAuth } from '../AuthContext';
+
+
+
 export default function TabTwoScreen() {
-  const thisUseFB = useFb('articles/seller2/articlesList');
-  const [articlesList, setArticlesList] = useState<Array<ArticleType>>([]);
+  const { articlesList, setArticlesList, thisParams, setThisParams,
+    thisUseFB, cart, setCart, currentUser,
+    addToCartFn, removeFromCartFn } = useAuth()
+
+  // Définir les routes et leurs paramètres
+  type RootStackParamList = {
+    Article: undefined;
+    DestinationScreen: { thisParams: any }; // Remplacez `any` par le type réel si possible
+  };
+
+  // Type pour navigation
+  type NavigationProps = StackNavigationProp<RootStackParamList, 'DestinationScreen'>;
+
+  // Type pour route
+  type RouteProps = RouteProp<RootStackParamList, 'DestinationScreen'>;
+
+  // Props combinées pour le composant
+  type Props = {
+    navigation: NavigationProps;
+    route: RouteProps;
+  };
+  const route = useRoute();
+  // const { thisParams0 } = route?.params;
+  useEffect(() => {
+    setThisParams(route?.params)
+  }, [])
+  const navigation = useNavigation<NavigationProps>();
   const [currentPdjType, setCurrentPdjType] = useState('');
-  const [cart, setCart] = useState([]);
   const [categoryName, setCategoryName] = useState('');
   const [pdjRayon, setPdjRayon] = useState([]);
   const [open, setOpen] = useState(false);
@@ -50,14 +73,17 @@ export default function TabTwoScreen() {
   };
 
   const removeFromCart = (article: any) => {
-    setCart((prevCart) =>
+    setCart((prevCart: any) =>
       prevCart
-        .map((item) =>
+        .map((item: any) =>
           item.id === article.id ? { ...item, qte: item.qte - 1 } : item
         )
-        .filter((item) => item.qte > 0)
+        .filter((item: any) => item.qte > 0)
     );
   };
+  useEffect(() => {
+    callBackFromPickerName(['Tout', pdjTitleObject0])
+  }, [])
 
   useEffect(() => {
     if (articlesList.length === 0 && thisUseFB.articlesList) {
@@ -69,6 +95,17 @@ export default function TabTwoScreen() {
   useEffect(() => {
     filteredData.length > 0 && console.log("articles70 filteredData mise à jour:", filteredData);
   }, [filteredData]);
+
+  useEffect(() => {
+    console.log("articles74 cart :", cart);
+  }, [cart]);
+
+
+  useEffect(() => {
+    console.log("articles80 thisParams :", thisParams);
+    if (thisParams && thisParams.articlesList?.length > 0)
+      setFilteredData(thisParams.articlesList)
+  }, [thisParams]);
 
   useEffect(() => {
     if (search === '') {
@@ -121,10 +158,10 @@ export default function TabTwoScreen() {
         textStyle={styles.text}
         placeholderStyle={styles.placeholder}
         ArrowUpIconComponent={() => (
-          <Icon name="keyboard-arrow-up" size={24} color="white" />
+          <Icon name="keyboard-arrow-up" style={{ fontSize: 24 }} color="white" />
         )}
         ArrowDownIconComponent={() => (
-          <Icon name="keyboard-arrow-down" size={24} color="white" />
+          <Icon name="keyboard-arrow-down" style={{ fontSize: 24 }} color="white" />
         )}
       />
     );
@@ -181,6 +218,7 @@ export default function TabTwoScreen() {
   });
 
   return (
+
     <View style={styles.mainContainer}>
       <View style={styles.headerContainer}>
         <Header
@@ -198,9 +236,6 @@ export default function TabTwoScreen() {
       </View>
       {categoryName !== 'Tout' ? (
 
-        // <View>
-        //   <Text style={{ color: 'white' }}>ArticlesQteToShow</Text>
-        // </View>
         <ArticlesQteToShow
           articlesList={articlesList}
           addToCart={addToCart}
@@ -209,15 +244,12 @@ export default function TabTwoScreen() {
           currentPdjType={currentPdjType} //pdjType résulté par DropDownMenu
         />
       ) : (
-        // <View>
-        //   <Text style={{ color: 'white' }}>SearchableList</Text>
-        // </View>
-        <SearchableList 
-          search={search} 
-          setSearch={setSearch} 
-          filteredData={filteredData} 
-          addToCart={addToCart} 
-          removeFromCart={removeFromCart} 
+        <SearchableList
+          search={search}
+          setSearch={setSearch}
+          filteredData={filteredData}
+          addToCart={addToCart}
+          removeFromCart={removeFromCart}
         />
       )}
     </View>

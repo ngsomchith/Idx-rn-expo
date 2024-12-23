@@ -84,7 +84,7 @@ const SignInComp = ({
     const [requireRefresh, setRequireRefresh] = useState(false);
     const [gUserEmail, setGUserEmail] = useState(null); //// getGoogleUser
 
-    const iconGoogle = <SimpleLineIcons name="social-google" size={24} color="white" />
+    const iconGoogle = <SimpleLineIcons name="social-google" style={{ fontSize: 24 }} color="white" />
 
     const [thisSignInByEmailChoosed, setThisSignInByEmailChoosed] = useState(false);
 

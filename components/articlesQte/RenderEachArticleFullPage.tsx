@@ -23,6 +23,7 @@ import { ThemedText } from '../ThemedText';
 
 const RenderEachArticleFullPage = ({
   articlesFilteredToWrap,
+  buttonGoToMenu,
   maxHeightArticle,
   addToCart,
   removeFromCart,
@@ -45,19 +46,25 @@ const RenderEachArticleFullPage = ({
   const padHorizNotMobile = MAX_WIDTH > widthMobile ? '10%' : 0
 
   const thisBackGround = menuN?.qte > 0 ? Colors.highlightBG : Colors.accentBG
-  useEffect(() => {
-    if (scrollY0 > 0 && scrollY0 !== scrollYLastVal) {
-      setTimeout(() => {
-        if (updateScrollValue) {
-          setScrollYLastVal(scrollY0);
-          setScrollXLastVal(scrollX0);
-        }
-      }, 500);
-    }
-  }, [scrollY0, scrollX0]);
+  // useEffect(() => {
+  //   if (scrollY0 > 0 && scrollY0 !== scrollYLastVal) {
+  //     setTimeout(() => {
+  //       if (updateScrollValue) {
+  //         setScrollYLastVal(scrollY0);
+  //         setScrollXLastVal(scrollX0);
+  //       }
+  //     }, 500);
+  //   }
+  // }, [scrollY0, scrollX0]);
+
+
+    useEffect(() => {
+      console.log("RFullPage62 qte ", qte)
+    }, [qte])
 
   const incrementQuantity = () => {
     menuN.qte++;
+    console.log("RFullPage67 incrementQuantity",menuN.qte )
     addToCart(menuN);
     setQte(menuN.qte);
   };
@@ -101,13 +108,13 @@ const RenderEachArticleFullPage = ({
             // borderStyle: 'solid',
             height: widthMobileOrWeb
           }]}>
-          {/* <ThemedText style={styles.icon}>{iconSearchPlus}</ThemedText> */}
+            
           <ImageViewer placeholderImageSource={menuN?.img} />
           {menuN &&
             menuN.pdjType === 'promo'
             // && menuN.qte >= 1
             &&
-            <ThemedText style={[styles.texteArticlePrix, {
+            <ThemedText style={[styles.texteArticlePrix, { //  + 1 gratuit
               fontSize: 20,
               width: 100,
               // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '30%',
@@ -122,9 +129,9 @@ const RenderEachArticleFullPage = ({
               top: '10%',
               borderRadius: 5,
               padding: 10,
-              borderWidth: 5,
-              borderColor: 'white',
-              borderStyle: 'solid',
+              // borderWidth: 5,
+              // borderColor: 'white',
+              // borderStyle: 'solid',
             }]}>
               {/* + {Math.round((menuN.qte / 2) - 0.5)} gratuit */}
               + 1 gratuit
@@ -134,14 +141,9 @@ const RenderEachArticleFullPage = ({
         <ThemedText type="default" style={[styles.imageDescription, {
 
           width: '100%',
-          // color: 'white',
           fontSize: 16,
-          // borderWidth: 5,
-          // borderColor: 'green',
-          // borderStyle: 'solid',
 
         }]}
-        // style={styles.icon}
         >{menuN?.explication}
         </ThemedText>
 
@@ -179,6 +181,7 @@ const RenderEachArticleFullPage = ({
           <ThemedText style={styles.quantityButtonText}>+</ThemedText>
         </Pressable>
       </ThemedView>
+      {buttonGoToMenu}
     </ThemedView>
   );
 
@@ -202,6 +205,9 @@ const RenderEachArticleFullPage = ({
       height: sectionPriceHeight,
       borderRadius: 10,
       backgroundColor: thisBackGround, // Couleur de fond pour une meilleure visibilité
+    },
+    texteArticlePrix: {
+      borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
     },
     strikethroughPrice: {
       textDecorationLine: 'line-through',
@@ -440,7 +446,7 @@ const RenderEachArticleFullPage = ({
       minWidth: '100%',
       maxWidth: '100%',
       height: '100%',
-      // borderColor: 'white', borderStyle: 'solid', borderWidth: 10,
+      // borderColor: 'white', borderStyle: 'solid', borderWidth: 5,
     }]}>
       <ThemedView
         style={[
@@ -454,12 +460,12 @@ const RenderEachArticleFullPage = ({
             minHeight: '100%',
             paddingHorizontal: 5,
             height: maxHeightArticle,//height of price section
-
+            maxHeight: '100%',
             borderRadius: 10,
             display: 'flex',
             alignItems: 'flex-start',
             justifyContent: 'space-between',
-            // borderColor: 'coral',
+            // borderColor: 'yellow',
             // borderWidth: 5,
             // borderStyle: 'solid',
           },

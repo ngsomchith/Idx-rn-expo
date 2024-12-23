@@ -15,6 +15,9 @@ import ThisDevice from '@/constants/ThisDevice';
 import ImageViewer from '../ImageViewer';
 import { Colors } from '@/constants/Colors';
 import ModalMenuN from './ModalMenuN';
+import { ThemedView } from '../ThemedView';
+import { ThemedText } from '../ThemedText';
+import { number } from 'yup';
 
 const RenderEachArticleInHome = ({
   articlesFilteredToWrap,
@@ -27,7 +30,7 @@ const RenderEachArticleInHome = ({
 }) => {
   const [scrollXLastVal, setScrollXLastVal] = useState(0);
   const [scrollYLastVal, setScrollYLastVal] = useState(0);
-  const [qte, setQte] = useState(menuN?.qte || 0);
+  const [qte, setQte] = useState(menuN.qte);
 
   const MAX_WIDTH = ThisDevice().device.width - 5;
   const maxHeightArticle = 230;
@@ -43,44 +46,39 @@ const RenderEachArticleInHome = ({
     }
   }, [scrollY0, scrollX0]);
 
-  const incrementQuantity = () => {
+  const incrementQuantity = (menuN:any) => {
     menuN.qte++;
+    console.log("RInHome incrementQuantity menuN.qte = ",menuN.qte, " :: qte = ", qte )
     addToCart(menuN);
-    setQte(menuN.qte);
+    setQte(typeof(qte)=='number' ? qte+1 : Number(qte)+1);
   };
 
-  const decrementQuantity = () => {
+  const decrementQuantity = (menuN:any) => {
     if (menuN.qte > 0) {
       menuN.qte--;
       removeFromCart(menuN);
-      setQte(menuN.qte);
+      setQte(typeof(qte)=='number' ? qte-1 : Number(qte)-1);
     }
   };
 
+  useEffect(() => {
 
-  // const incrementQuantity = () => {
-  //   menuN.qte++;
-  //   addToCart(menuN);
-  //   const updatedMenuN = { ...menuN, qte:( Number(menuN.qte + 1)).toString() };
-  //   // Assurez-vous que `addToCart` accepte le nouvel objet
-  //   setQte(updatedMenuN.qte);
-  //   console.log("updatedMenuN ", menuN.qte, menuN)
-  //   console.log("updatedMenuN ", updatedMenuN)
-  // };
-  
-  // const decrementQuantity = () => {
-  //   if (menuN.qte > 0) {
-  //     menuN.qte--;
-  //     removeFromCart(menuN);
-  //     const updatedMenuN = { ...menuN, qte: menuN.qte - 1 };
-  //     removeFromCart(menuN);
-  //     setQte(updatedMenuN.qte);
-  //   }
-  // };
-  
+    menuN.qte > 0 && console.log("RinHome63 qte ", qte, menuN.qte)
+    if (menuN.qte > 0) {
+      setQte(menuN.qte)
+      console.log("RinHome63 qte ", menuN.qte)
+    }
+  }, [menuN])
+
+  useEffect(() => {
+    console.log("RinHome73 qte ", qte, menuN.qte)
+    // menuN.qte > 0 // && console.log("RinHome67 qte ", qte, menuN.qte)
+    // setQte(menuN.qte)
+
+  }, [qte, menuN])
 
 
-  const renderPriceSection = () => (
+  const renderPriceSection0 = () => (
     <View style={styles.priceSection}>
       {menuN?.prixbarre > 0 && (
         <Text style={[styles.strikethroughPrice, {
@@ -93,7 +91,7 @@ const RenderEachArticleInHome = ({
         <Text style={styles.price}>{Number(menuN.prix).toFixed(2)}€</Text>
       )}
       <View style={styles.quantityControls}>
-        <Pressable style={styles.quantityButton} onPress={decrementQuantity}>
+        <Pressable style={styles.quantityButton} onPress={()=>decrementQuantity(menuN)}>
           <Text style={styles.quantityButtonText}>-</Text>
         </Pressable>
         <TextInput
@@ -101,12 +99,44 @@ const RenderEachArticleInHome = ({
           editable={false}
           value={String(qte)}
         />
-        <Pressable style={styles.quantityButton} onPress={incrementQuantity}>
+        <Pressable style={styles.quantityButton} onPress={()=>incrementQuantity(menuN)}>
           <Text style={styles.quantityButtonText}>+</Text>
         </Pressable>
       </View>
     </View>
   );
+  const renderPriceSection = (menuN: any) => (
+    <ThemedView style={styles.priceSection}>
+      {menuN?.prixbarre > 0 && (
+        <ThemedText style={[styles.strikethroughPrice, {
+          position: 'absolute', top: -20
+        }]}>
+          {Number(menuN.prixbarre).toFixed(2)}€
+        </ThemedText>
+      )}
+      {menuN?.prix > 0 && (
+        <ThemedText style={styles.price}>{Number(menuN.prix).toFixed(2)}€</ThemedText>
+      )}
+      <ThemedView style={styles.quantityControls}>
+        <Pressable style={styles.quantityButton} onPress={()=>decrementQuantity(menuN)}>
+          <ThemedText style={styles.quantityButtonText}>-</ThemedText>
+        </Pressable>
+        <TextInput
+          style={styles.quantityInput}
+          editable={false}
+          // value={menuN.qte}
+          value={String(qte)}
+        />
+        {/* <Text style={{color:'yellow'}}>{menuN.qte}/{qte} </Text> */}
+        <Pressable style={styles.quantityButton} onPress={()=>incrementQuantity(menuN)}>
+          <ThemedText style={styles.quantityButtonText}>+</ThemedText>
+        </Pressable>
+      </ThemedView>
+      {/* {buttonGoToMenu} */}
+    </ThemedView>
+  );
+
+
 
   return (
     <View style={styles.articleContainer}>
@@ -117,91 +147,91 @@ const RenderEachArticleInHome = ({
         ]}
       >
         <ModalMenuN menuN={menuN} />
-        {renderPriceSection()}
+        {renderPriceSection(menuN)}
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    articleContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-      alignItems: 'flex-start',
-      width: '100%',
-      height: '100%', // maxHeightArticle,
-    },
-    articleContent: {
-      flexDirection: 'column',
-      width: '100%',
-      paddingHorizontal: 5,
-      height: '100%',
-      borderRadius: 10,
-      display: 'flex',
-      alignItems: 'flex-start',
-      justifyContent: 'space-between',
-    },
-    priceSection: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      width: '100%',
-      paddingVertical: 8,
-      maxHeight: 60, // Limiter la hauteur
-      // borderWidth: 2,
-      // borderColor: Colors.primaryText, // Couleur adaptée pour contraste
-      borderRadius: 10,
-      backgroundColor: Colors.background, // Couleur de fond pour une meilleure visibilité
-    },
-    strikethroughPrice: {
-      textDecorationLine: 'line-through',
-      color: 'red',
-      backgroundColor:'white',
-      padding:3,
-      fontSize: 16,
-      transform: [{ rotate: '-30deg' }], // Rotation de 45 degrés
-    },
-    rotatedText: {
-      fontSize: 18,
-      color: '#333',
-      transform: [{ rotate: '-30deg' }], // Rotation de 45 degrés
-    },
-    price: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      color: Colors.primaryText,
-    },
-    quantityControls: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    quantityButton: {
-      backgroundColor: Colors.highlightBG, // Couleur plus visible
-      borderRadius: 5,
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: 30, // Augmentation pour une meilleure cliquabilité
-      height: 34,
-      marginHorizontal: 5,
-      elevation: 3, // Ombre pour plus de profondeur
-    },
-    quantityButtonText: {
-      fontSize: 20, // Texte plus grand
-      fontWeight: 'bold',
-      color: 'white',
-    },
-    quantityInput: {
-      width: 26,
-      textAlign: 'center',
-      // borderColor: 'gray',
-      // borderWidth: 1,
-      borderRadius: 5,
-      paddingVertical: 5,
-      fontSize: 18,
-      backgroundColor: Colors.accentBG,
-    },
-  });
-  
+  articleContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    width: '100%',
+    height: '100%', // maxHeightArticle,
+  },
+  articleContent: {
+    flexDirection: 'column',
+    width: '100%',
+    paddingHorizontal: 5,
+    height: '100%',
+    borderRadius: 10,
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+  },
+  priceSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    paddingVertical: 8,
+    maxHeight: 60, // Limiter la hauteur
+    // borderWidth: 2,
+    // borderColor: Colors.primaryText, // Couleur adaptée pour contraste
+    borderRadius: 10,
+    backgroundColor: Colors.background, // Couleur de fond pour une meilleure visibilité
+  },
+  strikethroughPrice: {
+    textDecorationLine: 'line-through',
+    color: 'red',
+    backgroundColor: 'white',
+    padding: 3,
+    fontSize: 16,
+    transform: [{ rotate: '-30deg' }], // Rotation de 45 degrés
+  },
+  rotatedText: {
+    fontSize: 18,
+    color: '#333',
+    transform: [{ rotate: '-30deg' }], // Rotation de 45 degrés
+  },
+  price: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: Colors.primaryText,
+  },
+  quantityControls: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  quantityButton: {
+    backgroundColor: Colors.highlightBG, // Couleur plus visible
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 30, // Augmentation pour une meilleure cliquabilité
+    height: 34,
+    marginHorizontal: 5,
+    elevation: 3, // Ombre pour plus de profondeur
+  },
+  quantityButtonText: {
+    fontSize: 20, // Texte plus grand
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  quantityInput: {
+    width: 26,
+    textAlign: 'center',
+    // borderColor: 'gray',
+    // borderWidth: 1,
+    borderRadius: 5,
+    paddingVertical: 5,
+    fontSize: 18,
+    backgroundColor: Colors.accentBG,
+  },
+});
+
 
 export default RenderEachArticleInHome;

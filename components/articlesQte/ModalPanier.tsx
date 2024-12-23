@@ -329,10 +329,15 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                     <Text style={[, { color: 'white', width: '17%', textAlign: 'left', fontWeight: '600' }]} >{total.toFixed(2)}€ </Text>
                 </View>
                 {/* {warningToaster()} */}
-                <ButtonStd iconL={undefined} iconR={undefined}
+                <Pressable onPress={() => saveCurrentCde()}
+                style={{padding: 10, backgroundColor: '#c3731d', marginVertical: 10, borderRadius: 10}}>
+                    <Text style={{color: 'white', textAlign:'center', fontSize: 20}}>Valider votre commande</Text>
+                </Pressable>
+                {/* <ButtonStd iconL={undefined} iconR={undefined}
                     label={'Valider votre commande'} labelColor={Colors.primaryText}
                     onPress={() => saveCurrentCde()} onChange={undefined}
-                    bgButton={Colors.accentBG} />
+                    bgButton={'#c3731d'} /> */}
+
                 {commandeRecu &&
                     <View style={{backgroundColor: Colors.highlightBG, padding : 10}}>
                         <ThemedText>Merci pour votre commande </ThemedText>
@@ -400,17 +405,20 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                 style={styles.openModalButton}
                 onPress={() => setModalPanierVisible(true)}
             >
-                <View style={{ position: 'relative', left: -15, top: -10 }}>
+                <View style={{
+                    left: -15, top: -10,
+                    width: 50,
+                    borderWidth: 1, borderColor: 'green', borderStyle: 'solid',
+                     }}>
                     <ThemedText style={{
                         position: 'absolute',
-                        top: -20, left: 5,
-                        backgroundColor: 'green', borderRadius: 50,
-
+                        top: -30, left: 30,
+                        backgroundColor: 'green', borderRadius: '50%',
                     }}>{cart?.length}</ThemedText>
-                    <Text style={{ position: 'absolute', top: 0, left: 0 }}>
+                    <Text style={{ position: 'relative', top: 0, left: 0 }}>
                         {/* {iconBasket}  */}
 
-                        <FontAwesomeIcon icon={faBasketShopping} size={32} color="white" />
+                        <FontAwesomeIcon icon={faBasketShopping}style={{ fontSize: 32 }} color="white" />
                     </Text>
                 </View>
             </Pressable>

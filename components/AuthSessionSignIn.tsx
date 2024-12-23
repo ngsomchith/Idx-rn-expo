@@ -137,7 +137,7 @@ export const AuthSessionSignIn = ({
   const [isLoading, setIsLoading] = useState(false);
 
 
-  const iconGoogle = <SimpleLineIcons name="social-google" size={24} color="white" />
+  const iconGoogle = <SimpleLineIcons name="social-google" style={{ fontSize: 24 }} color="white" />
 
   const [request, response, promptAsync] = Google.useAuthRequest({
 
