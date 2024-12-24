@@ -443,7 +443,7 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                             // height: '50%',
                             // margin: 10,
                             maxWidth: '100%',
-                            borderWidth: 5, borderColor: 'yellow', borderStyle: 'solid',
+                            // borderWidth: 5, borderColor: 'yellow', borderStyle: 'solid',
                             display: 'flex',
                             flexDirection: 'row'
                         }]}>

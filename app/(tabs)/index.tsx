@@ -89,7 +89,9 @@ export default function HomeScreen({ }) { //navigation, route
   // const styles = myStyles
   const MAXWIDTH1_3 = ThisDevice().device.myMAXWIDTH
 
-  const maxHeightArticle = MAXWIDTH > widthMobile ? 500 : 800
+  // const maxHeightArticle = MAXWIDTH > widthMobile ? 500 : 800
+
+  const maxHeightArticle = MAXWIDTH > widthMobile ?  widthMobile *1.1 : widthMobile * 1.2
   const device = ThisDevice().device
   const myHeight = device.height * 1.3
   const [_cdeFrom2Months, set_CdeFrom2Months] = useState([])
@@ -431,10 +433,10 @@ export default function HomeScreen({ }) { //navigation, route
                 <Text style={{
                   position: 'absolute', fontSize: 30, zIndex: 9,
                   top: '30%', color:  Colors.primaryBG,
-                  backgroundColor: '#ffffff6e', textAlign: 'center',
-                  padding: 5, width: '70%',
+                  backgroundColor: '#2fcc179e', textAlign: 'center',
+                  padding: 5, width: '70%',top:0, right: 0,
                   transform: [{ rotate: '-30deg' }], // Rotation de 45 degrés
-                }}> Incontournable pour vos soirées de fêtes
+                }}> Dépêchez-vous: Reste 2 x 2parts !!!
                 </Text>
                 <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
                   addToCart={addToCart} removeFromCart={removeFromCart}

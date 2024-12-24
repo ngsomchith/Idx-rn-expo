@@ -92,7 +92,7 @@ const RenderEachArticleFullPage = ({
       }}>
         <ThemedText type="subtitle" style={[styles.menuTitle, {
 
-        }]}>{menuN?.name}
+        }]}>{menuN?.name.indexOf('Fondu')<0 ? menuN?.name :'Fondu pour 2' }
         </ThemedText>
       </View>
       <ThemedView style={styles.descriptionContainer}>
@@ -101,6 +101,8 @@ const RenderEachArticleFullPage = ({
             // width: widthMobileOrWeb,
             width: '100%',
             maxWidth: '100%',
+            minHeight:MAX_WIDTH > widthMobile ? 300 : 200 ,
+            maxHeight: MAX_WIDTH > widthMobile ? 300 : 200 ,
             position: 'relative',
             backgroundColor: thisBackGround,
             // borderWidth: 5,
@@ -111,9 +113,9 @@ const RenderEachArticleFullPage = ({
             
           <ImageViewer placeholderImageSource={menuN?.img} />
           {menuN &&
-            menuN.ref === "topV175"
+            menuN?.ref === "topV175"
             // && menuN.qte >= 1
-            &&
+            ?
             <Text style={[styles.texteArticlePrix, { //  + 1 gratuit
               fontSize: 20,
               width: 220,
@@ -126,17 +128,42 @@ const RenderEachArticleFullPage = ({
               color: 'white',
               position: 'relative',
               backgroundColor: 'green',
-              left: 10,
-              top: 50,
+              right: 0,
+              top: -50,
               borderRadius: 5,
               padding: 10,
               borderWidth: 5,
               borderColor: 'white',
               borderStyle: 'solid',
+              zIndex: 999
             }]}>
               {/* + {Math.round((menuN.qte / 2) - 0.5)} gratuit */}
               1 Acheté = 1 Offert
-            </Text>
+            </Text> :
+            <></>
+            // <Text style={[styles.texteArticlePrix, { //  + 1 gratuit
+            //   fontSize: 20,
+            //   width: 220,
+            //   textAlign:'center',
+            //   // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '30%',
+            //   display: 'flex', justifyContent: 'center',
+            //   paddingHorizontal: 5,
+            //   alignItems: 'center',
+            //   // color: Colors.primaryText,
+            //   color: 'white',
+            //   position: 'relative',
+            //   backgroundColor: 'green',
+            //   left: 10,
+            //   top: 50,
+            //   borderRadius: 5,
+            //   padding: 10,
+            //   borderWidth: 5,
+            //   borderColor: 'white',
+            //   borderStyle: 'solid'
+            // }]}
+            //   >
+            //   {menuN?.ref}
+            // </Text>
           }
         </ThemedView>
         <ThemedText type="default" style={[styles.imageDescription, {
@@ -192,7 +219,8 @@ const RenderEachArticleFullPage = ({
   const styles = StyleSheet.create({
     articleContainer: {
       borderColor: thisBackGround, borderStyle: 'solid', borderWidth: 8,
-      borderRadius: 18
+      borderRadius: 18, 
+      width: '100%'
     },
     articleContent: {
     },
@@ -203,7 +231,7 @@ const RenderEachArticleFullPage = ({
       width: '100%',
       paddingVertical: 2,
       marginVertical: 4,
-      borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
+      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
       height: sectionPriceHeight,
       borderRadius: 10,
       backgroundColor: thisBackGround, // Couleur de fond pour une meilleure visibilité
@@ -233,7 +261,9 @@ const RenderEachArticleFullPage = ({
     quantityControls: {
       flexDirection: 'row',
       alignItems: 'center',
+      borderRadius: 10,
       borderColor: Colors.primaryBG, borderStyle: 'solid', borderWidth: 3,
+      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
     },
     quantityButton: {
       backgroundColor: Colors.highlightBG, // Couleur plus visible
@@ -285,7 +315,8 @@ const RenderEachArticleFullPage = ({
       // flexWrap: 'nowrap',
       width: '100%',
       minHeight: maxHeightArticle - sectionPriceHeight,
-      height: '100%',// maxHeightArticle - sectionPriceHeight, //MAX_WIDTH > widthMobile ? 400 : 350,
+
+      height:maxHeightArticle,// maxHeightArticle - sectionPriceHeight, //MAX_WIDTH > widthMobile ? 400 : 350,
 
       // borderColor: 'red', borderStyle: 'solid', borderWidth: 5,
       // backgroundColor: 'transparent'
@@ -302,8 +333,8 @@ const RenderEachArticleFullPage = ({
       // borderWidth: 5,
       // borderColor: 'pink',
       // borderStyle: 'solid',
-      height: '80%',
-      maxHeight:MAX_WIDTH > widthMobile ?  widthMobile *.8 : widthMobile * 1.5 ,
+      height: MAX_WIDTH > widthMobile ?  widthMobile *.8 : widthMobile * 1,
+      maxHeight:MAX_WIDTH > widthMobile ?  widthMobile *.8 : widthMobile * 1 ,
       overflow: 'hidden',  
     },
     menuTitle: {
@@ -373,74 +404,6 @@ const RenderEachArticleFullPage = ({
       margin: 0,
       padding: 0
     },
-    // dateContainer: {
-    //   width: '100%',
-    //   marginVertical: 5,
-    // },
-    // dateText: {
-    //   backgroundColor: Colors.highlightBG,
-    //   color: Colors.primaryText,
-    //   fontSize: 16,
-    // },
-    // lienContainer: {
-    //   flex: 1,
-    //   width: '100%',
-    //   backgroundColor: '#ecf0f1',
-    //   marginVertical: 10,
-    //   borderRadius: 10,
-    //   // borderColor: 'gold',
-    //   // borderWidth: 5,
-    //   // borderStyle: 'solid',
-    //   // minHeight: device.heightBody,
-    //   justifyContent: 'space-around',
-    // },
-    // lienContent: {
-    //   height: '80%',
-    //   width: '100%',
-    //   justifyContent: 'space-around',
-    //   // borderWidth: 3,
-    //   // borderColor: 'white',
-    // },
-    // lienTitle: {
-    //   color: 'white',
-    //   fontSize: 26,
-    // },
-    // lienButtonContainer: {
-    //   marginVertical: 20,
-    //   padding: 10,
-    //   borderRadius: 18,
-    //   width: '80%',
-    //   alignItems: 'center',
-    // },
-    // lienButton: {
-    //   color: 'white',
-    //   fontSize: 26,
-    // },
-    // modalHeader: {
-    //   flexDirection: 'row',
-    //   justifyContent: 'space-between',
-    //   marginVertical: 10,
-    //   // borderWidth: 5,
-    //   // borderColor: 'pink',
-    //   // borderStyle: 'solid',
-    // },
-    // modalTitle: {
-    //   fontSize: 30,
-    // },
-    // modalContent: {
-    //   width: '100%',
-    //   height: '100%',
-    //   minWidth: 100,
-    //   minHeight: '100%',
-    //   maxHeight:'100%',
-    //   display: 'flex',
-    //   justifyContent: "flex-start",
-    //   backgroundColor: 'coral',
-    //   alignItems: "center",
-    //   padding: 10,
-    //   // borderWidth: 3,
-    //   // borderColor: 'yellow',
-    // },
   });
 
   return ( //global

@@ -49,11 +49,13 @@ function ModalSignin({ myImage }) {
     return (
       <Pressable
         style={{
-          width: '100%',
+          // width: '100%',
           // height: 100,
           flexDirection: 'row',
           justifyContent: 'flex-end',
           alignItems: 'flex-end',
+          marginVertical: 5
+          // borderWidth: 1, borderColor: 'white', borderStyle: 'solid',
           // borderWidth: 13, borderColor: 'blue', borderStyle: 'solid',
         }}
         onPress={() => {
@@ -62,16 +64,19 @@ function ModalSignin({ myImage }) {
         }}>
 
         <Text style={{
-          width: '100%',
+          // width: '100%',
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'flex-end',
           alignItems: 'center',
           height: '100%',
           fontSize: 16,
+          paddingHorizontal: 10,
           color: Colors.primaryText,
+          backgroundColor: Colors.accentBG,
+          borderRadius: 10,
           // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
-          minWidth: 300
+          // minWidth: 300
         }}>
           {/* {!user ? iconLogin : iconUser} */}
           {!user && 'connexion'} {!user ? iconLogin : iconUser}
@@ -89,7 +94,7 @@ function ModalSignin({ myImage }) {
       style={{
         backgroundColor: 'transparent',
         width: '100%',
-        borderWidth: 1, borderColor: 'white', borderStyle: 'solid',
+        // borderWidth: 1, borderColor: 'white', borderStyle: 'solid',
       }
       }
     >

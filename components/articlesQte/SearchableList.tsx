@@ -3,7 +3,7 @@ import { TextInput, View, StyleSheet } from 'react-native';
 import FlatListArticles from './FlatListArticles';
 import { Colors } from '@/constants/Colors';
 
-const SearchableList = ({ search, setSearch, filteredData, addToCart, removeFromCart }) => {
+const SearchableList = ({ search, setSearch, filteredData, cart, addToCart, removeFromCart }) => {
     const handleSearch = (text:any) => {
       console.log("Recherche pour:", text);
       setSearch(text);
@@ -78,10 +78,9 @@ const SearchableList = ({ search, setSearch, filteredData, addToCart, removeFrom
           onChangeText={handleSearch}
         />
         <FlatListArticles 
-          addToCart={addToCart} 
-          removeFromCart={removeFromCart} 
-          articlesFilteredToWrap={filteredData} 
-        />
+          addToCart={addToCart}
+          removeFromCart={removeFromCart}
+          articlesFilteredToWrap={filteredData} cart={cart}        />
       </View>
     );
   };

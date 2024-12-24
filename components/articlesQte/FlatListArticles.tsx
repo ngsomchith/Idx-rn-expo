@@ -4,7 +4,7 @@ import RenderEachArticleInHome from './RenderEachArticleInHome';
 import ThisDevice from '@/constants/ThisDevice';
 import { Colors } from '@/constants/Colors';
 
-const FlatListArticles = ({ articlesFilteredToWrap,addToCart, removeFromCart }) => {
+const FlatListArticles = ({ articlesFilteredToWrap,cart, addToCart, removeFromCart }) => {
 
     const [articlesMenu, setArticlesMenu] = useState([]);
     const [categoryNameList, setCategoryNameList] = useState([]);
@@ -32,8 +32,8 @@ const FlatListArticles = ({ articlesFilteredToWrap,addToCart, removeFromCart }) 
                     addToCart={addToCart}
                     removeFromCart={removeFromCart}
                     menuN={item} scrollY0={undefined} scrollX0={undefined}
-                    updateScrollValue={undefined}
-                />
+                    updateScrollValue={undefined} articlesFilteredToWrap={undefined} 
+                    cart={cart}                />
             </View>
         );
     };

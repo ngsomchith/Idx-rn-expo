@@ -10,13 +10,31 @@ import { ThemedTitle } from "../ThemedTitle";
 import { Colors } from "@/constants/Colors";
 import { iconSearchPlus } from "@/icons";
 import ImageViewer from "../ImageViewer";
+import RenderEachArticleFullPage from "./RenderEachArticleFullPage";
+import Header from "../Header";
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faBasketShopping } from '@fortawesome/free-solid-svg-icons';
 
 interface ModalMenuNProps {
-  menuN: any; // Ici, vous pourriez définir un type plus précis pour `menuN`
+
+  // Ici, vous pourriez définir un type plus précis pour `menuN`
+
 }
 
-const ModalMenuN: React.FC<ModalMenuNProps> = ({ menuN }) => {
-  const [modalVisible, setModalVisible] = useState(false);
+const ModalMenuN = ({
+  articlesFilteredToWrap,
+  buttonGoToMenu,
+  maxHeightArticle,
+  cart,
+  addToCart,
+  removeFromCart,
+  menuN,
+  scrollY0,
+  scrollX0,
+  updateScrollValue,
+}) => {
+
+  const [modalMenuNVisible, setModalMenuNVisible] = useState(false);
   const [qte, setQte] = useState(menuN?.qte || 0);
   const [jour, setJour] = useState(menuN?.date || "date ../../..");
   const [image, setImage] = useState(menuN?.img || "../assets/imagesArticle/Banh-canh.jpg");
@@ -31,7 +49,7 @@ const ModalMenuN: React.FC<ModalMenuNProps> = ({ menuN }) => {
   const openModal = () => (
     <Pressable
       style={styles.openModalButton}
-      onPress={() => setModalVisible(true)}
+      onPress={() => setModalMenuNVisible(true)}
     >
       {renderMenuContent()}
     </Pressable>
@@ -41,7 +59,7 @@ const ModalMenuN: React.FC<ModalMenuNProps> = ({ menuN }) => {
     <View style={styles.menuContainer}>
       <Text style={styles.menuTitle}>{menuN?.name}</Text>
       <View style={styles.imageContainer}>
-        <Text style={styles.icon}>{iconSearchPlus}</Text>
+        {/* <Text style={styles.icon}>{iconSearchPlus}</Text> */}
         <ImageViewer placeholderImageSource={menuN?.img} />
       </View>
       <View style={styles.figCaption}>
@@ -82,46 +100,132 @@ const ModalMenuN: React.FC<ModalMenuNProps> = ({ menuN }) => {
   };
 
 
-  return (
-    <View style={styles.modalContainer}>
-      {openModal()}
-
-      <Modal animationType="slide" transparent={true} visible={modalVisible}>
-        <ThemedView style={styles.modalHeader}>
-          <ThemedTitle style={styles.modalTitle}>Modal menuN</ThemedTitle>
-          <Pressable onPress={() => setModalVisible(false)}>
-            <ThemedText>X</ThemedText>
-          </Pressable>
-        </ThemedView>
-
-        <View style={styles.modalContent}>
-          <LienGoToUrl />
-        </View>
-      </Modal>
-    </View>
-  );
-};
-
-
 const styles = StyleSheet.create({
-  modalContainer: {
-    backgroundColor: 'transparent',
-    width: '100%',
+
+  logoHeader: {
+    // borderColor: 'yellow',
+    // borderStyle: 'solid',
+    // borderWidth: 5,
+    margin: 10,
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+  },
+  containerColumn: {
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+    // borderColor: 'yellow',
+    // borderStyle: 'solid',
+    // borderWidth: 5,
+  },
+  mainContainer: {
+    display:'flex',
+    flex: 1,
+    width:'100%',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    // backgroundColor: 'blue',//Colors.background || '#f5f5f5',
+    // borderColor: 'red', borderStyle: 'solid', borderWidth: 5,
   },
   openModalButton: {
-    width: '100%',
-    height: '100%',
+    width:'100%',
+    maxWidth:'100%',
+    display:'flex',
+    // height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    // borderWidth: 5,
-    // borderColor: 'blue',
-    // borderStyle: 'solid',
+    // backgroundColor: Colors.primary || '#4caf50',
+    borderRadius: 10,
+    marginVertical: 10,
+    // borderColor: 'pink', borderStyle: 'solid', borderWidth: 2,
+  },
+  modalContainer: {
+    flex: 1,
+    // backgroundColor: Colors.background || '#ffffff',
+    backgroundColor: Colors.primaryBG || '#f5f5f5',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+    // borderColor: 'red', borderStyle: 'solid', borderWidth: 10,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    borderBottomWidth: 1,
+    // borderColor: Colors.border || '#e0e0e0',
+    // paddingBottom: 10,
+    // backgroundColor: Colors.primaryBG || '#ffffff',
+    // borderColor: 'pink', borderStyle: 'solid', borderWidth: 2,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 10,
+    color: Colors.primaryText || '#000000',
+    // borderColor: 'purple', borderStyle: 'solid', borderWidth: 2,
+  },
+  closeButton: {
+    padding: 8,
+    backgroundColor: Colors.closeButton || '#ff4d4d',
+    borderRadius: 50,
+    position: 'relative',
+    left: -25,
+    height: 40,
+    width: 40,
+    display:'flex',
+    justifyContent:'center',
+    alignItems: 'center',
+    // borderColor: 'red', borderStyle: 'solid', borderWidth: 2,
+  },
+  closeButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  modalContent: {
+    flex: 1,
+    // marginTop: 20,
+    // borderColor: 'turquoise', borderStyle: 'solid', borderWidth: 2,
+  },
+  userInfo: {
+    width: '100%',
+    flexDirection: 'row',
+    height: 60,
+    justifyContent: 'space-between',
+    // flexWrap: 'wrap',
+    padding: 5,
+    // backgroundColor: Colors.userInfoBackground || '#e0f7fa',
+    borderRadius: 10,
+    // borderColor: 'pink', borderStyle: 'solid', borderWidth: 2,
+  },
+  connectedText: {
+    flex: 1,
+    fontSize: 16,
+    color: Colors.primaryText || '#00796b',
+    // backgroundColor: Colors.userInfoBackground || '#e0f7fa',
+    marginBottom: 10,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // borderColor: 'black', borderStyle: 'solid', borderWidth: 4,
+  },
+  logoutButton: {
+    padding: 10,
+    backgroundColor: Colors.primary || '#4caf50',
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  logoutText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   menuContainer: {
     flexWrap: 'nowrap',
     width: '100%',
-    // borderColor: 'yellow',
-    // borderWidth: 3,
+    // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 3,
   },
   menuTitle: {
     color: Colors.primaryText,
@@ -165,8 +269,8 @@ const styles = StyleSheet.create({
   description: {
     maxWidth: '90%',
     flex: 1,
-    display:'flex',
-    justifyContent:'flex-start',
+    display: 'flex',
+    justifyContent: 'flex-start',
     alignItems: 'flex-start',
     overflow: 'hidden',
     color: 'white',
@@ -228,21 +332,98 @@ const styles = StyleSheet.create({
     // borderColor: 'pink',
     // borderStyle: 'solid',
   },
-  modalTitle: {
-    fontSize: 30,
-  },
-  modalContent: {
-    width: '100%',
-    height: '100%',
-    minWidth: 100,
-    minHeight: 50,
-    justifyContent: "flex-start",
-    backgroundColor: 'coral',
-    alignItems: "center",
-    padding: 10,
-    // borderWidth: 3,
-    // borderColor: 'yellow',
-  },
 });
+
+  return (
+    // <View style={styles.modalContainer}>
+    //   {openModal()}
+
+    //   <Modal animationType="slide" transparent={true} visible={modalVisible}>
+    //     <ThemedView style={styles.modalHeader}>
+    //       <ThemedTitle style={styles.modalTitle}>Modal menuN</ThemedTitle>
+    //       <Pressable onPress={() => setModalMenuNVisible(false)}>
+    //         <ThemedText>X</ThemedText>
+    //       </Pressable>
+    //     </ThemedView>
+
+
+    //   </Modal>
+    // </View
+
+    <View style={styles.mainContainer}>
+
+      {/* <Pressable //open modal
+        style={styles.openModalButton}
+        onPress={() => setModalMenuNVisible(true)}
+      >
+        <View style={{
+          // left: -15, top: -10,
+          width: 50,
+          borderWidth: 1, borderColor: 'pink', borderStyle: 'solid',
+        }}>
+          <Text style={{
+            position: 'absolute',
+            width: 25, height: 25,
+            top: -15, left: 20,
+            color: Colors.primaryText,
+            backgroundColor: 'green',
+            borderRadius: '50%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            display: 'flex'
+          }}>{cart?.length}</Text>
+          <Text style={{ position: 'relative', top: 0, left: 0 }}>
+            
+
+            <FontAwesomeIcon icon={faBasketShopping} size={32} color="white" />
+          </Text>
+        </View>
+      </Pressable> */}
+      {openModal()}
+
+      <Modal animationType="slide" transparent={true} visible={modalMenuNVisible}>
+        <ThemedView style={styles.modalContainer}>
+          {/* Modal Header */}
+          <View style={styles.modalHeader}>
+            <View style={[{ //ModalGoHome
+              // width: 50,
+              // height: '50%',
+              // margin: 10,
+              maxWidth: '100%',
+              // borderWidth: 5, borderColor: 'yellow', borderStyle: 'solid',
+              display: 'flex',
+              flexDirection: 'row'
+            }]}>
+              <Header articlesList={undefined} cart={undefined} removeFromCart={undefined} addToCart={undefined} navigation={undefined} />
+            </View>
+            <Pressable style={styles.closeButton} onPress={() => setModalMenuNVisible(false)}>
+              <Text style={styles.closeButtonText}>X</Text>
+            </Pressable>
+          </View>
+
+
+
+          <View>
+            <View style={styles.modalContent}>
+             
+              <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
+                addToCart={addToCart} removeFromCart={removeFromCart}
+                buttonGoToMenu={undefined}
+                menuN={menuN} scrollY0={undefined}
+                scrollX0={undefined} updateScrollValue={undefined} />
+
+            </View>
+
+
+
+
+          </View>
+        </ThemedView>
+      </Modal>
+    </View>
+  );
+};
+
+
 
 export default ModalMenuN;

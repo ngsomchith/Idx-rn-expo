@@ -116,8 +116,8 @@ export default function TabTwoScreen() {
         callBackFromPickerName(['Sushi', pdjTitleSushi])
       }
       else{
-        console.log("callBackFromPickerName ?",thisParams.rayon )
-        // callBackFromPickerName(['Tout', pdjTitleObject0])
+        // console.log("callBackFromPickerName ?",thisParams.rayon )
+        callBackFromPickerName(['Tout', pdjTitleObject0])
       }
     }
   }, [thisParams]);
@@ -263,12 +263,11 @@ export default function TabTwoScreen() {
         />
       ) : (
         <SearchableList
-          search={search}
-          setSearch={setSearch}
-          filteredData={filteredData}
-          addToCart={addToCart}
-          removeFromCart={removeFromCart}
-        />
+            search={search}
+            setSearch={setSearch}
+            filteredData={filteredData}
+            addToCart={addToCart}
+            removeFromCart={removeFromCart} cart={cart}        />
       )}
     </View>
   );
