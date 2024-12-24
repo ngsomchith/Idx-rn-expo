@@ -79,7 +79,7 @@ export const firebaseConfig = {
     // appId: "1:350509971155:web:a6cc1171331a9da7554626",
     // measurementId: "G-0074EQTBRN"
 
-    // delicatessen
+    // delicatessen chez udex.web
     apiKey: "AIzaSyAyu1gY_pBqNZbYJgd9KQ4vjfD-iVhx4I0",
     authDomain: "delicatessencloud.firebaseapp.com",
     projectId: "delicatessencloud",

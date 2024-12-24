@@ -334,14 +334,17 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                     <GestCodePromo />
                 </View> */}
                 {/* {warningToaster()} */}
+                {user ? 
                 <Pressable onPress={() => saveCurrentCde()}
                     style={{ padding: 10, backgroundColor: '#c3731d', marginVertical: 10, borderRadius: 10 }}>
                     <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>Valider votre commande</Text>
                 </Pressable>
-                {/* <ButtonStd iconL={undefined} iconR={undefined}
-                    label={'Valider votre commande'} labelColor={Colors.primaryText}
-                    onPress={() => saveCurrentCde()} onChange={undefined}
-                    bgButton={'#c3731d'} /> */}
+                :
+                <Pressable onPress={() => {window.alert('Connectez-vous pour valider')}}
+                    style={{ padding: 10, backgroundColor: 'grey', marginVertical: 10, borderRadius: 10 }}>
+                    <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>Valider votre commande</Text>
+                </Pressable>
+            }
 
                 {commandeRecu &&
                     <View style={{ backgroundColor: Colors.highlightBG, padding: 10 }}>

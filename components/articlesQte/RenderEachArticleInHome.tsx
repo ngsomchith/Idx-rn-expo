@@ -117,7 +117,7 @@ const RenderEachArticleInHome = ({
       <View
         style={[
           styles.articleContent,
-          { backgroundColor: menuN.qte > 0 ? Colors.highlightBG : Colors.accentBG },
+          { backgroundColor: (menuN.qte > 0 || qte>0) ? Colors.highlightBG : Colors.accentBG },
         ]}
       >
         <ModalMenuN menuN={menuN}
@@ -212,6 +212,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     // borderColor: 'gray',
     // borderWidth: 1,
+    color: 'white',
     borderRadius: 5,
     paddingVertical: 5,
     fontSize: 18,
