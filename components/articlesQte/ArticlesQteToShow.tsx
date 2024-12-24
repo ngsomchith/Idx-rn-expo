@@ -58,6 +58,9 @@ const ArticlesQteToShow = ({ articlesList, addToCart, removeFromCart, cart, curr
 
   useEffect(() => {
     console.log('articlesListByCat', articlesListByCat);
+    console.log('articlesListByCat.promo', articlesListByCat?.promo);
+    console.log('articlesListByCat.topV', articlesListByCat?.topV);
+
   }, [articlesListByCat]);
 
   async function getArticlesListByCat(_articlesList: any) {

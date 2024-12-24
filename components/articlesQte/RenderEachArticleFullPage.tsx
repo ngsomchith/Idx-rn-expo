@@ -201,8 +201,9 @@ const RenderEachArticleFullPage = ({
       justifyContent: 'space-around',
       alignItems: 'center',
       width: '100%',
-      paddingVertical: 8,
-      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
+      paddingVertical: 2,
+      marginVertical: 4,
+      borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
       height: sectionPriceHeight,
       borderRadius: 10,
       backgroundColor: thisBackGround, // Couleur de fond pour une meilleure visibilité

@@ -411,15 +411,21 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                 onPress={() => setModalPanierVisible(true)}
             >
                 <View style={{
-                    left: -15, top: -10,
+                    // left: -15, top: -10,
                     width: 50,
-                    borderWidth: 1, borderColor: 'green', borderStyle: 'solid',
+                    // borderWidth: 1, borderColor: 'pink', borderStyle: 'solid',
                 }}>
-                    <ThemedText style={{
+                    <Text style={{
                         position: 'absolute',
-                        top: -30, left: 30,
-                        backgroundColor: 'green', borderRadius: '50%',
-                    }}>{cart?.length}</ThemedText>
+                        width:25,height:25,
+                        top: -15, left: 20,
+                        color:Colors.primaryText,
+                        backgroundColor: 'green', 
+                        borderRadius: '50%',
+                        justifyContent:'center',
+                        alignItems:'center',
+                        display:'flex'
+                    }}>{cart?.length}</Text>
                     <Text style={{ position: 'relative', top: 0, left: 0 }}>
                         {/* {iconBasket}  */}
 
@@ -437,7 +443,7 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                             // height: '50%',
                             // margin: 10,
                             maxWidth: '100%',
-                            // borderWidth: 5, borderColor: 'green', borderStyle: 'solid',
+                            borderWidth: 5, borderColor: 'yellow', borderStyle: 'solid',
                             display: 'flex',
                             flexDirection: 'row'
                         }]}>
@@ -523,10 +529,10 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: Colors.primary || '#4caf50',
+        // backgroundColor: Colors.primary || '#4caf50',
         borderRadius: 10,
         marginVertical: 10,
-        // borderColor: 'green', borderStyle: 'solid', borderWidth: 2,
+        // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
     },
     modalContainer: {
         flex: 1,

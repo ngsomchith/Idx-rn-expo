@@ -96,28 +96,32 @@ export default function HomeScreen({ }) { //navigation, route
   const [platDuJour, setPlatDuJour] = useState()
   let topVentesListTemp = thisClone(topVentesList)
 
-
-
+  let docTemp:any
+  const [articlesListByCat2,setArticlesListByCat2]=useState<Array<ArticleType>>([]);
 
   useEffect(() => {
-    //all console.log('index75 articlesList', articlesList);
+    console.log('index75 articlesListByCat', articlesListByCat);
     if (articlesListByCat?.length === 0 && articlesList?.length > 0) {
       getArticlesListByCat(articlesList);
-    } else {
+    } else if(articlesListByCat != undefined && articlesListByCat != null ) {
       setArticlesListByCatLength(Object.keys(articlesListByCat).length);
-    }
-
-    if (Object.keys(articlesListByCat).length > 0) {
-
       getTopVentesList()
-      //  setIsLoading(false);
-      //  getPdjTitleList(pdjTitleObject2);
     }
-  }, [articlesListByCat, articlesList]);
 
+    // if (Object.keys(articlesListByCat)?.length > 0) {
+
+     
+    //   //  setIsLoading(false);
+    //   //  getPdjTitleList(pdjTitleObject2);
+    // }
+  }, [articlesListByCat, articlesList]);
+  useEffect(() => {
+    console.log('index110 articlesListByCat2', articlesListByCat2);
+    if(articlesListByCat!=articlesListByCat2){setArticlesListByCat(articlesListByCat2)}
+  }, [articlesListByCat2]);
 
   useEffect(() => {
-    //all console.log("topVentesList", topVentesList)
+    console.log("topVentesList", topVentesList)
   }, [topVentesList])
 
 
@@ -182,14 +186,26 @@ export default function HomeScreen({ }) { //navigation, route
       // _topVente && 
       // _topVente?.length > 0 &&
       _topVente?.forEach((element: any, index: any) => {
+        let articlesListByCatTopV:any
         // console.log('98', element.name, index)
-        if (element.name, element.name.indexOf('Fondu') >= 0) { topVentesListTemp[0] = element }//, console.log("topVentesListTemp93 ", index, element, topVentesListTemp[index]) }
-        if (element.name, element.name.indexOf('Bo Bun Boeuf') >= 0) { topVentesListTemp[1] = element }//, console.log("topVentesListTemp94 ", index, element, topVentesListTemp[index]) }
-        if (element.name, element.name.indexOf('Phat Thai') >= 0) { topVentesListTemp[2] = element }//, console.log("topVentesListTemp95 ", index, element, topVentesListTemp[index]) }
-        if (element.name, element.name.indexOf('Riz Cantonnais') >= 0) { topVentesListTemp[3] = element }//, console.log("topVentesListTemp96 ", index, element, topVentesListTemp[index]) }
-        if (element.name, element.name.indexOf('Poke Thon Saumon') >= 0) { topVentesListTemp[4] = element }//, console.log("topVentesListTemp97 ", index, element, topVentesListTemp[index]) }
-        if (element.name, element.name.indexOf('Cali Saumon Avocat') >= 0) { topVentesListTemp[5] = element }//, console.log("topVentesListTemp98 ", index, element, topVentesListTemp[index]) }
-        // if (element.name,element.name.indexOf('Cali Saumon Avocat') >= 0) { topVentesListTemp[index] = element}//, console.log("topVentesListTemp93 ", index, element, topVentesListTemp[index]) }
+        if ( element.name.indexOf('Fondu') >= 0) { topVentesListTemp[0] = element }//, console.log("topVentesListTemp93 ", index, element, topVentesListTemp[index]) }
+        if ( element.name.indexOf('Bo Bun Boeuf') >= 0) { topVentesListTemp[1] = element }//, console.log("topVentesListTemp94 ", index, element, topVentesListTemp[index]) }
+        if ( element.name.indexOf('Phat Thai') >= 0) { topVentesListTemp[2] = element }//, console.log("topVentesListTemp95 ", index, element, topVentesListTemp[index]) }
+        if ( element.name.indexOf('Riz Cantonnais') >= 0) { topVentesListTemp[3] = element }//, console.log("topVentesListTemp96 ", index, element, topVentesListTemp[index]) }
+        if ( element.name.indexOf('Poke Thon Saumon') >= 0) { topVentesListTemp[4] = element }//, console.log("topVentesListTemp97 ", index, element, topVentesListTemp[index]) }
+        if ( element.name.indexOf('Cali Saumon Avocat') >= 0) { 
+          topVentesListTemp[5] = element 
+          articlesListByCatTopV = element
+          articlesListByCat?.promo.push(element)
+          setArticlesListByCat2(articlesListByCat)
+          console.log("element", element)
+          console.log("articlesListByCatTopV", articlesListByCatTopV)
+          console.log("articlesListByCat?.topV", articlesListByCat)
+        //  console.log("articlesListByCat?", articlesListByCat)
+        //  setArticlesListByCat2(articlesListByCat)
+
+        }
+        // if (element.name.indexOf('Cali Saumon Avocat') >= 0) { topVentesListTemp[index] = element}//, console.log("topVentesListTemp93 ", index, element, topVentesListTemp[index]) }
 
       })
 
@@ -414,11 +430,11 @@ export default function HomeScreen({ }) { //navigation, route
               <View style={styles.eachContainerArticle}>
                 <Text style={{
                   position: 'absolute', fontSize: 30, zIndex: 9,
-                  top: '30%', color: 'white', // Colors.primaryText,
+                  top: '30%', color:  Colors.primaryBG,
                   backgroundColor: '#ffffff6e', textAlign: 'center',
                   padding: 5, width: '70%',
                   transform: [{ rotate: '-30deg' }], // Rotation de 45 degrés
-                }}> Idéale pour vos soirées exceptionnelles
+                }}> Incontournable pour vos soirées de fêtes
                 </Text>
                 <RenderEachArticleFullPage articlesFilteredToWrap={undefined}
                   addToCart={addToCart} removeFromCart={removeFromCart}
@@ -453,7 +469,7 @@ export default function HomeScreen({ }) { //navigation, route
 
           <ThemedView style={[styles.stepContainer, {
           }]}>
-            <ThemedText style={{ width: '100%' }}>🍕🍣🍔 Des saveurs pour tous les goûts, à prix malin !</ThemedText>
+            <Text style={{ width: '100%', color: Colors.primaryText, fontSize:16 }}>🍕🍣🍔 Des saveurs pour tous les goûts, à prix malin !</Text>
 
             {topVentesList &&
               <View style={styles.eachContainerArticle}>

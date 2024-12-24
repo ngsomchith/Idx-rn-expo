@@ -25,11 +25,11 @@ export function ThemedText({
       if (type === 'title') {
         return <h1 style={{ color, margin : 0 }}>{children}</h1>;
       } else if (type === 'subtitle') {
-        return <h2 style={{ color, margin : 0, fontFamily: 'SpaceMono', }}>{children}</h2>;
+        return <h2 style={{ color, margin : 0, fontFamily: 'Roboto', }}>{children}</h2>;
       } else if (type === 'link') {
-        return <a style={{ color, margin : 0,  fontFamily: 'SpaceMono',  }} {...rest}>{children}</a>;
+        return <a style={{ color, margin : 0,  fontFamily: 'Roboto',  }} {...rest}>{children}</a>;
       } else  {
-        return <p style={{ color, margin : 0,  fontFamily: 'SpaceMono',  }}>{children}</p>;
+        return <p style={{ color, margin : 0,  fontFamily: 'Roboto',  }}>{children}</p>;
       }
     }
     // Pour React Native (mobile), utiliser Text
