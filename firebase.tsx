@@ -7,6 +7,8 @@ import { ThemedView } from './components/ThemedView';
 import { ThemedTitle } from './components/ThemedTitle';
 import { ThemedText } from './components/ThemedText';
 import { ThemedInput } from './components/ThemedInput';
+import { formeMyDatefr, formeMyDateTable, get_all_dates } from './components/services/DataServices';
+import { PanierType } from './app/models/PanierType';
 
 
 export const myApp = FirebaseInit()
@@ -336,4 +338,93 @@ export async function informClientCdeRecu(
   //all0810 console.log("emailOptions = ", emailOptions);
 
   updateItem(thisCollection, emailOptions, thisDoc);
+}
+
+export async function getCdeEnCoursPlatsCde() {
+  const myDocs: Array<PanierType> = new Array();
+  try {
+    await getItems("platsCde/").then((res) => {
+      res.forEach((element: any) => {
+        myDocs.push(element);
+        // console.log(244, element.plat.id, element.plat.name, element.dayCde)
+      });
+      // console.log("286 getCdeEnCours  = ", myDocs)
+    });
+  } catch (error) {
+    //all console.log("error =", error)
+  }
+  return myDocs;
+}
+
+export async function getTwoMonths(dayDocStr: any) {
+  if (dayDocStr) {
+    // console.log("getTwoMonths ", dayDocStr);
+    let monthDocStr = dayDocStr.substring(0, 6);
+    let thisMonth = [];
+
+    let year = Number(monthDocStr?.substring(0, 4));
+    let month = Number(monthDocStr?.substring(4));
+    // console.log("832 monthDocStr,year, month =", monthDocStr,year, month)
+    thisMonth[0] = await get_all_dates(year, month);
+    // console.log("thisMonth[0] = ", thisMonth[0])
+
+    let lastMonth = (month + 11) % 12;
+    if (lastMonth == 0) {
+      lastMonth = 12;
+      year = year - 1;
+    }
+    // console.log("841 year, lastMonth ", year, lastMonth)
+
+    thisMonth[1] = await get_all_dates(year, lastMonth);
+    //  console.log("thisMonth[1] = ", thisMonth[1])
+
+    const this2Months = thisMonth[0]?.concat(thisMonth[1]);
+    // console.log("855this2Months = ", this2Months);
+    return this2Months;
+    // return ;
+  }
+}
+
+export async function getCdeEnCoursByDay(monthDocStr: string, eachDay: string) {
+  let collectionStr = "/dayListCde/" + monthDocStr + "/" + eachDay;
+  //  console.log("FB873 collectionStr" , collectionStr)
+
+  const myDocs = [];
+  const todayfr = formeMyDatefr(new Date());
+  let resultGetCdeEnCoursByDay;
+  resultGetCdeEnCoursByDay = await getItems(collectionStr);
+
+  if (resultGetCdeEnCoursByDay.length > 0) {
+    // console.log("FB-880 eachDay" , eachDay, resultGetCdeEnCoursByDay)
+  }
+  return resultGetCdeEnCoursByDay;
+}
+
+export async function getNextNDays(startDay: Date, nbJours: number) {
+  //all0810 console.log("getNewDate : construire articlesList avec date startDay, nbJours", startDay, nbJours);
+
+  let menuIdx: number;
+  let article: any = [];
+
+  menuIdx = 0;
+  // let nbJours = 30;
+  const newDate: any[] = [];
+  const newDateStr: any[] = [];
+  let thisTempArticlesList: any = [];
+
+  let calendar: any = [];
+  calendar["row"] = [];
+  let eachDay = [];
+  for (let index = 0; index < nbJours; index++) {
+    // const element = index;
+
+    // calendar[index.toString()] = new Date(startDay.setDate((startDay.getDate() + 1))).toString();
+
+    eachDay[index] = new Date(startDay.setDate(startDay.getDate() + 1));
+
+    calendar[index.toString()] = await formeMyDateTable(eachDay[index]);
+    //all0810 console.log("848calendar index, calendar[index.toString()]",index, calendar[index.toString()] )
+  }
+  // console.log("1073calendar", calendar)
+  return calendar; // format Date
 }

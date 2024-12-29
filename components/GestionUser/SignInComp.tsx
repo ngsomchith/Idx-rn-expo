@@ -30,6 +30,9 @@ import { thisClone } from '../services/DataServices';
 import { AuthSessionSignIn } from '../AuthSessionSignIn';
 import { UserType } from '@/app/models/UserType';
 import PhoneSignIn from './PhoneSignIn';
+import { ThemedText } from '../ThemedText';
+import ModalSignIn from './ModalSignIn';
+import { ExternalLink } from '../ExternalLink';
 // import AuthSessionSignIn from '../AuthSessionSignIn';
 // import ModalSignUp from '../components/ModalSignUp';
 
@@ -49,6 +52,7 @@ const SignInComp = ({
         auth, user, setUser,
         modalSignInVisible, setModalSignInVisible,
         userInfo, setUserInfo,
+        requireRefresh, setRequireRefresh,
         gAuth, setGAuth
     } = useAuth();
 
@@ -81,7 +85,6 @@ const SignInComp = ({
     const [currentUserEmail, setCurrentUserEmail] = useState('')
     // const thisCollection = 'shoppinUsers/test/phoneSignIn'
     const thisCollection = 'shoppinUsers'
-    const [requireRefresh, setRequireRefresh] = useState(false);
     const [gUserEmail, setGUserEmail] = useState(null); //// getGoogleUser
 
     const iconGoogle = <SimpleLineIcons name="social-google" style={{ fontSize: 24 }} color="white" />
@@ -159,7 +162,9 @@ const SignInComp = ({
     //         objectLength(routeParams).then(() => {
     // })
     //     }, [route, routeParams])
-
+    useEffect(() => {
+        console.log("user useEffect163", user)
+    }, [user])
     useEffect(() => {
         //all console.log("294 currentUserEmail, panierQte, panierView ", currentUserEmail, panierQte, panierView)
         if (currentUserEmail == 'udex.invited@gmail.com' || currentUserEmail == ''
@@ -205,6 +210,25 @@ const SignInComp = ({
 
         console.log("79 userInfo.email ", userInfo?.email)
         setGUserEmail(userInfo?.email)
+
+        try {
+            // const userCredential = awa it signInWithEmailAndPassword(myApp, email, password);
+            // console.log(userCredential)
+            // console.log('Connexion réussie', `Bienvenue ${userCredential.user.email}`);
+
+            // currentUserTemp = userCredential.user
+            // console.log("user ProfileScreen 24", currentUserTemp)
+            if (userInfo && userInfo?.email) {
+                login(userInfo)
+                afterSignIn(userInfo, userInfo?.email)
+            }
+
+
+        } catch (error) {
+
+            window.alert('Erreur' + error?.message);
+        }
+
         // setTimeout(() => {
         //     useRouteParams()
         // }, 2000);
@@ -226,6 +250,7 @@ const SignInComp = ({
 
 
     useEffect(() => {
+        console.log("gUserEmail useEffect", gUserEmail)
 
         setTimeout(() => {
             console.log(89, gAuth?.accessToken)
@@ -358,38 +383,13 @@ const SignInComp = ({
         const { email, password } = values;
         try {
             const userCredential = await signInWithEmailAndPassword(myApp, email, password);
-            console.log(userCredential)
+            console.log("userCredential ", userCredential)
             console.log('Connexion réussie', `Bienvenue ${userCredential.user.email}`);
 
             currentUserTemp = userCredential.user
             console.log("user ProfileScreen 24", currentUserTemp)
-            setModalSignInVisible(false)
             login(userCredential.user)
-
-            if (userCredential && userCredential.user && userCredential.user.email) { // user exist after email sign in
-
-                checkUserEmailExist(email)
-
-
-                if (!userInfo || !userInfo?.email
-                    // && (currentUser.codePromo == ''
-                    //     || currentUser.codePromo == 'noCode'
-                    //     || !currentUser.codePromo
-                    // )
-                ) {
-                    console.log("128currentUser ", currentUser)
-                    console.log("userInfo ", userInfo)
-                    let currentUserTemp = thisClone(currentUser)
-                    // const result = promoOuverture ? 'promoOuverture' : 'noCode138'
-
-                }
-
-
-            }
-            //all console.log("271resultLogin =", resultLogin['codePromo'])
-            // setpromoOuverture(resultLogin['codePromo'])
-
-
+            afterSignIn(userCredential, email)
 
 
         } catch (error) {
@@ -397,6 +397,31 @@ const SignInComp = ({
             window.alert('Erreur' + error?.message);
         }
     };
+
+    function afterSignIn(userCredential: any, email: any) {
+        setCurrentUserEmail(email)
+        setModalSignInVisible(false)
+        if (userCredential && userCredential.user && userCredential.user.email) { // user exist after email sign in
+
+            checkUserEmailExist(email)
+
+
+            if (!userInfo || !userInfo?.email
+                // && (currentUser.codePromo == ''
+                //     || currentUser.codePromo == 'noCode'
+                //     || !currentUser.codePromo
+                // )
+            ) {
+                console.log("128currentUser ", currentUser)
+                console.log("userInfo ", userInfo)
+                let currentUserTemp = thisClone(currentUser)
+                // const result = promoOuverture ? 'promoOuverture' : 'noCode138'
+
+            }
+
+
+        }
+    }
 
     async function checkUserEmailExist(thisValue: string) {
 
@@ -869,7 +894,7 @@ const SignInComp = ({
             // borderColor: 'green',
             // borderWidth: 5,
             // borderStyle: 'solid',
-            paddingHorizontal : 10,
+            paddingHorizontal: 10,
             minHeight: 40,
             width: MAXWIDTH,
             maxWidth: '100%',
@@ -990,10 +1015,12 @@ const SignInComp = ({
                     <View style={{
                         top: 20
                     }}>
-                        {/* {showPanierViewModal && showPanierViewModal()} */}
-                        <Text>
-                            showpanier ?
-                        </Text>
+                        <ExternalLink href="https://delicatessen.cloud/">
+                            <ThemedText type="link">Accueil</ThemedText>
+                        </ExternalLink>
+                        {/* <ThemedText type='defaultSemiBold'>
+                            showpanier ? (sans issue ... ?reset)
+                        </ThemedText> */}
                     </View>
             }
         </View >

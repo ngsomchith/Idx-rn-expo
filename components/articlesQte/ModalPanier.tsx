@@ -32,11 +32,13 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
     // const {thisAuth} = useAuth();
     const {
         login, currentUser, auth, user,
+        remiseObtenue, setRemiseObtenue,
         modalSignInVisible, setModalSignInVisible
     } = useAuth();
     const device = ThisDevice().device;
     const MAXWIDTH = ThisDevice().device.myMAXWIDTH;
     const [totalPanier, setTotalPanier] = useState(0)
+    const [totalQte, setTotalQte] = useState(0)
     const [modalPanierVisible, setModalPanierVisible] = useState(false);
     const [currentUserEmail, setCurrentUserEmail] = useState('');
 
@@ -111,6 +113,19 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
         }
     }
 
+    useEffect(() => {
+        console.log(" remiseObtenue useEffect", remiseObtenue, totalPanier)
+        const totalTemp = totalPanier - remiseObtenue
+        setTimeout(() => {
+            if (totalTemp != totalPanier) {
+                console.log("totalTemp ", totalTemp)
+                setTotalPanier(totalTemp)
+            } else {
+                console.log("totalTemp == ? totalPanier ", totalTemp, totalPanier)
+            }
+        }, 500);
+
+    }, [remiseObtenue])
 
     useEffect(() => {
         if (thisCollectionStr) {
@@ -147,6 +162,9 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
         setThisCollectionStr(thisCollectionRefTemp)
     }, [todayfr10, dateFact, dayDocStr])
 
+    useEffect(() => {
+        console.log("user useEffect166", user)
+    }, [user])
     useFocusEffect(
         React.useCallback(() => {// Empêchez le retour à la page précédente en désactivant le geste de retour
 
@@ -161,7 +179,7 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
 
     const saveCurrentCde = async () => {
         const sellerName = 'Delicatessen' // sellerName: any, sellerEmai: any
-        const sellerEmai = 'delicatessen.cloud@gmail.com'
+        const sellerEmail = 'delicatessen.cloud@gmail.com'
         //all202409    //All console.log("ARTI2241", "saveCurrentCde =", sellerName)
         const commandeTemp: any = CommandeType
         console.log(" saveCurrentCde ",)
@@ -177,7 +195,7 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
             let panierQteTemp: any = []
             let i = 0
             cart?.forEach((panierElt: any) => {
-                //all202409    //All console.log("ARTI", "1544panierElt ", panierElt)
+                  console.log("ARTI", "1544panierElt ", panierElt)
                 panierQteTemp[i] = []
                 panierQteTemp[i].id = panierElt.id
                 panierQteTemp[i].ref = panierElt.ref
@@ -234,7 +252,7 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
     }, [cart])
 
     useEffect(() => {
-        console.log("totalPanier ", totalPanier)
+        console.log("totalPanier245 useEffet ", totalPanier)
     }, [totalPanier])
 
 
@@ -265,8 +283,9 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
         });
         // somme sum
         // console.log("ARTI", totalLigne)
-        const total = totalLigne.reduce((a: any, b: any) => a + b, 0)
-        const totalQte = totalQte0.reduce((a: any, b: any) => a + b, 0)
+        const totalTemp = totalLigne.reduce((a: any, b: any) => a + b, 0)
+
+        const totalQteTemp = totalQte0.reduce((a: any, b: any) => a + b, 0)
         // - promoAccord
         //   - (remiseSushi ? remiseSushi : 0)
         //   - (remiseObtenue ? remiseObtenue : 0)
@@ -277,76 +296,105 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
         //All console.log("ARTI1490", "totalLigneNoJap ", totalLigneNoJap)
         // const totalNoJap = await totalLigneNoJap.reduce((a: any, b: any) => a + b, 0)
 
-        console.log("total ", total)
-        if (total > 0 && total != totalPanier) {
-            setTotalPanier(total ? total : 0)
+        if (totalTemp > 0 && totalTemp != totalPanier) {
+            console.log("total280 ", totalTemp)
+            setTotalQte(totalQteTemp)
+            setTotalPanier(totalTemp ? totalTemp : 0)
         }
 
         // if (totalJap >= 0) setTotalPanierJap(totalJap ? totalJap : 0)
-
         // if (totalNoJap >= 0) setTotalPanierNoJap(totalNoJap ? totalNoJap : 0)
 
 
+
+
+    }
+    const showTotalPanier = () => {
         return (
-            <View>
+            <View style={{
+                width: '100%',
+                minHeight: 100,
+                height: 100,
+                // borderColor: 'white',
+                // borderStyle: 'solid',
+                // borderWidth: 2,
+                padding:0
+            }}>
+                {/* <ThemedText type='title'> showTotalPanier </ThemedText> */}
                 <View style={[
                     // styles.dbRow
                     , {
 
                         maxWidth: 500,
-                        // borderColor: 'white',
+                        // borderColor: 'yellow',
                         // borderStyle: 'solid',
-                        // borderWidth: 1,
+                        // borderWidth: 3,
                         marginHorizontal: 'auto',
                         width: '100%',
                         // maxWidth: '100%',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-end',
-                        paddingVertical: 10,
+                        justifyContent: 'flex-start',
+                        alignItems: 'flex-start',
+                        // paddingVertical: 10,
                         display: 'flex',
                         flexDirection: 'row',
-                        marginVertical: 20
-                    }]} >
-                    <Text style={{ //Total à payer:
-                        color: 'white',
-                        width: MAXWIDTH * 0.4,
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        fontWeight: '600'
+                        marginVertical: 0,
+                        padding:0
+                    }]} 
+                    >
+                    <View style={{ 
+                        flexDirection: 'row', 
                         // borderColor: 'white',
                         // borderStyle: 'solid',
                         // borderWidth: 3,
-                    }
+                        flexWrap: 'wrap', 
+                        padding:5, 
+                        backgroundColor: Colors.highlightBG,
+                        width:'100%',margin:0 
+                        }}>
+                        <GestCodePromo totalPanier={totalPanier} />
 
-                    } >
-                        Total à payer:
+                        <Text style={{ //Total à payer:
+                            color: 'white',
+                            width: MAXWIDTH * 0.4,
+                            fontSize: 20,
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            fontWeight: '600'
+                            // borderColor: 'white',
+                            // borderStyle: 'solid',
+                            // borderWidth: 3,
+                        }
 
-                    </Text>
+                        } >
+                            Total à payer:
 
+                        </Text>
+                        <Text style={[, { color: 'white', width: '20%', 
+                        fontSize: 20,textAlign: 'left', fontWeight: '600' }]} > {totalQte}  </Text>
+                        <Text style={[, { color: 'white',flex: 1,
+                        fontSize: 20, textAlign: 'right', fontWeight: '600' }]} >{totalPanier.toFixed(2)}€ </Text>
+                    </View>
 
-                    <Text style={[, { color: 'white', width: '10%', textAlign: 'left', fontWeight: '600' }]} > {totalQte}  </Text>
-                    <Text style={[, { color: 'white', width: '17%', textAlign: 'left', fontWeight: '600' }]} >{total.toFixed(2)}€ </Text>
                 </View>
 
-                {/* <View style={{ backgroundColor: Colors.highlightBG, padding: 10 }}>
-                    <GestCodePromo />
-                </View> */}
-                {/* {warningToaster()} */}
-                {user ? 
-                <Pressable onPress={() => saveCurrentCde()}
-                    style={{ padding: 10, backgroundColor: '#c3731d', marginVertical: 10, borderRadius: 10 }}>
-                    <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>Valider votre commande</Text>
-                </Pressable>
-                :
-                <Pressable onPress={() => {window.alert('Connectez-vous pour valider')}}
-                    style={{ padding: 10, backgroundColor: 'grey', marginVertical: 10, borderRadius: 10 }}>
-                    <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>Valider votre commande</Text>
-                </Pressable>
-            }
 
-                {commandeRecu &&
+                {/* {warningToaster()} */}
+
+                {user ?
+                    <Pressable onPress={() => saveCurrentCde()}
+                        style={{ padding: 10, backgroundColor: '#c3731d', marginVertical: 10, borderRadius: 10 }}>
+                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>Valider votre commande</Text>
+                    </Pressable>
+                    :
+                    <Pressable onPress={() => { window.alert('Connectez-vous pour valider') }}
+                        style={{ padding: 10, backgroundColor: 'grey', marginVertical: 10, borderRadius: 10 }}>
+                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>Valider votre commande</Text>
+                    </Pressable>
+                }
+
+                {/* {commandeRecu &&
                     <View style={{ backgroundColor: Colors.highlightBG, padding: 10 }}>
                         <ThemedText>Merci pour votre commande </ThemedText>
                         <ThemedText>
@@ -354,13 +402,12 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                         </ThemedText>
                         <ThemedText>Si besoin, contactez nous au 07 43 30 12 34</ThemedText>
                     </View>
-                }
+                } */}
             </View>
 
 
             // <Text style={{ color: 'white', width: '17%', textAlign: 'left' }} >total prix </Text>
         )
-
     }
     const warningToaster0 = () => { //success Toaster
         return (
@@ -420,14 +467,14 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                 }}>
                     <Text style={{
                         position: 'absolute',
-                        width:25,height:25,
+                        width: 25, height: 25,
                         top: -15, left: 20,
-                        color:Colors.primaryText,
-                        backgroundColor: 'green', 
+                        color: Colors.primaryText,
+                        backgroundColor: 'green',
                         borderRadius: '50%',
-                        justifyContent:'center',
-                        alignItems:'center',
-                        display:'flex'
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        display: 'flex'
                     }}>{cart?.length}</Text>
                     <Text style={{ position: 'relative', top: 0, left: 0 }}>
                         {/* {iconBasket}  */}
@@ -452,7 +499,10 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                         }]}>
                             <Header articlesList={undefined} cart={undefined} removeFromCart={undefined} addToCart={undefined} navigation={undefined} />
                         </View>
-                        <Pressable style={styles.closeButton} onPress={() => setModalPanierVisible(false)}>
+                        <Pressable style={styles.closeButton} onPress={() => {
+                            setModalPanierVisible(false)
+                            setRemiseObtenue(0)
+                            }}>
                             <Text style={styles.closeButtonText}>X</Text>
                         </Pressable>
                     </View>
@@ -463,9 +513,10 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
 
 
 
-                        {user ? (
-                            <View style={{ width: '100%' }}>
-                                <View style={styles.userInfo}>
+                        <View style={{ width: '100%' }}>
+                            {user ? (
+                                <View style={styles.userInfo} //ModalProfile
+                                >
                                     <Text style={styles.connectedText}>Connecté : {currentUserEmail}
                                         {/* <Pressable style={styles.logoutButton} onPress={handleLogout}>
                                         <Text style={styles.logoutText}>Déconnexion</Text>
@@ -473,28 +524,22 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
 
                                     </Text>
                                     <ModalProfile myImage={undefined} />
+                                </View>) : (
+                                <View style={styles.containerColumn}>
+                                    <ModalSignIn myImage={undefined} />
+
                                 </View>
+                            )}
 
-                                <FlatListScrollPanier
-                                    cart={cart}
-                                    addToCart={addToCart}
-                                    removeFromCart={removeFromCart} />
+                            <FlatListScrollPanier
+                                cart={cart}
+                                addToCart={addToCart}
+                                removeFromCart={removeFromCart} />
 
-                                {getTotalPanier(cart)}
-                            </View>
-                        ) : (
-                            <View style={styles.containerColumn}>
-                                <ModalSignIn myImage={undefined} />
-                                {/* <ThemedTitle style={styles.modalTitle}>Modal Panier</ThemedTitle> */}
-                                <FlatListScrollPanier
-                                    cart={cart}
-                                    addToCart={addToCart}
-                                    removeFromCart={removeFromCart} />
+                            {showTotalPanier()}
+                            {/* {getTotalPanier(cart)} */}
+                        </View>
 
-                                {getTotalPanier(cart)}
-                                {/*  //total */}
-                            </View>
-                        )}
 
                     </View>
                 </ThemedView>

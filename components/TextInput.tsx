@@ -29,8 +29,8 @@ export const TextInput = ({
   return (
     <View
       style={{
-        // backgroundColor: 'transparent',
-        backgroundColor: Colors.primaryBG,
+        backgroundColor: 'transparent',
+        // backgroundColor: Colors.primaryBG,
         borderRadius: 0,
         flexDirection: 'row',
         justifyContent:'space-between',
@@ -40,9 +40,9 @@ export const TextInput = ({
         maxWidth:'100%',
         paddingHorizontal:0,
         height:60,
-        borderStyle: 'solid',
-        borderBottomColor: 'grey',
-        borderWidth: 1,
+        // borderStyle: 'solid',
+        // borderBottomColor: 'grey',
+        // borderWidth: 1,
         // marginHorizontal:'auto',
 
         ...otherProps
@@ -59,7 +59,7 @@ export const TextInput = ({
       <RNTextInput
         style={{
           // color: Colors.primaryText,
-          color: 'yellow',
+          // color: 'yellow',
           // backgroundColor: Colors.primaryBG,
           flex: 1,
           width: '100%',

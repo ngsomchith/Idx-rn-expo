@@ -29,7 +29,7 @@ export function ThemedText({
       } else if (type === 'link') {
         return <a style={{ color, margin : 0,  fontFamily: 'Roboto',  }} {...rest}>{children}</a>;
       } else  {
-        return <p style={{ color, margin : 0,  fontFamily: 'Roboto',  }}>{children}</p>;
+        return <h3 style={{ color, margin : 0,  fontFamily: 'Roboto',  }}>{children}</h3>;
       }
     }
     // Pour React Native (mobile), utiliser Text

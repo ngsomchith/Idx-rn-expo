@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
-import { Text, Button, View, StyleSheet } from 'react-native';
+import { Text, Button, View, StyleSheet, Pressable } from 'react-native';
 import { useAuth } from '../../app/AuthContext';
 import { Colors } from '@/constants/Colors';
 import { EditUser } from './EditUser';
+import { ExternalLink } from '../ExternalLink';
+import { ThemedText } from '../ThemedText';
 
 const ProfileScreen: React.FC = () => {
   const { currentUser, logout } = useAuth();
@@ -19,7 +21,13 @@ const ProfileScreen: React.FC = () => {
           <Text style={styles.welcomeText}>
             Bienvenue, {currentUser.name ? `nom: ${currentUser.name}` : currentUser.email}!
           </Text>
-          <Button title="Se déconnecter" onPress={logout} />
+          {/* <Button title="Se déconnecter" onPress={logout} /> */}
+        <Pressable onPress={logout}>
+          <ExternalLink href="https://delicatessen.cloud/"  target="_self" >
+            <ThemedText type="link">Se déconnecter</ThemedText>
+          </ExternalLink>
+        </Pressable>
+          
           <EditUser thisCurrentUser={currentUser} />
         </>
       ) : (

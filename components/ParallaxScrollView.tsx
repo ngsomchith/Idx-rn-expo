@@ -1,5 +1,5 @@
 import { useEffect, type PropsWithChildren, type ReactElement } from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -12,6 +12,8 @@ import { useBottomTabOverflow } from '@/components/ui/TabBarBackground';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import ThisDevice from '@/constants/ThisDevice';
 import { Colors } from '@/constants/Colors';
+import Header from './Header';
+import { useAuth } from '@/app/AuthContext';
 
 
 type Props = PropsWithChildren<{
@@ -24,6 +26,11 @@ export default function ParallaxScrollView({
   headerImage,
   headerBackgroundColor,
 }: Props) {
+
+  const { articlesList, setArticlesList, thisParams,
+    thisUseFB, cart, setCart, currentUser,
+    addToCartFn, removeFromCartFn } = useAuth()
+
   const colorScheme = useColorScheme() ?? 'light';
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
@@ -32,7 +39,7 @@ export default function ParallaxScrollView({
   const screenHeight = Dimensions.get('window').height;
   const screenWidth = Dimensions.get('window').width;
 
-  const myDevice = ThisDevice().device;
+  const device = ThisDevice().device;
   const HEADER_HEIGHT = screenHeight;
 
   useEffect(() => {
@@ -41,18 +48,20 @@ export default function ParallaxScrollView({
 
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 8,
-      backgroundColor :Colors.primaryBG
+      maxHeight: device.height,
+      height:device.height * 0.9,
+      width : screenWidth,
+      borderColor: 'red', borderStyle: 'solid', borderWidth: 8,
+      backgroundColor: Colors.primaryBG
     },
     header: {
       height: '100%', //
       maxHeight: HEADER_HEIGHT,
-      width:'100%',
+      width: '100%',
       maxWidth: screenWidth,
       overflow: 'hidden',
-      display:'flex',
-      justifyContent:'flex-start',
+      display: 'flex',
+      justifyContent: 'flex-start',
 
       // minHeight: myDevice.height ,
       // height:  myDevice.height ,
@@ -118,6 +127,20 @@ export default function ParallaxScrollView({
             { backgroundColor: headerBackgroundColor[colorScheme] },
             headerAnimatedStyle,
           ]}>
+
+          <View
+          // style={styles.headerContainer}
+          >
+            <Header
+              addToCart={undefined}
+              removeFromCart={undefined}
+              articlesList={articlesList}
+              cart={cart}
+              navigation={undefined}
+            />
+
+
+          </View>
           {headerImage}
         </Animated.View>
         <ThemedView style={styles.content}>{children}</ThemedView>

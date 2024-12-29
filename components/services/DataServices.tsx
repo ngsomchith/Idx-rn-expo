@@ -58,6 +58,45 @@ export function formeMyDatefr(journee: Date) {
   return result0
 }
 
+export async function get_all_dates(year: number, month: number) {
+  // console.log(475, "get_all_dates ",year, month)
+
+  if (year > 0) {
+    let date = new Date(year, month - 1, 1);
+    // console.log(481, "date ",month, date)
+    let dates = [];
+    let thisMonth
+    let thisDay
+    let result
+    let i = 0;
+    const myDocs = [];
+    while (date.getMonth() === month - 1) {
+
+      let zeroNeedMonth = 2 - Number(month.toString().length);
+
+      thisMonth = '0'.repeat(zeroNeedMonth) + (month).toString();
+
+      let zeroNeedDay = 2 - Number(date.getDate().toString().length);
+
+      thisDay = '0'.repeat(zeroNeedDay) + (date.getDate()).toString();
+
+      result = year.toString() + thisMonth + thisDay
+      // console.log(500,i,result)
+      dates.push(result);
+      date.setDate(date.getDate() + 1);
+      // console.log(546,dates[i]);
+
+      myDocs.push(dates[i])
+      i++;
+    }
+    return myDocs
+  } else {
+    // console.log(512, "get_all_dates ",year, month)
+    return
+  }
+
+}
+
 
 export async function formeMyDateTable(journee: Date) {
   const mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
@@ -367,4 +406,83 @@ export function groupedByPdjType(_articlesList: any, _setArticlesListByCat: any)
     _setArticlesListByCat(acc);
     return acc;
   }, {});
+}
+export async function sortObjectsDescent(objs: any[], fieldToSort: string | any[]) {
+  // console.log("1132 sortObjectsDescent : fieldToSort,objs = ",fieldToSort, objs)
+ 
+  // Define a couple of sorting callback functions, one with hardcoded sort key and the other with an argument sort key
+  // const sorter1 = (a, b) => a.last_nom.toLowerCase() > b.last_nom.toLowerCase() ? 1 : -1;
+  const sorter2 = (sortBy: any) => (a: { [x: string]: { toLowerCase: () => number; }; }, b: { [x: string]: { toLowerCase: () => number; }; }) => a[sortBy].toLowerCase() < b[sortBy].toLowerCase() ? 1 : -1;
+  // const sorter2 = (sortBy: string | number) => (a: { [x: string]: { toLowerCase: () => number; }; }, b: { [x: string]: { toLowerCase: () => number; }; }) => a[sortBy].toLowerCase() > b[sortBy].toLowerCase() ? 1 : -1;
+  if(Object.keys(objs)?.length == fieldToSort?.length){
+    objs?.sort(sorter2(fieldToSort));
+  }
+  // console.log(`Using sorter2 - passed param sortBy=${fieldToSort}`, objs);
+  return objs
+}
+
+export async function sortObjectsAscent(objs: any[], fieldToSort: string | any[]) {
+console.log("425 sortObjectsAscent : fieldToSort,objs = ",fieldToSort, objs)
+  //   var objs = [ 
+  //     { first_nom: 'Lazslo', last_nom: 'Jamf'     },
+  //     { first_nom: 'Pig',    last_nom: 'Bodine'   },
+  //     { first_nom: 'Pirate', last_nom: 'Prentice' }
+  // ];
+
+
+  // Define a couple of sorting callback functions, one with hardcoded sort key and the other with an argument sort key
+  // const sorter1 = (a, b) => a.last_nom.toLowerCase() > b.last_nom.toLowerCase() ? 1 : -1;
+  const sorter2 = (sortBy: any) => (a: { [x: string]: { toLowerCase: () => number; }; }, b: { [x: string]: { toLowerCase: () => number; }; }) => a[sortBy].toLowerCase() > b[sortBy].toLowerCase() ? 1 : -1;
+
+  if(Object.keys(objs)?.length == fieldToSort?.length){
+    objs?.sort(sorter2(fieldToSort));
+  }
+//all console.log(`Using sorter2 - passed param sortBy=${fieldToSort}`, objs);
+  return objs
+}
+
+export async function sortObjectsAscentStr(objs: any[], fieldToSort: string) {
+  console.log("425 sortObjectsAscent : fieldToSort, objs = ", fieldToSort, objs);
+
+  // Vérification des entrées
+  if (!Array.isArray(objs) || objs.length === 0) {
+    console.error("Le tableau d'objets est vide ou invalide.");
+    return objs;
+  }
+
+  if (typeof fieldToSort !== "string" || fieldToSort.trim() === "") {
+    console.error("Le champ de tri est invalide.");
+    return objs;
+  }
+
+  // Fonction de tri
+  const sorter = (a: { [key: string]: any }, b: { [key: string]: any }) => {
+    const valA = a[fieldToSort]?.toString().toLowerCase() || "";
+    const valB = b[fieldToSort]?.toString().toLowerCase() || "";
+
+    if (valA > valB) return 1;
+    if (valA < valB) return -1;
+    return 0;
+  };
+
+  // Application du tri
+  const sortedObjs = [...objs]; // Crée une copie pour éviter de modifier l'original
+  sortedObjs.sort(sorter);
+
+  console.log(`Trié sur le champ "${fieldToSort}" :`, sortedObjs);
+  return sortedObjs;
+}
+
+
+export function arrayUnique(arrayWithDuplicates: any[]) {
+  if(arrayWithDuplicates && arrayWithDuplicates.length==0){
+  // if(arrayWithDuplicates.length==0){
+    arrayWithDuplicates = [1, 1, 2, 3, 4, 4, 4, 5, 1];   const distinctArray = arrayWithDuplicates.filter((n: any, i: any) => arrayWithDuplicates.indexOf(n) === i);
+    console.dir(distinctArray);
+    // output: [1, 2, 3, 4, 5]
+    return distinctArray
+  }else{
+    return null
+  }
+ 
 }
