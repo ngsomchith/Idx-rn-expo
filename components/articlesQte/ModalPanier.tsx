@@ -114,11 +114,14 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
     }
 
     useEffect(() => {
+        if(!remiseObtenue){
+            setRemiseObtenue(0)
+        }
         console.log(" remiseObtenue useEffect", remiseObtenue, totalPanier)
-        const totalTemp = totalPanier - remiseObtenue
+        const totalTemp:number = totalPanier - remiseObtenue
         setTimeout(() => {
             if (totalTemp != totalPanier) {
-                console.log("totalTemp ", totalTemp)
+                console.log("totalTemp/remiseObtenue ", totalTemp)
                 setTotalPanier(totalTemp)
             } else {
                 console.log("totalTemp == ? totalPanier ", totalTemp, totalPanier)
@@ -282,7 +285,7 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
 
         });
         // somme sum
-        // console.log("ARTI", totalLigne)
+        console.log("ModalPanier285", totalLigne)
         const totalTemp = totalLigne.reduce((a: any, b: any) => a + b, 0)
 
         const totalQteTemp = totalQte0.reduce((a: any, b: any) => a + b, 0)
@@ -297,9 +300,9 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
         // const totalNoJap = await totalLigneNoJap.reduce((a: any, b: any) => a + b, 0)
 
         if (totalTemp > 0 && totalTemp != totalPanier) {
-            console.log("total280 ", totalTemp)
+            console.log("total280 ", typeof(totalTemp), totalTemp)
             setTotalQte(totalQteTemp)
-            setTotalPanier(totalTemp ? totalTemp : 0)
+            setTotalPanier(totalTemp ? totalTemp+0 : 0)
         }
 
         // if (totalJap >= 0) setTotalPanierJap(totalJap ? totalJap : 0)
@@ -374,7 +377,11 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                         <Text style={[, { color: 'white', width: '20%', 
                         fontSize: 20,textAlign: 'left', fontWeight: '600' }]} > {totalQte}  </Text>
                         <Text style={[, { color: 'white',flex: 1,
-                        fontSize: 20, textAlign: 'right', fontWeight: '600' }]} >{totalPanier.toFixed(2)}€ </Text>
+                        fontSize: 20, textAlign: 'right', fontWeight: '600' }]} >{
+                            // (totalPanier+0).toFixed(2)
+                           typeof (totalPanier)=='number'  ? totalPanier *1 : 'N'
+                        //    totalPanier+0 : Number(totalPanier+0)
+                            }€ </Text>
                     </View>
 
                 </View>

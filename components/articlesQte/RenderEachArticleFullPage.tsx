@@ -50,7 +50,7 @@ const RenderEachArticleFullPage = ({
   
   
     const widthArticle = screenWidth > widthMobile ? screenWidth * 0.4 : widthMobile
-    const heightArticle = screenHeight - 100
+    const heightArticle = screenHeight - 120
     const widthContainerArticle = screenWidth
 
 
@@ -239,15 +239,15 @@ const RenderEachArticleFullPage = ({
       flexWrap: 'wrap',
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginVertical: 10,
+      marginVertical: 5,
       backgroundColor: 'transparent',
       paddingHorizontal: 0
     },
     articleContent: {
       width: widthArticle,
       maxWidth: '100%',
-      height: heightArticle,
-      maxHeight: heightArticle,
+      // height: heightArticle,
+      maxHeight: '90%',
       marginHorizontal: 0, //widthMobile *0.1,
       marginVertical: 0,
       paddingVertical: 0,
@@ -256,7 +256,7 @@ const RenderEachArticleFullPage = ({
       justifyContent: 'space-between',
       backgroundColor: Colors.primaryBG,
       borderRadius: 18,
-      // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 3,
+      // borderColor: 'green', borderStyle: 'solid', borderWidth: 3,
     },
     priceSection: {
       flexDirection: 'row',
@@ -277,9 +277,9 @@ const RenderEachArticleFullPage = ({
       backgroundColor: thisBackGround,
       justifyContent: 'flex-start',
       width: '100%',
-      maxHeight: heightArticle - 80,
+      height: heightArticle - 70,
       // height: heightBody *.8, // ne pas fixer hauteur !!!
-      borderColor: 'red', borderStyle: 'solid', borderWidth: 5,
+      // borderColor: 'red', borderStyle: 'solid', borderWidth: 5,
     },
     quantityControls: {
       display: 'flex',

@@ -2,7 +2,7 @@
 import { StyleSheet, Button, View, Text, ScrollView, Pressable, SafeAreaView, ScrollViewComponent, FlatList, Platform } from 'react-native';
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faBasketShopping, faBookOpen, faCoffee, faHouseChimney } from '@fortawesome/free-solid-svg-icons';
+import { faBasketShopping, faBookOpen, faCoffee, faHandPointer, faHouseChimney } from '@fortawesome/free-solid-svg-icons';
 // import {
 //     AntDesign, Entypo, Feather,
 //     FontAwesome, FontAwesome5, Fontisto, Ionicons,
@@ -101,6 +101,7 @@ const iconPlusUn = <MaterialIcons name="add_circle" size={30} color="#e1a805" />
 const iconEuro = <MaterialIcons name="euro" size={30} color="white" />;
 const iconVisitor = <MaterialIcons name="location_away" size={30} color="white" />;
 
+const iconhandPointer = <FontAwesomeIcon icon={faHandPointer}  size ={24} color="white"/>;
 const iconHome = <FontAwesomeIcon icon={faHouseChimney} size ={24} color="brown"/>;
 const iconMenu = <FontAwesomeIcon icon={faBookOpen} size ={48} color={Colors.primaryBG} />;
 const iconInfo = <MaterialIcons name="info" size={30} color="white" />;
@@ -129,6 +130,7 @@ const iconFilter = <MaterialIcons name="filter_alt" size={30} color="white" />;
 const iconCalendarClock = <MaterialIcons name="today" size={30} color="white" />;
 
 export {
+  iconhandPointer,
   iconMenu,
   iconSend,
   iconUpCircle,

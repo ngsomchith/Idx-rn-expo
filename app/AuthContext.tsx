@@ -33,6 +33,8 @@ interface AuthContextType {
   thisUseFB: any
   thisParams: any
   setThisParams: any
+  remiseObtenue:any 
+  setRemiseObtenue: any
 }
 
 // Crée le contexte avec une valeur par défaut
@@ -49,6 +51,7 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);
   };
 
+  const [remiseObtenue, setRemiseObtenue] = useState(0)
   const [articlesList, setArticlesList] = useState<Array<ArticleType>>([]);
   const thisUseFB = useFb('articles/seller2/articlesList');
 
@@ -159,6 +162,7 @@ export const AuthProvider = ({ children }) => {
       addToCartFn, removeFromCartFn,
       articlesList, setArticlesList,
       thisParams, setThisParams,
+      remiseObtenue, setRemiseObtenue,
       thisUseFB
     }}>
       {children}
