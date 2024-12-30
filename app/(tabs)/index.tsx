@@ -68,7 +68,6 @@ export default function HomeScreen({ }) { //navigation, route
   const widthMobileOrWeb = MAXWIDTH > widthMobile ? '40%' : '100%'
 
   const heightBody = ThisDevice().device.heightBody
-
   const [todayfr10, setTodayfr10] = useState()
   const [topVentesList, setTopVentesList] = useState<Array<ArticleType>>([]);
 
@@ -89,13 +88,13 @@ export default function HomeScreen({ }) { //navigation, route
 
   const maxHeightArticle = MAXWIDTH > widthMobile ? 500 : 800
   const device = ThisDevice().device
-  const myHeight = device.height 
+  const myHeight = device.height
 
   const [_cdeFrom2Months, set_CdeFrom2Months] = useState([])
   const [platDuJour, setPlatDuJour] = useState()
   const [qte, setQte] = useState(0) // useState(menuN && menuN?.qte || 0);
   // let topVentesListTemp = thisClone(topVentesList)
-  
+
 
   // const maxHeightArticle = MAXWIDTH > widthMobile ? 500 : 800
   const thisBackGround = "transparent" // "grey"
@@ -268,16 +267,14 @@ export default function HomeScreen({ }) { //navigation, route
           {menuN &&
             menuN?.ref === "topV175"
             // && menuN.qte >= 1
-            ?
+            &&
             <Text style={[styles.texteArticlePrix, { //  + 1 gratuit
               fontSize: 20,
               width: 220,
               textAlign: 'center',
-              // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '30%',
               display: 'flex', justifyContent: 'center',
               paddingHorizontal: 5,
               alignItems: 'center',
-              // color: Colors.primaryText,
               color: 'white',
               position: 'relative',
               backgroundColor: 'green',
@@ -285,38 +282,11 @@ export default function HomeScreen({ }) { //navigation, route
               top: -50,
               borderRadius: 5,
               padding: 10,
-              borderWidth: 5,
-              borderColor: 'white',
-              borderStyle: 'solid',
               zIndex: 999
             }]}>
               {/* + {Math.round((menuN.qte / 2) - 0.5)} gratuit */}
               1 Acheté = 1 Offert
-            </Text> :
-            <></>
-            // <Text style={[styles.texteArticlePrix, { //  + 1 gratuit
-            //   fontSize: 20,
-            //   width: 220,
-            //   textAlign:'center',
-            //   // height: MAXWIDTH < 400 || myCoeffScreen < 1 ? '100%' : '30%',
-            //   display: 'flex', justifyContent: 'center',
-            //   paddingHorizontal: 5,
-            //   alignItems: 'center',
-            //   // color: Colors.primaryText,
-            //   color: 'white',
-            //   position: 'relative',
-            //   backgroundColor: 'green',
-            //   left: 10,
-            //   top: 50,
-            //   borderRadius: 5,
-            //   padding: 10,
-            //   borderWidth: 5,
-            //   borderColor: 'white',
-            //   borderStyle: 'solid'
-            // }]}
-            //   >
-            //   {menuN?.ref}
-            // </Text>
+            </Text>
           }
         </ThemedView>
         <ThemedText type="default" style={[styles.imageDescription, {
@@ -350,13 +320,20 @@ export default function HomeScreen({ }) { //navigation, route
         <ThemedText style={styles.price}>{Number(menuN.prix).toFixed(2)}€</ThemedText>
       )}
       <ThemedView style={styles.quantityControls}>
+
         <Pressable style={styles.quantityButton} onPress={decrementQuantity}>
           <ThemedText style={styles.quantityButtonText}>-</ThemedText>
         </Pressable>
-        <TextInput
-          style={styles.quantityInput}
-          editable={false}
-          value={String(qte)} leftIconName={undefined} rightIcon={undefined} handlePasswordVisibility={undefined} />
+
+        <View style={styles.qteInputContainer}>
+
+          <TextInput
+            style={styles.quantityInput}
+            editable={false}
+            value={String(qte)} leftIconName={undefined} rightIcon={undefined}
+            handlePasswordVisibility={undefined} />
+        </View>
+
         <Pressable style={styles.quantityButton} onPress={incrementQuantity}>
           <ThemedText style={styles.quantityButtonText}>+</ThemedText>
         </Pressable>
@@ -365,23 +342,40 @@ export default function HomeScreen({ }) { //navigation, route
     </ThemedView>
   );
 
+
+  const widthArticle = screenWidth > widthMobile ? screenWidth * 0.4 : widthMobile
+  const heightArticle = screenHeight - 100
+  const widthContainerArticle = screenWidth
+
   const styles = StyleSheet.create({
     articleContainer: {
       // borderColor: thisBackGround, borderStyle: 'solid', borderWidth: 8,
       borderRadius: 18,
-      width: screenWidth,
-      maxWidth:'100%',
-      height:heightBody,
-      borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
-      flexWrap:'wrap', 
-      flexDirection:'row',
-      justifyContent:'space-around'
+      width: widthContainerArticle,
+      maxWidth: '100%',
+      // height:heightArticle, // faut pas fixer la hauteur !!!
+      // borderColor: 'white', borderStyle: 'solid', borderWidth: 5,
+      flexWrap: 'wrap',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginVertical: 10,
+      backgroundColor: 'transparent',
+      paddingHorizontal: 0
     },
     articleContent: {
-      width: widthMobile *.7,
-      height: heightBody,
-      marginHorizontal: widthMobile *0.1,
-      marginVertical: 20
+      width: widthArticle,
+      maxWidth: '100%',
+      height: heightArticle,
+      maxHeight: heightArticle,
+      marginHorizontal: 0, //widthMobile *0.1,
+      marginVertical: 15,
+      paddingVertical: 5,
+      paddingHorizontal: 10,
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      backgroundColor: Colors.primaryBG,
+      borderRadius: 18,
+      // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 3,
     },
     priceSection: {
       flexDirection: 'row',
@@ -390,13 +384,67 @@ export default function HomeScreen({ }) { //navigation, route
       width: '100%',
       paddingVertical: 2,
       marginVertical: 4,
-      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
+      // borderColor: 'white', borderStyle: 'solid', borderWidth: 3,
       height: sectionPriceHeight,
+      minHeight: sectionPriceHeight,
       borderRadius: 10,
       backgroundColor: thisBackGround, // Couleur de fond pour une meilleure visibilité
     },
+    menuContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      backgroundColor: thisBackGround,
+      justifyContent: 'flex-start',
+      width: '100%',
+      maxHeight: heightArticle - 80,
+      // height: heightBody *.8, // ne pas fixer hauteur !!!
+      // borderColor: 'red', borderStyle: 'solid', borderWidth: 5,
+    },
+    quantityControls: {
+      display: 'flex',
+      flexDirection: 'row',
+      width: 120,
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      borderRadius: 10,
+      maxHeight: '100%',
+      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
+    },
+    quantityButton: {
+      backgroundColor: Colors.highlightBG, // Couleur plus visible
+      borderRadius: 5,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100%',
+      minHeight: 36,
+      width: 30, // Augmentation pour une meilleure cliquabilité
+      position: 'static',
+      margin: 0,
+      elevation: 3, // Ombre pour plus de profondeur
+      // borderColor: 'white', borderStyle: 'solid', borderWidth: 1,
+    },
+    quantityButtonText: {
+      fontSize: 20, // Texte plus grand
+      fontWeight: 'bold',
+      color: 'white',
+    },
+    qteInputContainer: {
+      maxWidth: 30,
+    },
+    quantityInput: {
+      width: 26,
+      textAlign: 'center',
+      borderRadius: 5,
+      paddingVertical: 5,
+      fontSize: 18,
+      backgroundColor: Colors.accentBG,
+      // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 1,
+    },
+
+
     texteArticlePrix: {
-      borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
+      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
     },
     strikethroughPrice: {
       textDecorationLine: 'line-through',
@@ -429,70 +477,17 @@ export default function HomeScreen({ }) { //navigation, route
       left: 0,
       position: 'absolute',
     },
-    quantityControls: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      borderRadius: 10,
-      // borderColor: Colors.primaryBG, borderStyle: 'solid', borderWidth: 3,
-      borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
-    },
-    quantityButton: {
-      backgroundColor: Colors.highlightBG, // Couleur plus visible
-      borderRadius: 5,
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: 30, // Augmentation pour une meilleure cliquabilité
-      height: 34,
-      marginHorizontal: 5,
-      elevation: 3, // Ombre pour plus de profondeur
-    },
-    quantityButtonText: {
-      fontSize: 20, // Texte plus grand
-      fontWeight: 'bold',
-      color: 'white',
-    },
-    quantityInput: {
-      width: 26,
-      textAlign: 'center',
-      // borderColor: 'gray',
-      // borderWidth: 1,
-      borderRadius: 5,
-      paddingVertical: 5,
-      fontSize: 18,
-      backgroundColor: Colors.accentBG,
-    },
 
     modalContainer: {
       backgroundColor: 'transparent',
       width: '100%',
-      // borderWidth: 5,
-      // borderColor: 'yellow',
-      // borderStyle: 'solid',
     },
     openModalButton: {
       width: '100%',
       height: '100%',
       justifyContent: 'center',
       alignItems: 'center',
-      // borderWidth: 5,
-      // borderColor: 'blue',
-      // borderStyle: 'solid',
     },
-    menuContainer: {
-      display: 'flex',
-      flexDirection: 'column',
-      backgroundColor: thisBackGround,
-      justifyContent: 'flex-start',
-      // flexWrap: 'nowrap',
-      width: '100%',
-      // minHeight: heightBody *.,
-
-      height: heightBody *.8,// maxHeightArticle - sectionPriceHeight, //MAXWIDTH > widthMobile ? 400 : 350,
-
-      // borderColor: 'red', borderStyle: 'solid', borderWidth: 5,
-      // backgroundColor: 'transparent'
-    },
-
     descriptionContainer: {
       display: 'flex',
       flexDirection: 'column',
@@ -501,11 +496,7 @@ export default function HomeScreen({ }) { //navigation, route
       flex: 1,
       maxWidth: '100%',
       backgroundColor: thisBackGround,
-      // borderWidth: 5,
-      // borderColor: 'pink',
-      // borderStyle: 'solid',
-      height: MAXWIDTH > widthMobile ? widthMobile * .8 : widthMobile * 1,
-      maxHeight: MAXWIDTH > widthMobile ? widthMobile * .8 : widthMobile * 1,
+      maxHeight: MAXWIDTH > widthMobile ? heightArticle - 100 : widthMobile * 1,
       overflow: 'hidden',
     },
     menuTitle: {
@@ -534,9 +525,6 @@ export default function HomeScreen({ }) { //navigation, route
       maxHeight: widthMobile * .3,
       overflow: 'hidden',
       backgroundColor: thisBackGround,
-      // borderWidth: 10,
-      // borderColor: 'white',
-      // borderStyle: 'solid',
     },
     icon: {
       position: 'absolute',
@@ -559,31 +547,21 @@ export default function HomeScreen({ }) { //navigation, route
       backgroundColor: thisBackGround,
       marginVertical: 10,
     },
-    description: {
-      maxWidth: '90%',
-      flex: 1,
-      display: 'flex',
-      justifyContent: 'flex-start',
-      alignItems: 'flex-start',
-      overflow: 'hidden',
-      color: 'white',
-      fontSize: 14,
-      height: 64,
-      backgroundColor: thisBackGround,
-      // minHeight:50,
-      maxHeight: 64,
-      margin: 0,
-      padding: 0
-    },
     pageContainer: {
       backgroundColor: 'transparent',
-      height: '100%',
       flexDirection: 'column',
       width: '100%',
+      marginHorizontal: 0,
       padding: 4,
-      // paddingHorizontal: padHorizNotMobile,
-      position: 'relative',
-      borderColor: 'white', borderStyle: 'solid', borderWidth: 5,
+      borderColor: 'blue', borderStyle: 'solid', borderWidth: 5,
+    },
+    listContainer: {
+      backgroundColor: 'transparent',
+      flexDirection: 'column',
+      width: '100%',
+      marginHorizontal: 0,
+      padding: 4,
+      // borderColor: 'turquoise', borderStyle: 'solid', borderWidth: 5,
     },
     titleContainer: {
       // borderColor: 'pink', borderStyle: 'solid', borderWidth: 10,
@@ -598,12 +576,14 @@ export default function HomeScreen({ }) { //navigation, route
     stepContainer: {
       gap: 8,
       marginBottom: 8,
-      minWidth: '90%',
+      // minWidth: '90%',
+      width: '100%',
       marginVertical: 40,
       padding: 4,
       paddingVertical: 10,
-      backgroundColor: Colors.primaryBG,
-      // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 8,
+      backgroundColor: "transparent",
+      // backgroundColor: "grey",// Colors.primaryBG,
+      // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 3,
       display: 'flex', flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'space-between'
     },
     eachContainerArticle: {
@@ -615,9 +595,9 @@ export default function HomeScreen({ }) { //navigation, route
       minWidth: MAXWIDTH > widthMobile ? '48%' : '100%',
       backgroundColor: Colors.primaryBG,
       marginVertical: 20,
-      borderColor: MAXWIDTH > widthMobile ? 'green' : 'yellow',
-      borderWidth: 5,
-      borderStyle: 'solid',
+      // borderColor: MAXWIDTH > widthMobile ? 'green' : 'yellow',
+      // borderWidth: 5,
+      // borderStyle: 'solid',
       padding: 4,
       margin: 0,
       borderRadius: 10,
@@ -632,8 +612,9 @@ export default function HomeScreen({ }) { //navigation, route
 
     headerContainer: {
       height: 100,
-      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 10,
-      position: 'relative'
+      borderColor: 'pink', borderStyle: 'solid', borderWidth: 10,
+      position: 'absolute',
+      top : 0
     },
 
   });
@@ -642,147 +623,152 @@ export default function HomeScreen({ }) { //navigation, route
   {/* {renderMenuN(topVentesList[0])} */ }
   const renderItem = (item: any, index: any) => {
     return (
-        <ThemedView
-          style={[
-            styles.articleContent,
+      <ThemedView
+        style={
+          styles.articleContent
+        }
+      >
 
-            {
-              borderColor: 'purple',
-              borderWidth: 5,
-              borderStyle: 'solid',
-            },
-          ]}
-        >
-
-          {renderMenuContent(topVentesList[index])}
-          {renderPriceSection(topVentesList[index])}
-        </ThemedView>
+        {renderMenuContent(topVentesList[index])}
+        {renderPriceSection(topVentesList[index])}
+      </ThemedView>
 
     )
   }
 
   const consTest = "Z0".repeat(50)
   return (
-    <>
-      {/* <View style={styles.headerContainer}>
-        <Header
-          addToCart={addToCart}
-          removeFromCart={removeFromCart}
-          articlesList={articlesList}
-          cart={cart}
-          navigation={undefined}
-        />
+    <ParallaxScrollView //background image
 
+      headerBackgroundColor={{ light: '#A1CEDC', dark: Colors.primaryBG }}
+      headerImage={ // BackgroundImage
+        // <BackgroundImage />
+        <View // cadre backGround
+          style={{
+            height: screenHeight,
+            width: screenWidth,
+            borderColor: 'yellow', borderStyle: 'solid', borderWidth: 5,
+            padding: 0,
 
-      </View> */}
+            position: 'relative',
 
-      <ParallaxScrollView //background image
+          }}>
+          <Image
+            source={require('@/assets/images/la_cuisiniere_Delicatessen.png')}
+            style={styles.reactLogo}
+          />
 
-        headerBackgroundColor={{ light: '#A1CEDC', dark: Colors.primaryBG }}
-        headerImage={ // BackgroundImage
-          // <BackgroundImage />
-          <View // cadre backGround
+          <View // BG TEXT
             style={{
-              height: screenHeight,
+              position: 'absolute',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'flex-end',
               width: screenWidth,
-              borderColor: 'yellow', borderStyle: 'solid', borderWidth: 3,
-              padding: 0,
-
-              position: 'relative',
+              height: screenHeight
+              // backgroundColor: Colors.highlightBG
+              // backgroundColor: '#294e807d', width: '84%', padding: 5, margin: 'auto' 
+            }}
+          >
+            <View style={{
+              backgroundColor: Colors.highlightBGlight,
+              padding: 10
 
             }}>
-            <Image
-              source={require('@/assets/images/la_cuisiniere_Delicatessen.png')}
-              style={styles.reactLogo}
-            />
+              <ThemedText type='subtitle' style={styles.text}>La fraicheur : je vous garantis . </ThemedText>
+              <ThemedText type='subtitle' style={styles.text}>Le meilleur goût : aussi .</ThemedText>
 
-            <View // BG TEXT
-              style={{
-                position: 'absolute',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'flex-end',
-                width: screenWidth,
-                height: screenHeight
-                // backgroundColor: Colors.highlightBG
-                // backgroundColor: '#294e807d', width: '84%', padding: 5, margin: 'auto' 
-              }}
-            >
-              <View style={{
-                backgroundColor: Colors.primaryBGlight,
-                padding: 10
+              <ThemedText type='subtitle' style={styles.text}>Vous ne serez pas déçus, c'est Promis .</ThemedText>
 
-              }}>
-                <ThemedText type='subtitle' style={styles.text}>La fraicheur : je vous garantis . </ThemedText>
-                <ThemedText type='subtitle' style={styles.text}>Le meilleur goût : aussi .</ThemedText>
-
-                <ThemedText type='subtitle' style={styles.text}>Vous ne serez pas déçus, c'est Promis .</ThemedText>
-
-              </View>
             </View>
           </View>
+        </View>
 
-        }>
+      }>
+        <View
+          style={styles.headerContainer}
+          >
+            <Header
+              addToCart={addToCart}
+              removeFromCart={removeFromCart}
+              articlesList={articlesList}
+              cart={cart}
+              navigation={undefined}
+            />
 
-        <ThemedView style={styles.pageContainer}>
 
+          </View>
+
+      <ThemedView style={styles.pageContainer}>
+
+          
+        <ThemedView style={[styles.stepContainer, {
+          backgroundColor: Colors.primaryBG,
+           padding: 10,
+          width:'96%',margin: 'auto',
+          borderRadius: 10,
+          // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 5,
+        }]}>
+
+          <ThemedText type="subtitle">Bienvenue chez Delicatessen
+            {/* <RenderHtmlIcon nameIcon={iconSend} /> */}
+            {/* {renderHtmlIcon('send')} */}
+          </ThemedText>
           <ThemedView style={[styles.stepContainer, {
+            borderRadius: 10,
+            // backgroundColor: Colors.primaryBG, padding: 10
           }]}>
-
-            <ThemedText type="subtitle">Bienvenue chez Delicatessen
-              {/* <RenderHtmlIcon nameIcon={iconSend} /> */}
-              {/* {renderHtmlIcon('send')} */}
-            </ThemedText>
             <ThemedText type="default">
               Découvrez une expérience culinaire unique où la fraîcheur et la tradition se rencontrent. Chez Delicatessen, nous livrons des Sushis et d'autres plats vietnamiens faits maison à la demande.
 
             </ThemedText>
             <ThemedText style={{ width: '100%', textAlign: 'left' }}> Site en cours en finition, N'hésitez pas à nous appeler :07 43 33 12 34</ThemedText>
           </ThemedView>
+        </ThemedView>
 
-          <ThemedView style={[styles.stepContainer, {
-          }]}>
+        <ThemedView style={[styles.stepContainer, {
+        }]}>
 
 
-            {topVentesListGroup.map((group, index) => (
-              <ThemedView style={styles.pageContainer} key={index}>
-                <ThemedText type="subtitle"> Group.map</ThemedText>
-                {index == 0 &&
-                  <ThemedView>
-                    <ThemedText type="subtitle">Cuisines traditionnelles</ThemedText>
-                    <ThemedText type="default">Invitation vietnamienne</ThemedText>
-                  </ThemedView>}
-                {index == 2 &&
-                  <ThemedView>
-                    <ThemedText type="subtitle">Cuisines Sushi</ThemedText>
-                    <ThemedText type="default">Invitation fraicheur sushi</ThemedText>
-                  </ThemedView>}
+          {topVentesListGroup.map((group, index) => (
+            <ThemedView style={styles.listContainer} key={index}>
+              {index == 0 &&
+                <ThemedView style={[styles.stepContainer, {
+                  borderRadius: 10,
+                  backgroundColor: Colors.primaryBG, padding: 10
+                }]}>
+                  <ThemedText type="subtitle">Plats vietnamiens fait-maison</ThemedText>
+                  <ThemedText type="default">Voyagez au cœur du Vietnam avec nos plats traditionnels, de la délicatesse des nems croustillants à la richesse parfumée du phở. Préparés dans le respect des saveurs authentiques, nos plats vietnamiens faits maison sont parfaits pour tous vos moments de partage, que ce soit un repas en famille ou un dîner entre amis. Découvrez des saveurs qui vous transporteront dans les rues du Vietnam, où vous serez certain de passer un moment inoubliable</ThemedText>
+                </ThemedView>}
+              {index == 1 &&
+                <ThemedView>
+                  <ThemedText type="subtitle">Des sushis frais et authentiques</ThemedText>
+                  <ThemedText type="default">Plongez dans l’art de la cuisine japonaise avec nos sushis, préparés avec soin pour offrir une expérience culinaire inoubliable. Des classiques comme les makis et nigiris aux créations originales, chaque bouchée est un voyage gustatif qui vous transporte directement au Japon. Nos assortiments de sushis frais sont idéaux pour satisfaire toutes vos envies et sublimer vos repas. Présentez à vos convives l'élégance et la délicatesse de notre cuisine japonaise pour une expérience visuelle et gustative unique.rez fiers de présenter l’élégance notre cuisine japonaise à vos convives</ThemedText>
+                </ThemedView>}
 
-                <ThemedView style={[styles.articleContainer,{}]}>
-                  {group.map((item: any, i: any) => (
-                    <React.Fragment key={i}>
-                      {renderItem(item, i)}
-                    </React.Fragment>
-                  ))}
-                </ThemedView>
+              <ThemedView style={[styles.articleContainer, {}]}>
+                {group.map((item: any, i: any) => (
+                  <React.Fragment key={i}>
+                    {renderItem(item, i)}
+                  </React.Fragment>
+                ))}
               </ThemedView>
-            ))}
+            </ThemedView>
+          ))}
 
 
-          </ThemedView>
-
-
-          <ThemedText type="defaultSemiBold">📍 Livraison rapide à Toulon et alentours.</ThemedText>
-          <ThemedText type="default">
-            Découvrez, commandez, dégustez : c'est bon pour vous et pour votre portefeuille ! 🥂✨
-          </ThemedText>
         </ThemedView>
 
 
-      </ParallaxScrollView>
+        <ThemedText type="defaultSemiBold">📍 Livraison rapide à Toulon et alentours.</ThemedText>
+        <ThemedText type="default">
+          Découvrez, commandez, dégustez : c'est bon pour vous et pour votre portefeuille ! 🥂✨
+        </ThemedText>
+      </ThemedView>
 
 
-    </>
+    </ParallaxScrollView>
+
 
   )
 }

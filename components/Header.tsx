@@ -145,6 +145,8 @@ const Header = ({ articlesList, cart, removeFromCart, addToCart, navigation
                 width: MAXWIDTH,
                 maxWidth: '100%',
                 height: 100,
+                // position: 'absolute',
+                // top: 0,
                 paddingHorizontal: MAXWIDTH > 700 ? '15%' : 0,
                 // display: 'flex', flexDirection: 'row', justifyContent: 'flex-start',alignItems:'flex-start',
                 //  borderWidth: 2, borderColor: 'turquoise', borderStyle: 'solid',

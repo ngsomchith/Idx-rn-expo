@@ -149,7 +149,7 @@ const ArticlesQteToShow = ({ articlesList, addToCart, removeFromCart, cart, curr
       overflow: 'scroll',
       backgroundColor: Colors.primaryBG,
       // borderWidth: 1,
-      borderColor: 'red',
+      // borderColor: 'red',
       minHeight: 300,
       height: ThisDevice().device.heightBody,
       // maxHeight: myDevice.,

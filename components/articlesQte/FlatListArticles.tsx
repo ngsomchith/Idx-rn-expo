@@ -68,12 +68,12 @@ const FlatListArticles = ({ articlesFilteredToWrap,cart, addToCart, removeFromCa
             maxWidth: '100%',
             flexWrap: 'wrap',
             backgroundColor: Colors.primaryBG,
-            borderWidth: 3,
-            borderColor: 'red',
             minHeight: 200,
             height: ThisDevice().device.heightBody,
             maxHeight: 300,
-            borderStyle:'solid'
+            // borderWidth: 3,
+            // borderColor: 'red',
+            // borderStyle:'solid'
         },
         rowContainer: {
             display: 'flex',

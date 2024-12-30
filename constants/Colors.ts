@@ -15,6 +15,7 @@ export const Colors: { [key: string]: string } = {
   red: '#fc5c65',
   primaryBG:'#821e1e',
   primaryBGlight:'#821e1e7a',
+  highlightBGlight:'#294e8087',
   
   primaryText:'white',
   secondaryBG:'#f2c2c2',

@@ -288,7 +288,7 @@ const ArticlesQteToShow = ({articlesList, addToCart, removeFromCart, cart }) => 
       backgroundColor: Colors.primaryBG,
       minHeight: myDevice.heightBody,
       borderStyle: 'solid',
-      borderWidth: 10,
+      // borderWidth: 10,
       borderColor: 'red',
       // minHeight: 300, 
       maxHeight: '100%'

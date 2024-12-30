@@ -49,10 +49,12 @@ export default function ParallaxScrollView({
   const styles = StyleSheet.create({
     container: {
       maxHeight: device.height,
-      height:device.height * 0.9,
-      width : screenWidth,
-      borderColor: 'red', borderStyle: 'solid', borderWidth: 8,
-      backgroundColor: Colors.primaryBG
+      height: device.height * 0.9,
+      width: screenWidth,
+      position:'relative',
+      // borderColor: 'red', borderStyle: 'solid', borderWidth: 5,
+      backgroundColor: Colors.highlightBG,
+      paddingHorizontal: 0
     },
     header: {
       height: '100%', //
@@ -69,34 +71,14 @@ export default function ParallaxScrollView({
     },
     content: {
       flex: 1,
-      padding: 32,
+      padding: device.width > 450 ? 32 : 10,
       gap: 16,
       overflow: 'hidden',
       backgroundColor: 'transparent'
     },
   });
 
-  // const styles = StyleSheet.create({
-  //   container: {
-  //     flex: 1,
-  //     borderColor: 'yellow', borderStyle: 'solid', borderWidth: 4,
-  //     backgroundColor: Colors.primaryBG
-  //   },
-  //   header: {
-  //     // height: HEADER_HEIGHT,
-  //     minHeight: myDevice.height ,
-  //     height:  myDevice.height ,
-  //     overflow: 'hidden',
-  //     borderColor: 'green', borderStyle: 'solid', borderWidth: 4,
-  //   },
-  //   content: {
-  //     // flex: 1,
-  //     padding: 32,
-  //     gap: 16,
-  //     overflow: 'hidden',
-  //     backgroundColor:'transparent'
-  //   },
-  // });
+
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -128,7 +110,7 @@ export default function ParallaxScrollView({
             headerAnimatedStyle,
           ]}>
 
-          <View
+          {/* <View
           // style={styles.headerContainer}
           >
             <Header
@@ -140,7 +122,7 @@ export default function ParallaxScrollView({
             />
 
 
-          </View>
+          </View> */}
           {headerImage}
         </Animated.View>
         <ThemedView style={styles.content}>{children}</ThemedView>
