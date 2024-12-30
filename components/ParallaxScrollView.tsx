@@ -51,7 +51,7 @@ export default function ParallaxScrollView({
       maxHeight: device.height,
       height: device.height * 0.9,
       width: screenWidth,
-      position:'relative',
+      // position:'relative',
       // borderColor: 'red', borderStyle: 'solid', borderWidth: 5,
       backgroundColor: Colors.highlightBG,
       paddingHorizontal: 0

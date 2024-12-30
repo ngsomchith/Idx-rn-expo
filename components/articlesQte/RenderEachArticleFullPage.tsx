@@ -7,6 +7,7 @@ import {
   Text,
   Pressable,
   TextInput,
+  Dimensions,
 } from 'react-native';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { ArticleType } from '@/app/models/ArticleType';
@@ -39,9 +40,19 @@ const RenderEachArticleFullPage = ({
   const MAX_WIDTH = ThisDevice().device.width - 5;
 
   const myDevice = ThisDevice().device
-  const widthMobile = 450
-  const sectionPriceHeight = 60
-  const widthMobileOrWeb = MAX_WIDTH > widthMobile ? widthMobile * .4 : '100%'
+ 
+    const screenHeight = Dimensions.get('window').height;
+    const screenWidth = Dimensions.get('window').width;
+  
+    const widthMobile = 450
+    const sectionPriceHeight = 60
+    const widthMobileOrWeb = MAX_WIDTH > widthMobile ? '40%' : '100%'
+  
+  
+    const widthArticle = screenWidth > widthMobile ? screenWidth * 0.4 : widthMobile
+    const heightArticle = screenHeight - 100
+    const widthContainerArticle = screenWidth
+
 
   const padHorizNotMobile = MAX_WIDTH > widthMobile ? '10%' : 0
 
@@ -217,12 +228,35 @@ const RenderEachArticleFullPage = ({
 
 
   const styles = StyleSheet.create({
+
     articleContainer: {
-      borderColor: thisBackGround, borderStyle: 'solid', borderWidth: 8,
-      borderRadius: 18, 
-      width: '100%'
+      // borderColor: thisBackGround, borderStyle: 'solid', borderWidth: 8,
+      borderRadius: 18,
+      width: widthContainerArticle,
+      maxWidth: '100%',
+      // height:heightArticle, // faut pas fixer la hauteur !!!
+      // borderColor: 'white', borderStyle: 'solid', borderWidth: 5,
+      flexWrap: 'wrap',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginVertical: 10,
+      backgroundColor: 'transparent',
+      paddingHorizontal: 0
     },
     articleContent: {
+      width: widthArticle,
+      maxWidth: '100%',
+      height: heightArticle,
+      maxHeight: heightArticle,
+      marginHorizontal: 0, //widthMobile *0.1,
+      marginVertical: 0,
+      paddingVertical: 0,
+      paddingHorizontal: 10,
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      backgroundColor: Colors.primaryBG,
+      borderRadius: 18,
+      // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 3,
     },
     priceSection: {
       flexDirection: 'row',
@@ -231,11 +265,66 @@ const RenderEachArticleFullPage = ({
       width: '100%',
       paddingVertical: 2,
       marginVertical: 4,
-      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
+      // borderColor: 'white', borderStyle: 'solid', borderWidth: 3,
       height: sectionPriceHeight,
+      minHeight: sectionPriceHeight,
       borderRadius: 10,
       backgroundColor: thisBackGround, // Couleur de fond pour une meilleure visibilité
     },
+    menuContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      backgroundColor: thisBackGround,
+      justifyContent: 'flex-start',
+      width: '100%',
+      maxHeight: heightArticle - 80,
+      // height: heightBody *.8, // ne pas fixer hauteur !!!
+      borderColor: 'red', borderStyle: 'solid', borderWidth: 5,
+    },
+    quantityControls: {
+      display: 'flex',
+      flexDirection: 'row',
+      width: 120,
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      borderRadius: 10,
+      maxHeight: '100%',
+      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
+    },
+    quantityButton: {
+      backgroundColor: Colors.highlightBG, // Couleur plus visible
+      borderRadius: 5,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100%',
+      minHeight: 36,
+      width: 30, // Augmentation pour une meilleure cliquabilité
+      position: 'static',
+      margin: 0,
+      elevation: 3, // Ombre pour plus de profondeur
+      // borderColor: 'white', borderStyle: 'solid', borderWidth: 1,
+    },
+    quantityButtonText: {
+      fontSize: 20, // Texte plus grand
+      fontWeight: 'bold',
+      color: 'white',
+    },
+    qteInputContainer: {
+      maxWidth: 30,
+    },
+    quantityInput: {
+      width: 26,
+      textAlign: 'center',
+      borderRadius: 5,
+      paddingVertical: 5,
+      fontSize: 18,
+      backgroundColor: Colors.accentBG,
+      // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 1,
+    },
+
+
+
     texteArticlePrix: {
       borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
     },
@@ -258,39 +347,6 @@ const RenderEachArticleFullPage = ({
       fontWeight: 'bold',
       color: Colors.primaryText,
     },
-    quantityControls: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      borderRadius: 10,
-      borderColor: Colors.primaryBG, borderStyle: 'solid', borderWidth: 3,
-      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
-    },
-    quantityButton: {
-      backgroundColor: Colors.highlightBG, // Couleur plus visible
-      borderRadius: 5,
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: 30, // Augmentation pour une meilleure cliquabilité
-      height: 34,
-      marginHorizontal: 5,
-      elevation: 3, // Ombre pour plus de profondeur
-    },
-    quantityButtonText: {
-      fontSize: 20, // Texte plus grand
-      fontWeight: 'bold',
-      color: 'white',
-    },
-    quantityInput: {
-      width: 26,
-      textAlign: 'center',
-      // borderColor: 'gray',
-      // borderWidth: 1,
-      borderRadius: 5,
-      paddingVertical: 5,
-      fontSize: 18,
-      backgroundColor: Colors.accentBG,
-    },
-
     modalContainer: {
       backgroundColor: 'transparent',
       width: '100%',
@@ -307,21 +363,6 @@ const RenderEachArticleFullPage = ({
       // borderColor: 'blue',
       // borderStyle: 'solid',
     },
-    menuContainer: {
-      display: 'flex',
-      flexDirection: 'column',
-      backgroundColor: thisBackGround,
-      justifyContent: 'flex-start',
-      // flexWrap: 'nowrap',
-      width: '100%',
-      minHeight: maxHeightArticle - sectionPriceHeight,
-
-      height:maxHeightArticle,// maxHeightArticle - sectionPriceHeight, //MAX_WIDTH > widthMobile ? 400 : 350,
-
-      // borderColor: 'red', borderStyle: 'solid', borderWidth: 5,
-      // backgroundColor: 'transparent'
-    },
-
     descriptionContainer: {
       display: 'flex',
       flexDirection: 'column',

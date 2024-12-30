@@ -67,6 +67,12 @@ export default function HomeScreen({ }) { //navigation, route
   const sectionPriceHeight = 60
   const widthMobileOrWeb = MAXWIDTH > widthMobile ? '40%' : '100%'
 
+
+  const widthArticle = screenWidth > widthMobile ? screenWidth * 0.4 : widthMobile
+  const heightArticle = screenHeight - 100
+  const widthContainerArticle = screenWidth
+
+
   const heightBody = ThisDevice().device.heightBody
   const [todayfr10, setTodayfr10] = useState()
   const [topVentesList, setTopVentesList] = useState<Array<ArticleType>>([]);
@@ -187,18 +193,20 @@ export default function HomeScreen({ }) { //navigation, route
     console.log("RFullPage62 qte ", qte)
   }, [qte])
 
-  const incrementQuantity = (menuN: any) => {
-    menuN.qte++;
-    console.log("RFullPage67 incrementQuantity", menuN.qte)
-    addToCart(menuN);
-    setQte(menuN.qte);
+  const incrementQuantity = (_menuN: any) => {
+    console.log("RFullPage191 incrementQuantity", _menuN)
+    // menuN.qte++;
+    console.log("RFullPage193 menuN", _menuN?.qte)
+    console.log("RFullPage194 incrementQuantity", _menuN.qte)
+    addToCart(_menuN);
+    setQte(_menuN.qte);
   };
 
-  const decrementQuantity = (menuN: any) => {
-    if (menuN.qte > 0) {
-      menuN.qte--;
-      removeFromCart(menuN);
-      setQte(menuN.qte);
+  const decrementQuantity = (_menuN: any) => {
+    if (_menuN.qte > 0) {
+      _menuN.qte--;
+      removeFromCart(_menuN);
+      setQte(_menuN.qte);
     }
   };
 
@@ -321,7 +329,7 @@ export default function HomeScreen({ }) { //navigation, route
       )}
       <ThemedView style={styles.quantityControls}>
 
-        <Pressable style={styles.quantityButton} onPress={decrementQuantity}>
+        <Pressable style={styles.quantityButton} onPress={()=>decrementQuantity(menuN)}>
           <ThemedText style={styles.quantityButtonText}>-</ThemedText>
         </Pressable>
 
@@ -330,11 +338,11 @@ export default function HomeScreen({ }) { //navigation, route
           <TextInput
             style={styles.quantityInput}
             editable={false}
-            value={String(qte)} leftIconName={undefined} rightIcon={undefined}
+            value={String(menuN.qte)} leftIconName={undefined} rightIcon={undefined}
             handlePasswordVisibility={undefined} />
         </View>
 
-        <Pressable style={styles.quantityButton} onPress={incrementQuantity}>
+        <Pressable style={styles.quantityButton} onPress={()=>incrementQuantity(menuN)}>
           <ThemedText style={styles.quantityButtonText}>+</ThemedText>
         </Pressable>
       </ThemedView>
@@ -342,10 +350,6 @@ export default function HomeScreen({ }) { //navigation, route
     </ThemedView>
   );
 
-
-  const widthArticle = screenWidth > widthMobile ? screenWidth * 0.4 : widthMobile
-  const heightArticle = screenHeight - 100
-  const widthContainerArticle = screenWidth
 
   const styles = StyleSheet.create({
     articleContainer: {
@@ -369,11 +373,11 @@ export default function HomeScreen({ }) { //navigation, route
       maxHeight: heightArticle,
       marginHorizontal: 0, //widthMobile *0.1,
       marginVertical: 15,
-      paddingVertical: 5,
+      paddingVertical: 15,
       paddingHorizontal: 10,
       flexDirection: 'column',
       justifyContent: 'space-between',
-      backgroundColor: Colors.primaryBG,
+      backgroundColor: Colors.accentBG,
       borderRadius: 18,
       // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 3,
     },
@@ -553,7 +557,7 @@ export default function HomeScreen({ }) { //navigation, route
       width: '100%',
       marginHorizontal: 0,
       padding: 4,
-      borderColor: 'blue', borderStyle: 'solid', borderWidth: 5,
+      // borderColor: 'blue', borderStyle: 'solid', borderWidth: 5,
     },
     listContainer: {
       backgroundColor: 'transparent',
@@ -612,9 +616,9 @@ export default function HomeScreen({ }) { //navigation, route
 
     headerContainer: {
       height: 100,
-      borderColor: 'pink', borderStyle: 'solid', borderWidth: 10,
-      position: 'absolute',
-      top : 0
+      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 10,
+      // position: 'absolute',
+      // top: 0
     },
 
   });
@@ -629,8 +633,17 @@ export default function HomeScreen({ }) { //navigation, route
         }
       >
 
-        {renderMenuContent(topVentesList[index])}
-        {renderPriceSection(topVentesList[index])}
+        <RenderEachArticleFullPage
+          articlesFilteredToWrap={undefined} buttonGoToMenu={undefined}
+          maxHeightArticle={undefined}
+          addToCart={addToCart}
+          removeFromCart={removeFromCart}
+          menuN={topVentesList[index]} scrollY0={undefined}
+          scrollX0={undefined} updateScrollValue={undefined}
+        />
+
+        {/* {renderMenuContent(topVentesList[index])}
+        {renderPriceSection(topVentesList[index])} */}
       </ThemedView>
 
     )
@@ -638,136 +651,142 @@ export default function HomeScreen({ }) { //navigation, route
 
   const consTest = "Z0".repeat(50)
   return (
-    <ParallaxScrollView //background image
+    <ThemedView style={{
+      position: 'relative'
+    }}>
 
-      headerBackgroundColor={{ light: '#A1CEDC', dark: Colors.primaryBG }}
-      headerImage={ // BackgroundImage
-        // <BackgroundImage />
-        <View // cadre backGround
-          style={{
-            height: screenHeight,
-            width: screenWidth,
-            borderColor: 'yellow', borderStyle: 'solid', borderWidth: 5,
-            padding: 0,
-
-            position: 'relative',
-
-          }}>
-          <Image
-            source={require('@/assets/images/la_cuisiniere_Delicatessen.png')}
-            style={styles.reactLogo}
-          />
-
-          <View // BG TEXT
-            style={{
-              position: 'absolute',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'flex-end',
-              width: screenWidth,
-              height: screenHeight
-              // backgroundColor: Colors.highlightBG
-              // backgroundColor: '#294e807d', width: '84%', padding: 5, margin: 'auto' 
-            }}
-          >
-            <View style={{
-              backgroundColor: Colors.highlightBGlight,
-              padding: 10
-
-            }}>
-              <ThemedText type='subtitle' style={styles.text}>La fraicheur : je vous garantis . </ThemedText>
-              <ThemedText type='subtitle' style={styles.text}>Le meilleur goût : aussi .</ThemedText>
-
-              <ThemedText type='subtitle' style={styles.text}>Vous ne serez pas déçus, c'est Promis .</ThemedText>
-
-            </View>
-          </View>
-        </View>
-
-      }>
-        <View
-          style={styles.headerContainer}
-          >
-            <Header
-              addToCart={addToCart}
-              removeFromCart={removeFromCart}
-              articlesList={articlesList}
-              cart={cart}
-              navigation={undefined}
-            />
+      <ThemedView
+        style={styles.headerContainer}
+      >
+        <Header
+          addToCart={addToCart}
+          removeFromCart={removeFromCart}
+          articlesList={articlesList}
+          cart={cart}
+          navigation={undefined}
+        />
 
 
-          </View>
-
-      <ThemedView style={styles.pageContainer}>
-
-          
-        <ThemedView style={[styles.stepContainer, {
-          backgroundColor: Colors.primaryBG,
-           padding: 10,
-          width:'96%',margin: 'auto',
-          borderRadius: 10,
-          // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 5,
-        }]}>
-
-          <ThemedText type="subtitle">Bienvenue chez Delicatessen
-            {/* <RenderHtmlIcon nameIcon={iconSend} /> */}
-            {/* {renderHtmlIcon('send')} */}
-          </ThemedText>
-          <ThemedView style={[styles.stepContainer, {
-            borderRadius: 10,
-            // backgroundColor: Colors.primaryBG, padding: 10
-          }]}>
-            <ThemedText type="default">
-              Découvrez une expérience culinaire unique où la fraîcheur et la tradition se rencontrent. Chez Delicatessen, nous livrons des Sushis et d'autres plats vietnamiens faits maison à la demande.
-
-            </ThemedText>
-            <ThemedText style={{ width: '100%', textAlign: 'left' }}> Site en cours en finition, N'hésitez pas à nous appeler :07 43 33 12 34</ThemedText>
-          </ThemedView>
-        </ThemedView>
-
-        <ThemedView style={[styles.stepContainer, {
-        }]}>
-
-
-          {topVentesListGroup.map((group, index) => (
-            <ThemedView style={styles.listContainer} key={index}>
-              {index == 0 &&
-                <ThemedView style={[styles.stepContainer, {
-                  borderRadius: 10,
-                  backgroundColor: Colors.primaryBG, padding: 10
-                }]}>
-                  <ThemedText type="subtitle">Plats vietnamiens fait-maison</ThemedText>
-                  <ThemedText type="default">Voyagez au cœur du Vietnam avec nos plats traditionnels, de la délicatesse des nems croustillants à la richesse parfumée du phở. Préparés dans le respect des saveurs authentiques, nos plats vietnamiens faits maison sont parfaits pour tous vos moments de partage, que ce soit un repas en famille ou un dîner entre amis. Découvrez des saveurs qui vous transporteront dans les rues du Vietnam, où vous serez certain de passer un moment inoubliable</ThemedText>
-                </ThemedView>}
-              {index == 1 &&
-                <ThemedView>
-                  <ThemedText type="subtitle">Des sushis frais et authentiques</ThemedText>
-                  <ThemedText type="default">Plongez dans l’art de la cuisine japonaise avec nos sushis, préparés avec soin pour offrir une expérience culinaire inoubliable. Des classiques comme les makis et nigiris aux créations originales, chaque bouchée est un voyage gustatif qui vous transporte directement au Japon. Nos assortiments de sushis frais sont idéaux pour satisfaire toutes vos envies et sublimer vos repas. Présentez à vos convives l'élégance et la délicatesse de notre cuisine japonaise pour une expérience visuelle et gustative unique.rez fiers de présenter l’élégance notre cuisine japonaise à vos convives</ThemedText>
-                </ThemedView>}
-
-              <ThemedView style={[styles.articleContainer, {}]}>
-                {group.map((item: any, i: any) => (
-                  <React.Fragment key={i}>
-                    {renderItem(item, i)}
-                  </React.Fragment>
-                ))}
-              </ThemedView>
-            </ThemedView>
-          ))}
-
-
-        </ThemedView>
-
-
-        <ThemedText type="defaultSemiBold">📍 Livraison rapide à Toulon et alentours.</ThemedText>
-        <ThemedText type="default">
-          Découvrez, commandez, dégustez : c'est bon pour vous et pour votre portefeuille ! 🥂✨
-        </ThemedText>
       </ThemedView>
 
+      <ParallaxScrollView //background image
 
-    </ParallaxScrollView>
+        headerBackgroundColor={{ light: '#A1CEDC', dark: Colors.primaryBG }}
+        headerImage={ // BackgroundImage
+          // <BackgroundImage />
+          <View // cadre backGround
+            style={{
+              height: screenHeight,
+              width: screenWidth,
+              // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 5,
+              padding: 0,
+
+              position: 'relative',
+
+            }}>
+            <Image
+              source={require('@/assets/images/la_cuisiniere_Delicatessen.png')}
+              style={styles.reactLogo}
+            />
+
+            <View // BG TEXT
+              style={{
+                position: 'absolute',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'flex-end',
+                width: screenWidth,
+                height: screenHeight
+                // backgroundColor: Colors.highlightBG
+                // backgroundColor: '#294e807d', width: '84%', padding: 5, margin: 'auto' 
+              }}
+            >
+              <View style={{
+                backgroundColor: Colors.highlightBGlight,
+                padding: 10
+
+              }}>
+                <ThemedText type='subtitle' style={styles.text}>La fraicheur : je vous garantis . </ThemedText>
+                <ThemedText type='subtitle' style={styles.text}>Le meilleur goût : aussi .</ThemedText>
+
+                <ThemedText type='subtitle' style={styles.text}>Vous ne serez pas déçus, c'est Promis .</ThemedText>
+
+              </View>
+            </View>
+          </View>
+
+        }>
+
+        <ThemedView style={styles.pageContainer}>
+
+
+          <ThemedView style={[styles.stepContainer, {
+            backgroundColor: Colors.primaryBG,
+            padding: 10,
+            width: '96%', margin: 'auto',
+            borderRadius: 10,
+            // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 5,
+          }]}>
+
+            <ThemedText type="subtitle">Bienvenue chez Delicatessen
+              {/* <RenderHtmlIcon nameIcon={iconSend} /> */}
+              {/* {renderHtmlIcon('send')} */}
+            </ThemedText>
+            <ThemedView style={[styles.stepContainer, {
+              borderRadius: 10,
+              // backgroundColor: Colors.primaryBG, padding: 10
+            }]}>
+              <ThemedText type="default">
+                Découvrez une expérience culinaire unique où la fraîcheur et la tradition se rencontrent. Chez Delicatessen, nous livrons des Sushis et d'autres plats vietnamiens faits maison à la demande.
+
+              </ThemedText>
+              <ThemedText style={{ width: '100%', textAlign: 'left' }}> Site en cours en finition, N'hésitez pas à nous appeler :07 43 33 12 34</ThemedText>
+            </ThemedView>
+          </ThemedView>
+
+          <ThemedView style={[styles.stepContainer, {
+          }]}>
+
+
+            {topVentesListGroup.map((group, index) => (
+              <ThemedView style={styles.listContainer} key={index}>
+                {index == 0 &&
+                  <ThemedView style={[styles.stepContainer, {
+                    borderRadius: 10,
+                    backgroundColor: Colors.primaryBG, padding: 10
+                  }]}>
+                    <ThemedText type="subtitle">Plats vietnamiens fait-maison</ThemedText>
+                    <ThemedText type="default">Voyagez au cœur du Vietnam avec nos plats traditionnels, de la délicatesse des nems croustillants à la richesse parfumée du phở. Préparés dans le respect des saveurs authentiques, nos plats vietnamiens faits maison sont parfaits pour tous vos moments de partage, que ce soit un repas en famille ou un dîner entre amis. Découvrez des saveurs qui vous transporteront dans les rues du Vietnam, où vous serez certain de passer un moment inoubliable</ThemedText>
+                  </ThemedView>}
+                {index == 1 &&
+                  <ThemedView>
+                    <ThemedText type="subtitle">Des sushis frais et authentiques</ThemedText>
+                    <ThemedText type="default">Plongez dans l’art de la cuisine japonaise avec nos sushis, préparés avec soin pour offrir une expérience culinaire inoubliable. Des classiques comme les makis et nigiris aux créations originales, chaque bouchée est un voyage gustatif qui vous transporte directement au Japon. Nos assortiments de sushis frais sont idéaux pour satisfaire toutes vos envies et sublimer vos repas. Présentez à vos convives l'élégance et la délicatesse de notre cuisine japonaise pour une expérience visuelle et gustative unique.rez fiers de présenter l’élégance notre cuisine japonaise à vos convives</ThemedText>
+                  </ThemedView>}
+
+                <ThemedView style={[styles.articleContainer, {}]}>
+                  {group.map((item: any, i: any) => (
+                    <React.Fragment key={i}>
+                      {renderItem(item, i)}
+                    </React.Fragment>
+                  ))}
+                </ThemedView>
+              </ThemedView>
+            ))}
+
+
+          </ThemedView>
+
+
+          <ThemedText type="defaultSemiBold">📍 Livraison rapide à Toulon et alentours.</ThemedText>
+          <ThemedText type="default">
+            Découvrez, commandez, dégustez : c'est bon pour vous et pour votre portefeuille ! 🥂✨
+          </ThemedText>
+        </ThemedView>
+
+
+      </ParallaxScrollView>
+    </ThemedView>
 
 
   )
