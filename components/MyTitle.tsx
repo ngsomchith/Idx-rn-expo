@@ -9,6 +9,7 @@ import { myStyles } from './myStyle';
 import ThisDevice from '@/constants/ThisDevice';
 import { ThemedView } from './ThemedView';
 import { Colors } from '@/constants/Colors';
+import { ThemedText } from './ThemedText';
 
 // SplashScreen.preventAutoHideAsync();
 
@@ -112,25 +113,7 @@ export default function MyTitle() {
             flexDirection: 'column',
             justifyContent: 'flex-start',
         }}>
-            <View
-            // style={[
-            // styles.dbCol,
-            //  {
-            // borderColor: 'white',
-            // borderWidth: 5,
-            // borderStyle: 'solid',
-            // }]} onLayout={onLayoutRootView}
-            >
-                <View // Délicatessen
-                    style={{
-                        maxHeight: '90%',
-                        // display:'flex',
-                        // flexDirection:'column',
-                        // justifyContent:'flex-start',
-
-                    }}
-
-                >
+           
                     <Text style={{
                         fontFamily: 'Babylonica-Regular',
                         fontSize: 44,
@@ -139,20 +122,14 @@ export default function MyTitle() {
                         maxHeight: '100%',
                         display: 'flex',
                         fontWeight: '600',
-                        // borderColor: 'yellow',
-                        // borderWidth: 5,
-                        // borderStyle: 'solid',
                         position: 'relative',
                         top: 10,
-
-                        
                     }}>
 
                         Délicatessen
 
                     </Text>
 
-                </View>
 
 
                 <Text style={{
@@ -163,7 +140,7 @@ export default function MyTitle() {
                     // color: Colors.primaryText,
                     fontFamily: 'BrushScript',
                     position: 'absolute',
-                    left: -45,
+                    left: 10,
                     top: 65,
                     // borderColor: 'green',
                     // borderWidth: 5,
@@ -171,7 +148,44 @@ export default function MyTitle() {
                 }}>
                     Plats Vietnamien et Sushi
                 </Text>
-            </View>
         </h1>
+
+
+        // <ThemedView
+        // >
+        //     <ThemedText // Délicatessen
+        //         type='title'
+        //         style={{
+        //             maxHeight: '90%',
+        //             fontFamily: 'Babylonica-Regular',
+        //         }}
+
+        //     >
+
+
+        //         Délicatessen
+        //         <ThemedText type='defaultSemiBold'
+        //             style={{
+        //                 width: MAXWIDTH,
+        //                 height: 60,
+        //                 fontSize: 22,
+        //                 color: 'white',
+        //                 // color: Colors.primaryText,
+        //                 fontFamily: 'BrushScript',
+        //                 position: 'absolute',
+        //                 left: -45,
+        //                 top: 65,
+        //                 borderColor: 'green',
+        //                 borderWidth: 3,
+        //                 borderStyle: 'solid',
+        //             }}>
+        //             Plats Vietnamien et Sushi
+        //         </ThemedText>
+
+        //     </ThemedText>
+
+
+
+        // </ThemedView>
     )
 }

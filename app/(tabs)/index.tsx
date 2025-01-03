@@ -62,7 +62,7 @@ export default function HomeScreen({ }) { //navigation, route
 
   const screenHeight = Dimensions.get('window').height;
   const screenWidth = Dimensions.get('window').width;
-
+  const maxScreenArticle = 800
   const widthMobile = 450
   const sectionPriceHeight = 60
   const widthMobileOrWeb = MAXWIDTH > widthMobile ? '40%' : '100%'
@@ -273,7 +273,7 @@ export default function HomeScreen({ }) { //navigation, route
 
           <ImageViewer placeholderImageSource={menuN?.img} />
           {menuN &&
-            menuN?.ref === "topV175"
+            menuN?.ref === "topV141"
             // && menuN.qte >= 1
             &&
             <Text style={[styles.texteArticlePrix, { //  + 1 gratuit
@@ -329,7 +329,7 @@ export default function HomeScreen({ }) { //navigation, route
       )}
       <ThemedView style={styles.quantityControls}>
 
-        <Pressable style={styles.quantityButton} onPress={()=>decrementQuantity(menuN)}>
+        <Pressable style={styles.quantityButton} onPress={() => decrementQuantity(menuN)}>
           <ThemedText style={styles.quantityButtonText}>-</ThemedText>
         </Pressable>
 
@@ -342,7 +342,7 @@ export default function HomeScreen({ }) { //navigation, route
             handlePasswordVisibility={undefined} />
         </View>
 
-        <Pressable style={styles.quantityButton} onPress={()=>incrementQuantity(menuN)}>
+        <Pressable style={styles.quantityButton} onPress={() => incrementQuantity(menuN)}>
           <ThemedText style={styles.quantityButtonText}>+</ThemedText>
         </Pressable>
       </ThemedView>
@@ -368,7 +368,7 @@ export default function HomeScreen({ }) { //navigation, route
     },
     articleContent: {
       width: widthArticle,
-      maxWidth: '100%',
+      maxWidth: 320,
       height: heightArticle,
       maxHeight: heightArticle,
       marginHorizontal: 0, //widthMobile *0.1,
@@ -379,7 +379,8 @@ export default function HomeScreen({ }) { //navigation, route
       justifyContent: 'space-between',
       backgroundColor: Colors.accentBG,
       borderRadius: 18,
-      borderColor: Colors.accentBG, borderStyle: 'solid', borderWidth: 3,
+      // borderColor: 'yellow', borderStyle: 'solid', borderWidth: 2,
+      // borderColor: Colors.accentBG, borderStyle: 'solid', borderWidth: 3,
     },
     priceSection: {
       flexDirection: 'row',
@@ -475,11 +476,23 @@ export default function HomeScreen({ }) { //navigation, route
       height: '100%',
       // height:device.heightBody,
       // minHeight:device.heightBody,
-      width: screenWidth,
+      width: '100%',
       margin: 'auto',
       bottom: 0,
       left: 0,
       position: 'absolute',
+    },
+    fullWidth: {
+      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 3,
+      resizeMode: 'cover',
+      height: '100%',
+      // height:device.heightBody,
+      // minHeight:device.heightBody,
+      width: screenWidth,
+      margin: 'auto',
+      // bottom: 0,
+      // left: 0,
+      // position: 'absolute',
     },
 
     modalContainer: {
@@ -555,9 +568,10 @@ export default function HomeScreen({ }) { //navigation, route
       backgroundColor: 'transparent',
       flexDirection: 'column',
       width: '100%',
-      marginHorizontal: 0,
+      marginHorizontal: 'auto',
       padding: 4,
-      // borderColor: 'blue', borderStyle: 'solid', borderWidth: 5,
+      // borderColor: 'pink', borderStyle: 'solid', borderWidth: 5,
+      maxWidth: maxScreenArticle,
     },
     listContainer: {
       backgroundColor: 'transparent',
@@ -610,7 +624,7 @@ export default function HomeScreen({ }) { //navigation, route
     text: {
       marginBottom: 10,
       color: Colors.primaryText,
-      fontSize: 30,
+      fontSize: 40,
       padding: 10
     },
 
@@ -638,12 +652,12 @@ export default function HomeScreen({ }) { //navigation, route
           maxHeightArticle={undefined}
           addToCart={addToCart}
           removeFromCart={removeFromCart}
-          menuN={topVentesList[index]} scrollY0={undefined}
+          menuN={item} scrollY0={undefined}
           scrollX0={undefined} updateScrollValue={undefined}
         />
 
-        {/* {renderMenuContent(topVentesList[index])}
-        {renderPriceSection(topVentesList[index])} */}
+        {/* {renderMenuContent(item)}
+        {renderPriceSection(item)}  */}
       </ThemedView>
 
     )
@@ -706,10 +720,9 @@ export default function HomeScreen({ }) { //navigation, route
                 padding: 10
 
               }}>
-                <ThemedText type='subtitle' style={styles.text}>La fraicheur : je vous garantis . </ThemedText>
-                <ThemedText type='subtitle' style={styles.text}>Le meilleur goût : aussi .</ThemedText>
+                <Text style={styles.text}>La cuisine préparée à la demande </Text>
+                <Text  style={styles.text}>Pour une fraicheur assurée</Text>
 
-                <ThemedText type='subtitle' style={styles.text}>Vous ne serez pas déçus, c'est Promis .</ThemedText>
 
               </View>
             </View>
@@ -753,14 +766,32 @@ export default function HomeScreen({ }) { //navigation, route
                 {index == 0 &&
                   <ThemedView style={[styles.stepContainer, {
                     borderRadius: 10,
-                    backgroundColor: Colors.primaryBG, padding: 10
+                    backgroundColor: Colors.primaryBG, padding: 10, 
                   }]}>
                     <ThemedText type="subtitle">Plats vietnamiens fait-maison</ThemedText>
+                    <View style={{
+                      width: "100%", 
+                      height:screenHeight* 0.5, 
+                      
+                      }}>
+                   
+                        <ImageViewer placeholderImageSource={'cadre_plats_traditionnels'} />
+                    </View>
                     <ThemedText type="default">Voyagez au cœur du Vietnam avec nos plats traditionnels, de la délicatesse des nems croustillants à la richesse parfumée du phở. Préparés dans le respect des saveurs authentiques, nos plats vietnamiens faits maison sont parfaits pour tous vos moments de partage, que ce soit un repas en famille ou un dîner entre amis. Découvrez des saveurs qui vous transporteront dans les rues du Vietnam, où vous serez certain de passer un moment inoubliable</ThemedText>
                   </ThemedView>}
                 {index == 1 &&
-                  <ThemedView>
+                  <ThemedView style={{
+                    padding: 10,
+                    borderRadius: 10
+                  }}>
                     <ThemedText type="subtitle">Des sushis frais et authentiques</ThemedText>
+                    <View style={{
+                      width: "100%", 
+                      height:screenHeight* 0.5
+                      }}>
+                   
+                        <ImageViewer placeholderImageSource={'cadre_sushi'} />
+                    </View>
                     <ThemedText type="default">Plongez dans l’art de la cuisine japonaise avec nos sushis, préparés avec soin pour offrir une expérience culinaire inoubliable. Des classiques comme les makis et nigiris aux créations originales, chaque bouchée est un voyage gustatif qui vous transporte directement au Japon. Nos assortiments de sushis frais sont idéaux pour satisfaire toutes vos envies et sublimer vos repas. Présentez à vos convives l'élégance et la délicatesse de notre cuisine japonaise pour une expérience visuelle et gustative unique.rez fiers de présenter l’élégance notre cuisine japonaise à vos convives</ThemedText>
                   </ThemedView>}
 

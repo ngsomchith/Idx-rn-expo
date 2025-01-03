@@ -7,7 +7,8 @@ import pizzasDuPort from '@/assets/images/PIZZAS DU PORT.jpg';
 
 import livreursToulon from '@/assets/images/livreurs-a-TOULON.webp';
 
-
+import cadre_sushi from '@/assets/images/seller2/cadre_sushi.png'
+import cadre_plats_traditionnels from '@/assets/images/seller2/cadre_plats_traditionnels.png'
 
 // import profile from "@/assets/images/kemal.png";
 // // import img1 from "@/assets/images/seller2/bi_cuon.png"
@@ -303,7 +304,7 @@ export default {
   xum_carotte,
   vitrineWeb,
   vitrineModeEmploi,
-  cuisiniere,
+  cuisiniere,cadre_plats_traditionnels,cadre_sushi
 };
 
 

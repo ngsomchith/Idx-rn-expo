@@ -16,20 +16,23 @@ export function ThemedText({
   children,
   ...rest
 }: ThemedTextProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const color = 'white' //useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
   // Fonction qui conditionne le rendu en fonction de la plateforme
   const renderContent = () => {
     if (Platform.OS === 'web') {
       // Pour le web, utiliser <h1>, <h2> pour les titres
       if (type === 'title') {
-        return <h1 style={{ color, margin : 0 }}>{children}</h1>;
+        return <h1 style={{ color, margin: 0 }}>{children}</h1>;
+        // return <Text style={[{ color }, style]} {...rest}>{children}</Text>;
       } else if (type === 'subtitle') {
-        return <h2 style={{ color, margin : 0, fontFamily: 'Roboto', }}>{children}</h2>;
+        return <h2 style={{ color, margin: 0, fontFamily: 'Roboto' }}>{children}</h2>;
       } else if (type === 'link') {
-        return <a style={{ color, margin : 0,  fontFamily: 'Roboto',  }} {...rest}>{children}</a>;
-      } else  {
-        return <h3 style={{ color, margin : 0,  fontFamily: 'Roboto',  }}>{children}</h3>;
+        return <a style={{ color, margin: 0, fontFamily: 'Roboto' }} {...rest}>{children}</a>;
+      } else if (type === 'defaultSemiBold') {
+        return <h3 style={{ color, margin: 0, fontFamily: 'Roboto' }}>{children}</h3>;
+      } else {
+        return <p style={{ color, margin: 0, fontFamily: 'Roboto' }}>{children}</p>;
       }
     }
     // Pour React Native (mobile), utiliser Text
@@ -58,23 +61,28 @@ const styles = StyleSheet.create({
   default: {
     fontSize: 16,
     lineHeight: 24,
-    color:'white',
+    color: 'white',
   },
   defaultSemiBold: {
     fontSize: 16,
     lineHeight: 24,
-    fontWeight: '600', 
+    fontWeight: '600',
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
     // lineHeight: 32,
-    margin:0
+    margin: 0,
+    paddingVertical: 30,
+    textAlign: 'center',
+    borderWidth: 5,
+    borderColor: 'white',
+    borderStyle: 'solid',
   },
   subtitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    margin:0
+    margin: 0
   },
   link: {
     lineHeight: 30,

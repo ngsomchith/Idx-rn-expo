@@ -258,6 +258,50 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
         console.log("totalPanier245 useEffet ", totalPanier)
     }, [totalPanier])
 
+    const panierLigneLabel = () => {
+        return (
+
+            <View style={
+                {
+                width:'100%',
+                maxWidth: 500,
+                borderColor: 'white',
+                borderStyle: 'solid',
+                borderWidth: 2,
+                paddingVertical: 5,
+                marginHorizontal: 'auto',
+                justifyContent:'space-between',
+                alignItems:'flex-end',
+                display:'flex',
+                flexDirection:'row'
+            }} >
+                <Text style={{
+                    color: 'white',
+                    width: MAXWIDTH *0.4,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    // borderColor: 'white',
+                    // borderStyle: 'solid',
+                    // borderWidth: 3,
+                }
+
+                } >
+                    libellé
+                    
+                </Text>
+
+
+                <Text style={[{ color: 'white', width: '10%',textAlign:'right' }]} >qté</Text>
+                <Text style={[{ color: 'white', width: '17%',textAlign:'right' }]} >
+
+                   P.U.
+                 </Text>
+                <Text style={[{ color: 'white' , width: '25%', textAlign: 'right' }]} >Prix/ligne </Text>
+            </View>
+        )
+    }
 
     const getTotalPanier = (cart: any
         // , remiseSushi: any, remiseObtenue:any, 
@@ -532,11 +576,14 @@ const ModalPanier = ({ cart, addToCart, removeFromCart }) => {
                                     </Text>
                                     <ModalProfile myImage={undefined} />
                                 </View>) : (
-                                <View style={styles.containerColumn}>
+                                <View style={styles.containerColumn} //ModalSignIn
+                                >
                                     <ModalSignIn myImage={undefined} />
 
                                 </View>
                             )}
+                            {/* <View></View> */}
+                            {panierLigneLabel()}
 
                             <FlatListScrollPanier
                                 cart={cart}

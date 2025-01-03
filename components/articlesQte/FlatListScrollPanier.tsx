@@ -47,19 +47,8 @@ const FlatListScrollPanier = ({
                 thiscategoryName={'categoryName'}
                 todayfr10={'todayfr10'} menuN={item}
                 menuNImg={item?.img} 
-                // idx={undefined} 
-                // navigation={navigation} 
-                // route={route}
-                // callbackFn={callbackFn} 
-                // pdjType={pdjType}
-                // PlatsToShowFilteredTemp={PlatsToShowFilteredTemp}
-                // articlesListTemp={articlesListTemp}
-                // fromPanier={undefined} 
-                // callback={callbackFn}
                 scrollY0={undefined} 
                 scrollX0={undefined}
-                // updateScrollValue={undefined}
-                // zoomMenuN={undefined} 
                 />
 
         </Pressable>

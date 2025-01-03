@@ -199,39 +199,7 @@ const RenderEachPanierElt = ({
 
             {panierLigne(menuN)}
 
-            {/* <View style={undefined}>
-
-                <View style={[styles.dbRow, { paddingHorizontal: 20 }]} >
-                    <Text style={[{ color: 'white' }, { width: '50%' }, { textAlign: 'right' }]} >Remise : </Text>
-
-                    <Text style={[{ color: 'white' }, { width: '25%' }, { textAlign: 'right' }]} >{
-                        (
-                            // Number(promoAccord) + 
-                            Number(remiseObtenue)).toFixed(2) + ' €'
-                    }</Text>
-                </View>
-            <View style={[styles.dbRow, {
-                // paddingHorizontal: 5,
-                // width: MAXWIDTH,
-                width:'100%',
-                maxWidth: '100%',
-                justifyContent:'flex-end',
-                alignItems:'flex-end',
-                borderColor: 'red',
-                borderStyle: 'solid',
-                borderWidth: 3,
-                display:'flex'
-            }]} >
-                    <Text style={[{ color: 'white' }, { width: '50%' }, { textAlign: 'right' }]} >Total à payer : </Text>
-                    
-                    <Text style={[{ color: 'white' }, { width: '10%' }]} >qte</Text> 
-                    
-                    <Text style={[{ color: 'white' }, { width: '25%' }, { textAlign: 'right' }]} >{
-                        (Number(totalAPayer) - Number(remiseObtenue)).toFixed(2) + ' €'
-                    }</Text>
-                </View>
-            </View> */}
-
+         
         </View>
     );
 };

@@ -1,0 +1,30 @@
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: AhrefsBot
+Allow: /
+
+User-agent: MJ12bot
+Allow: /
+
+User-agent: DataForSeoBot
+Allow: /
+
+User-agent: SemrushBot
+Allow: /
+
+
+User-agent: Rogerbot
+Allow: /
+
+User-agent: Dotbot
+Allow: /
+
+
+User-agent: *
+Disallow: /
+
